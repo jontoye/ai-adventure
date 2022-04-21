@@ -1,35 +1,36 @@
 const express = require("express");
 const mongoose = require("mongoose");
-require('dotenv').config();
+require("dotenv").config();
 
 const PORT = process.env.PORT || 3001;
 
 const app = express();
-app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
-
+app.use(express.json());
 
 // initialise session/cookies
-let session = require('express-session');
-let passport = require('./helper/ppConfig');
+let session = require("express-session");
+let passport = require("./helper/ppConfig");
 
-app.use(session({
-    secret: process.env.secret,
-    saveUninitialized: true,
-    resave: false, //don't resave if cookie is modified
-    cookie: {maxAge: 3600000}, //milliseconds until cookie timeout (1hr)
-}))
+app.use(
+    session({
+        secret: process.env.secret,
+        saveUninitialized: true,
+        resave: false, //don't resave if cookie is modified
+        cookie: { maxAge: 3600000 }, //milliseconds until cookie timeout (1hr)
+    })
+);
 //must go before routes
 app.use(passport.initialize());
 app.use(passport.session());
 
 // Share session information with all pages
-app.use(function(req,res,next) {
+app.use(function (req, res, next) {
     res.locals.currentUser = req.user;
     // res.locals.alerts = req.flash();
     next(); //next is from the express framework
-})
-
+});
 
 app.get("/api", (req, res) => {
     res.json({ message: "Hello from server! " });
@@ -41,21 +42,24 @@ const eventRoute = require("./routes/event");
 const authRoute = require("./routes/auth");
 const userRoute = require("./routes/user");
 //Mount routes
-app.get("/", (req,res,next) => {
-    res.redirect('/home')
+app.get("/", (req, res, next) => {
+    res.redirect("/home");
 });
 app.use("/", adventureRoute);
 app.use("/", eventRoute);
 app.use("/", authRoute);
 app.use("/", userRoute);
 
-mongoose.connect(process.env.mongoDBURL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  },
-  () => {
-      console.log("mongodb connected successfully!");
-  });
+mongoose.connect(
+    process.env.mongoDBURL,
+    {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    },
+    () => {
+        console.log("mongodb connected successfully!");
+    }
+);
 
 app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);
