@@ -21,16 +21,9 @@ export default class Signup extends Component {
         <h1>Sign Up</h1>
         <Container>
           <Form.Group>
-            <Form.Label>First Name</Form.Label>
+            <Form.Label>Username</Form.Label>
             <Form.Control
-              name='firstName'
-              onChange={this.changeHandler}
-            ></Form.Control>
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Last Name</Form.Label>
-            <Form.Control
-              name='lastName'
+              name='username'
               onChange={this.changeHandler}
             ></Form.Control>
           </Form.Group>
@@ -49,7 +42,8 @@ export default class Signup extends Component {
               onChange={this.changeHandler}
             ></Form.Control>
           </Form.Group>
-          <Button varient='primary' onClick={this.registerHandler}>Register</Button>
+          <br></br>
+          <Button variant='primary' onClick={this.registerHandler}>Register</Button>
         </Container>
       </div>
     );

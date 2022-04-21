@@ -21,23 +21,15 @@ export default class Signin extends Component {
         <h1>Sign In</h1>
         <Container>
           <Form.Group>
-            <Form.Label>Email Address</Form.Label>
-            <Form.Control
-              name='emailAddress'
-              onChange={this.changeHandler}
-            ></Form.Control>
+            <Form.Label>Username</Form.Label>
+            <Form.Control name='username' onChange={this.changeHandler}></Form.Control>
           </Form.Group>
           <Form.Group>
             <Form.Label>Password</Form.Label>
-            <Form.Control
-              name='password'
-              type='password'
-              onChange={this.changeHandler}
-            ></Form.Control>
+            <Form.Control name='password' type='password' onChange={this.changeHandler}></Form.Control>
           </Form.Group>
-          <Button varient='primary' onClick={this.loginHandler}>
-            Sign In
-          </Button>
+          <br></br>
+          <Button variant='primary' onClick={this.loginHandler}>Sign In</Button>
         </Container>
       </div>
     );
