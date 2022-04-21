@@ -83,7 +83,7 @@ export default class Tweets extends Component {
               </Card.Title>
               <hr />
               <Card.Text>
-                <h4>{this.state.response}</h4>
+                {this.state.response}
               </Card.Text>
             </Card.Body>
           </Card>
