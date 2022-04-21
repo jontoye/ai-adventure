@@ -7,7 +7,7 @@ export default class Tweets extends Component {
     super();
     this.state = {
       heading: "The Response from the AI will be Shown here",
-      response: ".... await the response",
+      response: "Waiting for user entry",
     };
   }
 
@@ -16,7 +16,7 @@ export default class Tweets extends Component {
 
     const formData = new FormData(e.target),
       formDataObj = Object.fromEntries(formData.entries());
-    console.log(formDataObj.tweetTopic);
+    console.log(formDataObj.backstory_character);
 
     ////Open Ai Goes here
 
@@ -27,7 +27,7 @@ export default class Tweets extends Component {
 
     openai
       .createCompletion("text-davinci-002", {
-        prompt: `Write a detailed, smart, informative and professional back story about ${formDataObj.tweetTopic}\n`,
+        prompt: `Write a detailed, smart, informative and professional back story about ${formDataObj.backstory_character}\n`,
         temperature: 0.8,
         max_tokens: 256,
         top_p: 1,
@@ -36,7 +36,7 @@ export default class Tweets extends Component {
       })
       .then((response) => {
         this.setState({
-          heading: `Back story for: ${formDataObj.tweetTopic}`,
+          heading: `Back story for: ${formDataObj.backstory_character}`,
           response: `${response.data.choices[0].text}`,
         });
       })
@@ -45,8 +45,8 @@ export default class Tweets extends Component {
       });
 
     this.setState({
-      heading: `Back story for  : ${formDataObj.tweetTopic}`,
-      response: `The Response from the AI will be shown here`,
+      heading: `Back story for  : ${formDataObj.backstory_character}`,
+      response: `Waiting for AI to think`,
     });
   };
   render() {
@@ -63,8 +63,8 @@ export default class Tweets extends Component {
               <Form.Label>Who should we create a back story for?</Form.Label>
               <Form.Control
                 text='text'
-                name='tweetTopic'
-                placeholder='Tweet Topic Idea'
+                name='backstory_character'
+                placeholder='Character Name + Description'
               ></Form.Control>
               <Form.Text>
                 Enter as much information as possible for a more detailed story.
@@ -82,9 +82,7 @@ export default class Tweets extends Component {
                 <h1>{this.state.heading}</h1>
               </Card.Title>
               <hr />
-              <Card.Text>
-                {this.state.response}
-              </Card.Text>
+              <Card.Text>{this.state.response}</Card.Text>
             </Card.Body>
           </Card>
         </Container>
