@@ -79,7 +79,7 @@ export default class Tweets extends Component {
           <Card>
             <Card.Body>
               <Card.Title>
-                <h1>{this.state.heading}</h1>
+                {this.state.heading}
               </Card.Title>
               <hr />
               <Card.Text>
