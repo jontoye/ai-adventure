@@ -1,27 +1,27 @@
 {
-    "name": "ai-adventure",
-    "version": "1.0.0",
-    "description": "",
-    "main": "server.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "nodemon server/index.js"
-    },
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
-    "dependencies": {
-        "bcrypt": "^5.0.1",
-        "dotenv": "^16.0.0",
-        "express": "^4.17.3",
-        "express-session": "^1.17.2",
-        "express-sessions": "^1.0.6",
-        "express-validator": "^6.14.0",
-        "jsonwebtoken": "^8.5.1",
-        "moment": "^2.29.3",
-        "mongoose": "^6.3.0",
-        "nodemon": "^2.0.15",
-        "passport": "^0.5.2",
-        "passport-local": "^1.0.0"
-    }
+  "name": "ai-adventure",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "express-session": "^1.17.2",
+    "express-sessions": "^1.0.6",
+    "express-validator": "^6.14.0",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.3",
+    "mongoose": "^6.3.0",
+    "nodemon": "^2.0.15",
+    "passport": "^0.5.2",
+    "passport-local": "^1.0.0"
+  }
 }

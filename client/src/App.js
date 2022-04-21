@@ -7,6 +7,7 @@ import Axios from "axios";
 import jwt_decode from "jwt-decode";
 import { Alert } from "react-bootstrap";
 import Home from "./components/Home";
+import Tweets from "./components/Tweets";
 
 export default class App extends Component {
   state = {
@@ -43,7 +44,7 @@ export default class App extends Component {
           message: response.data.message,
           failMessage: null,
           successMessage: null,
-        })
+        });
       })
       .catch((error) => {
         console.log(error);
@@ -58,7 +59,7 @@ export default class App extends Component {
 
         this.setState({
           message: response.data.message,
-        })
+        });
 
         if (response.data.token != null) {
           //localStorage refers to localStorage of browser
@@ -90,14 +91,20 @@ export default class App extends Component {
       user: null,
       message: null,
       failMessage: "User logged out successfully.",
-      successMessage:null,
+      successMessage: null,
     });
   };
 
   render() {
-    const message = this.state.message ? (<Alert variant="info">{this.state.message}</Alert>) : null
-    const failMessage = this.state.failMessage ? (<Alert variant="danger">{this.state.failMessage}</Alert>) : null
-    const successMessage = this.state.successMessage ? (<Alert variant="success">{this.state.successMessage}</Alert>) : null
+    const message = this.state.message ? (
+      <Alert variant='info'>{this.state.message}</Alert>
+    ) : null;
+    const failMessage = this.state.failMessage ? (
+      <Alert variant='danger'>{this.state.failMessage}</Alert>
+    ) : null;
+    const successMessage = this.state.successMessage ? (
+      <Alert variant='success'>{this.state.successMessage}</Alert>
+    ) : null;
     const { isAuth } = this.state;
     return (
       <div>
@@ -111,8 +118,9 @@ export default class App extends Component {
                 {this.state.user
                   ? "Welcome " + this.state.user.user.name
                   : null}
-                  &nbsp;
+                &nbsp;
                 <Link to='/'>Home</Link> &nbsp;
+                <Link to='/tweets'>Backstory</Link> &nbsp;
                 <Link to='/signout' onClick={this.logoutHandler}>
                   Sign Out
                 </Link>
@@ -135,6 +143,7 @@ export default class App extends Component {
                   isAuth ? <Home /> : <Signin login={this.loginHandler} />
                 }
               ></Route>
+              <Route path='/tweets' exact element={<Tweets />} />
               <Route
                 path='/signup'
                 element={<Signup register={this.registerHandler} />}
