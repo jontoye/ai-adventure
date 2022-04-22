@@ -1,6 +1,5 @@
 .banner {
-
-    height: 85vh;
+    min-height: 80vh;
 
     background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.6)), url("https://images.unsplash.com/photo-1462759353907-b2ea5ebd72e7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2231&q=80");
     background-position: center center;
@@ -22,15 +21,21 @@
     align-items: center;
 }
 
+.greeting-title {
+    font-size: 56px;
+    margin-bottom: 30px;
+}
+
 .banner__intro-card {
     background: rgba(0,0,0,0.5);
     border: 2px solid white;
     border-radius: 10px;
     margin: 0 auto;
+    padding: 10px 30px;
     width: 80%;
 
-    height: 300px;
     color: white;
+    font-size: larger;
 
     box-shadow: rgba(255, 255, 255, 0.35) 0px 5px 15px;
 }
@@ -40,7 +45,6 @@
     border: 2px solid white;
     border-radius: 10px;
     width: 80%;
-    height: 80%;
 
     color: white;
     text-align: center;
@@ -53,4 +57,24 @@
     flex-direction: column;
     gap: 25px;
     width: 40%;
+    margin-bottom: 30px;
+}
+
+.achievement-list {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 25px;
+
+    padding: 10px;
+}
+
+.achievement-badge {
+    width: 60px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.achievement-badge:hover {
+    transform: scale(1.08);
 }

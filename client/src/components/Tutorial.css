@@ -1,5 +1,21 @@
 .section-tutorial {
     text-align: center;
-    height: 80vh;
-    padding: 50px;
+    padding: 100px 50px;
+    color: white;
+    max-width: 700px;
+    line-height: 1.6;
+    font-size: larger;
+}
+
+.tutorial__content {
+    margin-bottom: 40px;
+}
+
+.tutorial__title {
+    font-size: 72px;
+    margin-bottom: 50px;
+}
+
+.tutorial__heading {
+    font-size: 46px;
 }
