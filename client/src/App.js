@@ -96,7 +96,7 @@ export default class App extends Component {
         });
       });
   };
-
+  
   logoutHandler = (e) => {
     e.preventDefault();
     localStorage.removeItem("token");
@@ -109,76 +109,65 @@ export default class App extends Component {
     });
   };
 
-  render() {
-    const message = this.state.message ? (
-      <Alert variant='info'>{this.state.message}</Alert>
-    ) : null;
-    const failMessage = this.state.failMessage ? (
-      <Alert variant='danger'>{this.state.failMessage}</Alert>
-    ) : null;
-    const successMessage = this.state.successMessage ? (
-      <Alert variant='success'>{this.state.successMessage}</Alert>
-    ) : null;
-    const { isAuth } = this.state;
-    return (
-      <div>
-        <Router>
-          <Navbar bg='light' expand='lg'>
-            <Container>
-              <Navbar.Brand href='/'>| AI Adventure |</Navbar.Brand>
+    render() {
+        const message = this.state.message ? (
+            <Alert variant="info">{this.state.message}</Alert>
+        ) : null;
+        const failMessage = this.state.failMessage ? (
+            <Alert variant="danger">{this.state.failMessage}</Alert>
+        ) : null;
+        const successMessage = this.state.successMessage ? (
+            <Alert variant="success">{this.state.successMessage}</Alert>
+        ) : null;
+        const { isAuth } = this.state;
+        return (
+            <div>
+                <Router>
+                    <Navbar variant="dark" expand="lg">
+                        <Container>
+                            <Navbar.Brand id="nav" href="/">
+                                | AI Adventure |
+                            </Navbar.Brand>
 
-              <Navbar.Toggle aria-controls='basic-navbar-nav' />
-              <Navbar.Collapse id='basic-navbar-nav'>
-                <Nav className='me-auto'>
-                  {isAuth ? (
-                    <>
-                      <Nav.Link href='/'>Home</Nav.Link>
-                      <Nav.Link href='/back-story'>Backstory</Nav.Link>
-                      <Nav.Link href='/signout' onClick={this.logoutHandler}>
-                        Sign Out
-                      </Nav.Link>
-                    </>
-                  ) : (
-                    <>
-                      <Nav.Link href='/signup'>Sign Up</Nav.Link>
-                      <Nav.Link href='/signin'>Sign In</Nav.Link>
-                    </>
-                  )}
-                </Nav>
-                {this.state.user
-                  ? "Welcome " + this.state.user.user.name
-                  : null}
-              </Navbar.Collapse>
-            </Container>
-          </Navbar>
-          {message}
-          {failMessage}
-          {successMessage}
-          {/* <nav>
-                        {isAuth ? (
-                            <div>
+                            <Navbar.Toggle aria-controls="basic-navbar-nav" id="nav" />
+                            <Navbar.Collapse id="basic-navbar-nav nav" >
+                                <Nav className="me-auto" id="nav">
+                                    {isAuth ? (
+                                        <>
+                                            <Nav.Link href="/" id="nav">Home</Nav.Link>
+                                            <Nav.Link href="/tweets" id="nav">
+                                                Backstory
+                                            </Nav.Link>
+                                            <Nav.Link
+                                                href="/signout"
+                                                onClick={this.logoutHandler} id="nav"
+                                            >
+                                                Sign Out
+                                            </Nav.Link>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Nav.Link href="/signup" id="nav">
+                                                Sign Up
+                                            </Nav.Link>
+                                            <Nav.Link href="/signin" id="nav">
+                                                Sign In
+                                            </Nav.Link>
+                                        </>
+                                    )}
+                                </Nav>
+                                <span class="main-greeting">
                                 {this.state.user
                                     ? "Welcome " + this.state.user.user.name
                                     : null}
-                                &nbsp;
-                                <Link to="/">Home</Link> &nbsp;
-                                <Link to="/tweets">Backstory</Link> &nbsp;
-                                <Link
-                                    to="/signout"
-                                    onClick={this.logoutHandler}
-                                >
-                                    Sign Out
-                                </Link>
-                                &nbsp;
-                            </div>
-                        ) : (
-                            <div>
-                                <Link to="/signup">Sign Up</Link> &nbsp;
-                                <Link to="/signin">Sign In</Link> &nbsp;
-                            </div>
-                        )}
-                        <div></div>
-                    </nav> */}
+                                    </span>
+                            </Navbar.Collapse>
+                        </Container>
+                    </Navbar>
+                    {message}
+                    {failMessage}
+                    {successMessage}
+                    
 
           <div>
             <Routes>
