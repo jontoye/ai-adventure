@@ -8,7 +8,7 @@ import jwt_decode from "jwt-decode";
 import { Alert, Container, Navbar, Nav, NavDropdown } from "react-bootstrap";
 import Home from "./components/Home";
 import Footer from "./components/Footer";
-import BackgroundStory from "./components/BackgroundStory";
+import CreateCharacter from "./components/CreateCharacter";
 import "./App.scss";
 
 export default class App extends Component {
@@ -183,7 +183,7 @@ export default class App extends Component {
                     <Route
                         path="/create-character"
                         exact
-                        element={<BackgroundStory />}
+                        element={<CreateCharacter />}
                     />
                     <Route
                         path="/signup"

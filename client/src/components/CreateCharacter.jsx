@@ -5,7 +5,7 @@ import Entry from "./Entry";
 
 const { Configuration, OpenAIApi } = require("openai");
 
-export default class BackgroundStory extends Component {
+export default class CreateCharacter extends Component {
   constructor() {
     super();
     this.state = {
@@ -65,6 +65,8 @@ export default class BackgroundStory extends Component {
       formDataObj = Object.fromEntries(formData.entries());
     console.log(formDataObj);
 
+    let AIprompt = `${formDataObj.name} is a ${formDataObj.class} who has the power of ${formDataObj.ability} and a weakness to ${formDataObj.weakness}. Write a detailed and ${formDataObj.tone} back story about ${formDataObj.name} in 100 words.\n`
+
     ////Open Ai Goes here
 
     const configuration = new Configuration({
@@ -74,7 +76,7 @@ export default class BackgroundStory extends Component {
 
     openai
       .createCompletion("text-davinci-002", {
-        prompt: `${formDataObj.name} is a ${formDataObj.class} who has the power of ${formDataObj.ability} and a weakness to ${formDataObj.weakness}. Write a detailed and ${formDataObj.tone} back story about ${formDataObj.name} in 100 words.\n`,
+        prompt: AIprompt,
         temperature: 0.8,
         max_tokens: 256,
         top_p: 1,
@@ -89,7 +91,7 @@ export default class BackgroundStory extends Component {
         this.setState({
           heading: `Backstory for: ${formDataObj.name}`,
           response: `${backstory}`,
-          log: [...this.state.log, response.data.choices[0].text],
+          log: [...this.state.log, AIprompt, response.data.choices[0].text],
         });
       })
       .catch((error) => {
