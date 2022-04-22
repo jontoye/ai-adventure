@@ -8,6 +8,7 @@ import jwt_decode from "jwt-decode";
 import { Alert, Container, Navbar, Nav, NavDropdown } from "react-bootstrap";
 import Home from "./components/Home";
 import BackgroundStory from "./components/BackgroundStory";
+import './App.css'
 
 export default class App extends Component {
   state = {
@@ -156,7 +157,7 @@ export default class App extends Component {
                                         </>
                                     )}
                                 </Nav>
-                                <span class="main-greeting">
+                                <span id="main-greeting">
                                 {this.state.user
                                     ? "Welcome " + this.state.user.user.name
                                     : null}
