@@ -25,6 +25,18 @@ export default class Banner extends Component {
                     <Card className="banner__achievement-card">
                         <Card.Body>
                             <h3>Achievements</h3>
+                            <div className='achievement-list'>
+                                <img className='achievement-badge' src="images/badges/rank-1.png" alt="" />
+                                <img className='achievement-badge' src="images/badges/ninja-heroic-stance.png" alt="" />
+                                <img className='achievement-badge' src="images/badges/rank-2.png" alt="" />
+                                <img className='achievement-badge' src="images/badges/rank-3.png" alt="" />
+                                <img className='achievement-badge' src="images/badges/dragon-head.png" alt="" />
+                                <img className='achievement-badge' src="images/badges/sabers-choc.png" alt="" />
+                                <img className='achievement-badge' src="images/badges/drink-me.png" alt="" />
+                                <img className='achievement-badge' src="images/badges/drink-me-2.png" alt="" />
+                                <img className='achievement-badge' src="images/badges/wheat.png" alt="" />
+                            </div>
+                            
                         </Card.Body>
                     </Card>
                 </Col>
