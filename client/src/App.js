@@ -9,6 +9,7 @@ import { Alert, Container, Navbar, Nav, NavDropdown } from "react-bootstrap";
 import Home from "./components/Home";
 import Footer from "./components/Footer";
 import CreateCharacter from "./components/CreateCharacter";
+import CreateAdventure from "./components/CreateAdventure";
 import "./App.scss";
 
 export default class App extends Component {
@@ -137,6 +138,9 @@ export default class App extends Component {
                                         <Nav.Link href="/create-character">
                                             Create Character
                                         </Nav.Link>
+                                        <Nav.Link href="/create-adventure">
+                                            Create Adventure
+                                        </Nav.Link>
                                         <Nav.Link
                                             href="/signout"
                                             onClick={this.logoutHandler}
@@ -184,6 +188,11 @@ export default class App extends Component {
                         path="/create-character"
                         exact
                         element={<CreateCharacter />}
+                    />
+                    <Route
+                        path="/create-adventure"
+                        exact
+                        element={<CreateAdventure />}
                     />
                     <Route
                         path="/signup"
