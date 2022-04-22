@@ -7,94 +7,107 @@ import Axios from "axios";
 import jwt_decode from "jwt-decode";
 import { Alert, Container, Navbar, Nav, NavDropdown } from "react-bootstrap";
 import Home from "./components/Home";
-import Tweets from "./components/Tweets";
-import './App.css'
+import BackgroundStory from "./components/BackgroundStory";
 
 export default class App extends Component {
-    state = {
-        isAuth: false,
-        user: null,
-        message: null,
-        failMessage: null,
-        successMessage: null,
-    };
+  state = {
+    isAuth: false,
+    user: null,
+    message: null,
+    failMessage: null,
+    successMessage: null,
+  };
 
-    componentDidMount() {
-        let token = localStorage.getItem("token");
-        if (token != null) {
-            let user = jwt_decode(token);
-            if (user) {
-                this.setState({
-                    isAuth: true,
-                    user: user,
-                });
-            } else {
-                localStorage.removeItem("token");
-                this.setState({
-                    isAuth: false,
-                });
-            }
-        }
-    }
-
-    registerHandler = (user) => {
-        Axios.post("auth/signup", user)
-            .then((response) => {
-                console.log(response.data.message);
-                this.setState({
-                    message: response.data.message,
-                    failMessage: null,
-                    successMessage: null,
-                });
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    };
-
-    loginHandler = (cred) => {
-        Axios.post("auth/signin", cred)
-            .then((response) => {
-                // console.log("response data token", response.data.token);
-                console.log(response.data.message);
-
-                this.setState({
-                    message: response.data.message,
-                });
-
-                if (response.data.token != null) {
-                    //localStorage refers to localStorage of browser
-                    localStorage.setItem("token", response.data.token);
-                    let user = jwt_decode(response.data.token);
-
-                    this.setState({
-                        isAuth: true,
-                        user: user,
-                        message: null,
-                        failMessage: null,
-                        successMessage: "User logged in successfully.",
-                    });
-                }
-            })
-            .catch((error) => {
-                console.log(error);
-                this.setState({
-                    isAuth: false,
-                });
-            });
-    };
-
-    logoutHandler = (e) => {
-        e.preventDefault();
+  componentDidMount() {
+    let token = localStorage.getItem("token");
+    if (token != null) {
+      let user = jwt_decode(token);
+      if (user) {
+        this.setState({
+          isAuth: true,
+          user: user,
+        });
+      } else {
         localStorage.removeItem("token");
         this.setState({
-            isAuth: false,
-            user: null,
-            message: null,
-            failMessage: "User logged out successfully.",
-            successMessage: null,
+          isAuth: false,
         });
-    };
+      }
+    }
+  }
+  // addCharacter = (character) => {
+  //   Axios.post("character/add", character, {
+  //     headers: {
+  //       Characterization: "Bearer " + localStorage.getItem("token"),
+  //     },
+  //   })
+  //     .then((response) => {
+  //       console.log("Character Added Successfully", response);
+  //       // this.loadCharacterList();
+  //     })
+  //     .catch((error) => {
+  //       console.log("Error adding character", error);
+  //     });
+  // };
+
+  registerHandler = (user) => {
+    Axios.post("auth/signup", user)
+      .then((response) => {
+        console.log(response.data.message);
+        this.setState({
+          message: response.data.message,
+          failMessage: null,
+          successMessage: null,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  loginHandler = (cred) => {
+    Axios.post("auth/signin", cred)
+      .then((response) => {
+        // console.log("response data token", response.data.token);
+        console.log(response.data.message);
+
+        this.setState({
+          message: response.data.message,
+        });
+
+        if (response.data.token != null) {
+          //localStorage refers to localStorage of browser
+          localStorage.setItem("token", response.data.token);
+          let user = jwt_decode(response.data.token);
+
+          this.setState({
+            isAuth: true,
+            user: user,
+            message: null,
+            failMessage: null,
+            successMessage: "User logged in successfully.",
+          });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        this.setState({
+          isAuth: false,
+        });
+      });
+  };
+  
+  logoutHandler = (e) => {
+    e.preventDefault();
+    localStorage.removeItem("token");
+    this.setState({
+      isAuth: false,
+      user: null,
+      message: null,
+      failMessage: "User logged out successfully.",
+      successMessage: null,
+    });
+  };
 
     render() {
         const message = this.state.message ? (
@@ -154,61 +167,31 @@ export default class App extends Component {
                     {message}
                     {failMessage}
                     {successMessage}
-                    {/* <nav>
-                        {isAuth ? (
-                            <div>
-                                {this.state.user
-                                    ? "Welcome " + this.state.user.user.name
-                                    : null}
-                                &nbsp;
-                                <Link to="/">Home</Link> &nbsp;
-                                <Link to="/tweets">Backstory</Link> &nbsp;
-                                <Link
-                                    to="/signout"
-                                    onClick={this.logoutHandler}
-                                >
-                                    Sign Out
-                                </Link>
-                                &nbsp;
-                            </div>
-                        ) : (
-                            <div>
-                                <Link to="/signup">Sign Up</Link> &nbsp;
-                                <Link to="/signin">Sign In</Link> &nbsp;
-                            </div>
-                        )}
-                        <div></div>
-                    </nav> */}
+                    
 
-                    <div>
-                        <Routes>
-                            <Route
-                                path="/"
-                                element={
-                                    isAuth ? (
-                                        <Home />
-                                    ) : (
-                                        <Signin login={this.loginHandler} />
-                                    )
-                                }
-                            ></Route>
-                            <Route path="/tweets" exact element={<Tweets />} />
-                            <Route
-                                path="/signup"
-                                element={
-                                    <Signup register={this.registerHandler} />
-                                }
-                            ></Route>
-                            <Route
-                                path="/signin"
-                                element={<Signin login={this.loginHandler} />}
-                            ></Route>
-                        </Routes>
-                    </div>
-                </Router>
-            </div>
+          <div>
+            <Routes>
+              <Route
+                path='/'
+                element={
+                  isAuth ? <Home /> : <Signin login={this.loginHandler} />
+                }
+              ></Route>
+              <Route path='/back-story' exact element={<BackgroundStory />} />
+              <Route
+                path='/signup'
+                element={<Signup register={this.registerHandler} />}
+              ></Route>
+              <Route
+                path='/signin'
+                element={<Signin login={this.loginHandler} />}
+              ></Route>
+            </Routes>
+          </div>
+        </Router>
+      </div>
 
-            // <AuthorList></AuthorList>
-        );
-    }
+      // <AuthorList></AuthorList>
+    );
+  }
 }
