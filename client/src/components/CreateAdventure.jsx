@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Container, Form, Button, Card } from "react-bootstrap";
 import Axios from "axios";
-import Entry from "./Entry";
+import Log from "./Log";
 
 const { Configuration, OpenAIApi } = require("openai");
 
@@ -74,7 +74,7 @@ export default class CreateAdventure extends Component {
     // console.log(formDataObj);
 
     let intro = `${formDataObj.characterStory}`;
-    let prompt = `Begin a ${formDataObj.genre} story to ${formDataObj.quest} in a ${formDataObj.setting} setting.\n`;
+    let prompt = `Begin a ${formDataObj.genre} story to ${formDataObj.quest} in a ${formDataObj.setting} setting.`;
     let AIprompt = intro + '\n' + prompt + '\n';
     // console.log("prompt test", AIprompt);
     ////Open Ai Goes here
@@ -117,11 +117,6 @@ export default class CreateAdventure extends Component {
   };
 
   render() {
-    const entries = this.state.log.map((entry, index) => {
-      return (
-        <Entry text={entry} key={index} />
-      );
-    });
     const characters = this.state.characters.map((c) => {
       return (
         <option value={c.backstory}>
@@ -212,15 +207,7 @@ export default class CreateAdventure extends Component {
           <br></br>
           <br></br>
 
-          <Card>
-            <Card.Body>
-              <Card.Title>*AI Log*</Card.Title>
-              <hr />
-              <Card.Text>
-                {entries}
-              </Card.Text>
-            </Card.Body>
-          </Card>
+          <Log log={this.state.log}/>
         </Container>
       </div>
     );
