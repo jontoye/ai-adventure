@@ -111,7 +111,9 @@ export default class App extends Component {
                 <Router>
                     <Navbar bg="light" expand="lg">
                         <Container>
-                            <Navbar.Brand href="/">ai adventure.</Navbar.Brand>
+                            <Navbar.Brand href="/">
+                                | AI Adventure |
+                            </Navbar.Brand>
 
                             <Navbar.Toggle aria-controls="basic-navbar-nav" />
                             <Navbar.Collapse id="basic-navbar-nav">
