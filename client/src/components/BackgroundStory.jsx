@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Container, Form, Button, Card } from "react-bootstrap";
 import Axios from "axios";
+import Entry from "./Entry";
 
 const { Configuration, OpenAIApi } = require("openai");
 
@@ -97,6 +98,14 @@ export default class BackgroundStory extends Component {
     //Use a timeout/clock here to randomly change state.response to keep things interesting while the AI thinks?
   };
   render() {
+    const entries = this.state.log.map((entry) => {
+      return (
+        <Card.Text>
+          <Entry text={entry} />
+        </Card.Text>
+      );
+    });
+
     return (
       <div>
         <Container>
@@ -131,8 +140,15 @@ export default class BackgroundStory extends Component {
               <Card.Text>{this.state.response}</Card.Text>
             </Card.Body>
           </Card>
+
+          <Card>
+            <Card.Body>
+              <Card.Title>Log</Card.Title>
+              <hr />
+              {entries}
+            </Card.Body>
+          </Card>
         </Container>
-        {this.state.log}
       </div>
     );
   }
