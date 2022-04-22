@@ -10,6 +10,7 @@ export default class BackgroundStory extends Component {
     this.state = {
       heading: "The Response from the AI will be Shown here",
       response: "Waiting for user entry",
+      newCharacter: {},
       character: "",
       log: [],
     };
@@ -26,10 +27,22 @@ export default class BackgroundStory extends Component {
   //     }
   //   };
 
+  handleChange = (event) => {
+    const attributeToChange = event.target.name; // this will give the name of the field that is changing
+    const newValue = event.target.value; //this will give the value of the field that is changing
+
+    const character = { ...this.state.newCharacter };
+    character[attributeToChange] = newValue;
+    console.log("onchange", character);
+    this.setState({
+      newCharacter: character,
+    });
+  };
+
   addCharacter = (character) => {
     Axios.post("character/add", character, {
       headers: {
-        Characterization: "Bearer " + localStorage.getItem("token"),
+        Authorization: "Bearer " + localStorage.getItem("token"),
       },
     })
       .then((response) => {
@@ -67,7 +80,7 @@ export default class BackgroundStory extends Component {
         presence_penalty: 0,
       })
       .then((response) => {
-        this.addCharacter(formDataObj.name);
+        this.addCharacter(this.state.newCharacter);
         this.setState({
           heading: `Back story for: ${formDataObj.name}`,
           response: `${response.data.choices[0].text}`,
@@ -99,6 +112,7 @@ export default class BackgroundStory extends Component {
                 text='text'
                 name='name'
                 placeholder='Character Name + Description'
+                onChange={this.handleChange}
               ></Form.Control>
               <Form.Text>
                 Enter as much information as possible for a more detailed story.
@@ -112,9 +126,7 @@ export default class BackgroundStory extends Component {
 
           <Card>
             <Card.Body>
-              <Card.Title>
-                {this.state.heading}
-              </Card.Title>
+              <Card.Title>{this.state.heading}</Card.Title>
               <hr />
               <Card.Text>{this.state.response}</Card.Text>
             </Card.Body>

@@ -36,6 +36,20 @@ export default class App extends Component {
             }
         }
     }
+    // addCharacter = (character) => {
+    //   Axios.post("character/add", character, {
+    //     headers: {
+    //       Characterization: "Bearer " + localStorage.getItem("token"),
+    //     },
+    //   })
+    //     .then((response) => {
+    //       console.log("Character Added Successfully", response);
+    //       // this.loadCharacterList();
+    //     })
+    //     .catch((error) => {
+    //       console.log("Error adding character", error);
+    //     });
+    // };
 
     registerHandler = (user) => {
         Axios.post("auth/signup", user)
@@ -110,7 +124,7 @@ export default class App extends Component {
         return (
             <div>
                 <Router>
-                    <Navbar fixed="top" bg="light" expand="lg">
+                    <Navbar bg="light" expand="lg">
                         <Container>
                             <Navbar.Brand href="/">
                                 | AI Adventure |
@@ -152,6 +166,31 @@ export default class App extends Component {
                     {message}
                     {failMessage}
                     {successMessage}
+                    {/* <nav>
+                        {isAuth ? (
+                            <div>
+                                {this.state.user
+                                    ? "Welcome " + this.state.user.user.name
+                                    : null}
+                                &nbsp;
+                                <Link to="/">Home</Link> &nbsp;
+                                <Link to="/tweets">Backstory</Link> &nbsp;
+                                <Link
+                                    to="/signout"
+                                    onClick={this.logoutHandler}
+                                >
+                                    Sign Out
+                                </Link>
+                                &nbsp;
+                            </div>
+                        ) : (
+                            <div>
+                                <Link to="/signup">Sign Up</Link> &nbsp;
+                                <Link to="/signin">Sign In</Link> &nbsp;
+                            </div>
+                        )}
+                        <div></div>
+                    </nav> */}
 
                     <div>
                         <Routes>
