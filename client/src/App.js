@@ -9,6 +9,7 @@ import { Alert, Container, Navbar, Nav, NavDropdown } from "react-bootstrap";
 import Home from "./components/Home";
 import Footer from "./components/Footer";
 import BackgroundStory from "./components/BackgroundStory";
+import "./App.css";
 
 export default class App extends Component {
     state = {
@@ -124,7 +125,7 @@ export default class App extends Component {
         return (
             <div>
                 <Router>
-                    <Navbar bg="light" expand="lg">
+                    <Navbar variant="dark" expand="lg">
                         <Container>
                             <Navbar.Brand href="/">
                                 | AI Adventure |
