@@ -1,7 +1,10 @@
 .main-footer {
-    color: white;
-    background-color: rgb(33, 37, 41);
+  color: white;
+  background-color: rgb(33, 37, 41);
 
-    padding: 50px;
-    margin-top: 200px;
+  padding-top: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin-top: 10px;
 }
