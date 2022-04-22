@@ -12,17 +12,21 @@ const characterSchema = mongoose.Schema(
     class: {
       type: String,
       lowercase: true,
+      required: true,
     },
     ability: {
       type: String,
       lowercase: true,
+      required: true,
     },
     weakness: {
       type: String,
       lowercase: true,
+      required: true,
     },
     backstory: {
       type: String,
+      required: true,
     },
   },
   {

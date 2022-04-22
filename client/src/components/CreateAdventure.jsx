@@ -71,10 +71,12 @@ export default class CreateAdventure extends Component {
 
     const formData = new FormData(e.target),
       formDataObj = Object.fromEntries(formData.entries());
-    console.log(formDataObj);
+    // console.log(formDataObj);
 
-    let AIprompt = `${formDataObj.characterStory}\n\nBegin a ${formDataObj.genre} story to ${formDataObj.quest} in a ${formDataObj.setting} setting. \n\n`;
-    console.log("prompt test", AIprompt);
+    let intro = `${formDataObj.characterStory}`;
+    let prompt = `Begin a ${formDataObj.genre} story to ${formDataObj.quest} in a ${formDataObj.setting} setting.\n`;
+    let AIprompt = intro + '\n' + prompt + '\n';
+    // console.log("prompt test", AIprompt);
     ////Open Ai Goes here
 
     const configuration = new Configuration({
@@ -101,7 +103,7 @@ export default class CreateAdventure extends Component {
           newAdventure: formDataObj,
           placeholder: `Adventure successfully created. Enjoy!`,
           response: `${intro}`,
-          log: [...this.state.log, AIprompt, response.data.choices[0].text],
+          log: [...this.state.log,intro,prompt, response.data.choices[0].text],
         });
         this.addAdventure(formDataObj);
       })
@@ -117,9 +119,7 @@ export default class CreateAdventure extends Component {
   render() {
     const entries = this.state.log.map((entry, index) => {
       return (
-        <Card.Text>
-          <Entry text={entry} key={index} />
-        </Card.Text>
+        <Entry text={entry} key={index} />
       );
     });
     const characters = this.state.characters.map((c) => {
@@ -216,7 +216,9 @@ export default class CreateAdventure extends Component {
             <Card.Body>
               <Card.Title>*AI Log*</Card.Title>
               <hr />
-              {entries}
+              <Card.Text>
+                {entries}
+              </Card.Text>
             </Card.Body>
           </Card>
         </Container>
