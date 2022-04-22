@@ -1,13 +1,18 @@
 .banner {
-    min-height: 80vh;
+    min-height: 800px;
     font-weight: 600;
     width: 100%;
 
     /* background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.6)), url("https://images.unsplash.com/photo-1462759353907-b2ea5ebd72e7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2231&q=80"); */
     background-image: url("https://images.unsplash.com/photo-1500964757637-c85e8a162699?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3003&q=80");
-    background-position: center center;
-    background-size: cover;
     margin: 100px 0 auto;
+
+    /* parallax scroll effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
 }
 
 .banner-left {
@@ -96,9 +101,9 @@
 }
 
 .banner-fade {
-    height: 120px;
-    background: linear-gradient(rgba(0,0,0,0), #070707);
-    transform: translateY(-120px);
+    height: 100px;
+    background: linear-gradient(transparent, #070707);
+    transform: translateY(-100px);
 }
 
 @media (max-width: 991px) {
@@ -113,3 +118,4 @@
         width: 80%;
     }
 }
+
