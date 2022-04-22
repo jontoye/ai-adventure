@@ -97,6 +97,18 @@ export default class BackgroundStory extends Component {
     });
   };
   render() {
+    const allEntries = this.state.log.map((entry) => {
+      return (
+        <FilmRow
+          film={film}
+          key={film.id}
+          onFaveToggle={() => this.props.onFaveToggle(film)}
+          isFave={this.props.faves.includes(film)}
+          onDetailToggle={() => this.props.onDetailToggle(film)}
+        />
+      );
+    });
+
     return (
       <div>
         <Container>
