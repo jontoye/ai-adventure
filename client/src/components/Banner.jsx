@@ -17,8 +17,8 @@ export default class Banner extends Component {
                         </Card.Body>
                     </Card>
                     <div className='banner__buttons'>
-                        <Button href="/create-character" variant="light">Quick Start</Button>
-                        <Button href="#tutorial" variant="light">Tutorial</Button>
+                        <Button className="banner-button" href="/create-character" variant="light">Quick Start</Button>
+                        <Button className="banner-button" href="#tutorial" variant="light">Tutorial</Button>
                     </div>
                 </Col>
                 <Col md={12} lg={4} className="banner-right">
@@ -41,6 +41,7 @@ export default class Banner extends Component {
                     </Card>
                 </Col>
             </Row>
+            <div className="banner-fade"></div>
         </Container>
     )
   }

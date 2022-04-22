@@ -9,32 +9,28 @@ export default class TechStack extends Component {
 			<h1 className="tech-title">Our Tech Stack</h1>
 
 			<div className="tech-logos">
-				<div >
-					<img className="logo-img" src="images/logos/mongodb.png" alt="" />
+				<div>
+					<a href="https://www.mongodb.com/"><img className="logo-img" src="images/logos/mongodb.png" alt="" /></a>
 				</div>
 				<div >
-					<img className="logo-img" src="images/logos/express-js.png" alt="" />
+					<a href="https://expressjs.com/"><img className="logo-img" src="images/logos/express-js.png" alt="" /></a>
 				</div>
-				<div >
-					<img className="logo-img" src="images/logos/react.png" alt="" />
+				<div>
+					<a href="https://reactjs.org/"><img className="logo-img" src="images/logos/react.png" alt="" /></a>
 				</div>
-				<div >
-					<img className="logo-img" src="images/logos/nodejs.png" alt="" />
+				<div>
+					<a href="https://nodejs.dev/"><img className="logo-img" src="images/logos/nodejs.png" alt="" /></a>
 				</div>
 			</div>
 
 			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro consequuntur nam vel suscipit aperiam atque inventore consectetur asperiores dignissimos saepe molestiae eius velit, sed iste nemo cupiditate nostrum enim voluptatum.</p>
-			
+
 			<div>
 				And with a little help from
 				<div >
-					<img className="openai-img" src="images/logos/openai.png" alt="" />
+					<a href="https://openai.com/"><img className="openai-img" src="images/logos/openai.png" alt="" /></a>
 				</div>
 			</div>
-
-
-
-
 		</Container>
     )
   }
