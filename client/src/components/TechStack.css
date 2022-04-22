@@ -27,3 +27,22 @@
     width: 200px;
     margin: 20px 0;
 }
+
+@media (max-width: 991px) {
+    .section-tech {
+        padding: 100px 20px;
+    }
+
+    .tech-logos {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .logo-img {
+        width: 200px;
+    }
+
+    .tech-title {
+        font-size: 56px;
+    }
+}

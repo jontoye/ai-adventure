@@ -19,3 +19,13 @@
 .tutorial__heading {
     font-size: 46px;
 }
+
+@media (max-width: 991px) {
+    .section-tutorial {
+        padding: 100px 20px;
+    }
+
+    .tutorial-title {
+        font-size: 56px;
+    }
+}
