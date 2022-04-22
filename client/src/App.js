@@ -7,7 +7,7 @@ import Axios from "axios";
 import jwt_decode from "jwt-decode";
 import { Alert } from "react-bootstrap";
 import Home from "./components/Home";
-import Tweets from "./components/Tweets";
+import BackgroundStory from "./components/BackgroundStory";
 
 export default class App extends Component {
   state = {
@@ -120,7 +120,7 @@ export default class App extends Component {
                   : null}
                 &nbsp;
                 <Link to='/'>Home</Link> &nbsp;
-                <Link to='/tweets'>Backstory</Link> &nbsp;
+                <Link to='/back-story'>Backstory</Link> &nbsp;
                 <Link to='/signout' onClick={this.logoutHandler}>
                   Sign Out
                 </Link>
@@ -143,7 +143,7 @@ export default class App extends Component {
                   isAuth ? <Home /> : <Signin login={this.loginHandler} />
                 }
               ></Route>
-              <Route path='/tweets' exact element={<Tweets />} />
+              <Route path='/back-story' exact element={<BackgroundStory />} />
               <Route
                 path='/signup'
                 element={<Signup register={this.registerHandler} />}

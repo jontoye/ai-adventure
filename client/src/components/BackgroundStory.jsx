@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Container, Form, Button, Card } from "react-bootstrap";
 const { Configuration, OpenAIApi } = require("openai");
 
-export default class Tweets extends Component {
+export default class BackgroundStory extends Component {
   constructor() {
     super();
     this.state = {
