@@ -8,6 +8,7 @@ import jwt_decode from "jwt-decode";
 import { Alert, Container, Navbar, Nav, NavDropdown } from "react-bootstrap";
 import Home from "./components/Home";
 import Tweets from "./components/Tweets";
+import './App.css'
 
 export default class App extends Component {
     state = {
@@ -109,42 +110,44 @@ export default class App extends Component {
         return (
             <div>
                 <Router>
-                    <Navbar bg="light" expand="lg">
+                    <Navbar variant="dark" expand="lg">
                         <Container>
-                            <Navbar.Brand href="/">
+                            <Navbar.Brand id="nav" href="/">
                                 | AI Adventure |
                             </Navbar.Brand>
 
-                            <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                            <Navbar.Collapse id="basic-navbar-nav">
-                                <Nav className="me-auto">
+                            <Navbar.Toggle aria-controls="basic-navbar-nav" id="nav" />
+                            <Navbar.Collapse id="basic-navbar-nav nav" >
+                                <Nav className="me-auto" id="nav">
                                     {isAuth ? (
                                         <>
-                                            <Nav.Link href="/">Home</Nav.Link>
-                                            <Nav.Link href="/tweets">
+                                            <Nav.Link href="/" id="nav">Home</Nav.Link>
+                                            <Nav.Link href="/tweets" id="nav">
                                                 Backstory
                                             </Nav.Link>
                                             <Nav.Link
                                                 href="/signout"
-                                                onClick={this.logoutHandler}
+                                                onClick={this.logoutHandler} id="nav"
                                             >
                                                 Sign Out
                                             </Nav.Link>
                                         </>
                                     ) : (
                                         <>
-                                            <Nav.Link href="/signup">
+                                            <Nav.Link href="/signup" id="nav">
                                                 Sign Up
                                             </Nav.Link>
-                                            <Nav.Link href="/signin">
+                                            <Nav.Link href="/signin" id="nav">
                                                 Sign In
                                             </Nav.Link>
                                         </>
                                     )}
                                 </Nav>
+                                <span class="main-greeting">
                                 {this.state.user
                                     ? "Welcome " + this.state.user.user.name
                                     : null}
+                                    </span>
                             </Navbar.Collapse>
                         </Container>
                     </Navbar>
