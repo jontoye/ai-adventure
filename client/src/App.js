@@ -8,6 +8,7 @@ import jwt_decode from "jwt-decode";
 import { Alert, Container, Navbar, Nav, NavDropdown } from "react-bootstrap";
 import Home from "./components/Home";
 import Tweets from "./components/Tweets";
+import Footer from "./components/Footer";
 
 export default class App extends Component {
     state = {
@@ -109,7 +110,7 @@ export default class App extends Component {
         return (
             <div>
                 <Router>
-                    <Navbar bg="light" expand="lg">
+                    <Navbar fixed="top" bg="light" expand="lg">
                         <Container>
                             <Navbar.Brand href="/">
                                 | AI Adventure |
@@ -151,31 +152,6 @@ export default class App extends Component {
                     {message}
                     {failMessage}
                     {successMessage}
-                    {/* <nav>
-                        {isAuth ? (
-                            <div>
-                                {this.state.user
-                                    ? "Welcome " + this.state.user.user.name
-                                    : null}
-                                &nbsp;
-                                <Link to="/">Home</Link> &nbsp;
-                                <Link to="/tweets">Backstory</Link> &nbsp;
-                                <Link
-                                    to="/signout"
-                                    onClick={this.logoutHandler}
-                                >
-                                    Sign Out
-                                </Link>
-                                &nbsp;
-                            </div>
-                        ) : (
-                            <div>
-                                <Link to="/signup">Sign Up</Link> &nbsp;
-                                <Link to="/signin">Sign In</Link> &nbsp;
-                            </div>
-                        )}
-                        <div></div>
-                    </nav> */}
 
                     <div>
                         <Routes>
@@ -202,6 +178,7 @@ export default class App extends Component {
                             ></Route>
                         </Routes>
                     </div>
+                    <Footer />
                 </Router>
             </div>
 
