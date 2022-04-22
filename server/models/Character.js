@@ -5,10 +5,18 @@ const characterSchema = mongoose.Schema(
     name: {
       type: String,
       required: true,
-      minlength: [3, "Username must be more than 3 characters"],
-      maxlength: [20, "Username cannot be longer than 20 characters."],
+      minlength: [3, "Character name must be more than 2 characters"],
+      maxlength: [16, "Character name cannot be longer than 16 characters."],
     },
     class: {
+      type: String,
+      lowercase: true,
+    },
+    ability: {
+      type: String,
+      lowercase: true,
+    },
+    weakness: {
       type: String,
       lowercase: true,
     },
