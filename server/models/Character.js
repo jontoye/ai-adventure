@@ -10,7 +10,6 @@ const characterSchema = mongoose.Schema(
     },
     class: {
       type: String,
-      required: true,
       lowercase: true,
     },
     backstory: {

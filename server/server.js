@@ -41,6 +41,7 @@ const adventureRoute = require("./routes/adventure");
 const eventRoute = require("./routes/event");
 const authRoute = require("./routes/auth");
 const userRoute = require("./routes/user");
+const characterRoute = require("./routes/characters")
 //Mount routes
 app.get("/", (req, res, next) => {
     res.redirect("/home");
@@ -49,6 +50,7 @@ app.use("/", adventureRoute);
 app.use("/", eventRoute);
 app.use("/", authRoute);
 app.use("/", userRoute);
+app.use("/", characterRoute);
 
 mongoose.connect(
     process.env.mongoDBURL,
