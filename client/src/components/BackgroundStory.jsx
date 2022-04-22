@@ -113,7 +113,7 @@ export default class BackgroundStory extends Component {
           <Card>
             <Card.Body>
               <Card.Title>
-                <h1>{this.state.heading}</h1>
+                {this.state.heading}
               </Card.Title>
               <hr />
               <Card.Text>{this.state.response}</Card.Text>
