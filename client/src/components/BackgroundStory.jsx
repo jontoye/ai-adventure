@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Container, Form, Button, Card } from "react-bootstrap";
 import Axios from "axios";
+import Entry from "./Entry";
 
 const { Configuration, OpenAIApi } = require("openai");
 
@@ -97,15 +98,11 @@ export default class BackgroundStory extends Component {
     });
   };
   render() {
-    const allEntries = this.state.log.map((entry) => {
+    const entries = this.state.log.map((entry) => {
       return (
-        <FilmRow
-          film={film}
-          key={film.id}
-          onFaveToggle={() => this.props.onFaveToggle(film)}
-          isFave={this.props.faves.includes(film)}
-          onDetailToggle={() => this.props.onDetailToggle(film)}
-        />
+        <Card.Text>
+          <Entry text={entry} />
+        </Card.Text>
       );
     });
 
@@ -143,8 +140,15 @@ export default class BackgroundStory extends Component {
               <Card.Text>{this.state.response}</Card.Text>
             </Card.Body>
           </Card>
+
+          <Card>
+            <Card.Body>
+              <Card.Title>Log</Card.Title>
+              <hr />
+              {entries}
+            </Card.Body>
+          </Card>
         </Container>
-        {this.state.log}
       </div>
     );
   }
