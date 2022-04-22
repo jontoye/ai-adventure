@@ -7,7 +7,7 @@ export default class Banner extends Component {
     return (
         <Container>
             <Row className="banner">
-                <Col sm={12} md={8} className="banner-left">
+                <Col md={12} lg={8} className="banner-left">
                     <Card className="banner__intro-card">
                         <Card.Body>
                             <h1>Greetings!</h1>
@@ -21,7 +21,7 @@ export default class Banner extends Component {
                         <Button variant="light">Tutorial</Button>
                     </div>
                 </Col>
-                <Col sm={12} md={4} className="banner-right">
+                <Col md={12} lg={4} className="banner-right">
                     <Card className="banner__achievement-card">
                         <Card.Body>
                             <h3>Achievements</h3>
