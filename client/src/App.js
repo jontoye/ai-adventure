@@ -135,7 +135,7 @@ export default class App extends Component {
                   {isAuth ? (
                     <>
                       <Nav.Link href='/'>Home</Nav.Link>
-                      <Nav.Link href='/back-story'>Backstory</Nav.Link>
+                      <Nav.Link href='/create-character'>Create Character</Nav.Link>
                       <Nav.Link href='/signout' onClick={this.logoutHandler}>
                         Sign Out
                       </Nav.Link>
@@ -169,7 +169,7 @@ export default class App extends Component {
                   isAuth ? <Home /> : <Signin login={this.loginHandler} />
                 }
               ></Route>
-              <Route path='/back-story' exact element={<BackgroundStory />} />
+              <Route path='/create-character' exact element={<BackgroundStory />} />
               <Route
                 path='/signup'
                 element={<Signup register={this.registerHandler} />}

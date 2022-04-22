@@ -16,9 +16,9 @@ const { response } = require("express");
 //HTTP Post - post sign up form data
 
 exports.auth_signup_post = (req, res) => {
-  // check if password length is greater than 8.
+  // check if password length is greater than 6.
   if (req.body.password.length < 6) {
-    res.json({message: 'Password must be at least 6 characters long.'});
+    res.json({message: 'Password must be at least 6 characters long.'}).status(400);
     return
   }
 
@@ -32,17 +32,19 @@ exports.auth_signup_post = (req, res) => {
   user.save()
     .then(() => {
       // res.redirect("/auth/signin");
-      res.json({ message: "User created successfully!" });
+      res.json({ message: "User created successfully!" }).status(200);
     })
     .catch((err) => {
-      console.log(err)
+      // console.log(err)
       if (err.code == 11000) {
         // req.flash("error", "Email is already in use");
         // res.redirect("/auth/signin");
         if (Object.keys(err.keyValue).includes("username")) {
-          res.json({ message: "Username already exists." });
+          res.json({ message: "Username already exists." }).status(400);
         } else if (Object.keys(err.keyValue).includes("emailAddress"))  {
-          res.json({ message: "Email address already exists." });
+          res.json({ message: "Email address already exists." }).status(400);
+        } else {
+          res.json({ message: "Username or email already exists. Please choose a new one." }).status(400);
         }
       } else {
         const errors = validationResult(req);
@@ -51,17 +53,17 @@ exports.auth_signup_post = (req, res) => {
           res.json({
             message: "Validation Errors",
             ValidationErrors: errors.errors,
-          });
+          }).status(400);
         }
         // res.redirect("/auth/signup");
         if (err.errors.username) {
-          res.json({ message: err.errors.username.properties.message });
+          res.json({ message: err.errors.username.properties.message }).status(400);
         } else if (err.errors.emailAddress) {
-          res.json({ message: err.errors.emailAddress.properties.message });
+          res.json({ message: err.errors.emailAddress.properties.message }).status(400);
         } else if (err.errors.password) {
-          res.json({ message: err.errors.password.properties.message });
+          res.json({ message: err.errors.password.properties.message }).status(400);
         } else
-        res.json({ message: "Error creating user. Please try again later." });
+        res.json({ message: "Error creating user. Please try again later." }).status(400);
       }
     });
 };

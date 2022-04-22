@@ -8,8 +8,8 @@ export default class BackgroundStory extends Component {
   constructor() {
     super();
     this.state = {
-      heading: "The Response from the AI will be Shown here",
-      response: "Waiting for user entry",
+      heading: "The response from the AI will be shown below.",
+      response: "Waiting for user entry.",
       newCharacter: {},
       character: "",
       log: [],
@@ -33,7 +33,7 @@ export default class BackgroundStory extends Component {
 
     const character = { ...this.state.newCharacter };
     character[attributeToChange] = newValue;
-    console.log("onchange", character);
+    // console.log("onchange", character);
     this.setState({
       newCharacter: character,
     });
@@ -46,11 +46,11 @@ export default class BackgroundStory extends Component {
       },
     })
       .then((response) => {
-        console.log("Character Added Successfully", response);
+        console.log("Character added successfully.", response);
         // this.loadCharacterList();
       })
       .catch((error) => {
-        console.log("Error adding character", error);
+        console.log("Error adding character.", error);
       });
   };
 
@@ -82,7 +82,7 @@ export default class BackgroundStory extends Component {
       .then((response) => {
         this.addCharacter(this.state.newCharacter);
         this.setState({
-          heading: `Back story for: ${formDataObj.name}`,
+          heading: `Backstory for: ${formDataObj.name}`,
           response: `${response.data.choices[0].text}`,
           log: [...this.state.log, response.data.choices[0].text],
         });
@@ -90,20 +90,20 @@ export default class BackgroundStory extends Component {
       .catch((error) => {
         console.log("error log:", error);
       });
-
     this.setState({
-      heading: `Back story for  : ${formDataObj.name}`,
-      response: `Waiting for AI to think`,
+      heading: `Backstory for: ${formDataObj.name}`,
+      response: `Waiting for AI to think...`,
     });
+    //Use a timeout/clock here to randomly change state.response to keep things interesting while the AI thinks?
   };
   render() {
     return (
       <div>
         <Container>
-          <h1>Create a backstory</h1>
+          <h1>Create a Character</h1>
           <h4>
-            Generate a backstory for any character, simply enter the a name and
-            details and open ai will do the rest.
+            To generate a backstory for any character, simply enter a name and
+            description and OpenAI will do the rest.
           </h4>
           <Form onSubmit={this.onFormSubmit}>
             <Form.Group className='mb-3' controlId='formBasicEmail'>
