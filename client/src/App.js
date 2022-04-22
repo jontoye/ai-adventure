@@ -121,7 +121,7 @@ export default class App extends Component {
                                     {isAuth ? (
                                         <>
                                             <Nav.Link href="/">Home</Nav.Link>
-                                            <Nav.Link href="/tweets">
+                                            <Nav.Link href="/back-story">
                                                 Backstory
                                             </Nav.Link>
                                             <Nav.Link
@@ -189,7 +189,7 @@ export default class App extends Component {
                                     )
                                 }
                             ></Route>
-                            <Route path="/tweets" exact element={<Tweets />} />
+                            <Route path="/back-story" exact element={<BackgroundStory/>} />
                             <Route
                                 path="/signup"
                                 element={
