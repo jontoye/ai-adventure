@@ -10,7 +10,7 @@ export default class Banner extends Component {
                 <Col md={12} lg={8} className="banner-left">
                     <Card className="banner__intro-card">
                         <Card.Body>
-                            <h1>Greetings!</h1>
+                            <h1 className="greeting-title">Greetings!</h1>
                             <p> Welcome to AI Adventure, the best randomly-generated AI-driven choose-your-own adventure game. If this is your first time playing we recommend you go through the tutorial.</p> 
                             <p>If you are a returning adventurer you can continue your character's adventure by clicking <span className="text-info">continue</span> below.</p>
                             <p>Good luck on your next adventure!</p>
