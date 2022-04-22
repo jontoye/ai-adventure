@@ -128,33 +128,25 @@ export default class App extends Component {
                     <Container>
                         <Navbar.Brand href="/">| AI Adventure |</Navbar.Brand>
 
-                        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                        <Navbar.Collapse id="basic-navbar-nav">
-                            <Nav className="me-auto">
-                                {isAuth ? (
-                                    <>
-                                        <Nav.Link href="/">Home</Nav.Link>
-                                        <Nav.Link href="/back-story">
-                                            Backstory
-                                        </Nav.Link>
-                                        <Nav.Link
-                                            href="/signout"
-                                            onClick={this.logoutHandler}
-                                        >
-                                            Sign Out
-                                        </Nav.Link>
-                                    </>
-                                ) : (
-                                    <>
-                                        <Nav.Link href="/signup">
-                                            Sign Up
-                                        </Nav.Link>
-                                        <Nav.Link href="/signin">
-                                            Sign In
-                                        </Nav.Link>
-                                    </>
-                                )}
-                            </Nav>
+                        <Navbar.Toggle aria-controls='basic-navbar-nav' />
+                        <Navbar.Collapse id='basic-navbar-nav'>
+                          <Nav className='me-auto'>
+                            {isAuth ? (
+                              <>
+                                <Nav.Link href='/'>Home</Nav.Link>
+                                <Nav.Link href='/create-character'>Create Character</Nav.Link>
+                                <Nav.Link href='/signout' onClick={this.logoutHandler}>
+                                  Sign Out
+                                </Nav.Link>
+                              </>
+                            ) : (
+                              <>
+                                <Nav.Link href='/signup'>Sign Up</Nav.Link>
+                                <Nav.Link href='/signin'>Sign In</Nav.Link>
+                              </>
+                            )}
+                          </Nav>
+
 
                             <span id="main-greeting">
                                 {this.state.user
@@ -164,6 +156,7 @@ export default class App extends Component {
                         </Navbar.Collapse>
                     </Container>
                 </Navbar>
+
                 {message}
                 {failMessage}
                 {successMessage}
