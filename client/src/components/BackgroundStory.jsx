@@ -11,6 +11,7 @@ export default class BackgroundStory extends Component {
       heading: "The Response from the AI will be Shown here",
       response: "Waiting for user entry",
       character: "",
+      log: [],
     };
   }
 
@@ -40,6 +41,8 @@ export default class BackgroundStory extends Component {
       });
   };
 
+  appendResponse = (response) => {};
+
   onFormSubmit = (e) => {
     e.preventDefault();
 
@@ -68,6 +71,7 @@ export default class BackgroundStory extends Component {
         this.setState({
           heading: `Back story for: ${formDataObj.name}`,
           response: `${response.data.choices[0].text}`,
+          log: [...this.state.log, response.data.choices[0].text],
         });
       })
       .catch((error) => {
@@ -116,6 +120,7 @@ export default class BackgroundStory extends Component {
             </Card.Body>
           </Card>
         </Container>
+        {this.state.log}
       </div>
     );
   }
