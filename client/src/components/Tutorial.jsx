@@ -5,7 +5,7 @@ import './Tutorial.css'
 export default class Tutorial extends Component {
     render() {
         return (
-            <Container className="section-tutorial">
+            <Container className="section-tutorial" id="tutorial">
                 <h1>Tutorial</h1>
             </Container>
         )
