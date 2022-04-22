@@ -1,4 +1,4 @@
-const { Character } = require("../models/Character");
+const Character = require("../models/Character");
 
 exports.character_create_post = (req, res) => {
   let character = new Character(req.body);
@@ -14,3 +14,12 @@ exports.character_create_post = (req, res) => {
       res.send("Error 418");
     });
 };
+
+//HTTP GET - Character index
+exports.character_index_get = (req,res)=>{
+  Character.find()
+  .then((characters) => {
+      res.json({characters})
+  })
+  .catch((err)=>{console.log(err); res.send("Error locating Characters.")})
+}

@@ -10,6 +10,7 @@ const characterCtrl = require("../controllers/character");
 
 //routes
 router.post("/character/add", isLoggedIn, characterCtrl.character_create_post);
+router.get("/character/index", characterCtrl.character_index_get);
 
 //export router
 module.exports = router;

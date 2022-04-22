@@ -41,7 +41,7 @@ const adventureRoute = require("./routes/adventure");
 const eventRoute = require("./routes/event");
 const authRoute = require("./routes/auth");
 const userRoute = require("./routes/user");
-const characterRoute = require("./routes/characters")
+const characterRoute = require("./routes/character")
 //Mount routes
 app.get("/", (req, res, next) => {
     res.redirect("/home");

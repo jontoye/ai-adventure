@@ -5,8 +5,9 @@ const characterSchema = mongoose.Schema(
     name: {
       type: String,
       required: true,
-      minlength: [3, "Character name must be more than 2 characters"],
-      maxlength: [16, "Character name cannot be longer than 16 characters."],
+      unique: true,
+      minlength: [3, "Character name must be longer than 2 characters"],
+      maxlength: [32, "Character name cannot be longer than 32 characters."],
     },
     class: {
       type: String,
@@ -31,4 +32,4 @@ const characterSchema = mongoose.Schema(
 
 const Character = mongoose.model("Character", characterSchema);
 
-module.exports = { Character };
+module.exports = Character;
