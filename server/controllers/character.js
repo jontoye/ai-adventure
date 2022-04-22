@@ -10,7 +10,7 @@ exports.character_create_post = (req, res) => {
     .then((character) => {
       res.json({ character });
     })
-    .catch(() => {
+    .catch((err) => {
       console.log(err);
       res.send("Error 418");
     });
