@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Form, Button, Card } from "react-bootstrap";
+import { Container, Form, Button } from "react-bootstrap";
 import Axios from "axios";
 import Log from "./Log";
 
@@ -23,10 +23,10 @@ export default class CreateAdventure extends Component {
   }
 
   loadCharacterList = () => {
-    console.log("getting characters...");
+    // console.log("getting characters...");
     Axios.get("character/index")
       .then((response) => {
-        console.log(response.data.characters);
+        // console.log(response.data.characters);
         this.setState({
           characters: response.data.characters,
         });

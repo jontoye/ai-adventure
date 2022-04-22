@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import { Container, Form, Button, Card } from "react-bootstrap";
+import { Container, Form, Button } from "react-bootstrap";
 import Axios from "axios";
-import Entry from "./Entry";
 import Log from "./Log";
 
 const { Configuration, OpenAIApi } = require("openai");
@@ -61,12 +60,12 @@ export default class CreateCharacter extends Component {
   appendResponse = (response) => {};
 
   generateBackstory = (e) => {
-    console.log("CREATING BACKSTORY");
+    // console.log("CREATING BACKSTORY");
     e.preventDefault();
 
     const formData = new FormData(e.target.parentNode),
       formDataObj = Object.fromEntries(formData.entries());
-    console.log(formDataObj);
+    // console.log(formDataObj);
 
     let AIprompt = `${formDataObj.name} is a ${formDataObj.class} who has the power of ${formDataObj.ability} and a weakness to ${formDataObj.weakness}. Write a detailed and ${formDataObj.tone} back story about ${formDataObj.name} in 100 words.\n`;
     this.setState({prompt:AIprompt})
@@ -121,13 +120,6 @@ export default class CreateCharacter extends Component {
   };
 
   render() {
-    const entries = this.state.log.map((entry, index) => {
-      return (
-        <Card.Text>
-          <Entry text={entry} key={index} />
-        </Card.Text>
-      );
-    });
 
     return (
       <>
