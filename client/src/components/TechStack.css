@@ -1,0 +1,29 @@
+.section-tech {
+    text-align: center;
+    padding: 100px 200px;
+    color: black;
+    background-color: white;
+    line-height: 1.6;
+    font-size: larger;
+}
+
+.tech-title {
+    font-size: 72px;
+    margin-bottom: 50px;
+    color: black;
+}
+
+.tech-logos {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+}
+
+.logo-img {
+    width: 100%;
+}
+
+.openai-img {
+    width: 200px;
+    margin: 20px 0;
+}
