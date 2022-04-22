@@ -9,7 +9,7 @@ import { Alert, Container, Navbar, Nav, NavDropdown } from "react-bootstrap";
 import Home from "./components/Home";
 import Footer from "./components/Footer";
 import BackgroundStory from "./components/BackgroundStory";
-import "./App.css";
+import "./App.scss";
 
 export default class App extends Component {
     state = {
