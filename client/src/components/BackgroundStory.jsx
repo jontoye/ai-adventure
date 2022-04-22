@@ -153,7 +153,7 @@ export default class BackgroundStory extends Component {
           <Form.Group className='mb-3' controlId=''>
             <Form.Label className="text-white">Special ability</Form.Label>
             <Form.Control
-              ttypext='text'
+              type='text'
               name='ability'
               placeholder='Speak in riddles'
               onChange={this.handleChange}
@@ -172,7 +172,7 @@ export default class BackgroundStory extends Component {
             <h4 className="text-white">
               Write a short backstory, or let OpenAI do the work for you!
             </h4>
-            <p className="text-White">
+            <p className="text-white">
               Tip: you can edit the AI-generated story directly in the textbox below (not working yet).
             </p>
             {/* <Form.Group className='mb-3' controlId='formBasicEmail'>
