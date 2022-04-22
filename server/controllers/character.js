@@ -1,8 +1,8 @@
 const { Character } = require("../models/Character");
 
 exports.character_create_post = (req, res) => {
-  console.log(req.body);
   let character = new Character(req.body);
+  console.log("new character test", character);
 
   //save character
   character
