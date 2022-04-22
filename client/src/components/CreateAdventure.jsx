@@ -14,27 +14,28 @@ export default class CreateAdventure extends Component {
       newAdventure: {},
       characters: [],
       log: [],
+      prompt: "",
     };
   }
 
-  componentDidMount() { 
+  componentDidMount() {
     this.loadCharacterList();
- }
+  }
 
- loadCharacterList = () => {
-   console.log('getting characters...')
+  loadCharacterList = () => {
+    console.log("getting characters...");
     Axios.get("character/index")
-    .then(response =>{
-        console.log(response.data.characters)
+      .then((response) => {
+        console.log(response.data.characters);
         this.setState({
-          characters: response.data.characters
-        })
-    })
-    .catch(err=>{
-        console.log("Error fetching characters.")
-        console.log(err)
-    })
- }
+          characters: response.data.characters,
+        });
+      })
+      .catch((err) => {
+        console.log("Error fetching characters.");
+        console.log(err);
+      });
+  };
 
   handleChange = (event) => {
     const attributeToChange = event.target.name; // this will give the name of the field that is changing
@@ -70,10 +71,10 @@ export default class CreateAdventure extends Component {
 
     const formData = new FormData(e.target),
       formDataObj = Object.fromEntries(formData.entries());
-      console.log(formDataObj)
+    console.log(formDataObj);
 
-    let AIprompt = `${formDataObj.characterStory}\n Begin a ${formDataObj.genre} story to ${formDataObj.quest} in a ${formDataObj.setting} setting.\n`
-
+    let AIprompt = `${formDataObj.characterStory}\n\nBegin a ${formDataObj.genre} story to ${formDataObj.quest} in a ${formDataObj.setting} setting. \n\n`;
+    console.log("prompt test", AIprompt);
     ////Open Ai Goes here
 
     const configuration = new Configuration({
@@ -92,17 +93,17 @@ export default class CreateAdventure extends Component {
       })
       .then((response) => {
         let intro = response.data.choices[0].text;
-        if (intro[0] =="\n") {
-          intro = intro.slice(1,intro.length)
+        if (intro[0] === "\n") {
+          intro = intro.slice(1, intro.length);
         }
-        formDataObj.log = [AIprompt, response.data.choices[0].text]
+        formDataObj.log = [AIprompt, response.data.choices[0].text];
         this.setState({
           newAdventure: formDataObj,
           placeholder: `Adventure successfully created. Enjoy!`,
           response: `${intro}`,
           log: [...this.state.log, AIprompt, response.data.choices[0].text],
         });
-        this.addAdventure(formDataObj); 
+        this.addAdventure(formDataObj);
       })
       .catch((error) => {
         console.log("error log:", error);
@@ -111,20 +112,21 @@ export default class CreateAdventure extends Component {
       placeholder: `Generating Adventure. Please wait...`,
       response: "",
     });
-
   };
 
   render() {
-    const entries = this.state.log.map((entry) => {
+    const entries = this.state.log.map((entry, index) => {
       return (
         <Card.Text>
-          <Entry text={entry} />
+          <Entry text={entry} key={index} />
         </Card.Text>
       );
     });
     const characters = this.state.characters.map((c) => {
       return (
-        <option value={c.backstory}>{c.name} ({c.class})</option>
+        <option value={c.backstory}>
+          {c.name} ({c.class})
+        </option>
       );
     });
 
@@ -133,13 +135,11 @@ export default class CreateAdventure extends Component {
         <Container>
           <h1>Begin an Adventure</h1>
 
-          <h4 className="text-white">
-            Set up your adventure
-          </h4>
+          <h4 className='text-white'>Set up your adventure</h4>
 
           <Form onSubmit={this.onFormSubmit}>
-          <Form.Group className='mb-3' controlId=''>
-              <Form.Label className="text-white">Adventure name</Form.Label>
+            <Form.Group className='mb-3' controlId=''>
+              <Form.Label className='text-white'>Adventure name</Form.Label>
               <Form.Control
                 type='text'
                 name='name'
@@ -148,51 +148,53 @@ export default class CreateAdventure extends Component {
               ></Form.Control>
             </Form.Group>
             <Form.Group className='mb-3' controlId=''>
-              <Form.Label className="text-white">Genre</Form.Label>
+              <Form.Label className='text-white'>Genre</Form.Label>
               <Form.Select name='genre' onChange={this.handleChange}>
-                <option value="Action">Action</option>
-                <option value="Fantasy">Fantasy</option>
-                <option value="Historical Fiction">Historical Fiction</option>
-                <option value="Memoir">Memoir</option>
-                <option value="Mythic">Mythic</option>
-                <option value="Romance">Romance</option>
-                <option value="Science Fiction">Science Fiction</option>
-                <option value="Thriller">Thriller</option>
+                <option value='Action'>Action</option>
+                <option value='Fantasy'>Fantasy</option>
+                <option value='Historical Fiction'>Historical Fiction</option>
+                <option value='Memoir'>Memoir</option>
+                <option value='Mythic'>Mythic</option>
+                <option value='Romance'>Romance</option>
+                <option value='Science Fiction'>Science Fiction</option>
+                <option value='Thriller'>Thriller</option>
               </Form.Select>
             </Form.Group>
             <Form.Group className='mb-3' controlId=''>
-              <Form.Label className="text-white">Setting</Form.Label>
+              <Form.Label className='text-white'>Setting</Form.Label>
               <Form.Select name='setting' onChange={this.handleChange}>
-                <option value="Alternate Universe">Alternate Universe</option>
-                <option value="Ancient Egypt">Ancient Egypt</option>
-                <option value="Classical Greece">Classical Greece</option>
-                <option value="Dystopia">Dystopia</option>
-                <option value="Future">Future</option>
-                <option value="Medieval">Medieval</option>
-                <option value="Modern">Modern</option>
-                <option value="Roman Empire">Roman Empire</option>
-                <option value="Prehistoric">Prehistory</option>
-                <option value="Steampunk">Steampunk</option>
+                <option value='Alternate Universe'>Alternate Universe</option>
+                <option value='Ancient Egypt'>Ancient Egypt</option>
+                <option value='Classical Greece'>Classical Greece</option>
+                <option value='Dystopia'>Dystopia</option>
+                <option value='Future'>Future</option>
+                <option value='Medieval'>Medieval</option>
+                <option value='Modern'>Modern</option>
+                <option value='Roman Empire'>Roman Empire</option>
+                <option value='Prehistoric'>Prehistory</option>
+                <option value='Steampunk'>Steampunk</option>
               </Form.Select>
             </Form.Group>
             <Form.Group className='mb-3' controlId=''>
-              <Form.Label className="text-white">Length</Form.Label>
+              <Form.Label className='text-white'>Length</Form.Label>
               <Form.Select name='length' onChange={this.handleChange}>
-                <option value="very short">Short Story</option>
-                <option value="short">Novelette</option>
-                <option value="moderate">Novella</option>
-                <option value="long">Novel</option>
-                <option value="very long">Epic</option>
+                <option value='very short'>Short Story</option>
+                <option value='short'>Novelette</option>
+                <option value='moderate'>Novella</option>
+                <option value='long'>Novel</option>
+                <option value='very long'>Epic</option>
               </Form.Select>
             </Form.Group>
             <Form.Group className='mb-3' controlId=''>
-              <Form.Label className="text-white">Character</Form.Label>
+              <Form.Label className='text-white'>Character</Form.Label>
               <Form.Select name='characterStory' onChange={this.handleChange}>
                 {characters}
               </Form.Select>
             </Form.Group>
             <Form.Group className='mb-3' controlId=''>
-              <Form.Label className="text-white">What is your quest?</Form.Label>
+              <Form.Label className='text-white'>
+                What is your quest?
+              </Form.Label>
               <Form.Control
                 type='text'
                 name='quest'
@@ -200,7 +202,6 @@ export default class CreateAdventure extends Component {
                 onChange={this.handleChange}
               ></Form.Control>
             </Form.Group>
-            
 
             <Button variant='primary' size='lg' type='submit'>
               Start Adventure
@@ -208,8 +209,8 @@ export default class CreateAdventure extends Component {
             <Form.Text>{this.state.placeholder}</Form.Text>
           </Form>
           <br />
-            <br></br>
-            <br></br>
+          <br></br>
+          <br></br>
 
           <Card>
             <Card.Body>
