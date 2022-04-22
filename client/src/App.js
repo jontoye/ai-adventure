@@ -11,6 +11,7 @@ import Footer from "./components/Footer";
 import BackgroundStory from "./components/BackgroundStory";
 import "./App.css";
 
+
 export default class App extends Component {
     state = {
         isAuth: false,
@@ -158,6 +159,9 @@ export default class App extends Component {
                                         </>
                                     )}
                                 </Nav>
+
+                                <span id="main-greeting">
+
                                 {this.state.user
                                     ? "Welcome " + this.state.user.user.name
                                     : null}
