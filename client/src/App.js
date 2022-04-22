@@ -7,7 +7,7 @@ import Axios from "axios";
 import jwt_decode from "jwt-decode";
 import { Alert, Container, Navbar, Nav, NavDropdown } from "react-bootstrap";
 import Home from "./components/Home";
-import Tweets from "./components/Tweets";
+import BackgroundStory from "./components/BackgroundStory";
 
 export default class App extends Component {
     state = {
@@ -204,6 +204,7 @@ export default class App extends Component {
                     </div>
                 </Router>
             </div>
+
 
             // <AuthorList></AuthorList>
         );
