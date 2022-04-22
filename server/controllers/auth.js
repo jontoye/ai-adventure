@@ -16,7 +16,14 @@ const { response } = require("express");
 //HTTP Post - post sign up form data
 
 exports.auth_signup_post = (req, res) => {
+  // check if password length is greater than 8.
+  if (req.body.password.length < 6) {
+    res.json({message: 'Password must be at least 6 characters long.'});
+    return
+  }
+
   let user = new User(req.body);
+
   // console.log(req.body);
   let hash = bcrypt.hashSync(req.body.password, salt);
   // console.log(hash);
@@ -28,10 +35,15 @@ exports.auth_signup_post = (req, res) => {
       res.json({ message: "User created successfully!" });
     })
     .catch((err) => {
+      console.log(err)
       if (err.code == 11000) {
         // req.flash("error", "Email is already in use");
         // res.redirect("/auth/signin");
-        res.json({ message: "Username or email address already exists." });
+        if (Object.keys(err.keyValue).includes("username")) {
+          res.json({ message: "Username already exists." });
+        } else if (Object.keys(err.keyValue).includes("emailAddress"))  {
+          res.json({ message: "Email address already exists." });
+        }
       } else {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -42,6 +54,13 @@ exports.auth_signup_post = (req, res) => {
           });
         }
         // res.redirect("/auth/signup");
+        if (err.errors.username) {
+          res.json({ message: err.errors.username.properties.message });
+        } else if (err.errors.emailAddress) {
+          res.json({ message: err.errors.emailAddress.properties.message });
+        } else if (err.errors.password) {
+          res.json({ message: err.errors.password.properties.message });
+        } else
         res.json({ message: "Error creating user. Please try again later." });
       }
     });
