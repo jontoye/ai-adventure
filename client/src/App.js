@@ -7,8 +7,8 @@ import Axios from "axios";
 import jwt_decode from "jwt-decode";
 import { Alert, Container, Navbar, Nav, NavDropdown } from "react-bootstrap";
 import Home from "./components/Home";
-import Tweets from "./components/Tweets";
 import Footer from "./components/Footer";
+import BackgroundStory from "./components/BackgroundStory";
 
 export default class App extends Component {
     state = {
@@ -122,7 +122,7 @@ export default class App extends Component {
                                     {isAuth ? (
                                         <>
                                             <Nav.Link href="/">Home</Nav.Link>
-                                            <Nav.Link href="/tweets">
+                                            <Nav.Link href="/back-story">
                                                 Backstory
                                             </Nav.Link>
                                             <Nav.Link
@@ -165,7 +165,11 @@ export default class App extends Component {
                                     )
                                 }
                             ></Route>
-                            <Route path="/tweets" exact element={<Tweets />} />
+                            <Route
+                                path="/back-story"
+                                exact
+                                element={<BackgroundStory />}
+                            />
                             <Route
                                 path="/signup"
                                 element={
