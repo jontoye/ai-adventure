@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Container, Form, Button, Card } from "react-bootstrap";
 import Axios from "axios";
 import Entry from "./Entry";
+import Log from "./Log";
 
 const { Configuration, OpenAIApi } = require("openai");
 
@@ -129,7 +130,7 @@ export default class CreateCharacter extends Component {
     });
 
     return (
-      <div>
+      <>
         <Container>
           <h1>Create a Character</h1>
 
@@ -226,15 +227,10 @@ export default class CreateCharacter extends Component {
           <br />
           <br></br>
           <br></br>
-          <Card>
-            <Card.Body>
-              <Card.Title>*AI Log*</Card.Title>
-              <hr />
-              {entries}
-            </Card.Body>
-          </Card>
+          
+          <Log log={this.state.log}/>
         </Container>
-      </div>
+      </>
     );
   }
 }
