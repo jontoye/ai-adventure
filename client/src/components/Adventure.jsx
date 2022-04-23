@@ -15,11 +15,22 @@ export default class Adventure extends Component {
       characters: [],
       log: [],
       prompt: "",
+      option1: "",
+      option2: "",
+      option3: "",
     };
   }
 
   componentDidMount() {
     this.loadCharacterList();
+  }
+
+  populateOptions = (option) => {
+
+    if(option[0] === 1 || option[1] === 1 || option[2] === 1 || option[3] === 1){
+        
+    }
+
   }
 
   loadCharacterList = () => {
