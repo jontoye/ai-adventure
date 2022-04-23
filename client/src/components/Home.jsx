@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Banner from './Banner';
 import Tutorial from './Tutorial'
 import TechStack from './TechStack'
-import './Home.css'
+import './css/Home.css'
 
 export default class Home extends Component {
 	render() {

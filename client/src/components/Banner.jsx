@@ -8,7 +8,7 @@ import {
   useNavigate,
 } from "react-router-dom";
 // import CreateCharacter from "./CreateCharacter";
-import "./Banner.css";
+import "./css/Banner.css";
 
 export default function Banner(props) {
   let navigate = useNavigate();

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Container } from 'react-bootstrap'
-import './Tutorial.css'
+import './css/Tutorial.css'
 
 export default class Tutorial extends Component {
     render() {
