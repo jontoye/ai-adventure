@@ -142,7 +142,7 @@ export default class App extends Component {
                     <Nav.Link href='/create-adventure'>
                       Create Adventure
                     </Nav.Link>
-                    <Nav.Link href='/adventure'>Adventure</Nav.Link>
+                    {/* <Nav.Link href='/adventure'>Adventure</Nav.Link> */}
                     <Nav.Link href='/signout' onClick={this.logoutHandler}>
                       Sign Out
                     </Nav.Link>

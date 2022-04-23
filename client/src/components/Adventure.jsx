@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Container, Form, Button } from "react-bootstrap";
 import Axios from "axios";
 import Log from "./Log";
+import "./Adventure.css";
 
 const { Configuration, OpenAIApi } = require("openai");
 
@@ -13,6 +14,7 @@ export default class Adventure extends Component {
       response: "",
       newAdventure: {},
       characters: [],
+      stories: [],
       log: [],
       prompt: "",
       option1: "",
@@ -23,15 +25,53 @@ export default class Adventure extends Component {
 
   componentDidMount() {
     this.loadCharacterList();
+    this.loadStoryList();
   }
 
   populateOptions = (option) => {
-
-    if(option[0] === 1 || option[1] === 1 || option[2] === 1 || option[3] === 1){
-        
+    if (
+      option[0] === 1 ||
+      option[1] === 1 ||
+      option[2] === 1 ||
+      option[3] === 1
+    ) {
+      this.setState({ option1: option });
+    } else if (
+      option[0] === 2 ||
+      option[1] === 2 ||
+      option[2] === 2 ||
+      option[3] === 2
+    ) {
+      this.setState({ option2: option });
+    } else if (
+      option[0] === 3 ||
+      option[1] === 3 ||
+      option[2] === 3 ||
+      option[3] === 3
+    ) {
+      this.setState({ option3: option });
     }
+  };
 
-  }
+  optionSelect = (option) => {
+    if (option === 1) {
+      this.setState({ log: [...this.state.log, this.state.option1] });
+    } else if (option === 2) {
+      this.setState({ log: [...this.state.log, this.state.option2] });
+    } else if (option === 3) {
+      this.setState({ log: [...this.state.log, this.state.option3] });
+    }
+  };
+
+  buttonOneClick = () => {
+    this.optionSelect(1);
+  };
+  buttonTwoClick = () => {
+    this.optionSelect(2);
+  };
+  buttonThreeClick = () => {
+    this.optionSelect(3);
+  };
 
   loadCharacterList = () => {
     // console.log("getting characters...");
@@ -40,6 +80,21 @@ export default class Adventure extends Component {
         // console.log(response.data.characters);
         this.setState({
           characters: response.data.characters,
+        });
+      })
+      .catch((err) => {
+        console.log("Error fetching characters.");
+        console.log(err);
+      });
+  };
+
+  loadStoryList = () => {
+    // console.log("getting characters...");
+    Axios.get("/home")
+      .then((response) => {
+        // console.log(response.data.characters);
+        this.setState({
+          stories: response.data.characters,
         });
       })
       .catch((err) => {
@@ -60,21 +115,6 @@ export default class Adventure extends Component {
     });
   };
 
-  addAdventure = (adventure) => {
-    Axios.post("adventure/add", adventure, {
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token"),
-      },
-    })
-      .then((response) => {
-        console.log("Adventure created successfully.", response);
-        // this.loadCharacterList();
-      })
-      .catch((error) => {
-        console.log("Error creating adventure.", error);
-      });
-  };
-
   appendResponse = (response) => {};
 
   onFormSubmit = (e) => {
@@ -87,6 +127,7 @@ export default class Adventure extends Component {
     let intro = `${formDataObj.characterStory}`;
     let prompt = `Begin a ${formDataObj.genre} story to ${formDataObj.quest} in a ${formDataObj.setting} setting.`;
     let AIprompt = intro + "\n" + prompt + "\n";
+    // let newPrompt = ''
     // console.log("prompt test", AIprompt);
     ////Open Ai Goes here
 
@@ -147,8 +188,27 @@ export default class Adventure extends Component {
           <h1>Adventure</h1>
 
           <h4 className='text-white'>Set up your adventure</h4>
-          <Log log={this.state.log} />
-
+          <div className='game-log'>
+            <Log log={this.state.log} />
+          </div>
+          <Button variant='primary' size='lg' onClick={this.buttonOneClick}>
+            Button One - Lorem ipsum dolor sit amet consectetur, adipisicing
+            elit. Est inventore debitis, repellat quis voluptates accusantium
+            molestiae, rem veniam suscipit quia esse, dicta molestias voluptate
+            sit! Commodi voluptatibus corporis voluptates optio!
+          </Button>
+          <Button variant='primary' size='lg' onClick={this.buttonTwoClick}>
+            Button Two - Lorem ipsum dolor sit amet consectetur, adipisicing
+            elit. Est inventore debitis, repellat quis voluptates accusantium
+            molestiae, rem veniam suscipit quia esse, dicta molestias voluptate
+            sit! Commodi voluptatibus corporis voluptates optio!
+          </Button>
+          <Button variant='primary' size='lg' onClick={this.buttonThreeClick}>
+            Button Three - Lorem ipsum dolor sit amet consectetur, adipisicing
+            elit. Est inventore debitis, repellat quis voluptates accusantium
+            molestiae, rem veniam suscipit quia esse, dicta molestias voluptate
+            sit! Commodi voluptatibus corporis voluptates optio!
+          </Button>
           <Form onSubmit={this.onFormSubmit}>
             <Form.Group className='mb-3' controlId=''>
               <Form.Label className='text-white'>Adventure name</Form.Label>
@@ -215,16 +275,11 @@ export default class Adventure extends Component {
               ></Form.Control>
             </Form.Group>
 
-            <Button variant='primary' size='lg' type='submit'>
-              Start Adventure
-            </Button>
             <Form.Text>{this.state.placeholder}</Form.Text>
           </Form>
           <br />
           <br></br>
           <br></br>
-
-          
         </Container>
       </div>
     );

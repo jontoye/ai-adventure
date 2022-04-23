@@ -11,7 +11,7 @@ export default class Log extends Component {
       );
     });
     return (
-      <>
+      <div>
           <Card>
             <Card.Body>
               <Card.Title>*AI Log*</Card.Title>
@@ -22,7 +22,7 @@ export default class Log extends Component {
               </div>
             </Card.Body>
           </Card>
-      </>
+      </div>
     )
   }
 }
