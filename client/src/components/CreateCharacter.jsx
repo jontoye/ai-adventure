@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Container, Form, Button } from "react-bootstrap";
 import Axios from "axios";
 import Log from "./Log";
+import {TITLE, NAME, DECOR, CLASS, ABILITY, WEAKNESS} from "../data/character"
+
 
 
 const { Configuration, OpenAIApi } = require("openai");
@@ -11,25 +13,36 @@ export default class CreateCharacter extends Component {
     super();
     this.state = {
       heading: "Backstory",
-      placeholder:
-        'Gandalf was born in the year 2953 of the Third Age. He was originally a Maia of the race of the Valar, and his name was Olorin. He was one of the Maiar who remained in Middle-earth after the Valar departed. He became a friend of the Elves of Middle-earth and often visited them. He was known by various names, including Mithrandir, meaning "Gray Pilgrim", and tharkûn, meaning "staff-man". In the year 2063 of the Third Age, he took the form of an old man and went to live among the Dwarves of the Blue Mountains. He remained with them for many years, and became known as Gandalf the Grey.\nIn the year 2941 of the Third Age, Gandalf returned to Middle-earth. He gathered the Dwarves of the Lonely Mountain and helped them reclaim their homeland from the dragon Smaug. He also played a key role in the War of the Ring, which culminated in the destruction of the One Ring and the defeat of Sauron. After the war, Gandalf was instrumental in the establishment of the Shire as a safe haven for the Hobbits. He also helped to restore the kingdom of Gondor.',
+      generateRandomCharacter: false,
       newCharacter: {},
       character: "",
       log: [],
       prompt: "",
+      placeholder: {
+        name: "Gandalf",
+        class: "Wizard",
+        ability: "Speaking in riddles",
+        weakness: "Hobbits",
+        backstory: 'Gandalf was born in the year 2953 of the Third Age. He was originally a Maia of the race of the Valar, and his name was Olorin. He was one of the Maiar who remained in Middle-earth after the Valar departed. He became a friend of the Elves of Middle-earth and often visited them. He was known by various names, including Mithrandir, meaning "Gray Pilgrim", and tharkûn, meaning "staff-man". In the year 2063 of the Third Age, he took the form of an old man and went to live among the Dwarves of the Blue Mountains. He remained with them for many years, and became known as Gandalf the Grey.\nIn the year 2941 of the Third Age, Gandalf returned to Middle-earth. He gathered the Dwarves of the Lonely Mountain and helped them reclaim their homeland from the dragon Smaug. He also played a key role in the War of the Ring, which culminated in the destruction of the One Ring and the defeat of Sauron. After the war, Gandalf was instrumental in the establishment of the Shire as a safe haven for the Hobbits. He also helped to restore the kingdom of Gondor.',
+      }
     };
   }
-
-  //   loadCharacterList = (user) => {
-  //     console.log(user);
-  //     //check if user has aritcles
-  //     if (user.character) {
-  //       const characters = user.character.map((character, key) => (
-  //         <td key={key}>{character.title}</td>
-  //       ));
-  //       return characters;
-  //     }
-  //   };
+  componentDidMount() { 
+    if (this.props.randomCharacter) {
+      const character = {
+        name: TITLE[Math.floor(Math.random()*TITLE.length)]+NAME[Math.floor(Math.random()*NAME.length)]+DECOR[Math.floor(Math.random()*DECOR.length)],
+        class: CLASS[Math.floor(Math.random()*CLASS.length)],
+        ability: ABILITY[Math.floor(Math.random()*ABILITY.length)],
+        weakness: WEAKNESS[Math.floor(Math.random()*WEAKNESS.length)],
+        backstory: 'Please chose a tone and click "Generate Backstory" above.'
+      }
+      this.setState({
+        placeholder:character,
+        newCharacter: character,
+        generateRandomCharacter:this.props.randomCharacter,
+      })
+    }
+   }
 
   handleChange = (event) => {
     const attributeToChange = event.target.name; // this will give the name of the field that is changing
@@ -40,6 +53,7 @@ export default class CreateCharacter extends Component {
     // console.log("onchange", character);
     this.setState({
       newCharacter: character,
+      generateRandomCharacter:false,
     });
   };
 
@@ -93,7 +107,8 @@ export default class CreateCharacter extends Component {
         }
         this.setState({
           heading: `Backstory for: ${formDataObj.name}`,
-          response: `${backstory}`,
+          placeholder: {backstory: `${backstory}`},
+          newCharacter: {backstory: `${backstory}`},
           log: [...this.state.log, AIprompt, response.data.choices[0].text],
         });
       })
@@ -101,10 +116,9 @@ export default class CreateCharacter extends Component {
         console.log("error log:", error);
       });
     this.setState({
-      response: "",
-      placeholder: `Generating a ${formDataObj.tone.toLowerCase()} backstory for ${
+      placeholder: {backstory: `Generating a ${formDataObj.tone.toLowerCase()} backstory for ${
         formDataObj.name
-      }. Please wait...`,
+      }. Please wait...`,}
     });
     //Use a timeout/clock here to randomly change state.response to keep things interesting while the AI thinks?
   };
@@ -121,6 +135,9 @@ export default class CreateCharacter extends Component {
   };
 
   render() {
+
+    // console.log(this.props)
+
     return (
       <>
         <Container>
@@ -134,7 +151,8 @@ export default class CreateCharacter extends Component {
               <Form.Control
                 type='text'
                 name='name'
-                placeholder='Gandalf'
+                placeholder={this.state.placeholder.name}
+                value={this.state.generateRandomCharacter ? this.state.placeholder.name : this.state.newCharacter.name}
                 onChange={this.handleChange}
               ></Form.Control>
             </Form.Group>
@@ -145,7 +163,8 @@ export default class CreateCharacter extends Component {
               <Form.Control
                 type='text'
                 name='class'
-                placeholder='Wizard'
+                placeholder={this.state.placeholder.class}
+                value={this.state.generateRandomCharacter ? this.state.placeholder.class : this.state.newCharacter.class}
                 onChange={this.handleChange}
               ></Form.Control>
             </Form.Group>
@@ -154,7 +173,8 @@ export default class CreateCharacter extends Component {
               <Form.Control
                 type='text'
                 name='ability'
-                placeholder='Speak in riddles'
+                placeholder={this.state.placeholder.ability}
+                value={this.state.generateRandomCharacter ? this.state.placeholder.ability : this.state.newCharacter.ability}
                 onChange={this.handleChange}
               ></Form.Control>
             </Form.Group>
@@ -163,7 +183,8 @@ export default class CreateCharacter extends Component {
               <Form.Control
                 type='text'
                 name='weakness'
-                placeholder='Hobbits'
+                placeholder={this.state.placeholder.weakness}
+                value={this.state.generateRandomCharacter ? this.state.placeholder.weakness : this.state.newCharacter.weakness}
                 onChange={this.handleChange}
               ></Form.Control>
             </Form.Group>
@@ -206,9 +227,9 @@ export default class CreateCharacter extends Component {
               <Form.Label className='text-white'>Backstory</Form.Label>
               <Form.Control
                 as='textarea'
-                value={this.state.response}
                 name='backstory'
-                placeholder={this.state.placeholder}
+                placeholder={this.state.placeholder.backstory}
+                value={this.state.generateRandomCharacter ? this.state.placeholder.backstory : this.state.newCharacter.backstory}
                 onChange={this.handleChange}
               ></Form.Control>
             </Form.Group>

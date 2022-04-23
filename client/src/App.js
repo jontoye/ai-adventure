@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import Signup from "./user/Signup";
 import Signin from "./user/Signin";
-import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Axios from "axios";
 import jwt_decode from "jwt-decode";
 import { Alert, Container, Navbar, Nav, NavDropdown } from "react-bootstrap";
@@ -14,13 +14,20 @@ import Adventure from "./components/Adventure";
 import "./App.scss";
 
 export default class App extends Component {
-  state = {
-    isAuth: false,
-    user: null,
-    message: null,
-    failMessage: null,
-    successMessage: null,
-  };
+
+  constructor(props) {
+    super(props)
+    this.createRandomCharacter = this.createRandomCharacter.bind(this)
+  }
+    state = {
+        isAuth: false,
+        user: null,
+        message: null,
+        failMessage: null,
+        successMessage: null,
+        randomCharacter: false,
+    };
+
 
   componentDidMount() {
     let token = localStorage.getItem("token");
@@ -38,21 +45,30 @@ export default class App extends Component {
         });
       }
     }
+
   }
-  // addCharacter = (character) => {
-  //   Axios.post("character/add", character, {
-  //     headers: {
-  //       Characterization: "Bearer " + localStorage.getItem("token"),
-  //     },
-  //   })
-  //     .then((response) => {
-  //       console.log("Character Added Successfully", response);
-  //       // this.loadCharacterList();
-  //     })
-  //     .catch((error) => {
-  //       console.log("Error adding character", error);
-  //     });
-  // };
+  addCharacter = (character) => {
+    Axios.post("character/add", character, {
+      headers: {
+        Characterization: "Bearer " + localStorage.getItem("token"),
+      },
+    })
+      .then((response) => {
+        console.log("Character Added Successfully", response);
+        // this.loadCharacterList();
+      })
+      .catch((error) => {
+        console.log("Error adding character", error);
+      });
+  };
+
+    
+    createRandomCharacter() {
+      this.setState({
+        randomCharacter: true,
+      })
+    }
+
 
   registerHandler = (user) => {
     Axios.post("auth/signup", user)
@@ -164,31 +180,41 @@ export default class App extends Component {
           </Container>
         </Navbar>
 
-        {message}
-        {failMessage}
-        {successMessage}
+                <Routes>
+                    <Route
+                        path="/"
+                        element={
+                            isAuth ? (
+                                <Home createRandomCharacter={this.createRandomCharacter}/>
+                            ) : (
+                                <Signin login={this.loginHandler} />
+                            )
+                        }
+                    ></Route>
+                    <Route
+                        path="/create-character"
+                        exact
+                        element={<CreateCharacter randomCharacter={this.state.randomCharacter}/>}
+                    />
+                    <Route
+                        path="/create-adventure"
+                        exact
+                        element={<CreateAdventure/>}
+                    />
+                    <Route path='/adventure' exact element={<Adventure />} />
+                    <Route
+                        path="/signup"
+                        element={<Signup register={this.registerHandler} />}
+                    ></Route>
+                    <Route
+                        path="/signin"
+                        element={<Signin login={this.loginHandler} />}
+                    ></Route>
+                </Routes>
 
-        <Routes>
-          <Route
-            path='/'
-            element={isAuth ? <Home /> : <Signin login={this.loginHandler} />}
-          ></Route>
-          <Route path='/create-character' exact element={<CreateCharacter />} />
-          <Route path='/create-adventure' exact element={<CreateAdventure />} />
-          <Route path='/adventure' exact element={<Adventure />} />
-          <Route
-            path='/signup'
-            element={<Signup register={this.registerHandler} />}
-          ></Route>
-          <Route
-            path='/signin'
-            element={<Signin login={this.loginHandler} />}
-          ></Route>
-        </Routes>
-
-        <Footer />
-      </Router>
-      // <AuthorList></AuthorList>
-    );
-  }
+                <Footer />
+            </Router>
+        );
+    }
 }
+

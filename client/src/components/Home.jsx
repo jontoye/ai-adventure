@@ -8,7 +8,7 @@ export default class Home extends Component {
 	render() {
 		return (
 			<>
-				<Banner />
+				<Banner createRandomCharacter={this.props.createRandomCharacter}/>
 				<Tutorial />
 				<TechStack />
 			</>
