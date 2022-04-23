@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { Container, Form, Button } from "react-bootstrap";
 import Axios from "axios";
 import Log from "./Log";
-
+import { Link } from "react-router-dom";
+import Adventure from "./Adventure";
 const { Configuration, OpenAIApi } = require("openai");
 
 export default class CreateAdventure extends Component {
@@ -75,7 +76,7 @@ export default class CreateAdventure extends Component {
 
     let intro = `${formDataObj.characterStory}`;
     let prompt = `Begin a ${formDataObj.genre} story to ${formDataObj.quest} in a ${formDataObj.setting} setting.`;
-    let AIprompt = intro + '\n' + prompt + '\n';
+    let AIprompt = intro + "\n" + prompt + "\n";
     // console.log("prompt test", AIprompt);
     ////Open Ai Goes here
 
@@ -103,7 +104,12 @@ export default class CreateAdventure extends Component {
           newAdventure: formDataObj,
           placeholder: `Adventure successfully created. Enjoy!`,
           response: `${intro}`,
-          log: [...this.state.log,intro,prompt, response.data.choices[0].text],
+          log: [
+            ...this.state.log,
+            intro,
+            prompt,
+            response.data.choices[0].text,
+          ],
         });
         this.addAdventure(formDataObj);
       })
@@ -197,7 +203,6 @@ export default class CreateAdventure extends Component {
                 onChange={this.handleChange}
               ></Form.Control>
             </Form.Group>
-
             <Button variant='primary' size='lg' type='submit'>
               Start Adventure
             </Button>
@@ -207,7 +212,7 @@ export default class CreateAdventure extends Component {
           <br></br>
           <br></br>
 
-          <Log log={this.state.log}/>
+          <Log log={this.state.log} />
         </Container>
       </div>
     );

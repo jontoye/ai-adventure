@@ -3,6 +3,7 @@ import { Container, Form, Button } from "react-bootstrap";
 import Axios from "axios";
 import Log from "./Log";
 
+
 const { Configuration, OpenAIApi } = require("openai");
 
 export default class CreateCharacter extends Component {
@@ -68,7 +69,7 @@ export default class CreateCharacter extends Component {
     // console.log(formDataObj);
 
     let AIprompt = `${formDataObj.name} is a ${formDataObj.class} who has the power of ${formDataObj.ability} and a weakness to ${formDataObj.weakness}. Write a detailed and ${formDataObj.tone} back story about ${formDataObj.name} in 100 words.\n`;
-    this.setState({prompt:AIprompt})
+    this.setState({ prompt: AIprompt });
     ////Open Ai Goes here
 
     const configuration = new Configuration({
@@ -120,7 +121,6 @@ export default class CreateCharacter extends Component {
   };
 
   render() {
-
     return (
       <>
         <Container>
@@ -212,15 +212,15 @@ export default class CreateCharacter extends Component {
                 onChange={this.handleChange}
               ></Form.Control>
             </Form.Group>
-            <Button variant='primary' size='lg' type='submit'>
-              Create Character
-            </Button>
+              <Button variant='primary' size='lg' type='submit'>
+                Create Character
+              </Button>
           </Form>
           <br />
           <br></br>
           <br></br>
-          
-          <Log log={this.state.log}/>
+
+          <Log log={this.state.log} />
         </Container>
       </>
     );
