@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Container } from 'react-bootstrap'
-import './TechStack.css'
+import './css/TechStack.css'
 
 export default class TechStack extends Component {
   render() {
