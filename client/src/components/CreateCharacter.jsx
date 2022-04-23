@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { Container, Form, Button } from "react-bootstrap";
+import CharacterForm1 from "./CharacterForm1";
+import CharacterForm2 from "./CharacterForm2";
 import Axios from "axios";
-import Log from "./Log";
 import {
   TITLE,
   NAME,
@@ -14,12 +15,20 @@ import {
 const { Configuration, OpenAIApi } = require("openai");
 
 export default class CreateCharacter extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
+      currentStep: 1,
       heading: "Backstory",
       generateRandomCharacter: false,
-      newCharacter: {},
+      newCharacter: {
+        name: "",
+        class: "",
+        ability: "",
+        weakness: "",
+        backstory: "",
+        tone: "dark"
+      },
       character: "",
       log: [],
       prompt: "",
@@ -32,6 +41,10 @@ export default class CreateCharacter extends Component {
           'Gandalf was born in the year 2953 of the Third Age. He was originally a Maia of the race of the Valar, and his name was Olorin. He was one of the Maiar who remained in Middle-earth after the Valar departed. He became a friend of the Elves of Middle-earth and often visited them. He was known by various names, including Mithrandir, meaning "Gray Pilgrim", and tharkûn, meaning "staff-man". In the year 2063 of the Third Age, he took the form of an old man and went to live among the Dwarves of the Blue Mountains. He remained with them for many years, and became known as Gandalf the Grey.\nIn the year 2941 of the Third Age, Gandalf returned to Middle-earth. He gathered the Dwarves of the Lonely Mountain and helped them reclaim their homeland from the dragon Smaug. He also played a key role in the War of the Ring, which culminated in the destruction of the One Ring and the defeat of Sauron. After the war, Gandalf was instrumental in the establishment of the Shire as a safe haven for the Hobbits. He also helped to restore the kingdom of Gondor.',
       },
     };
+
+    // this.handleChange = this.handleChange.bind(this);
+    this._next = this._next.bind(this);
+    this._prev = this._prev.bind(this);
   }
   componentDidMount() {
     if (this.props.randomCharacter) {
@@ -88,9 +101,20 @@ export default class CreateCharacter extends Component {
     // console.log("CREATING BACKSTORY");
     e.preventDefault();
 
-    const formData = new FormData(e.target.parentNode),
-      formDataObj = Object.fromEntries(formData.entries());
+    console.log(this.state)
+
+    // const formData = new FormData(e.target.parentNode),
+    //   formDataObj = Object.fromEntries(formData.entries());
     // console.log(formDataObj);
+    const formDataObj = this.state.newCharacter;
+
+    this.setState({
+      placeholder: {
+        backstory: `Generating a ${this.state.newCharacter.tone.toLowerCase()} backstory for ${
+          formDataObj.name
+        }. Please wait...`,
+      },
+    });
 
     let AIprompt = `${formDataObj.name} is a ${formDataObj.class} who has the power of ${formDataObj.ability} and a weakness to ${formDataObj.weakness}. Write a detailed and ${formDataObj.tone} back story about ${formDataObj.name} in 100 words.\n`;
     this.setState({ prompt: AIprompt });
@@ -115,36 +139,82 @@ export default class CreateCharacter extends Component {
         if (backstory[0] === "\n") {
           backstory = backstory.slice(1, backstory.length);
         }
+        const character = {...this.state.newCharacter}
+        character.backstory = backstory;
         this.setState({
           heading: `Backstory for: ${formDataObj.name}`,
           placeholder: { backstory: `${backstory}` },
-          newCharacter: { backstory: `${backstory}` },
+          newCharacter: character,
           log: [...this.state.log, AIprompt, response.data.choices[0].text],
         });
       })
       .catch((error) => {
         console.log("error log:", error);
       });
-    this.setState({
-      placeholder: {
-        backstory: `Generating a ${formDataObj.tone.toLowerCase()} backstory for ${
-          formDataObj.name
-        }. Please wait...`,
-      },
-    });
+
     //Use a timeout/clock here to randomly change state.response to keep things interesting while the AI thinks?
   };
 
   onFormSubmit = (e) => {
     e.preventDefault();
 
-    const formData = new FormData(e.target),
-      formDataObj = Object.fromEntries(formData.entries());
+    // const formData = new FormData(e.target),
+    //   formDataObj = Object.fromEntries(formData.entries());
     // console.log(formDataObj);
     // console.log(this.state.newCharacter);
 
-    this.addCharacter(formDataObj);
+    // this.addCharacter(formDataObj);
+    console.log('Adding character...', this.state.newCharacter);
+    this.addCharacter(this.state.newCharacter)
   };
+
+  _next() {
+    let currentStep = this.state.currentStep;
+    currentStep = currentStep < 2 ? currentStep + 1 : currentStep;
+    this.setState({
+      currentStep: currentStep
+    })
+  }
+
+  _prev() {
+    let currentStep = this.state.currentStep;
+    currentStep = currentStep > 1 ? currentStep - 1 : currentStep;
+    this.setState({
+      currentStep: currentStep
+    })
+  }
+
+  get previousButton() {
+    let currentStep = this.state.currentStep;
+    if(currentStep !== 1) {
+      return (
+        <button
+          className="btn btn-secondary"
+          type="button"
+          onClick={this._prev}
+        >
+          Previous
+        </button>
+      )
+    }
+    return null;
+  }
+
+  get nextButton() {
+    let currentStep = this.state.currentStep;
+    if(currentStep < 2) {
+      return (
+        <button
+          className="btn btn-secondary"
+          type="button"
+          onClick={this._next}
+        >
+          Next
+        </button>
+      )
+    }
+    return null;
+  }
 
   render() {
     // console.log(this.props)
@@ -153,125 +223,29 @@ export default class CreateCharacter extends Component {
         <Container>
           <h1>Create a Character</h1>
 
-          <h4 className='text-white'>Define your character</h4>
-
           <Form onSubmit={this.onFormSubmit}>
-            <Form.Group className='mb-3' controlId=''>
-              <Form.Label className='text-white'>Character name</Form.Label>
-              <Form.Control
-                type='text'
-                name='name'
-                placeholder={this.state.placeholder.name}
-                value={
-                  this.state.generateRandomCharacter
-                    ? this.state.placeholder.name
-                    : this.state.newCharacter.name
-                }
-                onChange={this.handleChange}
-              ></Form.Control>
-            </Form.Group>
-            <Form.Group className='mb-3' controlId=''>
-              <Form.Label className='text-white'>
-                Class/role/occupation
-              </Form.Label>
-              <Form.Control
-                type='text'
-                name='class'
-                placeholder={this.state.placeholder.class}
-                value={
-                  this.state.generateRandomCharacter
-                    ? this.state.placeholder.class
-                    : this.state.newCharacter.class
-                }
-                onChange={this.handleChange}
-              ></Form.Control>
-            </Form.Group>
-            <Form.Group className='mb-3' controlId=''>
-              <Form.Label className='text-white'>Special ability</Form.Label>
-              <Form.Control
-                type='text'
-                name='ability'
-                placeholder={this.state.placeholder.ability}
-                value={
-                  this.state.generateRandomCharacter
-                    ? this.state.placeholder.ability
-                    : this.state.newCharacter.ability
-                }
-                onChange={this.handleChange}
-              ></Form.Control>
-            </Form.Group>
-            <Form.Group className='mb-3' controlId=''>
-              <Form.Label className='text-white'>Weakness</Form.Label>
-              <Form.Control
-                type='text'
-                name='weakness'
-                placeholder={this.state.placeholder.weakness}
-                value={
-                  this.state.generateRandomCharacter
-                    ? this.state.placeholder.weakness
-                    : this.state.newCharacter.weakness
-                }
-                onChange={this.handleChange}
-              ></Form.Control>
-            </Form.Group>
-            <br></br>
-            <h4 className='text-white'>
-              Write a short backstory, or let OpenAI do the work for you!
-            </h4>
-            <p className='text-white'>
-              Tip: you can edit the AI-generated story directly in the textbox
-              below (not working yet).
-            </p>
-            <Form.Group className='mb-3' controlId=''>
-              <Form.Label className='text-white'>Tone</Form.Label>
-              <Form.Select name='tone' onChange={this.handleChange}>
-                <option value='Dark'>Dark</option>
-                <option value='Dry'>Dry</option>
-                <option value='Grandiose'>Grandiose</option>
-                <option value='Happy'>Happy</option>
-                <option value='Humorous'>Humorous</option>
-                <option value='Lighthearted'>Lighthearted</option>
-                <option value='Lofty'>Lofty</option>
-                <option value='Realistic'>Realistic</option>
-                <option value='Sad'>Sad</option>
-                <option value='Sarcastic'>Sarcastic</option>
-                <option value='Serious'>Serious</option>
-                <option value='Tragic'>Tragic</option>
-              </Form.Select>
-            </Form.Group>
-            <Button
-              variant='primary'
-              size='lg'
-              type='button'
-              onClick={this.generateBackstory}
-            >
-              Generate Backstory
-            </Button>
-            <br></br>
-            <br></br>
-            <Form.Group className='mb-3' controlId=''>
-              <Form.Label className='text-white'>Backstory</Form.Label>
-              <Form.Control
-                as='textarea'
-                name='backstory'
-                placeholder={this.state.placeholder.backstory}
-                value={
-                  this.state.generateRandomCharacter
-                    ? this.state.placeholder.backstory
-                    : this.state.newCharacter.backstory
-                }
-                onChange={this.handleChange}
-              ></Form.Control>
-            </Form.Group>
-            <Button variant='primary' size='lg' type='submit'>
-              Create Character
-            </Button>
-          </Form>
-          <br />
-          <br></br>
-          <br></br>
+            <CharacterForm1 
+              currentStep={this.state.currentStep} 
+              placeholder={this.state.placeholder}
+              generateRandomCharacter={this.state.generateRandomCharacter}
+              newCharacter={this.state.newCharacter}
+              handleChange={this.handleChange}
+            />
 
-          <Log log={this.state.log} />
+            <CharacterForm2
+              currentStep={this.state.currentStep}
+              placeholder={this.state.placeholder}
+              generateRandomCharacter={this.state.generateRandomCharacter}
+              newCharacter={this.state.newCharacter}
+              handleChange={this.handleChange}
+              log={this.state.log}
+              generateBackstory={this.generateBackstory}
+            />
+
+            {this.previousButton}
+            {this.nextButton}
+
+          </Form>
         </Container>
       </>
     );
