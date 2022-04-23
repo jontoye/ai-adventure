@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import Signup from "./user/Signup";
 import Signin from "./user/Signin";
-import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Axios from "axios";
 import jwt_decode from "jwt-decode";
 import { Alert, Container, Navbar, Nav, NavDropdown } from "react-bootstrap";
@@ -13,12 +13,17 @@ import CreateAdventure from "./components/CreateAdventure";
 import "./App.scss";
 
 export default class App extends Component {
+  constructor(props) {
+    super(props)
+    this.createRandomCharacter = this.createRandomCharacter.bind(this)
+  }
     state = {
         isAuth: false,
         user: null,
         message: null,
         failMessage: null,
         successMessage: null,
+        randomCharacter: false,
     };
 
     componentDidMount() {
@@ -38,20 +43,12 @@ export default class App extends Component {
             }
         }
     }
-    // addCharacter = (character) => {
-    //   Axios.post("character/add", character, {
-    //     headers: {
-    //       Characterization: "Bearer " + localStorage.getItem("token"),
-    //     },
-    //   })
-    //     .then((response) => {
-    //       console.log("Character Added Successfully", response);
-    //       // this.loadCharacterList();
-    //     })
-    //     .catch((error) => {
-    //       console.log("Error adding character", error);
-    //     });
-    // };
+    
+    createRandomCharacter() {
+      this.setState({
+        randomCharacter: true,
+      })
+    }
 
     registerHandler = (user) => {
         Axios.post("auth/signup", user)
@@ -178,7 +175,7 @@ export default class App extends Component {
                         path="/"
                         element={
                             isAuth ? (
-                                <Home />
+                                <Home createRandomCharacter={this.createRandomCharacter}/>
                             ) : (
                                 <Signin login={this.loginHandler} />
                             )
@@ -187,12 +184,12 @@ export default class App extends Component {
                     <Route
                         path="/create-character"
                         exact
-                        element={<CreateCharacter />}
+                        element={<CreateCharacter randomCharacter={this.state.randomCharacter}/>}
                     />
                     <Route
                         path="/create-adventure"
                         exact
-                        element={<CreateAdventure />}
+                        element={<CreateAdventure/>}
                     />
                     <Route
                         path="/signup"
@@ -206,7 +203,6 @@ export default class App extends Component {
 
                 <Footer />
             </Router>
-            // <AuthorList></AuthorList>
         );
     }
 }

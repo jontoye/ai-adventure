@@ -3,6 +3,7 @@ import { Container, Form, Button } from "react-bootstrap";
 import Axios from "axios";
 import Log from "./Log";
 
+
 const { Configuration, OpenAIApi } = require("openai");
 
 export default class CreateCharacter extends Component {
@@ -120,7 +121,7 @@ export default class CreateCharacter extends Component {
   };
 
   render() {
-
+    console.log(this.props)
     return (
       <>
         <Container>
