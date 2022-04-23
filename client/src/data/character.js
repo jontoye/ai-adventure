@@ -61,5 +61,5 @@ export const WEAKNESS = [
   "Naivete",
   "Run on sentances",
   "Allergies",
-  "Covid"
+  "Covid",
 ];
