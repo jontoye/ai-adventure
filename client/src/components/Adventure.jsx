@@ -26,7 +26,14 @@ export default class Adventure extends Component {
   componentDidMount() {
     this.loadCharacterList();
     this.loadStoryList();
+    this.populateLog();
+    console.log("adventure props test", this.props.log);
   }
+  populateLog = () => {
+    this.setState({
+      log: this.props.log,
+    });
+  };
 
   populateOptions = (option) => {
     if (
