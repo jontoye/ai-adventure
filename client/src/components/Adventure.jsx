@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Form, Button } from "react-bootstrap";
+import { Container, Button } from "react-bootstrap";
 import Axios from "axios";
 import Log from "./Log";
 import "./Adventure.css";
@@ -185,7 +185,6 @@ export default class Adventure extends Component {
     return (
       <div>
         <Container>
-
           <div className='game-log'>
             <Log log={this.state.log} />
           </div>
@@ -213,7 +212,7 @@ export default class Adventure extends Component {
           </Button>
           <br></br>
           <br />
-          <Form onSubmit={this.onFormSubmit}>
+          {/* <Form onSubmit={this.onFormSubmit}>
             <Form.Group className='mb-3' controlId=''>
               <Form.Label className='text-white'>Adventure name</Form.Label>
               <Form.Control
@@ -280,7 +279,7 @@ export default class Adventure extends Component {
             </Form.Group>
 
             <Form.Text>{this.state.placeholder}</Form.Text>
-          </Form>
+          </Form> */}
           <br />
           <br></br>
           <br></br>
