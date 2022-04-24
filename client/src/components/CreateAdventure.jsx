@@ -229,7 +229,6 @@ export default class CreateAdventure extends Component {
           {this.state.redirect && (
             <Navigate to='/adventure' replace={true} log={this.state.log} />
           )}
-          <Log log={this.state.log} />
         </Container>
       </div>
     );

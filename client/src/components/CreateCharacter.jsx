@@ -270,8 +270,6 @@ export default class CreateCharacter extends Component {
           <br />
           <br></br>
           <br></br>
-
-          <Log log={this.state.log} />
         </Container>
       </>
     );
