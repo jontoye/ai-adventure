@@ -1,8 +1,19 @@
 import React, { Component } from "react";
 import { Container, Form, Button } from "react-bootstrap";
 import Axios from "axios";
+
+import {
+  TITLE,
+  NAME,
+  DECOR,
+  CLASS,
+  ABILITY,
+  WEAKNESS,
+} from "../data/character";
+=======
 import Log from "./Log";
 import {CHARACTER_DEFAULTS} from "../data/character";
+
 
 const { Configuration, OpenAIApi } = require("openai");
 
@@ -113,7 +124,7 @@ export default class CreateCharacter extends Component {
       .createCompletion("text-davinci-002", {
         prompt: AIprompt,
         temperature: 0.8,
-        max_tokens: 256,
+        max_tokens: 500,
         top_p: 1,
         frequency_penalty: 0,
         presence_penalty: 0,
@@ -278,8 +289,6 @@ export default class CreateCharacter extends Component {
           <br />
           <br></br>
           <br></br>
-
-          <Log log={this.state.log} />
         </Container>
       </>
     );
