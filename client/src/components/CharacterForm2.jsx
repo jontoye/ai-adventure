@@ -48,10 +48,10 @@ export default class CharacterForm2 extends Component {
             <Form.Control
             as='textarea'
             name='backstory'
-            placeholder={this.props.placeholder.backstory}
+            placeholder={this.props.isBackstory ? this.props.placeholder.backstory : 'Please chose a tone and click "Generate Backstory" above.'}
             value={
                 this.props.generateRandomCharacter
-                ? this.props.placeholder.backstory
+                ? ""
                 : this.props.newCharacter.backstory
             }
             onChange={this.props.handleChange}

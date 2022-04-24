@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { Container, Form, Button } from "react-bootstrap";
+import { Container, Form } from "react-bootstrap";
 import CharacterForm1 from "./CharacterForm1";
 import CharacterForm2 from "./CharacterForm2";
 import Axios from "axios";
+import './css/CreateCharacter.css'
 import {
   TITLE,
   NAME,
@@ -56,7 +57,7 @@ export default class CreateCharacter extends Component {
         class: CLASS[Math.floor(Math.random() * CLASS.length)],
         ability: ABILITY[Math.floor(Math.random() * ABILITY.length)],
         weakness: WEAKNESS[Math.floor(Math.random() * WEAKNESS.length)],
-        backstory: 'Please chose a tone and click "Generate Backstory" above.',
+        backstory: '',
       };
       this.setState({
         placeholder: character,
@@ -66,8 +67,6 @@ export default class CreateCharacter extends Component {
     }
   }
   handleChange = (event) => {
-    
-
     const attributeToChange = event.target.name; // this will give the name of the field that is changing
     const newValue = event.target.value; //this will give the value of the field that is changing
 
@@ -100,8 +99,6 @@ export default class CreateCharacter extends Component {
   generateBackstory = (e) => {
     // console.log("CREATING BACKSTORY");
     e.preventDefault();
-
-    console.log(this.state)
 
     // const formData = new FormData(e.target.parentNode),
     //   formDataObj = Object.fromEntries(formData.entries());
@@ -164,7 +161,6 @@ export default class CreateCharacter extends Component {
     // console.log(this.state.newCharacter);
 
     // this.addCharacter(formDataObj);
-    console.log('Adding character...', this.state.newCharacter);
     this.addCharacter(this.state.newCharacter)
   };
 
@@ -223,7 +219,7 @@ export default class CreateCharacter extends Component {
         <Container>
           <h1>Create a Character</h1>
 
-          <Form onSubmit={this.onFormSubmit}>
+          <Form onSubmit={this.onFormSubmit} className="form-container">
             <CharacterForm1 
               currentStep={this.state.currentStep} 
               placeholder={this.state.placeholder}
