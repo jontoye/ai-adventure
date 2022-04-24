@@ -30,7 +30,7 @@ export default class CreateAdventure extends Component {
       .then((response) => {
         // console.log(response.data.characters);
         this.setState({
-          characters: response.data.characters,
+          characters: response.data.characters.reverse(),
         });
       })
       .catch((err) => {

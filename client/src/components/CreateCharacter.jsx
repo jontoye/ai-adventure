@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Container, Form, Button } from "react-bootstrap";
 import Axios from "axios";
+import { Navigate } from "react-router-dom";
 
 import { CHARACTER_DEFAULTS } from "../data/character";
 
@@ -16,6 +17,8 @@ export default class CreateCharacter extends Component {
       character: "",
       log: [],
       prompt: "",
+      name: "",
+      redirect: false,
       placeholder: {
         name: "Gandalf",
         class: "Wizard",
@@ -155,6 +158,7 @@ export default class CreateCharacter extends Component {
           placeholder: { backstory: `${backstory}` },
           newCharacter: { backstory: `${backstory}` },
           log: [...this.state.log, AIprompt, response.data.choices[0].text],
+          name: formDataObj.name,
         });
       })
       .catch((error) => {
@@ -179,6 +183,9 @@ export default class CreateCharacter extends Component {
     // console.log(this.state.newCharacter);
 
     this.addCharacter(formDataObj);
+    this.setState({
+      redirect: true,
+    });
   };
 
   render() {
@@ -306,6 +313,9 @@ export default class CreateCharacter extends Component {
           <br></br>
           <br></br>
         </Container>
+        {this.state.redirect && (
+          <Navigate to='/create-adventure' replace={true} charcater={this.state.newCharacter} characterName={this.state.name} log={this.state.log} />
+        )}
       </>
     );
   }
