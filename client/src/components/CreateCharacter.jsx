@@ -314,7 +314,13 @@ export default class CreateCharacter extends Component {
           <br></br>
         </Container>
         {this.state.redirect && (
-          <Navigate to='/create-adventure' replace={true} charcater={this.state.newCharacter} characterName={this.state.name} log={this.state.log} />
+          <Navigate
+            to='/create-adventure'
+            replace={true}
+            charcater={this.state.newCharacter}
+            name={this.state.name}
+            log={this.state.log}
+          />
         )}
       </>
     );

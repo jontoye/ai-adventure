@@ -16,6 +16,7 @@ export default class Adventure extends Component {
       characters: [],
       stories: [],
       log: [],
+      name: "",
       prompt: "",
       option1: "Generating your first choice, hold on one second.",
       option2: "Generating your second choice, hold on one second.",
@@ -26,6 +27,9 @@ export default class Adventure extends Component {
   componentDidMount() {
     this.populateLog();
     this.firstPrompt();
+    this.setState({
+      name: this.props.name,
+    });
   }
   populateLog = () => {
     this.setState({
@@ -45,7 +49,7 @@ export default class Adventure extends Component {
 
   buttonOneClick = () => {
     this.optionSelect(1);
-    let x = 1
+    let x = 1;
     this.button_respond(this.state.option1, x);
   };
   buttonTwoClick = () => {
@@ -66,7 +70,8 @@ export default class Adventure extends Component {
     const openai = new OpenAIApi(configuration);
     let AIprompt = this.props.log.join("");
     AIprompt =
-      AIprompt + "\nGive the player 3 detailed options for what to do next";
+      AIprompt +
+      `\nGive ${this.state.name} 3 detailed options for what to do next`;
     openai
       .createCompletion("text-davinci-002", {
         prompt: AIprompt,
@@ -104,7 +109,9 @@ export default class Adventure extends Component {
     });
     const openai = new OpenAIApi(configuration);
     let AIprompt = this.props.log.join("");
-    AIprompt = AIprompt + `\n Player chooses ${x}. ${option}. Give a long, detailed account of what happens next.`  ;
+    AIprompt =
+      AIprompt +
+      `\n ${this.state.name} chooses ${x}. ${option}. Give a long, detailed account of what happens next.`;
     openai
       .createCompletion("text-davinci-002", {
         prompt: AIprompt,
@@ -140,7 +147,8 @@ export default class Adventure extends Component {
     const openai = new OpenAIApi(configuration);
     let AIprompt = this.props.log.join("");
     AIprompt =
-      AIprompt + "\nGive the player 3 detailed options for what to do next";
+      AIprompt +
+      `\nGive ${this.state.name} 3 detailed options for what to do next`;
     openai
       .createCompletion("text-davinci-002", {
         prompt: AIprompt,
@@ -185,7 +193,6 @@ export default class Adventure extends Component {
   };
 
   render() {
-
     return (
       <div>
         <Container>
@@ -209,7 +216,7 @@ export default class Adventure extends Component {
           </div>
           <br></br>
           <br />
-         
+
           <br />
           <br></br>
           <br></br>

@@ -15,13 +15,16 @@ export default class CreateAdventure extends Component {
       newAdventure: {},
       characters: [],
       log: [],
+      name: '',
       prompt: "",
       redirect: false,
+      
     };
   }
 
   componentDidMount() {
     this.loadCharacterList();
+    this.setState({ name: this.props.name });
   }
 
   loadCharacterList = () => {
@@ -83,7 +86,7 @@ export default class CreateAdventure extends Component {
     // console.log(formDataObj);
 
     let intro = `${formDataObj.characterStory}`;
-    let prompt = `Begin a ${formDataObj.genre} story to ${formDataObj.quest} in a ${formDataObj.setting} setting. Create a detailed story about starting the quest`;
+    let prompt = `Begin a ${formDataObj.genre} story to ${formDataObj.quest} in a ${formDataObj.setting} setting. Create a detailed story about ${this.state.name} starting the quest`;
     let AIprompt = intro + "\n\n" + prompt + "\n";
     // console.log("intro", intro);
     // console.log("prompt", prompt);
@@ -228,7 +231,12 @@ export default class CreateAdventure extends Component {
           <br></br>
           <br></br>
           {this.state.redirect && (
-            <Navigate to='/adventure' replace={true} log={this.state.log} />
+            <Navigate
+              to='/adventure'
+              replace={true}
+              log={this.state.log}
+              name={this.state.name}
+            />
           )}
         </Container>
       </div>
