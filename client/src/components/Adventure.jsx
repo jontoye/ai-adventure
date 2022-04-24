@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Container, Button } from "react-bootstrap";
 import Axios from "axios";
 import Log from "./Log";
-import "./Adventure.css";
+import "./css/Adventure.css";
 
 const { Configuration, OpenAIApi } = require("openai");
 
@@ -26,7 +26,14 @@ export default class Adventure extends Component {
   componentDidMount() {
     this.loadCharacterList();
     this.loadStoryList();
+    this.populateLog();
+    console.log("adventure props test", this.props.log);
   }
+  populateLog = () => {
+    this.setState({
+      log: this.props.log,
+    });
+  };
 
   populateOptions = (option) => {
     if (
@@ -174,13 +181,13 @@ export default class Adventure extends Component {
   };
 
   render() {
-    const characters = this.state.characters.map((c) => {
-      return (
-        <option value={c.backstory}>
-          {c.name} ({c.class})
-        </option>
-      );
-    });
+    // const characters = this.state.characters.map((c) => {
+    //   return (
+    //     <option value={c.backstory}>
+    //       {c.name} ({c.class})
+    //     </option>
+    //   );
+    // });
 
     return (
       <div>

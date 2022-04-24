@@ -17,6 +17,7 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.createRandomCharacter = this.createRandomCharacter.bind(this);
+    this.startStory = this.startStory.bind(this);
   }
   state = {
     isAuth: false,
@@ -25,6 +26,7 @@ export default class App extends Component {
     failMessage: null,
     successMessage: null,
     randomCharacter: false,
+    log: [],
   };
 
   componentDidMount() {
@@ -49,6 +51,15 @@ export default class App extends Component {
     this.setState({
       randomCharacter: true,
     });
+  }
+
+  startStory(logs) {
+    console.log("start story triggered");
+    // console.log("navigate test", this.props.navigate);
+    this.setState({
+      log: logs,
+    });
+    // this.props.navigate("/adventure");
   }
 
   registerHandler = (user) => {
@@ -182,8 +193,16 @@ export default class App extends Component {
               <CreateCharacter randomCharacter={this.state.randomCharacter} />
             }
           />
-          <Route path='/create-adventure' exact element={<CreateAdventure />} />
-          <Route path='/adventure' exact element={<Adventure />} />
+          <Route
+            path='/create-adventure'
+            exact
+            element={<CreateAdventure startStory={this.startStory} />}
+          />
+          <Route
+            path='/adventure'
+            exact
+            element={<Adventure log={this.state.log} />}
+          />
           <Route
             path='/signup'
             element={<Signup register={this.registerHandler} />}

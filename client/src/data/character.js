@@ -9,17 +9,26 @@ export const TITLE = [
   "King ",
 ];
 
-export const NAME = ["Sam", "John", "Elizabeth", "Saad", "Leeroy"];
+export const NAME = [
+  "Sam",
+  "John",
+  "Elizabeth",
+  "Saad",
+  "Leeroy",
+  "Cleopatra",
+  "Mary",
+];
 
 export const DECOR = [
-  "the Changeling",
+  " the Changeling",
   " the Brave",
   " the Bold",
   " the Sly",
   " the Gifted",
-  "the Twisted",
-  "the Demented",
-  "the Wise",
+  " the Twisted",
+  " the Demented",
+  " the Wise",
+  " the Greedy",
 ];
 
 export const CLASS = [
@@ -31,6 +40,7 @@ export const CLASS = [
   "Sapper",
   "Thief",
   "Druid",
+  "Lockpicking Lawyer",
 ];
 
 export const ABILITY = [
@@ -39,6 +49,8 @@ export const ABILITY = [
   "Invisibility",
   "Pickpocketing",
   "Hindsight",
+  "Hacking",
+  "Animal Whisperer",
 ];
 
 export const WEAKNESS = [
@@ -47,4 +59,7 @@ export const WEAKNESS = [
   "Kryptonite",
   "Spiders",
   "Naivete",
+  "Run on sentances",
+  "Allergies",
+  "Covid",
 ];

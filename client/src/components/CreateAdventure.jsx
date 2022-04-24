@@ -2,12 +2,14 @@ import React, { Component } from "react";
 import { Container, Form, Button } from "react-bootstrap";
 import Axios from "axios";
 import Log from "./Log";
+import { Navigate } from "react-router-dom";
 
 const { Configuration, OpenAIApi } = require("openai");
 
 export default class CreateAdventure extends Component {
   constructor() {
     super();
+    this.startStory = this.startStory.bind(this);
     this.state = {
       placeholder: "Click to generate a new adventure!",
       response: "",
@@ -15,6 +17,7 @@ export default class CreateAdventure extends Component {
       characters: [],
       log: [],
       prompt: "",
+      redirect: false,
     };
   }
 
@@ -57,6 +60,7 @@ export default class CreateAdventure extends Component {
     })
       .then((response) => {
         console.log("Adventure created successfully.", response);
+        this.startStory();
         // this.loadCharacterList();
       })
       .catch((error) => {
@@ -64,6 +68,12 @@ export default class CreateAdventure extends Component {
       });
   };
 
+  startStory() {
+    console.log("start-story triggered2");
+    this.setState({
+      redirect: true,
+    });
+  }
   appendResponse = (response) => {};
 
   onFormSubmit = (e) => {
@@ -75,7 +85,7 @@ export default class CreateAdventure extends Component {
 
     let intro = `${formDataObj.characterStory}`;
     let prompt = `Begin a ${formDataObj.genre} story to ${formDataObj.quest} in a ${formDataObj.setting} setting.`;
-    let AIprompt = intro + '\n' + prompt + '\n';
+    let AIprompt = intro + "\n" + prompt + "\n";
     // console.log("prompt test", AIprompt);
     ////Open Ai Goes here
 
@@ -98,12 +108,25 @@ export default class CreateAdventure extends Component {
         if (intro[0] === "\n") {
           intro = intro.slice(1, intro.length);
         }
+        let logs = [
+          ...this.state.log,
+          intro,
+          prompt,
+          response.data.choices[0].text,
+        ];
+        console.log("logs test", logs);
         formDataObj.log = [AIprompt, response.data.choices[0].text];
+        this.props.startStory(logs);
         this.setState({
           newAdventure: formDataObj,
           placeholder: `Adventure successfully created. Enjoy!`,
           response: `${intro}`,
-          log: [...this.state.log,intro,prompt, response.data.choices[0].text],
+          log: [
+            ...this.state.log,
+            intro,
+            prompt,
+            response.data.choices[0].text,
+          ],
         });
         this.addAdventure(formDataObj);
       })
@@ -206,10 +229,14 @@ export default class CreateAdventure extends Component {
           <br />
           <br></br>
           <br></br>
-
-          <Log log={this.state.log}/>
+          {this.state.redirect && (
+            <Navigate to='/adventure' replace={true} log={this.state.log} />
+          )}
+          <Log log={this.state.log} />
         </Container>
       </div>
     );
   }
 }
+
+
