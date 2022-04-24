@@ -4,14 +4,7 @@ import CharacterForm1 from "./CharacterForm1";
 import CharacterForm2 from "./CharacterForm2";
 import Axios from "axios";
 import './css/CreateCharacter.css'
-import {
-  TITLE,
-  NAME,
-  DECOR,
-  CLASS,
-  ABILITY,
-  WEAKNESS,
-} from "../data/character";
+import {CHARACTER_DEFAULTS} from "../data/character";
 
 const { Configuration, OpenAIApi } = require("openai");
 
@@ -49,14 +42,29 @@ export default class CreateCharacter extends Component {
   }
   componentDidMount() {
     if (this.props.randomCharacter) {
+      //randomly generate an impressive name!
+      let name = "";
+      if (Math.floor(Math.random() * 2)<1) { //50% chance female or male (sorry we haven't got to non-binary yet!!)
+        if (Math.floor(Math.random() * 2)<1) { //50% chance of a pronoun/title
+          name+=CHARACTER_DEFAULTS.title_f[Math.floor(Math.random() * CHARACTER_DEFAULTS.title_f.length)]+" ";
+        }
+        name+=CHARACTER_DEFAULTS.name_f[Math.floor(Math.random() * CHARACTER_DEFAULTS.name_f.length)];
+      } else {
+        //male names
+        if (Math.floor(Math.random() * 2)<1) { //50% chance of a pronoun/title
+          name+=CHARACTER_DEFAULTS.title_m[Math.floor(Math.random() * CHARACTER_DEFAULTS.title_m.length)]+" ";
+        }
+        name+=CHARACTER_DEFAULTS.name_m[Math.floor(Math.random() * CHARACTER_DEFAULTS.name_m.length)];
+      }
+      if (Math.floor(Math.random() * 2)<1) { //50% chance of a decorative post-title
+        name+=" "+CHARACTER_DEFAULTS.decor[Math.floor(Math.random() * CHARACTER_DEFAULTS.decor.length)];
+      }
+      //NOTE: currently ability & weakness COULD be the same thing
       const character = {
-        name:
-          TITLE[Math.floor(Math.random() * TITLE.length)] +
-          NAME[Math.floor(Math.random() * NAME.length)] +
-          DECOR[Math.floor(Math.random() * DECOR.length)],
-        class: CLASS[Math.floor(Math.random() * CLASS.length)],
-        ability: ABILITY[Math.floor(Math.random() * ABILITY.length)],
-        weakness: WEAKNESS[Math.floor(Math.random() * WEAKNESS.length)],
+        name: name,
+        class: CHARACTER_DEFAULTS.class[Math.floor(Math.random() * CHARACTER_DEFAULTS.class.length)],
+        ability: CHARACTER_DEFAULTS.trait[Math.floor(Math.random() * CHARACTER_DEFAULTS.trait.length)],
+        weakness: CHARACTER_DEFAULTS.trait[Math.floor(Math.random() * CHARACTER_DEFAULTS.trait.length)],
         backstory: '',
       };
       this.setState({
