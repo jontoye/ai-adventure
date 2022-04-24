@@ -15,6 +15,7 @@ export default class CreateAdventure extends Component {
       newAdventure: {},
       characters: [],
       log: [],
+      name: '',
       prompt: "",
       redirect: false,
       
@@ -85,7 +86,7 @@ export default class CreateAdventure extends Component {
     // console.log(formDataObj);
 
     let intro = `${formDataObj.characterStory}`;
-    let prompt = `Begin a ${formDataObj.genre} story to ${formDataObj.quest} in a ${formDataObj.setting} setting. Create a detailed story about starting the quest`;
+    let prompt = `Begin a ${formDataObj.genre} story to ${formDataObj.quest} in a ${formDataObj.setting} setting. Create a detailed story about ${this.state.name} starting the quest`;
     let AIprompt = intro + "\n\n" + prompt + "\n";
     // console.log("intro", intro);
     // console.log("prompt", prompt);
