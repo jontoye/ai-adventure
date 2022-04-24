@@ -58,13 +58,16 @@ export default class CharacterForm2 extends Component {
             ></Form.Control>
             <br></br>
 
-            <Button 
+            {this.props.isBackstory ? 
+                <Button 
                 variant='primary' 
                 size='lg' 
                 type='submit'
-            >
-            Create Character
-            </Button>
+                >
+                Create Character
+                </Button> :
+                ""
+            }
 
             <br />
             <br></br>

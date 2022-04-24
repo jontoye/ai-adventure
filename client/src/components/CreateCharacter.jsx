@@ -240,6 +240,7 @@ export default class CreateCharacter extends Component {
               handleChange={this.handleChange}
               log={this.state.log}
               generateBackstory={this.generateBackstory}
+              isBackstory={this.state.newCharacter.backstory.length > 0}
             />
 
             {this.previousButton}
