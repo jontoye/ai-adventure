@@ -17,11 +17,13 @@ export default class CreateAdventure extends Component {
       log: [],
       prompt: "",
       redirect: false,
+      
     };
   }
 
   componentDidMount() {
     this.loadCharacterList();
+    this.setState({ name: this.props.name });
   }
 
   loadCharacterList = () => {
@@ -228,7 +230,12 @@ export default class CreateAdventure extends Component {
           <br></br>
           <br></br>
           {this.state.redirect && (
-            <Navigate to='/adventure' replace={true} log={this.state.log} />
+            <Navigate
+              to='/adventure'
+              replace={true}
+              log={this.state.log}
+              name={this.state.name}
+            />
           )}
         </Container>
       </div>
