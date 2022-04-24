@@ -3,6 +3,7 @@ import { Container, Form, Button } from "react-bootstrap";
 import Axios from "axios";
 import Log from "./Log";
 import { Navigate } from "react-router-dom";
+import './css/CreateAdventure.css';
 
 const { Configuration, OpenAIApi } = require("openai");
 
@@ -153,9 +154,9 @@ export default class CreateAdventure extends Component {
         <Container>
           <h1>Begin an Adventure</h1>
 
-          <h4 className='text-white'>Set up your adventure</h4>
 
-          <Form onSubmit={this.onFormSubmit}>
+          <Form onSubmit={this.onFormSubmit} className="form-container">
+            <h4 className='text-white'>Set up your adventure</h4>
             <Form.Group className='mb-3' controlId=''>
               <Form.Label className='text-white'>Adventure name</Form.Label>
               <Form.Control
