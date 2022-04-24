@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Container, Button } from "react-bootstrap";
-import Axios from "axios";
+// import Axios from "axios";
 import Log from "./Log";
 import "./css/Adventure.css";
 
@@ -17,16 +17,17 @@ export default class Adventure extends Component {
       stories: [],
       log: [],
       prompt: "",
-      option1: "",
-      option2: "",
-      option3: "",
+      option1: "Generating your first choice, hold on one second.",
+      option2: "Generating your second choice, hold on one second.",
+      option3: "Generating your third choice, hold on one second",
     };
   }
 
   componentDidMount() {
-    this.loadCharacterList();
-    this.loadStoryList();
+    // this.loadCharacterList();
+    // this.loadStoryList();
     this.populateLog();
+    this.firstPrompt();
     console.log("adventure props test", this.props.log);
   }
   populateLog = () => {
@@ -72,43 +73,175 @@ export default class Adventure extends Component {
 
   buttonOneClick = () => {
     this.optionSelect(1);
+    let x = 1
+    this.button_respond(this.state.option1, x);
   };
   buttonTwoClick = () => {
     this.optionSelect(2);
+    let x = 2;
+    this.button_respond(this.state.option2, x);
   };
   buttonThreeClick = () => {
     this.optionSelect(3);
+    let x = 3;
+    this.button_respond(this.state.option3, x);
   };
 
-  loadCharacterList = () => {
-    // console.log("getting characters...");
-    Axios.get("character/index")
+  firstPrompt = () => {
+    const configuration = new Configuration({
+      apiKey: process.env.REACT_APP_API_KEY,
+    });
+    const openai = new OpenAIApi(configuration);
+    let AIprompt = this.props.log.join("");
+    AIprompt =
+      AIprompt + "\nGive the player 3 detailed options for what to do next";
+    openai
+      .createCompletion("text-davinci-002", {
+        prompt: AIprompt,
+        temperature: 0.8,
+        max_tokens: 256,
+        top_p: 1,
+        frequency_penalty: 0,
+        presence_penalty: 0,
+      })
       .then((response) => {
-        // console.log(response.data.characters);
+        let choices = response.data.choices[0].text;
+        if (choices[0] === "\n") {
+          choices = choices.slice(1, choices.length);
+        }
+        console.log(choices);
+        let split_choices = choices.split(/\s?\d+\.\s/);
+        console.log("split", split_choices);
+
         this.setState({
-          characters: response.data.characters,
+          log: [...this.state.log, choices],
+          option1: split_choices[1],
+          option2: split_choices[2],
+          option3: split_choices[3],
         });
       })
-      .catch((err) => {
-        console.log("Error fetching characters.");
-        console.log(err);
+      .catch((error) => {
+        console.log("error log:", error);
       });
+    this.setState({
+      placeholder: `Generating Choice. Please wait...`,
+      response: "",
+    });
   };
 
-  loadStoryList = () => {
-    // console.log("getting characters...");
-    Axios.get("/home")
+  button_respond = (option, x) => {
+    const configuration = new Configuration({
+      apiKey: process.env.REACT_APP_API_KEY,
+    });
+    const openai = new OpenAIApi(configuration);
+    let AIprompt = this.props.log.join("");
+    AIprompt = AIprompt + `\n Player chooses ${x}. ${option}. Give a long, detailed account of what happens next.`  ;
+    openai
+      .createCompletion("text-davinci-002", {
+        prompt: AIprompt,
+        temperature: 0.8,
+        max_tokens: 256,
+        top_p: 1,
+        frequency_penalty: 0,
+        presence_penalty: 0,
+      })
       .then((response) => {
-        // console.log(response.data.characters);
+        let reply = response.data.choices[0].text;
+        if (reply[0] === "\n") {
+          reply = reply.slice(1, reply.length);
+        }
+        console.log("reply", reply);
+        // let split_choices = choices.split(/\s?\d+\.\s/);
+        // console.log("split", split_choices);
+
         this.setState({
-          stories: response.data.characters,
+          log: [...this.state.log, reply],
+          // option1: split_choices[1],
+          // option2: split_choices[2],
+          // option3: split_choices[3],
+        });
+        this.nextPrompt();
+      })
+      .catch((error) => {
+        console.log("error log:", error);
+      });
+    this.setState({
+      placeholder: `Generating Adventure. Please wait...`,
+      response: "",
+    });
+  };
+
+  nextPrompt = () => {
+    const configuration = new Configuration({
+      apiKey: process.env.REACT_APP_API_KEY,
+    });
+    const openai = new OpenAIApi(configuration);
+    let AIprompt = this.props.log.join("");
+    AIprompt =
+      AIprompt + "\nGive the player 3 detailed options for what to do next";
+    openai
+      .createCompletion("text-davinci-002", {
+        prompt: AIprompt,
+        temperature: 0.8,
+        max_tokens: 256,
+        top_p: 1,
+        frequency_penalty: 0,
+        presence_penalty: 0,
+      })
+      .then((response) => {
+        let choices = response.data.choices[0].text;
+        if (choices[0] === "\n") {
+          choices = choices.slice(1, choices.length);
+        }
+        console.log(choices);
+        let split_choices = choices.split(/\s?\d+\.\s/);
+        console.log("split", split_choices);
+
+        this.setState({
+          log: [...this.state.log, choices],
+          option1: split_choices[1],
+          option2: split_choices[2],
+          option3: split_choices[3],
         });
       })
-      .catch((err) => {
-        console.log("Error fetching characters.");
-        console.log(err);
+      .catch((error) => {
+        console.log("error log:", error);
       });
+    this.setState({
+      placeholder: `Generating Adventure. Please wait...`,
+      response: "",
+    });
   };
+
+  // loadCharacterList = () => {
+  //   // console.log("getting characters...");
+  //   Axios.get("character/index")
+  //     .then((response) => {
+  //       // console.log(response.data.characters);
+  //       this.setState({
+  //         characters: response.data.characters,
+  //       });
+  //     })
+  //     .catch((err) => {
+  //       console.log("Error fetching characters.");
+  //       console.log(err);
+  //     });
+  // };
+
+  // loadStoryList = () => {
+  //   // console.log("getting characters...");
+  //   Axios.get("/home")
+  //     .then((response) => {
+  //       // console.log(response.data.characters);
+  //       this.setState({
+  //         stories: response.data.characters,
+  //       });
+  //     })
+  //     .catch((err) => {
+  //       console.log("Error fetching characters.");
+  //       console.log(err);
+  //     });
+  // };
 
   handleChange = (event) => {
     const attributeToChange = event.target.name; // this will give the name of the field that is changing
@@ -190,28 +323,21 @@ export default class Adventure extends Component {
           <div className='game-log'>
             <Log log={this.state.log} />
           </div>
-          <Button variant='primary' size='lg' onClick={this.buttonOneClick}>
-            Button One - Lorem ipsum dolor sit amet consectetur, adipisicing
-            elit. Est inventore debitis, repellat quis voluptates accusantium
-            molestiae, rem veniam suscipit quia esse, dicta molestias voluptate
-            sit! Commodi voluptatibus corporis voluptates optio!
-          </Button>
-          <br></br>
-          <br />
-          <Button variant='primary' size='lg' onClick={this.buttonTwoClick}>
-            Button Two - Lorem ipsum dolor sit amet consectetur, adipisicing
-            elit. Est inventore debitis, repellat quis voluptates accusantium
-            molestiae, rem veniam suscipit quia esse, dicta molestias voluptate
-            sit! Commodi voluptatibus corporis voluptates optio!
-          </Button>
-          <br></br>
-          <br />
-          <Button variant='primary' size='lg' onClick={this.buttonThreeClick}>
-            Button Three - Lorem ipsum dolor sit amet consectetur, adipisicing
-            elit. Est inventore debitis, repellat quis voluptates accusantium
-            molestiae, rem veniam suscipit quia esse, dicta molestias voluptate
-            sit! Commodi voluptatibus corporis voluptates optio!
-          </Button>
+          <div className='buttons'>
+            <Button variant='primary' size='lg' onClick={this.buttonOneClick}>
+              {this.state.option1}
+            </Button>
+            <br></br>
+            <br />
+            <Button variant='primary' size='lg' onClick={this.buttonTwoClick}>
+              {this.state.option2}
+            </Button>
+            <br></br>
+            <br />
+            <Button variant='primary' size='lg' onClick={this.buttonThreeClick}>
+              {this.state.option3}
+            </Button>
+          </div>
           <br></br>
           <br />
           {/* <Form onSubmit={this.onFormSubmit}>

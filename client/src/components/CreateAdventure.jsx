@@ -85,7 +85,10 @@ export default class CreateAdventure extends Component {
 
     let intro = `${formDataObj.characterStory}`;
     let prompt = `Begin a ${formDataObj.genre} story to ${formDataObj.quest} in a ${formDataObj.setting} setting.`;
-    let AIprompt = intro + "\n" + prompt + "\n";
+    let AIprompt = intro + "\n\n" + prompt + "\n";
+    // console.log("intro", intro);
+    // console.log("prompt", prompt);
+    // console.log("aiPrompt", AIprompt);
     // console.log("prompt test", AIprompt);
     ////Open Ai Goes here
 
@@ -105,23 +108,27 @@ export default class CreateAdventure extends Component {
       })
       .then((response) => {
         let intro = response.data.choices[0].text;
+        // console.log("after response intro test", intro);
         if (intro[0] === "\n") {
           intro = intro.slice(1, intro.length);
         }
-        let logs = [intro, prompt];
-        console.log("logs test", logs);
+        //the important one
+        let logs = [formDataObj.characterStory, prompt, intro];
+        // console.log("formDataObj", formDataObj);
+        // console.log("logs test", logs);
         formDataObj.log = [AIprompt, response.data.choices[0].text];
-        this.props.startStory(logs);
+        this.addAdventure(formDataObj);
         this.setState({
           newAdventure: formDataObj,
           placeholder: `Adventure successfully created. Enjoy!`,
           response: `${intro}`,
-          log: [intro, prompt],
+          log: [formDataObj.characterStory, prompt, intro],
         });
-        this.addAdventure(formDataObj);
+
+        this.props.startStory(logs);
       })
       .catch((error) => {
-        console.log("error log:", error);
+        // console.log("error log:", error);
       });
     this.setState({
       placeholder: `Generating Adventure. Please wait...`,
