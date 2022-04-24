@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Container, Form, Button } from "react-bootstrap";
 import Axios from "axios";
-import Log from "./Log";
 import {
   TITLE,
   NAME,

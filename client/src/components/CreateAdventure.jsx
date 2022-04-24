@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Container, Form, Button } from "react-bootstrap";
 import Axios from "axios";
-import Log from "./Log";
 import { Navigate } from "react-router-dom";
 
 const { Configuration, OpenAIApi } = require("openai");
@@ -84,7 +83,7 @@ export default class CreateAdventure extends Component {
     // console.log(formDataObj);
 
     let intro = `${formDataObj.characterStory}`;
-    let prompt = `Begin a ${formDataObj.genre} story to ${formDataObj.quest} in a ${formDataObj.setting} setting.`;
+    let prompt = `Begin a ${formDataObj.genre} story to ${formDataObj.quest} in a ${formDataObj.setting} setting. Create a detailed story about starting the quest`;
     let AIprompt = intro + "\n\n" + prompt + "\n";
     // console.log("intro", intro);
     // console.log("prompt", prompt);
@@ -221,7 +220,9 @@ export default class CreateAdventure extends Component {
             <Button variant='primary' size='lg' type='submit'>
               Start Adventure
             </Button>
-            <Form.Text>{this.state.placeholder}</Form.Text>
+            <Form.Text>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {this.state.placeholder}
+            </Form.Text>
           </Form>
           <br />
           <br></br>
