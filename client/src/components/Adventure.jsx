@@ -162,12 +162,7 @@ export default class Adventure extends Component {
           newAdventure: formDataObj,
           placeholder: `Adventure successfully created. Enjoy!`,
           response: `${intro}`,
-          log: [
-            ...this.state.log,
-            intro,
-            prompt,
-            response.data.choices[0].text,
-          ],
+          log: [...this.state.log, intro, prompt],
         });
         this.addAdventure(formDataObj);
       })

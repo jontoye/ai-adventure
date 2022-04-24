@@ -108,12 +108,7 @@ export default class CreateAdventure extends Component {
         if (intro[0] === "\n") {
           intro = intro.slice(1, intro.length);
         }
-        let logs = [
-          ...this.state.log,
-          intro,
-          prompt,
-          response.data.choices[0].text,
-        ];
+        let logs = [intro, prompt];
         console.log("logs test", logs);
         formDataObj.log = [AIprompt, response.data.choices[0].text];
         this.props.startStory(logs);
@@ -121,12 +116,7 @@ export default class CreateAdventure extends Component {
           newAdventure: formDataObj,
           placeholder: `Adventure successfully created. Enjoy!`,
           response: `${intro}`,
-          log: [
-            ...this.state.log,
-            intro,
-            prompt,
-            response.data.choices[0].text,
-          ],
+          log: [intro, prompt],
         });
         this.addAdventure(formDataObj);
       })
@@ -238,5 +228,3 @@ export default class CreateAdventure extends Component {
     );
   }
 }
-
-
