@@ -11,6 +11,7 @@ import Footer from "./components/Footer";
 import CreateCharacter from "./components/CreateCharacter";
 import CreateAdventure from "./components/CreateAdventure";
 import Characters from "./components/Characters";
+import Adventures from "./components/Adventures";
 import Adventure from "./components/Adventure";
 import Profile from "./components/Profile";
 import CharacterDetail from "./components/CharacterDetail";
@@ -23,6 +24,7 @@ export default class App extends Component {
     this.createRandomCharacter = this.createRandomCharacter.bind(this);
     this.startStory = this.startStory.bind(this);
     this.createAdventure = this.createAdventure.bind(this);
+    this.continueAdventure = this.continueAdventure.bind(this);
   }
   state = {
     isAuth: false,
@@ -33,6 +35,7 @@ export default class App extends Component {
     randomCharacter: false,
     log: [],
     character: {},
+    adventure: {},
   };
 
   componentDidMount() {
@@ -76,6 +79,12 @@ export default class App extends Component {
       character: character,
     });
     // this.props.navigate("/adventure");
+  }
+
+  continueAdventure(adventure) {
+    this.setState({
+      adventure: adventure,
+    });
   }
 
   registerHandler = (user) => {
@@ -173,6 +182,9 @@ export default class App extends Component {
                     <Link to='/characters' className='nav-link'>
                       Characters
                     </Link>
+                    <Link to='/adventure-list' className='nav-link'>
+                      Adventures
+                    </Link>
                   </>
                 ) : (
                   <>
@@ -235,9 +247,14 @@ export default class App extends Component {
             element={<CreateAdventure startStory={this.startStory} character={this.state.character}/>}
           />
           <Route
+            path='/adventure-list'
+            exact
+            element={<Adventures continueAdventure={this.continueAdventure}/>}
+          />
+          <Route
             path='/adventure'
             exact
-            element={<Adventure log={this.state.log} />}
+            element={<Adventure log={this.state.log} adventure={this.state.adventure}/>}
           />
           <Route
             path='/characters'
