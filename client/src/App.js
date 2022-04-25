@@ -13,6 +13,7 @@ import CreateAdventure from "./components/CreateAdventure";
 import Characters from "./components/Characters";
 import Adventure from "./components/Adventure";
 import Profile from "./components/Profile";
+import CharacterDetail from "./components/CharacterDetail";
 import "./App.scss";
 import { Link } from "react-router-dom";
 
@@ -138,65 +139,68 @@ export default class App extends Component {
 
   render() {
     const message = this.state.message ? (
-      <Alert variant="info">{this.state.message}</Alert>
+      <Alert variant='info'>{this.state.message}</Alert>
     ) : null;
     const failMessage = this.state.failMessage ? (
-      <Alert variant="danger">{this.state.failMessage}</Alert>
+      <Alert variant='danger'>{this.state.failMessage}</Alert>
     ) : null;
     const successMessage = this.state.successMessage ? (
-      <Alert variant="success">{this.state.successMessage}</Alert>
+      <Alert variant='success'>{this.state.successMessage}</Alert>
     ) : null;
     const { isAuth } = this.state;
     return (
       <Router>
-        <Navbar fixed="top" variant="dark" bg="dark" expand="lg">
+        <Navbar fixed='top' variant='dark' bg='dark' expand='lg'>
           <Container>
-            <Link to="/" className="navbar-brand">
+            <Link to='/' className='navbar-brand'>
               | AI Adventure |
             </Link>
 
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
-              <Nav className="me-auto">
+            <Navbar.Toggle aria-controls='basic-navbar-nav' />
+            <Navbar.Collapse id='basic-navbar-nav'>
+              <Nav className='me-auto'>
                 {isAuth ? (
                   <>
-                    <Link to="/" className="nav-link">
+                    <Link to='/' className='nav-link'>
                       Home
                     </Link>
-                    <Link to="/create-character" className="nav-link">
+                    <Link to='/create-character' className='nav-link'>
                       Create Character
                     </Link>
-                    <Link to="/create-adventure" className="nav-link">
+                    <Link to='/create-adventure' className='nav-link'>
                       Create Adventure
                     </Link>
-                    <Link to="/characters" className="nav-link">
+                    <Link to='/characters' className='nav-link'>
                       Characters
-                    </Link>
-                    <Link
-                      to="/signout"
-                      className="nav-link"
-                      onClick={this.logoutHandler}
-                    >
-                      Sign Out
                     </Link>
                   </>
                 ) : (
                   <>
-                    <Link to="/signup" className="nav-link">
+                    <Link to='/signup' className='nav-link'>
                       Sign Up
                     </Link>
-                    <Link to="/signin" className="nav-link">
+                    <Link to='/signin' className='nav-link'>
                       Sign In
                     </Link>
                   </>
                 )}
               </Nav>
 
-              <span id="main-greeting">
+              <span id='main-greeting'>
                 {this.state.user ? (
-                  <Link to="/profile" className="nav-link">
-                    {"Welcome " + this.state.user.user.name}
-                  </Link>
+                  <div className="right-nav">
+                    <Link to='/profile' className='nav-link'>
+                      {"Welcome " + this.state.user.user.name}
+                    </Link>
+
+                    <Link
+                      to='/signout'
+                      className='nav-link'
+                      onClick={this.logoutHandler}
+                    >
+                      Sign Out
+                    </Link>
+                  </div>
                 ) : null}{" "}
               </span>
             </Navbar.Collapse>
@@ -209,7 +213,7 @@ export default class App extends Component {
 
         <Routes>
           <Route
-            path="/"
+            path='/'
             element={
               isAuth ? (
                 <Home createRandomCharacter={this.createRandomCharacter} />
@@ -219,38 +223,43 @@ export default class App extends Component {
             }
           ></Route>
           <Route
-            path="/create-character"
+            path='/create-character'
             exact
             element={
               <CreateCharacter randomCharacter={this.state.randomCharacter} createAdventure={this.createAdventure}/>
             }
           />
           <Route
-            path="/create-adventure"
+            path='/create-adventure'
             exact
             element={<CreateAdventure startStory={this.startStory} character={this.state.character}/>}
           />
           <Route
-            path="/adventure"
+            path='/adventure'
             exact
             element={<Adventure log={this.state.log} />}
           />
           <Route
-            path="/characters"
+            path='/characters'
             exact
             element={<Characters log={this.state.log} createAdventure={this.createAdventure}/>}
           />
+          <Route
+            path='/character-detail'
+            exact
+            element={<CharacterDetail log={this.state.log} />}
+          />
 
           <Route
-            path="/signup"
+            path='/signup'
             element={<Signup register={this.registerHandler} />}
           ></Route>
           <Route
-            path="/signin"
+            path='/signin'
             element={<Signin login={this.loginHandler} />}
           ></Route>
           <Route
-            path="/profile"
+            path='/profile'
             element={<Profile user={this.state.user} />}
           ></Route>
         </Routes>
