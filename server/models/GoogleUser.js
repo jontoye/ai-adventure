@@ -16,7 +16,7 @@ const userSchema = mongoose.Schema({
         maxlength: [20, "Username cannot be longer than 20 characters."],
         unique: true,
     },
-    emailAddress: {
+    email: {
         type: String,
         required: true,
         lowercase: true,
@@ -28,10 +28,6 @@ const userSchema = mongoose.Schema({
             message: "Please enter a valid email."
         },
     },
-    password: {
-        type: String,
-        required: true,
-    },
     // image: String
 },
     {
@@ -40,15 +36,6 @@ const userSchema = mongoose.Schema({
 )
 
 
-    // verifyPassword
-    userSchema.methods.verifyPassword = function(password){
-        // console.log(password);
-        // console.log(this.password);
-        return bcrypt.compareSync(password, this.password);
-    }
+const GoogleUser = mongoose.model("GoogleUser", userSchema);
 
-    userSchema.plugin(findOrCreate);
-
-const User = mongoose.model("User", userSchema);
-
-module.exports = User;
+module.exports = GoogleUser;

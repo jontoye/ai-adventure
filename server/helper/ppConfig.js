@@ -1,8 +1,8 @@
 const passport = require("passport");
-
+const GoogleStrategy = require( 'passport-google-oauth2').Strategy;
 const LocalStrategy = require('passport-local').Strategy;
-
 const User = require("../models/User");
+const GoogleUser = require("../models/GoogleUser")
 
 // serialzeUser
 // Saving the data to the session.
@@ -14,10 +14,18 @@ passport.serializeUser(function(user, done){
 
 // DeSerializeUser
 // Reading the information from the database according to the user id (Session)
-passport.deserializeUser(function(id, done){
-    User.findById(id, function(err, user){
-        done(err, user);
-    })
+passport.deserializeUser(async function(id, done){
+  if ( await User.findById(id)) {
+     User.findById(id, function (err, user) {
+      console.log(user, "<-user is");
+      done(err, user);
+    });
+  } else {
+    GoogleUser.findById(id, function (err, user) {
+      console.log(user, "<-user is");
+      done(err, user);
+    });
+  }
 })
 
 passport.use(new LocalStrategy(
@@ -34,6 +42,33 @@ passport.use(new LocalStrategy(
       });
     }
   ));
+  
+passport.use(new GoogleStrategy({
+  clientID:     process.env.GOOGLE_CLIENT_ID,
+  clientSecret: process.env.GOOGLE_SECRET_ID,
+  callbackURL: "http://localhost:3001/google/callback",
+},
+function(accessToken, refreshToken, profile, cb) {
+  console.log(profile)
+  GoogleUser.findOne({ 'googleId': profile.id }, function(err, user) {
+    if (err) return cb(err);
+    if (user) {
+      return cb(null, user);
+    } else {
+      // we have a new student via OAuth!
+      var newUser = new GoogleUser({
+        username: profile.displayName,
+        email: profile.emails[0].value,
+        googleId: profile.id
+      });
+      newUser.save(function(err) {
+        if (err) return cb(err);
+        return cb(null, newUser);
+      });
+    }
+  });
+}
+));
 
 
 

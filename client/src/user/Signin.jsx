@@ -1,9 +1,21 @@
 import React, { Component } from "react";
 import { Container, Form, Button } from "react-bootstrap";
+import axios from "axios";
 
 export default class Signin extends Component {
   state = {};
 
+  componentDidMount() { 
+    
+      axios.get('/wedidit')
+      .then(res=>{
+        console.log(res)
+      })
+      .catch(err=>{
+        console.log(err)
+      })
+    }
+  
   changeHandler = (e) => {
     let temp = { ...this.state };
     temp[e.target.name] = e.target.value;
@@ -14,7 +26,8 @@ export default class Signin extends Component {
     this.props.login(this.state);
   };
 
-  render() {
+
+  render(){
     // console.log(this.state);
     return (
       <div >

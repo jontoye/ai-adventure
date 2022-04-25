@@ -2,7 +2,11 @@
 // const router = express.Router();
 //two statements in one
 const router = require("express").Router();
+const { application } = require("express");
 const { body } = require("express-validator");
+const passport = require("passport");
+require('../helper/ppConfig.js')
+const GoogleUser = require("../models/GoogleUser.js");
 
 //import authentication controller
 const authCtrl = require("../controllers/auth");
@@ -23,5 +27,32 @@ router.post(
 router.post("/auth/signin", authCtrl.auth_signin_post);
 
 // router.get("/auth/logout", authCtrl.auth_logout_get);
+
+
+
+
+
+router.get('/auth/google',
+  passport.authenticate('google', {scope: ['profile', 'email']})
+)
+
+router.get('/google/callback',
+passport.authenticate('google', {
+  successRedirect: '/wedidit',
+  failureRedirect: '/google/failure',
+})
+)
+
+router.get('/google/failure', (req,res)=>{
+  res.send('something went wrong')
+})
+
+router.get('/wedidit', (req,res)=>{
+  console.log(req.user)
+  res.send(req.user)
+  
+  // console.log(req.data)
+  // res.send(req.user)
+})
 
 module.exports = router;
