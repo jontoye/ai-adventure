@@ -3,6 +3,7 @@ import { Container, Form } from "react-bootstrap";
 import CharacterForm1 from "./CharacterForm1";
 import CharacterForm2 from "./CharacterForm2";
 import Axios from "axios";
+import './css/CreateCharacter.css'
 import { Navigate } from "react-router-dom";
 
 import { CHARACTER_DEFAULTS } from "../data/character";
@@ -91,8 +92,8 @@ export default class CreateCharacter extends Component {
         class: CHARACTER_DEFAULTS.class[Math.floor(Math.random() * CHARACTER_DEFAULTS.class.length)],
         ability: CHARACTER_DEFAULTS.trait[Math.floor(Math.random() * CHARACTER_DEFAULTS.trait.length)],
         weakness: CHARACTER_DEFAULTS.trait[Math.floor(Math.random() * CHARACTER_DEFAULTS.trait.length)],
-        backstory: "",
-        tone: "dark",
+        backstory: "", // default
+        tone: "dark", // default
       };
       this.setState({
         placeholder: character,
@@ -285,7 +286,13 @@ export default class CreateCharacter extends Component {
           </Form>
         </Container>
         {this.state.redirect && (
-          <Navigate to='/create-adventure' replace={true} charcater={this.state.newCharacter} characterName={this.state.name} log={this.state.log} />
+          <Navigate
+            to='/create-adventure'
+            replace={true}
+            charcater={this.state.newCharacter}
+            name={this.state.name}
+            log={this.state.log}
+          />
         )}
       </>
     );
