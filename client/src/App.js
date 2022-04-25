@@ -10,6 +10,7 @@ import Home from "./components/Home";
 import Footer from "./components/Footer";
 import CreateCharacter from "./components/CreateCharacter";
 import CreateAdventure from "./components/CreateAdventure";
+import Characters from "./components/Characters";
 import Adventure from "./components/Adventure";
 import Profile from "./components/Profile";
 import "./App.scss";
@@ -219,6 +220,12 @@ export default class App extends Component {
             exact
             element={<Adventure log={this.state.log} />}
           />
+          <Route
+            path='/characters'
+            exact
+            element={<Characters log={this.state.log} />}
+          />
+
           <Route
             path="/signup"
             element={<Signup register={this.registerHandler} />}
