@@ -146,7 +146,7 @@ export default class CreateCharacter extends Component {
 
     this.setState({
       placeholder: backstoryInfo,
-      newCharacter: {backstory: ""},
+      // newCharacter: {backstory: ""},
     });
 
     let AIprompt = `${formDataObj.name} is a ${formDataObj.class} who has the power of ${formDataObj.ability.toLowerCase()} and a weakness to ${formDataObj.weakness.toLowerCase()}. Write a detailed and ${formDataObj.tone.toLowerCase()} back story about ${formDataObj.name} in 100 words.\n`;
