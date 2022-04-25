@@ -7,6 +7,7 @@ import './css/CreateCharacter.css'
 import { Navigate } from "react-router-dom";
 
 import { CHARACTER_DEFAULTS } from "../data/character";
+import './css/CreateCharacter.css';
 
 const { Configuration, OpenAIApi } = require("openai");
 
@@ -23,7 +24,7 @@ export default class CreateCharacter extends Component {
         ability: "",
         weakness: "",
         backstory: "",
-        tone: "dark"
+        tone: "dark",
       },
       character: "",
       log: [],
@@ -35,8 +36,10 @@ export default class CreateCharacter extends Component {
         class: "Wizard",
         ability: "Speaking in riddles",
         weakness: "Hobbits",
-        backstory:
-          'Gandalf was born in the year 2953 of the Third Age. He was originally a Maia of the race of the Valar, and his name was Olorin. He was one of the Maiar who remained in Middle-earth after the Valar departed. He became a friend of the Elves of Middle-earth and often visited them. He was known by various names, including Mithrandir, meaning "Gray Pilgrim", and tharkûn, meaning "staff-man". In the year 2063 of the Third Age, he took the form of an old man and went to live among the Dwarves of the Blue Mountains. He remained with them for many years, and became known as Gandalf the Grey.\nIn the year 2941 of the Third Age, Gandalf returned to Middle-earth. He gathered the Dwarves of the Lonely Mountain and helped them reclaim their homeland from the dragon Smaug. He also played a key role in the War of the Ring, which culminated in the destruction of the One Ring and the defeat of Sauron. After the war, Gandalf was instrumental in the establishment of the Shire as a safe haven for the Hobbits. He also helped to restore the kingdom of Gondor.',
+        tone: "dark",
+        // backstory:
+        //   'Gandalf was born in the year 2953 of the Third Age. He was originally a Maia of the race of the Valar, and his name was Olorin. He was one of the Maiar who remained in Middle-earth after the Valar departed. He became a friend of the Elves of Middle-earth and often visited them. He was known by various names, including Mithrandir, meaning "Gray Pilgrim", and tharkûn, meaning "staff-man". In the year 2063 of the Third Age, he took the form of an old man and went to live among the Dwarves of the Blue Mountains. He remained with them for many years, and became known as Gandalf the Grey.\nIn the year 2941 of the Third Age, Gandalf returned to Middle-earth. He gathered the Dwarves of the Lonely Mountain and helped them reclaim their homeland from the dragon Smaug. He also played a key role in the War of the Ring, which culminated in the destruction of the One Ring and the defeat of Sauron. After the war, Gandalf was instrumental in the establishment of the Shire as a safe haven for the Hobbits. He also helped to restore the kingdom of Gondor.',
+        backstory: 'Please chose a tone and click "Generate Backstory" above.',
       },
     };
 
@@ -86,20 +89,11 @@ export default class CreateCharacter extends Component {
       //NOTE: currently ability & weakness COULD be the same thing
       const character = {
         name: name,
-        class:
-          CHARACTER_DEFAULTS.class[
-            Math.floor(Math.random() * CHARACTER_DEFAULTS.class.length)
-          ],
-        ability:
-          CHARACTER_DEFAULTS.trait[
-            Math.floor(Math.random() * CHARACTER_DEFAULTS.trait.length)
-          ],
-        weakness:
-          CHARACTER_DEFAULTS.trait[
-            Math.floor(Math.random() * CHARACTER_DEFAULTS.trait.length)
-          ],
-        backstory: '', // default
-        tone: 'dark', // default
+        class: CHARACTER_DEFAULTS.class[Math.floor(Math.random() * CHARACTER_DEFAULTS.class.length)],
+        ability: CHARACTER_DEFAULTS.trait[Math.floor(Math.random() * CHARACTER_DEFAULTS.trait.length)],
+        weakness: CHARACTER_DEFAULTS.trait[Math.floor(Math.random() * CHARACTER_DEFAULTS.trait.length)],
+        backstory: "", // default
+        tone: "dark", // default
       };
       this.setState({
         placeholder: character,
@@ -141,21 +135,21 @@ export default class CreateCharacter extends Component {
   generateBackstory = (e) => {
     // console.log("CREATING BACKSTORY");
     e.preventDefault();
+    // console.log(e.target.parent);
 
     // const formData = new FormData(e.target.parentNode),
-    //   formDataObj = Object.fromEntries(formData.entries());
-    // console.log(formDataObj);
+      // formDataObj = Object.fromEntries(formData.entries());
+    // console.log(this.state.newCharacter);
     const formDataObj = this.state.newCharacter;
+    // console.log(formDataObj)
+    let backstoryInfo = {backstory: `Generating a ${this.state.newCharacter.tone.toLowerCase()} backstory for ${formDataObj.name}. Please wait...`,}
 
     this.setState({
-      placeholder: {
-        backstory: `Generating a ${this.state.newCharacter.tone.toLowerCase()} backstory for ${
-          formDataObj.name
-        }. Please wait...`,
-      },
+      placeholder: backstoryInfo,
+      newCharacter: {backstory: ""},
     });
 
-    let AIprompt = `${formDataObj.name} is a ${formDataObj.class} who has the power of ${formDataObj.ability} and a weakness to ${formDataObj.weakness}. Write a detailed and ${formDataObj.tone} back story about ${formDataObj.name} in 100 words.\n`;
+    let AIprompt = `${formDataObj.name} is a ${formDataObj.class} who has the power of ${formDataObj.ability.toLowerCase()} and a weakness to ${formDataObj.weakness.toLowerCase()}. Write a detailed and ${formDataObj.tone.toLowerCase()} back story about ${formDataObj.name} in 100 words.\n`;
     this.setState({ prompt: AIprompt });
     ////Open Ai Goes here
 
@@ -182,7 +176,7 @@ export default class CreateCharacter extends Component {
         character.backstory = backstory;
         this.setState({
           heading: `Backstory for: ${formDataObj.name}`,
-          placeholder: { backstory: `${backstory}` },
+          placeholder: { backstory: 'Please chose a tone and click "Generate Backstory" above.' },
           newCharacter: character,
           log: [...this.state.log, AIprompt, response.data.choices[0].text],
           name: formDataObj.name,
@@ -203,6 +197,7 @@ export default class CreateCharacter extends Component {
     // console.log(formDataObj);
     // console.log(this.state.newCharacter);
 
+    // this.addCharacter(formDataObj);
     this.addCharacter(this.state.newCharacter)
     this.setState({
       redirect: true,
@@ -213,7 +208,8 @@ export default class CreateCharacter extends Component {
     let currentStep = this.state.currentStep;
     currentStep = currentStep < 2 ? currentStep + 1 : currentStep;
     this.setState({
-      currentStep: currentStep
+      currentStep: currentStep,
+      placeholder: { backstory: 'Please chose a tone and click "Generate Backstory" above.' },
     })
   }
 
