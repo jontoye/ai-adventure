@@ -23,10 +23,14 @@ const adventureSchema = mongoose.Schema(
       lowercase: true,
       required: true,
     },
-    characterStory: {
+    character: {
       type: String,
       required: true,
     },
+    // characterStory: {
+    //   type: String,
+    //   required: true,
+    // },
     quest: {
       type: String,
       required: true,
