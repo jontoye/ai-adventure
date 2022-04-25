@@ -49,59 +49,64 @@ export default class CreateCharacter extends Component {
   }
   componentDidMount() {
     if (this.props.randomCharacter) {
-      //randomly generate an impressive name!
-      let name = "";
-      if (Math.floor(Math.random() * 2) < 1) {
-        //50% chance female or male (sorry we haven't got to non-binary yet!!)
-        if (Math.floor(Math.random() * 2) < 1) {
-          //50% chance of a pronoun/title
-          name +=
-            CHARACTER_DEFAULTS.title_f[
-              Math.floor(Math.random() * CHARACTER_DEFAULTS.title_f.length)
-            ] + " ";
-        }
-        name +=
-          CHARACTER_DEFAULTS.name_f[
-            Math.floor(Math.random() * CHARACTER_DEFAULTS.name_f.length)
-          ];
-      } else {
-        //male names
-        if (Math.floor(Math.random() * 2) < 1) {
-          //50% chance of a pronoun/title
-          name +=
-            CHARACTER_DEFAULTS.title_m[
-              Math.floor(Math.random() * CHARACTER_DEFAULTS.title_m.length)
-            ] + " ";
-        }
-        name +=
-          CHARACTER_DEFAULTS.name_m[
-            Math.floor(Math.random() * CHARACTER_DEFAULTS.name_m.length)
-          ];
-      }
-      if (Math.floor(Math.random() * 2) < 1) {
-        //50% chance of a decorative post-title
-        name +=
-          " " +
-          CHARACTER_DEFAULTS.decor[
-            Math.floor(Math.random() * CHARACTER_DEFAULTS.decor.length)
-          ];
-      }
-      //NOTE: currently ability & weakness COULD be the same thing
-      const character = {
-        name: name,
-        class: CHARACTER_DEFAULTS.class[Math.floor(Math.random() * CHARACTER_DEFAULTS.class.length)],
-        ability: CHARACTER_DEFAULTS.trait[Math.floor(Math.random() * CHARACTER_DEFAULTS.trait.length)],
-        weakness: CHARACTER_DEFAULTS.trait[Math.floor(Math.random() * CHARACTER_DEFAULTS.trait.length)],
-        backstory: "", // default
-        tone: "dark", // default
-      };
-      this.setState({
-        placeholder: character,
-        newCharacter: character,
-        generateRandomCharacter: this.props.randomCharacter,
-      });
+      this.createRandomCharacter();
     }
-  }
+  };
+
+  createRandomCharacter = () => {
+    //randomly generate an impressive name!
+    let name = "";
+    if (Math.floor(Math.random() * 2) < 1) {
+      //50% chance female or male (sorry we haven't got to non-binary yet!!)
+      if (Math.floor(Math.random() * 2) < 1) {
+        //50% chance of a pronoun/title
+        name +=
+          CHARACTER_DEFAULTS.title_f[
+            Math.floor(Math.random() * CHARACTER_DEFAULTS.title_f.length)
+          ] + " ";
+      }
+      name +=
+        CHARACTER_DEFAULTS.name_f[
+          Math.floor(Math.random() * CHARACTER_DEFAULTS.name_f.length)
+        ];
+    } else {
+      //male names
+      if (Math.floor(Math.random() * 2) < 1) {
+        //50% chance of a pronoun/title
+        name +=
+          CHARACTER_DEFAULTS.title_m[
+            Math.floor(Math.random() * CHARACTER_DEFAULTS.title_m.length)
+          ] + " ";
+      }
+      name +=
+        CHARACTER_DEFAULTS.name_m[
+          Math.floor(Math.random() * CHARACTER_DEFAULTS.name_m.length)
+        ];
+    }
+    if (Math.floor(Math.random() * 2) < 1) {
+      //50% chance of a decorative post-title
+      name +=
+        " " +
+        CHARACTER_DEFAULTS.decor[
+          Math.floor(Math.random() * CHARACTER_DEFAULTS.decor.length)
+        ];
+    }
+    //NOTE: currently ability & weakness COULD be the same thing
+    const character = {
+      name: name,
+      class: CHARACTER_DEFAULTS.class[Math.floor(Math.random() * CHARACTER_DEFAULTS.class.length)],
+      ability: CHARACTER_DEFAULTS.trait[Math.floor(Math.random() * CHARACTER_DEFAULTS.trait.length)],
+      weakness: CHARACTER_DEFAULTS.trait[Math.floor(Math.random() * CHARACTER_DEFAULTS.trait.length)],
+      backstory: "", // default
+      tone: "dark", // default
+    };
+    this.setState({
+      placeholder: character,
+      newCharacter: character,
+      generateRandomCharacter: this.props.randomCharacter,
+    });
+  };
+
   handleChange = (event) => {
     const attributeToChange = event.target.name; // this will give the name of the field that is changing
     const newValue = event.target.value; //this will give the value of the field that is changing
@@ -253,6 +258,22 @@ export default class CreateCharacter extends Component {
     return null;
   }
 
+  get randomButton() {
+    let currentStep = this.state.currentStep;
+    if(currentStep < 2) {
+      return (
+        <button
+          className="btn btn-dark"
+          type="button"
+          onClick={this.createRandomCharacter}
+        >
+          Randomize Character
+        </button>
+      )
+    }
+    return null;
+  }
+
   render() {
     // console.log(this.props)
     return (
@@ -282,6 +303,8 @@ export default class CreateCharacter extends Component {
 
             {this.previousButton}
             {this.nextButton}
+            &nbsp; &nbsp; 
+            {this.randomButton}
 
           </Form>
         </Container>
