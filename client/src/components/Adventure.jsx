@@ -25,6 +25,7 @@ export default class Adventure extends Component {
   }
 
   componentDidMount() {
+    console.log(this.props.adventure)
     this.populateLog();
     this.firstPrompt();
     this.setState({

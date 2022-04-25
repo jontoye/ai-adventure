@@ -24,6 +24,7 @@ export default class App extends Component {
     this.createRandomCharacter = this.createRandomCharacter.bind(this);
     this.startStory = this.startStory.bind(this);
     this.createAdventure = this.createAdventure.bind(this);
+    this.continueAdventure = this.continueAdventure.bind(this);
   }
   state = {
     isAuth: false,
@@ -34,6 +35,7 @@ export default class App extends Component {
     randomCharacter: false,
     log: [],
     character: {},
+    adventure: {},
   };
 
   componentDidMount() {
@@ -77,6 +79,12 @@ export default class App extends Component {
       character: character,
     });
     // this.props.navigate("/adventure");
+  }
+
+  continueAdventure(adventure) {
+    this.setState({
+      adventure: adventure,
+    });
   }
 
   registerHandler = (user) => {
@@ -241,12 +249,12 @@ export default class App extends Component {
           <Route
             path='/adventure-list'
             exact
-            element={<Adventures/>}
+            element={<Adventures continueAdventure={this.continueAdventure}/>}
           />
           <Route
             path='/adventure'
             exact
-            element={<Adventure log={this.state.log} />}
+            element={<Adventure log={this.state.log} adventure={this.state.adventure}/>}
           />
           <Route
             path='/characters'

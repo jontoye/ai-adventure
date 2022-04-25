@@ -255,6 +255,7 @@ export default class CreateAdventure extends Component {
               replace={true}
               log={this.state.log}
               name={this.state.name}
+              adventure={this.state.newAdventure}
             />
           )}
         </Container>

@@ -25,3 +25,13 @@ exports.adventure_index_get = (req, res) => {
     res.send("Error locating adventures.");
   });
 }
+
+//HTTP DELETE - Adventure
+exports.adventure_delete_get = (req,res) => {
+  // console.log("Deleting " + req.query.name);
+  Adventure.deleteOne({name: req.query.name})
+  .then((adventure)=>{
+    res.json({adventure});
+  })
+  .catch((err)=>{console.log(err); res.send("Error deleting selected adventure.")})
+}

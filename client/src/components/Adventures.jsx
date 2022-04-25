@@ -54,7 +54,7 @@ export default class Adventures extends Component {
           adventure={a}
           key={index}
           id={index}
-          createAdventure={this.props.createAdventure}
+          continueAdventure={this.props.continueAdventure}
           deleteAdventure={this.deleteAdventure}
         />
       );
