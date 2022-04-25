@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import Axios from "axios";
 import Character from "./Character";
+import "./css/Characters.css";
 
 export default class Characters extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      characters: {},
+      characters: [],
     };
   }
   componentDidMount() {
@@ -43,6 +44,11 @@ export default class Characters extends Component {
         />
       );
     });
-    return <div>{characters}</div>;
+    return (
+      <div>
+        <h1>Character List</h1>
+        <div className='character-list'>{characters}</div>
+      </div>
+    );
   }
 }
