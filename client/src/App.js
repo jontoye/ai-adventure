@@ -13,6 +13,7 @@ import CreateAdventure from "./components/CreateAdventure";
 import Characters from "./components/Characters";
 import Adventure from "./components/Adventure";
 import Profile from "./components/Profile";
+import CharacterDetail from "./components/CharacterDetail";
 import "./App.scss";
 import { Link } from "react-router-dom";
 
@@ -160,13 +161,6 @@ export default class App extends Component {
                     <Link to='/characters' className='nav-link'>
                       Characters
                     </Link>
-                    <Link
-                      to='/signout'
-                      className='nav-link'
-                      onClick={this.logoutHandler}
-                    >
-                      Sign Out
-                    </Link>
                   </>
                 ) : (
                   <>
@@ -182,9 +176,19 @@ export default class App extends Component {
 
               <span id='main-greeting'>
                 {this.state.user ? (
-                  <Link to='/profile' className='nav-link'>
-                    {"Welcome " + this.state.user.user.name}
-                  </Link>
+                  <div className="right-nav">
+                    <Link to='/profile' className='nav-link'>
+                      {"Welcome " + this.state.user.user.name}
+                    </Link>
+
+                    <Link
+                      to='/signout'
+                      className='nav-link'
+                      onClick={this.logoutHandler}
+                    >
+                      Sign Out
+                    </Link>
+                  </div>
                 ) : null}{" "}
               </span>
             </Navbar.Collapse>
@@ -227,6 +231,11 @@ export default class App extends Component {
             path='/characters'
             exact
             element={<Characters log={this.state.log} />}
+          />
+          <Route
+            path='/character-detail'
+            exact
+            element={<CharacterDetail log={this.state.log} />}
           />
 
           <Route

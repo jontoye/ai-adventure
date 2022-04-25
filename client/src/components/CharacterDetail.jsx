@@ -5,7 +5,10 @@ export default class CharacterDetail extends Component {
   render() {
     return (
       <div>
-        <Card className="character-detail-card" style={{ width: "50rem", margin: "15px" }}>
+        <Card
+          className='character-detail-card'
+          style={{ width: "50rem", margin: "15px" }}
+        >
           <Card.Img variant='top' src='images/saad.png' />
           <Card.Body>
             <Card.Title>
@@ -18,6 +21,8 @@ export default class CharacterDetail extends Component {
               Ability: {this.props.ability}
               <br />
               Weakness: {this.props.weakness}
+              Favorites: 9001 ♡
+              Stories: 5
             </Card.Text>
             <Button variant='primary'>Start Adventure</Button>
           </Card.Body>
