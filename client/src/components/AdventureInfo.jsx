@@ -8,7 +8,7 @@ export default class AdventureInfo extends Component {
     adventure: this.props.adventure,
     name: this.props.name,
     character: {},
-    log: [this.props.log],
+    log: [this.props.adventure.log],
     redirect: false,
   }
   componentDidMount() { 
@@ -38,7 +38,6 @@ export default class AdventureInfo extends Component {
   }
 
   deleteAdventure = (e) => {
-    // console.log('fancy backend stuff')
     this.props.deleteAdventure(this.state.adventure.name);
   }
   render() {
@@ -57,16 +56,16 @@ export default class AdventureInfo extends Component {
             {a_an} {this.state.adventure.setting} {this.state.adventure.genre} {this.state.adventure.length} to {quest}.<br></br>
               Character: {this.state.character.name} ({this.state.character.class})
             </Card.Text>
-            <Button variant='primary' onClick={this.startAdventure}>Continue</Button>
+            <Button variant='primary' onClick={this.continueAdventure}>Continue</Button>
             &nbsp; &nbsp; &nbsp; &nbsp;
             <Button variant='danger' onClick={this.deleteAdventure}>Delete</Button>
           </Card.Body>
         </Card>
         {this.state.redirect && (
           <Navigate
-            to='/create-adventure'
+            to='/adventure'
             replace={true}
-            character={this.state.character}
+            adventure={this.state.adventure}
           />
         )}
       </div>
