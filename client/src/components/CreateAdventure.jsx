@@ -21,11 +21,12 @@ export default class CreateAdventure extends Component {
       redirect: false,
       
     };
+    // console.log(this.props)
   }
 
   componentDidMount() {
     this.loadCharacterList();
-    this.setState({ name: this.props.name });
+    this.setState({ name: this.props.character.name });
   }
 
   loadCharacterList = () => {
@@ -72,7 +73,7 @@ export default class CreateAdventure extends Component {
   };
 
   startStory() {
-    console.log("start-story triggered2");
+    // console.log("start-story triggered2");
     this.setState({
       redirect: true,
     });
@@ -141,12 +142,23 @@ export default class CreateAdventure extends Component {
 
   render() {
     const characters = this.state.characters.map((c) => {
-      return (
-        <option value={c.backstory}>
-          {c.name} ({c.class})
-        </option>
-      );
+      if (c.name === this.state.name) {
+        return (
+          <option value={c.backstory} selected className={c.name}>
+            {c.name} ({c.class})
+          </option>
+        );
+
+      } else {
+        return (
+          <option value={c.backstory} className={c.name}>
+            {c.name} ({c.class})
+          </option>
+        );
+
+      }
     });
+    // console.log(this.props)
 
     return (
       <div>

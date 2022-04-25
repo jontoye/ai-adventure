@@ -3,7 +3,7 @@ import { Container, Form } from "react-bootstrap";
 import CharacterForm1 from "./CharacterForm1";
 import CharacterForm2 from "./CharacterForm2";
 import Axios from "axios";
-import './css/CreateCharacter.css'
+import './css/CreateCharacter.css';
 import { Navigate } from "react-router-dom";
 
 import { CHARACTER_DEFAULTS } from "../data/character";
@@ -204,6 +204,7 @@ export default class CreateCharacter extends Component {
 
     // this.addCharacter(formDataObj);
     this.addCharacter(this.state.newCharacter)
+    this.props.createAdventure(this.state.newCharacter)
     this.setState({
       redirect: true,
     });
@@ -312,9 +313,7 @@ export default class CreateCharacter extends Component {
           <Navigate
             to='/create-adventure'
             replace={true}
-            charcater={this.state.newCharacter}
-            name={this.state.name}
-            log={this.state.log}
+            character={this.state.newCharacter}
           />
         )}
       </>

@@ -41,6 +41,7 @@ export default class Characters extends Component {
           id={index}
           ability={c.ability}
           weakness={c.weakness}
+          createAdventure={this.props.createAdventure}
         />
       );
     });

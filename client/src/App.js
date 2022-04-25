@@ -21,6 +21,7 @@ export default class App extends Component {
     super(props);
     this.createRandomCharacter = this.createRandomCharacter.bind(this);
     this.startStory = this.startStory.bind(this);
+    this.createAdventure = this.createAdventure.bind(this);
   }
   state = {
     isAuth: false,
@@ -30,6 +31,7 @@ export default class App extends Component {
     successMessage: null,
     randomCharacter: false,
     log: [],
+    character: {},
   };
 
   componentDidMount() {
@@ -57,10 +59,20 @@ export default class App extends Component {
   }
 
   startStory(logs) {
-    console.log("start story triggered");
+    // console.log("start story triggered");
     // console.log("navigate test", this.props.navigate);
     this.setState({
       log: logs,
+    });
+    // this.props.navigate("/adventure");
+  }
+
+  createAdventure(character) {
+    // console.log("create adventure triggered");
+    // console.log(character)
+    // console.log("navigate test", this.props.navigate);
+    this.setState({
+      character: character,
     });
     // this.props.navigate("/adventure");
   }
@@ -210,13 +222,13 @@ export default class App extends Component {
             path="/create-character"
             exact
             element={
-              <CreateCharacter randomCharacter={this.state.randomCharacter} />
+              <CreateCharacter randomCharacter={this.state.randomCharacter} createAdventure={this.createAdventure}/>
             }
           />
           <Route
             path="/create-adventure"
             exact
-            element={<CreateAdventure startStory={this.startStory} />}
+            element={<CreateAdventure startStory={this.startStory} character={this.state.character}/>}
           />
           <Route
             path="/adventure"
@@ -226,7 +238,7 @@ export default class App extends Component {
           <Route
             path="/characters"
             exact
-            element={<Characters log={this.state.log} />}
+            element={<Characters log={this.state.log} createAdventure={this.createAdventure}/>}
           />
 
           <Route
