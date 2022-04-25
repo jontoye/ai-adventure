@@ -25,7 +25,8 @@ export default class Character extends Component {
   }
 
   deleteCharacter = (e) => {
-    console.log('fancy backend stuff')
+    // console.log('fancy backend stuff')
+    this.props.deleteCharacter(this.props.name);
   }
   render() {
     let css = `character-${this.props.id}`;
