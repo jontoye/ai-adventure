@@ -1,13 +1,8 @@
 // import React, { Component } from "react";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import {
-  //   BrowserRouter as Router,
-  //   Route,
-  //   Routes,
-  //   Link,
   useNavigate,
 } from "react-router-dom";
-// import CreateCharacter from "./CreateCharacter";
 import "./css/Banner.css";
 
 export default function Banner(props) {

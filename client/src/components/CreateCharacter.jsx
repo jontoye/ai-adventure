@@ -4,7 +4,9 @@ import CharacterForm1 from "./CharacterForm1";
 import CharacterForm2 from "./CharacterForm2";
 import Axios from "axios";
 import './css/CreateCharacter.css'
-import {CHARACTER_DEFAULTS} from "../data/character";
+import { Navigate } from "react-router-dom";
+
+import { CHARACTER_DEFAULTS } from "../data/character";
 
 const { Configuration, OpenAIApi } = require("openai");
 
@@ -26,6 +28,8 @@ export default class CreateCharacter extends Component {
       character: "",
       log: [],
       prompt: "",
+      name: "",
+      redirect: false,
       placeholder: {
         name: "Gandalf",
         class: "Wizard",
@@ -44,28 +48,58 @@ export default class CreateCharacter extends Component {
     if (this.props.randomCharacter) {
       //randomly generate an impressive name!
       let name = "";
-      if (Math.floor(Math.random() * 2)<1) { //50% chance female or male (sorry we haven't got to non-binary yet!!)
-        if (Math.floor(Math.random() * 2)<1) { //50% chance of a pronoun/title
-          name+=CHARACTER_DEFAULTS.title_f[Math.floor(Math.random() * CHARACTER_DEFAULTS.title_f.length)]+" ";
+      if (Math.floor(Math.random() * 2) < 1) {
+        //50% chance female or male (sorry we haven't got to non-binary yet!!)
+        if (Math.floor(Math.random() * 2) < 1) {
+          //50% chance of a pronoun/title
+          name +=
+            CHARACTER_DEFAULTS.title_f[
+              Math.floor(Math.random() * CHARACTER_DEFAULTS.title_f.length)
+            ] + " ";
         }
-        name+=CHARACTER_DEFAULTS.name_f[Math.floor(Math.random() * CHARACTER_DEFAULTS.name_f.length)];
+        name +=
+          CHARACTER_DEFAULTS.name_f[
+            Math.floor(Math.random() * CHARACTER_DEFAULTS.name_f.length)
+          ];
       } else {
         //male names
-        if (Math.floor(Math.random() * 2)<1) { //50% chance of a pronoun/title
-          name+=CHARACTER_DEFAULTS.title_m[Math.floor(Math.random() * CHARACTER_DEFAULTS.title_m.length)]+" ";
+        if (Math.floor(Math.random() * 2) < 1) {
+          //50% chance of a pronoun/title
+          name +=
+            CHARACTER_DEFAULTS.title_m[
+              Math.floor(Math.random() * CHARACTER_DEFAULTS.title_m.length)
+            ] + " ";
         }
-        name+=CHARACTER_DEFAULTS.name_m[Math.floor(Math.random() * CHARACTER_DEFAULTS.name_m.length)];
+        name +=
+          CHARACTER_DEFAULTS.name_m[
+            Math.floor(Math.random() * CHARACTER_DEFAULTS.name_m.length)
+          ];
       }
-      if (Math.floor(Math.random() * 2)<1) { //50% chance of a decorative post-title
-        name+=" "+CHARACTER_DEFAULTS.decor[Math.floor(Math.random() * CHARACTER_DEFAULTS.decor.length)];
+      if (Math.floor(Math.random() * 2) < 1) {
+        //50% chance of a decorative post-title
+        name +=
+          " " +
+          CHARACTER_DEFAULTS.decor[
+            Math.floor(Math.random() * CHARACTER_DEFAULTS.decor.length)
+          ];
       }
       //NOTE: currently ability & weakness COULD be the same thing
       const character = {
         name: name,
-        class: CHARACTER_DEFAULTS.class[Math.floor(Math.random() * CHARACTER_DEFAULTS.class.length)],
-        ability: CHARACTER_DEFAULTS.trait[Math.floor(Math.random() * CHARACTER_DEFAULTS.trait.length)],
-        weakness: CHARACTER_DEFAULTS.trait[Math.floor(Math.random() * CHARACTER_DEFAULTS.trait.length)],
-        backstory: '',
+        class:
+          CHARACTER_DEFAULTS.class[
+            Math.floor(Math.random() * CHARACTER_DEFAULTS.class.length)
+          ],
+        ability:
+          CHARACTER_DEFAULTS.trait[
+            Math.floor(Math.random() * CHARACTER_DEFAULTS.trait.length)
+          ],
+        weakness:
+          CHARACTER_DEFAULTS.trait[
+            Math.floor(Math.random() * CHARACTER_DEFAULTS.trait.length)
+          ],
+        backstory: '', // default
+        tone: 'dark', // default
       };
       this.setState({
         placeholder: character,
@@ -134,7 +168,7 @@ export default class CreateCharacter extends Component {
       .createCompletion("text-davinci-002", {
         prompt: AIprompt,
         temperature: 0.8,
-        max_tokens: 256,
+        max_tokens: 500,
         top_p: 1,
         frequency_penalty: 0,
         presence_penalty: 0,
@@ -151,6 +185,7 @@ export default class CreateCharacter extends Component {
           placeholder: { backstory: `${backstory}` },
           newCharacter: character,
           log: [...this.state.log, AIprompt, response.data.choices[0].text],
+          name: formDataObj.name,
         });
       })
       .catch((error) => {
@@ -168,8 +203,10 @@ export default class CreateCharacter extends Component {
     // console.log(formDataObj);
     // console.log(this.state.newCharacter);
 
-    // this.addCharacter(formDataObj);
     this.addCharacter(this.state.newCharacter)
+    this.setState({
+      redirect: true,
+    });
   };
 
   _next() {
@@ -252,6 +289,15 @@ export default class CreateCharacter extends Component {
 
           </Form>
         </Container>
+        {this.state.redirect && (
+          <Navigate
+            to='/create-adventure'
+            replace={true}
+            charcater={this.state.newCharacter}
+            name={this.state.name}
+            log={this.state.log}
+          />
+        )}
       </>
     );
   }
