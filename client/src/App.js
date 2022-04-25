@@ -227,7 +227,10 @@ export default class App extends Component {
             path="/signin"
             element={<Signin login={this.loginHandler} />}
           ></Route>
-          <Route path="/profile" element={<Profile />}></Route>
+          <Route
+            path="/profile"
+            element={<Profile user={this.state.user} />}
+          ></Route>
         </Routes>
 
         <Footer />
