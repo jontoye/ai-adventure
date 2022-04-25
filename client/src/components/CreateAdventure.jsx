@@ -15,6 +15,7 @@ export default class CreateAdventure extends Component {
       response: "",
       newAdventure: {},
       characters: [],
+      character: {},
       log: [],
       name: '',
       prompt: "",
@@ -86,9 +87,12 @@ export default class CreateAdventure extends Component {
     const formData = new FormData(e.target),
       formDataObj = Object.fromEntries(formData.entries());
     // console.log(formDataObj);
+    let character = this.state.characters.find(v=>{
+      return formDataObj.character === v.name;
+    })
 
-    let intro = `${formDataObj.characterStory}`;
-    let prompt = `Begin a ${formDataObj.genre} story to ${formDataObj.quest} in a ${formDataObj.setting} setting. Create a detailed story about ${this.state.name} starting the quest`;
+    let intro = `${character.characterStory}`;
+    let prompt = `Begin a ${formDataObj.genre} story to ${formDataObj.quest} in a ${formDataObj.setting} setting. Create a detailed story about ${character.name} starting the quest`;
     let AIprompt = intro + "\n\n" + prompt + "\n";
     // console.log("intro", intro);
     // console.log("prompt", prompt);
@@ -117,16 +121,18 @@ export default class CreateAdventure extends Component {
           intro = intro.slice(1, intro.length);
         }
         //the important one
-        let logs = [formDataObj.characterStory, prompt, intro];
+        let logs = [character.characterStory, prompt, intro];
         // console.log("formDataObj", formDataObj);
         // console.log("logs test", logs);
         formDataObj.log = [AIprompt, response.data.choices[0].text];
+        formDataObj.character = character;
         this.addAdventure(formDataObj);
         this.setState({
           newAdventure: formDataObj,
+          character: character,
           placeholder: `Adventure successfully created. Enjoy!`,
           response: `${intro}`,
-          log: [formDataObj.characterStory, prompt, intro],
+          log: [character.characterStory, prompt, intro],
         });
 
         this.props.startStory(logs);
@@ -144,14 +150,14 @@ export default class CreateAdventure extends Component {
     const characters = this.state.characters.map((c) => {
       if (c.name === this.state.name) {
         return (
-          <option value={c.backstory} selected className={c.name}>
+          <option value={c.name} selected className={c.name}>
             {c.name} ({c.class})
           </option>
         );
 
       } else {
         return (
-          <option value={c.backstory} className={c.name}>
+          <option value={c.name} className={c.name}>
             {c.name} ({c.class})
           </option>
         );
@@ -196,8 +202,8 @@ export default class CreateAdventure extends Component {
                 <option value='Alternate Universe'>Alternate Universe</option>
                 <option value='Ancient Egypt'>Ancient Egypt</option>
                 <option value='Classical Greece'>Classical Greece</option>
-                <option value='Dystopia'>Dystopia</option>
-                <option value='Future'>Future</option>
+                <option value='Dystopian'>Dystopian</option>
+                <option value='Futuristic'>Futuristic</option>
                 <option value='Medieval'>Medieval</option>
                 <option value='Modern'>Modern</option>
                 <option value='Roman Empire'>Roman Empire</option>
@@ -208,16 +214,16 @@ export default class CreateAdventure extends Component {
             <Form.Group className='mb-3' controlId=''>
               <Form.Label className='text-white'>Length</Form.Label>
               <Form.Select name='length' onChange={this.handleChange}>
-                <option value='very short'>Short Story</option>
-                <option value='short'>Novelette</option>
-                <option value='moderate'>Novella</option>
-                <option value='long'>Novel</option>
-                <option value='very long'>Epic</option>
+                <option value='short story'>Short Story</option>
+                <option value='novelette'>Novelette</option>
+                <option value='novella'>Novella</option>
+                <option value='novel'>Novel</option>
+                <option value='epic'>Epic</option>
               </Form.Select>
             </Form.Group>
             <Form.Group className='mb-3' controlId=''>
               <Form.Label className='text-white'>Character</Form.Label>
-              <Form.Select name='characterStory' onChange={this.handleChange}>
+              <Form.Select name='character' onChange={this.handleChange}>
                 {characters}
               </Form.Select>
             </Form.Group>

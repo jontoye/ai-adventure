@@ -11,6 +11,7 @@ import Footer from "./components/Footer";
 import CreateCharacter from "./components/CreateCharacter";
 import CreateAdventure from "./components/CreateAdventure";
 import Characters from "./components/Characters";
+import Adventures from "./components/Adventures";
 import Adventure from "./components/Adventure";
 import Profile from "./components/Profile";
 import CharacterDetail from "./components/CharacterDetail";
@@ -173,6 +174,9 @@ export default class App extends Component {
                     <Link to='/characters' className='nav-link'>
                       Characters
                     </Link>
+                    <Link to='/adventure-list' className='nav-link'>
+                      Adventures
+                    </Link>
                   </>
                 ) : (
                   <>
@@ -233,6 +237,11 @@ export default class App extends Component {
             path='/create-adventure'
             exact
             element={<CreateAdventure startStory={this.startStory} character={this.state.character}/>}
+          />
+          <Route
+            path='/adventure-list'
+            exact
+            element={<Adventures/>}
           />
           <Route
             path='/adventure'
