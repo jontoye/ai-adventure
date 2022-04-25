@@ -12,7 +12,7 @@ export default class CharacterDetail extends Component {
           <Card.Img variant='top' src='images/saad.png' />
           <Card.Body>
             <Card.Title>
-              {this.props.name} the {this.props.class}
+              {this.props.character.name} the {this.props.class}
             </Card.Title>
             <Card.Text>
               {this.props.backstory}
@@ -21,8 +21,7 @@ export default class CharacterDetail extends Component {
               Ability: {this.props.ability}
               <br />
               Weakness: {this.props.weakness}
-              Favorites: 9001 ♡
-              Stories: 5
+              Favorites: 9001 ♡ Stories: 5
             </Card.Text>
             <Button variant='primary'>Start Adventure</Button>
           </Card.Body>
