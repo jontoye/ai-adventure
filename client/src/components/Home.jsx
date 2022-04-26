@@ -6,11 +6,6 @@ import './css/Home.css'
 
 export default class Home extends Component {
 
-	
-
-	componentDidMount() {
-
-	}
 	render() {
 		return (
 			<>

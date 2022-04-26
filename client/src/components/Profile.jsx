@@ -4,21 +4,70 @@ import { Link, useParams } from 'react-router-dom'
 import './css/Profile.css'
 
 function Profile({ currentUser }) {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState({friends: [], followers: [], following: []});
+
   let params = useParams();
 
   useEffect(() => {
-    const getUser = async () => {
-      try {
-        const response = await axios.get(`/profile/${params.userId}`)
-        setUser(response.data.user);
-        return response;
-      } catch (err) {
-        console.error(err)
-      }
-    }
-    getUser()
+    // Get info for user who's profile currently showing
+    getUser(params.userId)
+    
   }, [params.userId])
+
+  const getUser = async (id) => {
+    try {
+      const response = await axios.get(`/profile/${id}`)
+      setUser(response.data.user);
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  const handleFriendClick = () => {
+    const addFriend = async () => {
+      // adds friend to each user
+      await axios.post(`/profile/${params.userId}/addsocial`, { user: currentUser.user.id, add: "friend"})
+      await axios.post(`/profile/${currentUser.user.id}/addsocial`, { user: params.userId, add: "friend"})
+      getUser(params.userId)
+    }
+    addFriend();
+  }
+
+  const handleUnfriendClick = () => {
+    const removeFriend = async () => {
+      // removes friends from each user
+      await axios.post(`/profile/${params.userId}/removesocial`, { user: currentUser.user.id, remove: "friend"})
+      await axios.post(`/profile/${currentUser.user.id}/removesocial`, { user: params.userId, remove: "friend"})
+      getUser(params.userId)
+    }
+    removeFriend();
+  }
+  
+  const handleFollowClick = () => {
+    const addFollower = async () => {
+      await axios.post(`/profile/${params.userId}/addsocial`, { user: currentUser.user.id, add: "follower"})
+      getUser(params.userId)
+    }
+    const addFollowing = async () => {
+      await axios.post(`/profile/${currentUser.user.id}/addsocial`, { user: params.userId, add: "following"})
+    }
+
+    addFollower();  
+    addFollowing();
+  }
+
+  const handleUnfollowClick = () => {
+    const removeFollower = async () => {
+      await axios.post(`/profile/${params.userId}/removesocial`, { user: currentUser.user.id, remove: "follower"})
+      getUser(params.userId)
+    }
+    const removeFollowing = async () => {
+      await axios.post(`/profile/${currentUser.user.id}/removesocial`, { user: params.userId, remove: "following"})
+    }
+
+    removeFollower();  
+    removeFollowing(); 
+  }
 
   return (
     <div className="section-profile container py-3">
@@ -28,25 +77,42 @@ function Profile({ currentUser }) {
       {params.userId !== currentUser.user.id &&
         <div className="row mb-5">
         <div className="d-flex col-4 mx-auto justify-content-between">
-          <Link to="#">
+          {!user.followers.includes(currentUser.user.id) ?
+            (<Link to="#">
+              <div className='social-button d-flex'>
+                <img src="/images/icons/follow.png" alt="follow" onClick={handleFollowClick}/>
+              </div>
+            </Link>) :
+            (<Link to="#">
+              <div className='social-button d-flex'>
+                <img src="/images/icons/unfollow.png" alt="unfollow" onClick={handleUnfollowClick}/>
+              </div>
+            </Link> )
+          }
+          {!user.friends.includes(currentUser.user.id) ?
+            (<Link to="#">
+              <div className='social-button d-flex'>
+                <img src="/images/icons/add-friend.png" alt="add-friend" onClick={handleFriendClick}/>
+              </div>
+            </Link>)
+            :
+            (<Link to="#">
             <div className='social-button d-flex'>
-              <img src="/images/icons/add-friend.png" alt="" />
+              <img src="/images/icons/unfriend.png" alt="remove-friend" onClick={handleUnfriendClick}/>
             </div>
-          </Link>
-          <Link to="#">
-            <div className='social-button d-flex'>
-              <img src="/images/icons/follow.png" alt="" />
-            </div>
-          </Link>
+            </Link>)
+
+          }
+
         </div>
       </div>
       }
       
       <div className="row">
         <div className="profile-connections d-flex col-7 mx-auto justify-content-between mb-4">
-          <h4>0 Followers</h4>
-          <h4>0 Following</h4>
-          <h4>0 Friends</h4>
+          <h4>{user.followers.length} Followers</h4>
+          <h4>{user.following.length} Following</h4>
+          <h4>{user.friends.length} Friends</h4>
         </div>
       </div>
 

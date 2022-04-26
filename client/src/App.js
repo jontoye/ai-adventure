@@ -312,7 +312,12 @@ export default class App extends Component {
 
           <Route
             path="/signup"
-            element={<Signup register={this.registerHandler} />}
+            element={
+              <Signup
+                register={this.registerHandler}
+                login={this.loginHandler}
+              />
+            }
           ></Route>
           <Route
             path="/signin"
