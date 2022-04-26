@@ -28,6 +28,7 @@ export default class AdventureInfo extends Component {
         console.log("Error fetching characters.");
         console.log(err);
       });
+    this.imageSelect();
   }
   continueAdventure = (e) => {
     // console.log('fancy frontend stuff')
@@ -39,8 +40,8 @@ export default class AdventureInfo extends Component {
   };
 
   imageSelect = () => {
-    
-    let path = `images/setting/${this.state.adventure.setting}`;
+    let fixed = this.state.adventure.setting.replace(" ", "");
+    let path = `images/setting/${fixed}.png`;
     this.setState({
       image: path,
     });
