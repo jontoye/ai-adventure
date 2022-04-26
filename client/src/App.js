@@ -28,6 +28,7 @@ export default class App extends Component {
     this.continueAdventure = this.continueAdventure.bind(this);
     this.setCharacter = this.setCharacter.bind(this);
   }
+
   state = {
     isAuth: false,
     user: null,
@@ -315,7 +316,9 @@ export default class App extends Component {
           ></Route>
           <Route
             path="/signin"
-            element={<Signin login={this.loginHandler} />}
+            element={
+              <Signin login={this.loginHandler} isAuth={this.state.isAuth} />
+            }
           ></Route>
           <Route
             path="/profile"
