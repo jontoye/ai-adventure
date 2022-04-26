@@ -21,6 +21,7 @@ export default class Adventure extends Component {
       option1: "Generating your first choice, hold on one second",
       option2: "Generating your second choice, hold on one second",
       option3: "Generating your third choice, hold on one second",
+      event: {},
     };
   }
 
