@@ -181,27 +181,29 @@ export default class App extends Component {
       });
   };
 
+    logoutHandler = (e) => {
+    e.preventDefault();
+
+    localStorage.removeItem("token");
+    const redirect = () =>{
+        window.location.href = '/'
+    }
+    redirect()
+    this.setState({
+      isAuth: false,
+      user: null,
+      isGoogleUser: false,
+      message: null,
+      failMessage: "User logged out successfully.",
+      successMessage: null,
+      logoutRedirect: true,
+    });
+    
+  };
+
   render() {
 
-    const logoutHandler = (e) => {
-        e.preventDefault();
-
-        localStorage.removeItem("token");
-        const redirect = () =>{
-            window.location.href = '/'
-        }
-        redirect()
-        this.setState({
-          isAuth: false,
-          user: null,
-          isGoogleUser: false,
-          message: null,
-          failMessage: "User logged out successfully.",
-          successMessage: null,
-          logoutRedirect: true,
-        });
-        
-      };
+    
 
     const message = this.state.message ? (
       <Alert variant="info">{this.state.message}</Alert>
@@ -266,7 +268,7 @@ export default class App extends Component {
                     <Link
                       to="/signout"
                       className="nav-link"
-                      onClick={logoutHandler}
+                      onClick={this.logoutHandler}
                     >
                       Sign Out
                     </Link>
