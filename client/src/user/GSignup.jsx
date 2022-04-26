@@ -3,10 +3,11 @@ import React from 'react'
 import { useState } from 'react';
 import jwt_decode from "jwt-decode";
 import { GoogleLogin } from 'react-google-login';
+import { useNavigate } from "react-router";
 
-export default function GSignup({ login }){
-
-    const state = {}
+export default function GSignup(){
+    const [state, setState] = useState({isAuth: false, user: null, message: null, failMessage: null, successMessage: ""})
+    const navigate = useNavigate();
 
   const googleAuth = (response) => {
     axios({
@@ -15,22 +16,22 @@ export default function GSignup({ login }){
         data: {tokenId: response.tokenId}
     })
     .then(res=>{
-        console.log("google login success",res);
+        console.log("google login success",res.data.user);
 
         if (res.data.token != null) {
             //localStorage refers to localStorage of browser
             localStorage.setItem("token", res.data.token);
             let user = jwt_decode(res.data.token);
   
-            this.setState({
+            setState({
               isAuth: true,
               user: user,
               message: null,
               failMessage: null,
               successMessage: "User logged in successfully.",
             });
-            // login();
-        }
+          }
+          navigate("/")
     })
     .catch(err=>{
         console.log(err)
@@ -41,11 +42,16 @@ export default function GSignup({ login }){
     <div>
         <GoogleLogin
             clientId = {process.env.REACT_APP_GOOGLE_CLIENT_ID}
-            onSuccess = {login}
-            // onFailure = {'error' + googleAuth}
+            render={(renderProps) => (
+                <button id="google-button" onClick={renderProps.onClick} disabled={renderProps.disabled}>
+                  <img id="google-logo-img" src="images/logos/Google__G__Logo.svg.webp"></img>
+                  <span> Sign in</span>
+                </button>
+              )}
+            onSuccess = {googleAuth}
+            onFailure = {'error' + googleAuth}
             cookiePolicy={"single_host_origin"}
-          >
-            <span>Sign In with Google</span>
+             >
           </GoogleLogin>
     </div>
   )
