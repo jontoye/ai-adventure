@@ -18,6 +18,7 @@ import CharacterDetail from "./components/CharacterDetail";
 import "./App.scss";
 import { Link } from "react-router-dom";
 import Users from "./components/Users";
+import { Navigate } from "react-router-dom";
 
 export default class App extends Component {
   constructor(props) {
@@ -31,6 +32,7 @@ export default class App extends Component {
 
   state = {
     isAuth: false,
+    logoutRedirect: false,
     user: null,
     message: null,
     failMessage: null,
@@ -58,6 +60,37 @@ export default class App extends Component {
       }
     }
   }
+
+  handleGoogleLogin = (response) => {
+    Axios({
+      method: "post",
+      url: "http://localhost:3001/auth/google",
+      data: { tokenId: response.tokenId },
+    })
+      .then((res) => {
+        console.log("google login success", res);
+
+        if (res.data.token != null) {
+          //localStorage refers to localStorage of browser
+          localStorage.setItem("token", res.data.token);
+          let user = jwt_decode(res.data.token);
+
+          console.log("GOOGLE USER", user);
+
+          this.setState({
+            isAuth: true,
+            user: user,
+            message: null,
+            failMessage: null,
+            successMessage: "User logged in successfully.",
+            logoutRedirect: "false",
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   createRandomCharacter() {
     this.setState({
@@ -126,12 +159,15 @@ export default class App extends Component {
           localStorage.setItem("token", response.data.token);
           let user = jwt_decode(response.data.token);
 
+          console.log("USER", user);
+
           this.setState({
             isAuth: true,
             user: user,
             message: null,
             failMessage: null,
             successMessage: "User logged in successfully.",
+            logoutRedirect: false,
           });
         }
       })
@@ -149,9 +185,11 @@ export default class App extends Component {
     this.setState({
       isAuth: false,
       user: null,
+      isGoogleUser: false,
       message: null,
       failMessage: "User logged out successfully.",
       successMessage: null,
+      logoutRedirect: true,
     });
   };
 
@@ -211,12 +249,11 @@ export default class App extends Component {
                 {this.state.user ? (
                   <div className="right-nav">
                     <Link
-                      to={`/profile/${this.state.user.user.id}`}
+                      to={`/profile/${this.state.user.id}`}
                       className="nav-link"
                     >
-                      {"Welcome " + this.state.user.user.name}
+                      {"Welcome " + this.state.user.name}
                     </Link>
-
                     <Link
                       to="/signout"
                       className="nav-link"
@@ -245,7 +282,10 @@ export default class App extends Component {
                   user={this.state.user}
                 />
               ) : (
-                <Signin login={this.loginHandler} />
+                <Signin
+                  login={this.loginHandler}
+                  googleLogin={this.handleGoogleLogin}
+                />
               )
             }
           ></Route>
@@ -310,7 +350,12 @@ export default class App extends Component {
 
           <Route
             path="/signup"
-            element={<Signup register={this.registerHandler} />}
+            element={
+              <Signup
+                register={this.registerHandler}
+                login={this.loginHandler}
+              />
+            }
           ></Route>
           <Route
             path="/signin"
@@ -327,6 +372,7 @@ export default class App extends Component {
         </Routes>
 
         <Footer />
+        {/* {this.state.logoutRedirect && <Navigate to="/" replace={true} />} */}
       </Router>
     );
   }

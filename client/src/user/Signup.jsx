@@ -1,9 +1,16 @@
 import React, { Component } from "react";
-import { Container, Button } from "react-bootstrap";
-import "./Signup.scss";
+
+import { Container, Form, Button } from "react-bootstrap";
+import GSignup from "./GSignup";
+import axios from "axios";
+import './Signup.scss'
+import { Navigate } from "react-router-dom";
+
 
 export default class Signup extends Component {
-  state = {};
+  state = {
+    redirect: false,
+  };
 
   changeHandler = (e) => {
     let temp = { ...this.state };
@@ -13,10 +20,15 @@ export default class Signup extends Component {
 
   registerHandler = () => {
     this.props.register(this.state);
+    this.props.login(this.state);
+    this.setState({
+      redirect: true,
+    })
   };
 
   render() {
     // console.log(this.state);
+      
     return (
       <div>
         <div>
@@ -67,7 +79,14 @@ export default class Signup extends Component {
               Register
             </Button>
           </Container>
+          <GSignup></GSignup>
         </div>
+        {this.state.redirect && (
+          <Navigate
+            to='/'
+            replace={true}
+          />
+        )}
       </div>
     );
   }

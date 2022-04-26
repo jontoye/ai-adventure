@@ -1,6 +1,9 @@
 //APIS for Authentication
 // const { User } = require("../models/User");
 const User = require("../models/User");
+const { OAuth2Client } = require("google-auth-library");
+const GoogleUser = require("../models/GoogleUser.js");
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 const bcrypt = require("bcrypt");
 const passport = require("passport");
 const salt = 10;
@@ -16,7 +19,7 @@ const { response } = require("express");
 //HTTP Post - post sign up form data
 
 exports.auth_signup_post = (req, res) => {
-  // check if password length is greater than 6.
+  // check if password length is greater than 6
   if (req.body.password.length < 6) {
     res
       .json({ message: "Password must be at least 6 characters long." })
@@ -117,18 +120,14 @@ exports.auth_signin_post = async (req, res) => {
       return res.json({ message: "Incorrect password." }).status(400);
     }
 
-    const payload = {
-      user: {
+    jwt.sign(
+      {
         id: user._id,
         name: user.username,
+        email: user.emailAddress,
       },
-      // user: { ...user },
-    };
-
-    jwt.sign(
-      payload,
       process.env.secret,
-      { expiresIn: 36000000 },
+      { expiresIn: "7d" },
       (err, token) => {
         if (err) throw err;
         res.json({ token, message: "Login successful." }).status(200);
@@ -147,3 +146,68 @@ exports.auth_signin_post = async (req, res) => {
 //   // req.flash("success", "You are successfully logged out");
 //   res.redirect("/auth/signin");
 // };
+
+exports.googleLoginPost = (req, resp) => {
+  const { tokenId } = req.body;
+
+  client
+    .verifyIdToken({ idToken: tokenId, audience: process.env.GOOGLE_CLIENT_ID })
+    .then((res) => {
+      const { email_verified, name, email } = res.payload;
+      console.log({ email_verified, name, email });
+      if (email_verified) {
+        User.findOne({ emailAddress: email }).exec((err, user) => {
+          if (err) {
+            return resp.json({
+              error: "Something went wrong...",
+            });
+          } else {
+            if (user) {
+              const token = jwt.sign(
+                {
+                  id: user._id,
+                  name: user.username,
+                  email: user.emailAddress,
+                },
+                process.env.secret,
+                {
+                  expiresIn: "7d",
+                }
+              );
+              const { _id, username, emailAddress } = user;
+
+              return resp.json({
+                token,
+                user: { _id, username, emailAddress },
+              });
+            } else {
+              let password = email + process.env.secret;
+              let newUser = new User({
+                username: name,
+                emailAddress: email,
+                password: password,
+              });
+              let hash = bcrypt.hashSync(password, salt);
+              newUser.password = hash;
+              newUser.save((err, data) => {
+                if (err) {
+                  return resp.json({
+                    error: "Something went wrong...",
+                  });
+                }
+                const token = jwt.sign({ id: data._id }, process.env.secret, {
+                  expiresIn: "7d",
+                });
+                const { _id, username, emailAddress, password } = newUser;
+
+                return resp.json({
+                  token,
+                  user: { _id, username, emailAddress, password },
+                });
+              });
+            }
+          }
+        });
+      }
+    });
+};
