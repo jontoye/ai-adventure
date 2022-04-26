@@ -4,11 +4,7 @@ const bcrypt = require('bcrypt');
 const findOrCreate = require('mongoose-findorcreate');
 
 const userSchema = mongoose.Schema({
-
-    googleId:{
-        type: String
-    },
-
+    
     username: {
         type: String,
         required: true,

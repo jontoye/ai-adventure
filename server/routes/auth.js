@@ -40,55 +40,7 @@ router.get('/auth/google',
   passport.authenticate('google', {scope: ['profile', 'email']})
 )
 
-router.post('/auth/google', (req,res)=>{
-  const{tokenId} = req.body;
-
-  client.verifyIdToken({idToken: tokenId, audience: process.env.GOOGLE_CLIENT_ID})
-  .then(res=>{
-    const {email_verified, name, email} = res.payload
-    console.log({email_verified,name,email})
-    if(email_verified){
-      User.findOne({emailAddress : email}).exec((err,user)=>{
-        if(err) {
-          console.log({
-            error: "Something went wrong..."
-          })
-        }else{
-          if(user){
-            const token = jwt.sign({id: user._id}, process.env.secret, {expiresIn: '7d'})
-            const {_id, username, emailAddress} = user;
-
-            console.log({
-              token,
-              user: {_id, username, emailAddress}
-            })
-          }else{
-            let password = email + process.env.secret
-            let newUser = new User({username:name, emailAddress:email, password:password})
-            newUser.save((err, data)=>{
-              if(err){
-                console.log({
-                  error: "Something went wrong..."
-                })
-              }
-              const token = jwt.sign({id: data._id}, process.env.secret, {expiresIn: '7d'})
-              const {_id, username, emailAddress} = newUser;
-              
-  
-              console.log({
-                token,
-                user: {_id, username, emailAddress}
-              })
-            })
-
-          }
-        }
-        
-      })
-    }
-  })
-
-})
+router.post('/auth/google', authCtrl.googleLoginPost)
 
 router.get('/google/callback',
 passport.authenticate('google', {

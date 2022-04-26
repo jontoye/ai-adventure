@@ -164,7 +164,7 @@ export default class App extends Component {
 
               <span id='main-greeting'>
                 {this.state.user
-                  ? "Welcome " + this.state.user.user.name
+                  ? "Welcome " + this.state.user.username
                   : null}{" "}
               </span>
             </Navbar.Collapse>

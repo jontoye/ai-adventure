@@ -1,18 +1,35 @@
 import axios from 'axios';
 import React from 'react'
 import { useState } from 'react';
+import jwt_decode from "jwt-decode";
 import { GoogleLogin } from 'react-google-login';
 
 export default function GSignup(){
 
-  const googleAuth = (res) => {
+    const state = {}
+
+  const googleAuth = (response) => {
     axios({
         method: 'post',
         url: "http://localhost:3001/auth/google",
-        data: {tokenId: res.tokenId}
+        data: {tokenId: response.tokenId}
     })
     .then(res=>{
         console.log("google login success",res);
+
+        if (res.data.token != null) {
+            //localStorage refers to localStorage of browser
+            localStorage.setItem("token", res.data.token);
+            let user = jwt_decode(res.data.token);
+  
+            this.setState({
+              isAuth: true,
+              user: user,
+              message: null,
+              failMessage: null,
+              successMessage: "User logged in successfully.",
+            });
+          }
     })
     .catch(err=>{
         console.log(err)
