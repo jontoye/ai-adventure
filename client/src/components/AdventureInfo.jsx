@@ -30,7 +30,7 @@ export default class AdventureInfo extends Component {
    }
   continueAdventure = (e) => {
     // console.log('fancy frontend stuff')
-    this.props.continueAdventure(this.state.adventure)
+    this.props.continueAdventure(this.state.adventure, this.state.character)
     this.setState({
       redirect: true,
     })
@@ -67,6 +67,7 @@ export default class AdventureInfo extends Component {
             to='/adventure'
             replace={true}
             adventure={this.state.adventure}
+            character={this.state.character}
           />
         )}
       </div>

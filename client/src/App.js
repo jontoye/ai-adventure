@@ -65,11 +65,12 @@ export default class App extends Component {
     });
   }
 
-  startStory(logs) {
+  startStory(logs,character) {
     // console.log("start story triggered");
     // console.log("navigate test", this.props.navigate);
     this.setState({
       log: logs,
+      character: character,
     });
     // this.props.navigate("/adventure");
   }
@@ -90,9 +91,10 @@ export default class App extends Component {
     // this.props.navigate("/adventure");
   }
 
-  continueAdventure(adventure) {
+  continueAdventure(adventure,character) {
     this.setState({
       adventure: adventure,
+      character: character,
     });
   }
 
@@ -281,6 +283,7 @@ export default class App extends Component {
               <Adventure
                 log={this.state.log}
                 adventure={this.state.adventure}
+                character={this.state.character}
               />
             }
           />

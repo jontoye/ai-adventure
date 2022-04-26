@@ -94,7 +94,7 @@ export default class CreateAdventure extends Component {
     console.log('story: '+ character.backstory)
 
     let intro = `${character.backstory}`;
-    let prompt = `Begin a ${formDataObj.genre} story to ${formDataObj.quest} in a ${formDataObj.setting} setting. Create a detailed story in 50 words about ${character.name} starting the quest`;
+    let prompt = `Begin a ${formDataObj.genre} story to ${formDataObj.quest} in a ${formDataObj.setting} setting. Create a detailed introduction in 50 words about ${character.name} starting the quest`;
     let AIprompt = intro + "\n\n" + prompt + "\n";
     // console.log("intro", intro);
     // console.log("prompt", prompt);
@@ -137,7 +137,7 @@ export default class CreateAdventure extends Component {
           log: [character.backstory, prompt, intro],
         });
 
-        this.props.startStory(logs);
+        this.props.startStory(logs, this.state.character);
       })
       .catch((error) => {
         // console.log("error log:", error);
@@ -256,6 +256,7 @@ export default class CreateAdventure extends Component {
               to='/adventure'
               replace={true}
               adventure={this.state.newAdventure}
+              character={this.state.character}
             />
           )}
         </Container>
