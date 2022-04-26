@@ -40,13 +40,13 @@ export default class Adventure extends Component {
   };
 
   optionSelect = (option) => {
-    if (option === 1) {
-      this.setState({ log: [...this.state.log, this.state.option1] });
-    } else if (option === 2) {
-      this.setState({ log: [...this.state.log, this.state.option2] });
-    } else if (option === 3) {
-      this.setState({ log: [...this.state.log, this.state.option3] });
-    }
+    // if (option === 1) {
+    //   this.setState({ log: [...this.state.log, this.state.option1] });
+    // } else if (option === 2) {
+    //   this.setState({ log: [...this.state.log, this.state.option2] });
+    // } else if (option === 3) {
+    //   this.setState({ log: [...this.state.log, this.state.option3] });
+    // }
   };
 
   buttonOneClick = () => {
@@ -70,12 +70,12 @@ export default class Adventure extends Component {
       apiKey: process.env.REACT_APP_API_KEY,
     });
     const openai = new OpenAIApi(configuration);
-    let AIprompt = this.props.adventure.log.join("");
-    AIprompt =
-      AIprompt +
-      `\nGive ${this.state.name} 3 detailed options for what to do next`;
+    let previousLog = this.state.log.join("");
+    let prompt = `\nGive ${this.state.name} 3 detailed options for what to do next.`;
+    let AIprompt = previousLog + prompt;
+      
     openai
-      .createCompletion("text-davinci-002", {
+      .createCompletion(process.env.REACT_APP_API_ENGINE, {
         prompt: AIprompt,
         temperature: 0.8,
         max_tokens: 256,
@@ -90,7 +90,7 @@ export default class Adventure extends Component {
         }
         let split_choices = choices.split(/\s?\d+\.\s/);
         this.setState({
-          log: [...this.state.log, choices],
+          log: [...this.state.log, prompt, '1. ' + split_choices[1]+'\n2. ' + split_choices[2]+'\n3. ' +split_choices[3]],
           option1: split_choices[1],
           option2: split_choices[2],
           option3: split_choices[3],
@@ -110,10 +110,10 @@ export default class Adventure extends Component {
       apiKey: process.env.REACT_APP_API_KEY,
     });
     const openai = new OpenAIApi(configuration);
-    let AIprompt = this.state.log.join("");
-    AIprompt =
-      AIprompt +
-      `\n ${this.state.name} chooses ${x}. ${option}. Give a long, detailed account of what happens next.`;
+    let previousLog = this.state.log.join("");
+    let prompt = `\n ${this.state.name} chooses to ${option}. Give a long and detailed account of what happens next.`;
+    let AIprompt = previousLog + prompt;
+      
     openai
       .createCompletion(process.env.REACT_APP_API_ENGINE, {
         prompt: AIprompt,
@@ -129,7 +129,7 @@ export default class Adventure extends Component {
           reply = reply.slice(1, reply.length);
         }
         this.setState({
-          log: [...this.state.log, reply],
+          log: [...this.state.log, prompt, reply],
         });
         this.nextPrompt();
       })
@@ -147,10 +147,9 @@ export default class Adventure extends Component {
       apiKey: process.env.REACT_APP_API_KEY,
     });
     const openai = new OpenAIApi(configuration);
-    let AIprompt = this.state.log.join("");
-    AIprompt =
-      AIprompt +
-      `\nGive ${this.state.name} 3 detailed options for what to do next`;
+    let previousLog = this.state.log.join("");
+    let prompt = `\nGive ${this.state.name} 3 detailed options for what to do next.`;
+    let AIprompt = previousLog + prompt;
     openai
       .createCompletion(process.env.REACT_APP_API_ENGINE, {
         prompt: AIprompt,
@@ -166,9 +165,8 @@ export default class Adventure extends Component {
           choices = choices.slice(1, choices.length);
         }
         let split_choices = choices.split(/\s?\d+\.\s/);
-
         this.setState({
-          log: [...this.state.log, choices],
+          log: [...this.state.log, prompt, '1. ' + split_choices[1]+'\n2. ' + split_choices[2]+'\n3. ' +split_choices[3]],
           option1: split_choices[1],
           option2: split_choices[2],
           option3: split_choices[3],
