@@ -207,6 +207,7 @@ export default class App extends Component {
                 )}
               </Nav>
 
+
               <span id="main-greeting">
                 {this.state.user ? (
                   <div className="right-nav">
@@ -226,6 +227,7 @@ export default class App extends Component {
                     </Link>
                   </div>
                 ) : null}{" "}
+
               </span>
             </Navbar.Collapse>
           </Container>

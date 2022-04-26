@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 require("dotenv").config();
+const cors = require('cors')
 
 const PORT = process.env.PORT || 3001;
 
@@ -8,6 +9,7 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use(express.json());
+app.use(cors())
 
 // initialise session/cookies
 let session = require("express-session");

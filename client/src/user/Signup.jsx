@@ -1,7 +1,11 @@
 import React, { Component } from "react";
-import { Container, Button } from "react-bootstrap";
+
+import { Container, Form, Button } from "react-bootstrap";
+import GSignup from "./GSignup";
+import axios from "axios";
+import './Signup.scss'
 import { Navigate } from "react-router-dom";
-import "./Signup.scss";
+
 
 export default class Signup extends Component {
   state = {
@@ -24,6 +28,7 @@ export default class Signup extends Component {
 
   render() {
     // console.log(this.state);
+      
     return (
       <div>
         <div>
@@ -74,6 +79,7 @@ export default class Signup extends Component {
               Register
             </Button>
           </Container>
+<GSignup></GSignup>
         </div>
         {this.state.redirect && (
           <Navigate

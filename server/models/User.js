@@ -1,9 +1,11 @@
 // Dependencies
-const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+const findOrCreate = require('mongoose-findorcreate');
 
-const userSchema = mongoose.Schema(
-  {
+const userSchema = mongoose.Schema({
+    
+
     username: {
       type: String,
       required: true,
@@ -64,6 +66,8 @@ userSchema.methods.verifyPassword = function (password) {
   // console.log(this.password);
   return bcrypt.compareSync(password, this.password);
 };
+
+    userSchema.plugin(findOrCreate);
 
 const User = mongoose.model("User", userSchema);
 

@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Container, Form, Button } from "react-bootstrap";
+import GSignup from "./GSignup";
+import axios from "axios";
 import { Navigate } from "react-router-dom";
 
 export default class Signin extends Component {
@@ -7,6 +9,17 @@ export default class Signin extends Component {
     redirect: false,
   };
 
+  componentDidMount() { 
+    
+      axios.get('/wedidit')
+      .then(res=>{
+        console.log(res)
+      })
+      .catch(err=>{
+        console.log(err)
+      })
+    }
+  
   changeHandler = (e) => {
     let temp = { ...this.state };
     temp[e.target.name] = e.target.value;
@@ -20,7 +33,8 @@ export default class Signin extends Component {
     })
   };
 
-  render() {
+
+  render(){
     // console.log(this.state);
     return (
       <div >
@@ -39,6 +53,7 @@ export default class Signin extends Component {
           <br></br>
           <Button id="create-user-button" onClick={this.loginHandler}>Sign In</Button>
         </Container>
+        <GSignup></GSignup>
         </div>
         {this.state.redirect && (
           <Navigate
