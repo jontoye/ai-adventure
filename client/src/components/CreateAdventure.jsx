@@ -90,8 +90,11 @@ export default class CreateAdventure extends Component {
     let character = this.state.characters.find(v=>{
       return formDataObj.character === v.name;
     })
+    console.log('character: '+ character.name)
+    console.log('story: '+ character.backstory)
 
-    let intro = `${character.characterStory}`;
+    let intro = `${character.backstory}`;
+    console.log(intro)
     let prompt = `Begin a ${formDataObj.genre} story to ${formDataObj.quest} in a ${formDataObj.setting} setting. Create a detailed story about ${character.name} starting the quest`;
     let AIprompt = intro + "\n\n" + prompt + "\n";
     // console.log("intro", intro);
@@ -121,7 +124,7 @@ export default class CreateAdventure extends Component {
           intro = intro.slice(1, intro.length);
         }
         //the important one
-        let logs = [character.characterStory, prompt, intro];
+        let logs = [character.backstory, prompt, intro];
         // console.log("formDataObj", formDataObj);
         // console.log("logs test", logs);
         formDataObj.log = [AIprompt, response.data.choices[0].text];
@@ -132,7 +135,7 @@ export default class CreateAdventure extends Component {
           character: character,
           placeholder: `Adventure successfully created. Enjoy!`,
           response: `${intro}`,
-          log: [character.characterStory, prompt, intro],
+          log: [character.backstory, prompt, intro],
         });
 
         this.props.startStory(logs);
@@ -253,8 +256,6 @@ export default class CreateAdventure extends Component {
             <Navigate
               to='/adventure'
               replace={true}
-              log={this.state.log}
-              name={this.state.name}
               adventure={this.state.newAdventure}
             />
           )}

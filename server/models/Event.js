@@ -15,6 +15,9 @@ const eventSchema = mongoose.Schema(
       type: Array,
       default: [],
     },
+    optionChosen: {
+      type: Number,
+    },
     log: {
       type: Array,
       default: [],

@@ -162,7 +162,6 @@ export default class CreateCharacter extends Component {
       apiKey: process.env.REACT_APP_API_KEY,
     });
     const openai = new OpenAIApi(configuration);
-
     openai
       .createCompletion(process.env.REACT_APP_API_ENGINE, {
         prompt: AIprompt,
