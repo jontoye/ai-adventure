@@ -162,9 +162,8 @@ export default class CreateCharacter extends Component {
       apiKey: process.env.REACT_APP_API_KEY,
     });
     const openai = new OpenAIApi(configuration);
-
     openai
-      .createCompletion("text-davinci-002", {
+      .createCompletion(process.env.REACT_APP_API_ENGINE, {
         prompt: AIprompt,
         temperature: 0.8,
         max_tokens: 500,

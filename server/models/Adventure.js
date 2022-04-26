@@ -24,13 +24,9 @@ const adventureSchema = mongoose.Schema(
       required: true,
     },
     character: {
-      type: String,
-      required: true,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Character",
     },
-    // characterStory: {
-    //   type: String,
-    //   required: true,
-    // },
     quest: {
       type: String,
       required: true,
@@ -39,6 +35,10 @@ const adventureSchema = mongoose.Schema(
       type: Array,
       default: [],
     },
+    events: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Event",
+    }],
     poem: {
       type: String,
     },
