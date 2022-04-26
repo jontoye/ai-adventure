@@ -4,7 +4,7 @@ import { useState } from 'react';
 import jwt_decode from "jwt-decode";
 import { GoogleLogin } from 'react-google-login';
 
-export default function GSignup(){
+export default function GSignup({ login }){
 
     const state = {}
 
@@ -29,7 +29,8 @@ export default function GSignup(){
               failMessage: null,
               successMessage: "User logged in successfully.",
             });
-          }
+            // login();
+        }
     })
     .catch(err=>{
         console.log(err)
@@ -40,8 +41,8 @@ export default function GSignup(){
     <div>
         <GoogleLogin
             clientId = {process.env.REACT_APP_GOOGLE_CLIENT_ID}
-            onSuccess = {googleAuth}
-            onFailure = {'error' + googleAuth}
+            onSuccess = {login}
+            // onFailure = {'error' + googleAuth}
             cookiePolicy={"single_host_origin"}
           >
             <span>Sign In with Google</span>

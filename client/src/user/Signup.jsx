@@ -79,7 +79,7 @@ export default class Signup extends Component {
               Register
             </Button>
           </Container>
-<GSignup></GSignup>
+          <GSignup></GSignup>
         </div>
         {this.state.redirect && (
           <Navigate

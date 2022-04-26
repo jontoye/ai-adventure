@@ -6,15 +6,15 @@ import './css/Home.css'
 import axios from 'axios';
 
 export default class Home extends Component {
-	componentDidMount() {
-		axios.get('/wedidit')
-      .then(res=>{
-        console.log(res)
-      })
-      .catch(err=>{
-        console.log(err)
-      })
-    }
+	// componentDidMount() {
+	// 	axios.get('/wedidit')
+    //   .then(res=>{
+    //     console.log(res)
+    //   })
+    //   .catch(err=>{
+    //     console.log(err)
+    //   })
+    // }
 
 	
 

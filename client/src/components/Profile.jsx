@@ -26,8 +26,8 @@ function Profile({ currentUser }) {
   const handleFriendClick = () => {
     const addFriend = async () => {
       // adds friend to each user
-      await axios.post(`/profile/${params.userId}/addsocial`, { user: currentUser.user.id, add: "friend"})
-      await axios.post(`/profile/${currentUser.user.id}/addsocial`, { user: params.userId, add: "friend"})
+      await axios.post(`/profile/${params.userId}/addsocial`, { user: currentUser.id, add: "friend"})
+      await axios.post(`/profile/${currentUser.id}/addsocial`, { user: params.userId, add: "friend"})
       getUser(params.userId)
     }
     addFriend();
@@ -36,8 +36,8 @@ function Profile({ currentUser }) {
   const handleUnfriendClick = () => {
     const removeFriend = async () => {
       // removes friends from each user
-      await axios.post(`/profile/${params.userId}/removesocial`, { user: currentUser.user.id, remove: "friend"})
-      await axios.post(`/profile/${currentUser.user.id}/removesocial`, { user: params.userId, remove: "friend"})
+      await axios.post(`/profile/${params.userId}/removesocial`, { user: currentUser.id, remove: "friend"})
+      await axios.post(`/profile/${currentUser.id}/removesocial`, { user: params.userId, remove: "friend"})
       getUser(params.userId)
     }
     removeFriend();
@@ -45,11 +45,11 @@ function Profile({ currentUser }) {
   
   const handleFollowClick = () => {
     const addFollower = async () => {
-      await axios.post(`/profile/${params.userId}/addsocial`, { user: currentUser.user.id, add: "follower"})
+      await axios.post(`/profile/${params.userId}/addsocial`, { user: currentUser.id, add: "follower"})
       getUser(params.userId)
     }
     const addFollowing = async () => {
-      await axios.post(`/profile/${currentUser.user.id}/addsocial`, { user: params.userId, add: "following"})
+      await axios.post(`/profile/${currentUser.id}/addsocial`, { user: params.userId, add: "following"})
     }
 
     addFollower();  
@@ -58,11 +58,11 @@ function Profile({ currentUser }) {
 
   const handleUnfollowClick = () => {
     const removeFollower = async () => {
-      await axios.post(`/profile/${params.userId}/removesocial`, { user: currentUser.user.id, remove: "follower"})
+      await axios.post(`/profile/${params.userId}/removesocial`, { user: currentUser.id, remove: "follower"})
       getUser(params.userId)
     }
     const removeFollowing = async () => {
-      await axios.post(`/profile/${currentUser.user.id}/removesocial`, { user: params.userId, remove: "following"})
+      await axios.post(`/profile/${currentUser.id}/removesocial`, { user: params.userId, remove: "following"})
     }
 
     removeFollower();  
@@ -74,10 +74,10 @@ function Profile({ currentUser }) {
       <h1>{user.username}'s Profile Page</h1>
       <img src={user.avatar} alt="profile-img" className="profile-img" />
       
-      {params.userId !== currentUser.user.id &&
+      {params.userId !== currentUser.id &&
         <div className="row mb-5">
         <div className="d-flex col-4 mx-auto justify-content-between">
-          {!user.followers.includes(currentUser.user.id) ?
+          {!user.followers.includes(currentUser.id) ?
             (<Link to="#">
               <div className='social-button d-flex'>
                 <img src="/images/icons/follow.png" alt="follow" onClick={handleFollowClick}/>
@@ -89,7 +89,7 @@ function Profile({ currentUser }) {
               </div>
             </Link> )
           }
-          {!user.friends.includes(currentUser.user.id) ?
+          {!user.friends.includes(currentUser.id) ?
             (<Link to="#">
               <div className='social-button d-flex'>
                 <img src="/images/icons/add-friend.png" alt="add-friend" onClick={handleFriendClick}/>
@@ -116,7 +116,7 @@ function Profile({ currentUser }) {
         </div>
       </div>
 
-      {params.userId === currentUser.user.id &&
+      {params.userId === currentUser.id &&
         <div className="row mb-5"> 
           <div className="col-8 mx-auto d-flex justify-content-between">
             <Link to="/characters" className="display-6">My Characters</Link>

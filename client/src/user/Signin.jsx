@@ -3,22 +3,23 @@ import { Container, Form, Button } from "react-bootstrap";
 import GSignup from "./GSignup";
 import axios from "axios";
 import { Navigate } from "react-router-dom";
+import jwt_decode from "jwt-decode";
 
 export default class Signin extends Component {
   state = {
     redirect: false,
   };
 
-  componentDidMount() { 
+  // componentDidMount() { 
     
-      axios.get('/wedidit')
-      .then(res=>{
-        console.log(res)
-      })
-      .catch(err=>{
-        console.log(err)
-      })
-    }
+  //     axios.get('/wedidit')
+  //     .then(res=>{
+  //       console.log(res)
+  //     })
+  //     .catch(err=>{
+  //       console.log(err)
+  //     })
+  //   }
   
   changeHandler = (e) => {
     let temp = { ...this.state };
@@ -31,11 +32,14 @@ export default class Signin extends Component {
     this.setState({
       redirect: true,
     })
+    this.setState({
+      redirect: false,
+    })
   };
 
+  
 
   render(){
-    // console.log(this.state);
     return (
       <div >
 
@@ -53,7 +57,7 @@ export default class Signin extends Component {
           <br></br>
           <Button id="create-user-button" onClick={this.loginHandler}>Sign In</Button>
         </Container>
-        <GSignup></GSignup>
+        <GSignup login={this.props.googleLogin}></GSignup>
         </div>
         {this.state.redirect && (
           <Navigate
