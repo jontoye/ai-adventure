@@ -16,7 +16,7 @@ export default class AdventureInfo extends Component {
     .then((response) => {
       // console.log(response.data.characters);
       let character = response.data.characters.find(v=>{
-        return this.state.adventure.character === v.id;
+        return this.state.adventure.character === v._id;
       })
       // console.log(character.name)
       this.setState({
