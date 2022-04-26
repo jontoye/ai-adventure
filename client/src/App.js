@@ -15,6 +15,7 @@ import Adventure from "./components/Adventure";
 import Profile from "./components/Profile";
 import "./App.scss";
 import { Link } from "react-router-dom";
+import Users from "./components/Users";
 
 export default class App extends Component {
   constructor(props) {
@@ -148,8 +149,8 @@ export default class App extends Component {
               <Nav className="me-auto">
                 {isAuth ? (
                   <>
-                    <Link to="/" className="nav-link">
-                      Home
+                    <Link to="/users" className="nav-link">
+                      Explore
                     </Link>
                     <Link to="/create-character" className="nav-link">
                       Create Character
@@ -182,7 +183,10 @@ export default class App extends Component {
 
               <span id="main-greeting">
                 {this.state.user ? (
-                  <Link to="/profile" className="nav-link">
+                  <Link
+                    to={`/profile/${this.state.user.user.id}`}
+                    className="nav-link"
+                  >
                     {"Welcome " + this.state.user.user.name}
                   </Link>
                 ) : null}{" "}
@@ -200,7 +204,10 @@ export default class App extends Component {
             path="/"
             element={
               isAuth ? (
-                <Home createRandomCharacter={this.createRandomCharacter} />
+                <Home
+                  createRandomCharacter={this.createRandomCharacter}
+                  user={this.state.user}
+                />
               ) : (
                 <Signin login={this.loginHandler} />
               )
@@ -228,6 +235,10 @@ export default class App extends Component {
             exact
             element={<Characters log={this.state.log} />}
           />
+          <Route
+            path="/users"
+            element={<Users currentUser={this.state.user} />}
+          />
 
           <Route
             path="/signup"
@@ -239,8 +250,10 @@ export default class App extends Component {
           ></Route>
           <Route
             path="/profile"
-            element={<Profile user={this.state.user} />}
-          ></Route>
+            element={<Profile currentUser={this.state.user} />}
+          >
+            <Route path=":userId" element={<Profile />} />
+          </Route>
         </Routes>
 
         <Footer />
