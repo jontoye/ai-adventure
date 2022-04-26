@@ -1,0 +1,21 @@
+.section-explore {
+    color: white;
+}
+
+.user-card {
+    width: 600px;
+    border: 2px solid white;
+    border-radius: 10px;
+    padding: 20px 50px;
+    font-size: larger;
+  
+    box-shadow: rgba(255, 255, 255, 0.35) 0px 5px 15px;    
+}
+
+.user-card__img {
+    width: 100px;
+}
+
+.user-card__img img {
+    width: 100%;
+}

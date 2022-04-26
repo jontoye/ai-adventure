@@ -18,8 +18,10 @@ const { response } = require("express");
 exports.auth_signup_post = (req, res) => {
   // check if password length is greater than 6.
   if (req.body.password.length < 6) {
-    res.json({message: 'Password must be at least 6 characters long.'}).status(400);
-    return
+    res
+      .json({ message: "Password must be at least 6 characters long." })
+      .status(400);
+    return;
   }
 
   let user = new User(req.body);
@@ -29,7 +31,8 @@ exports.auth_signup_post = (req, res) => {
   // console.log(hash);
   user.password = hash;
 
-  user.save()
+  user
+    .save()
     .then(() => {
       // res.redirect("/auth/signin");
       res.json({ message: "User created successfully!" }).status(200);
@@ -41,29 +44,44 @@ exports.auth_signup_post = (req, res) => {
         // res.redirect("/auth/signin");
         if (Object.keys(err.keyValue).includes("username")) {
           res.json({ message: "Username already exists." }).status(400);
-        } else if (Object.keys(err.keyValue).includes("emailAddress"))  {
+        } else if (Object.keys(err.keyValue).includes("emailAddress")) {
           res.json({ message: "Email address already exists." }).status(400);
         } else {
-          res.json({ message: "Username or email already exists. Please choose a new one." }).status(400);
+          res
+            .json({
+              message:
+                "Username or email already exists. Please choose a new one.",
+            })
+            .status(400);
         }
       } else {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
           // req.flash("validationErrors", errors.errors);
-          res.json({
-            message: "Validation Errors",
-            ValidationErrors: errors.errors,
-          }).status(400);
+          res
+            .json({
+              message: "Validation Errors",
+              ValidationErrors: errors.errors,
+            })
+            .status(400);
         }
         // res.redirect("/auth/signup");
         if (err.errors.username) {
-          res.json({ message: err.errors.username.properties.message }).status(400);
+          res
+            .json({ message: err.errors.username.properties.message })
+            .status(400);
         } else if (err.errors.emailAddress) {
-          res.json({ message: err.errors.emailAddress.properties.message }).status(400);
+          res
+            .json({ message: err.errors.emailAddress.properties.message })
+            .status(400);
         } else if (err.errors.password) {
-          res.json({ message: err.errors.password.properties.message }).status(400);
+          res
+            .json({ message: err.errors.password.properties.message })
+            .status(400);
         } else
-        res.json({ message: "Error creating user. Please try again later." }).status(400);
+          res
+            .json({ message: "Error creating user. Please try again later." })
+            .status(400);
       }
     });
 };
@@ -104,6 +122,7 @@ exports.auth_signin_post = async (req, res) => {
         id: user._id,
         name: user.username,
       },
+      // user: { ...user },
     };
 
     jwt.sign(
