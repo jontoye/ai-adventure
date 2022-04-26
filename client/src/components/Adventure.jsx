@@ -28,19 +28,33 @@ export default class Adventure extends Component {
 
   componentDidMount() {
     console.log('LOAD')
-    console.log(this.props.adventure)
-    console.log(this.props.character)
-    this.setState({
-      adventure: this.props.adventure,
-      character: this.props.character,
-      log: this.props.adventure.log,
-      previousLog: this.props.adventure.log,
-      name: this.props.adventure.name,
+
+    Axios.get("event/index")
+    .then((response) => {
+      console.log(response.data.events)
+      console.log(this.props.adventure.events)
+      let event = response.data.events.find(v=>{
+        return this.props.adventure.events.reverse()[0] === v._id;
+      })
+      console.log('successfully loaded event: ', event)
+      this.setState({
+        event: event,
+        adventure: this.props.adventure,
+        character: this.props.character,
+        log: this.props.adventure.log,
+        previousLog: this.props.adventure.log,
+        name: this.props.adventure.name,
+      });
+      //async!
+      setTimeout(()=>{
+        this.generatePrompt();
+      },100)
+    })
+    .catch((err) => {
+      console.log("Error fetching events.");
+      console.log(err);
     });
-    //async!
-    setTimeout(()=>{
-      this.generatePrompt();
-    },100)
+
   }
 
   optionSelect = (option) => {
@@ -78,6 +92,8 @@ export default class Adventure extends Component {
     let previousLog = this.state.log.join("");
     let prompt = `\nGive ${this.state.character.name} 3 detailed options for what to do next.`;
     let AIprompt = previousLog + prompt;
+
+    console.log(this.state.event[0])
       
     openai
       .createCompletion(process.env.REACT_APP_API_ENGINE, {
@@ -99,9 +115,15 @@ export default class Adventure extends Component {
           option1: split_choices[1],
           option2: split_choices[2],
           option3: split_choices[3],
+          event: {
+            ...this.state.event,
+            optionPrompt: prompt,
+            options: [split_choices[1],split_choices[2],split_choices[3]],
+          }
         });
+
         setTimeout(()=>{
-          this.saveEvent(prompt);
+          this.saveEvent();
         },100)
 
       })
@@ -114,19 +136,48 @@ export default class Adventure extends Component {
     });
   };
 
-  saveEvent = (prompt) => {
-    this.setState = {
-      event: {
-        previousLog: this.state.previousLog,
-        story: this.state.previousLog,
-        prompt: prompt,
-        options: [this.state.option1,this.state.option2,this.state.option3],
-      }
-    }
+  saveEvent = () => {
+    console.log('saving event', this.state.event)
+  }
+
+  createEvent = (event) => {
+    Axios.post("event/add", event, {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    })
+    .then((response) => {
+      console.log("Event created successfully.", response);
+      this.setState({
+        event: response.data.event,
+      })
+    })
+    .catch((error) => {
+      console.log("Error creating event.", error);
+    });
+  }
+
+  updateEvent = () => {
+    console.log('updating event', this.state.event)
   }
 
   chooseOption = (option, x) => {
     console.log('Option');
+    //UPDATE & SAVE EXISTING EVENT
+    this.setState({
+      event: {
+        selectedOption: x,
+      }
+    })
+    setTimeout(()=>{
+      this.saveEvent();
+    },100)
+
+    //INITIALIZE A NEW EVENT
+    this.setState({
+      event: {},
+    })
+
     const configuration = new Configuration({
       apiKey: process.env.REACT_APP_API_KEY,
     });
@@ -149,6 +200,21 @@ export default class Adventure extends Component {
         if (reply[0] === "\n") {
           reply = reply.slice(1, reply.length);
         }
+        console.log(reply)
+        //CREATE NEW EVENT
+        let event = {
+          previousLog: this.state.log,
+          storyPrompt: prompt,
+          story: reply,
+          optionPrompt: '',
+          options: [],
+          selectedOption: null,
+          fullLog: [...this.state.log, prompt, reply],
+          displayedLog: [...this.state.log, prompt, reply],
+        }
+        console.log(event)
+        this.createEvent(event);
+
         this.setState({
           log: [...this.state.log, prompt, reply],
         });

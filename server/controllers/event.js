@@ -14,8 +14,15 @@ exports.event_create_post = (req, res) => {
   });
 };
 
-//HTTP GET - load stock detail
-exports.event_detail_get = (req, res) => {
-    return
+//HTTP GET - load event index
+exports.event_index_get = (req, res) => {
+  Event.find()
+  .then((events) => {
+    res.json({ events });
+  })
+  .catch((err) => {
+    console.log(err);
+    res.send("Error locating events.");
+  });
 }
 

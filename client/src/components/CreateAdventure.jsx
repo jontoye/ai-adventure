@@ -137,7 +137,8 @@ export default class CreateAdventure extends Component {
           storyPrompt: prompt,
           story: story,
           optionPrompt: '',
-          options: ['','',''],
+          options: [],
+          selectedOption: null,
           fullLog: logs,
           displayedLog: logs,
         }
@@ -183,7 +184,6 @@ export default class CreateAdventure extends Component {
     .catch((error) => {
       console.log("Error creating event.", error);
     });
-    
   }
 
   render() {
