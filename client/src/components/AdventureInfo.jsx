@@ -32,10 +32,27 @@ export default class AdventureInfo extends Component {
   }
   continueAdventure = (e) => {
     // console.log('fancy frontend stuff')
-    this.props.continueAdventure(this.state.adventure);
-    this.setState({
-      redirect: true,
-    });
+    console.log('continuing adventure...')
+    Axios.get("event/index")
+    .then((response) => {
+      let events = response.data.events.filter(v=>{
+        return this.state.adventure.events.includes(v._id);
+      })
+      // console.log('successfully found events: ', events)
+      this.setState({
+        adventure: {
+          ...this.state.adventure,
+          events:events,
+        },
+      });
+      //async!
+      setTimeout(()=>{
+        this.props.continueAdventure(this.state.adventure, this.state.character)
+        this.setState({
+          redirect: true,
+        })
+      },100)
+    })
     // console.log(this.state.character)
   };
 
@@ -85,6 +102,7 @@ export default class AdventureInfo extends Component {
             to='/adventure'
             replace={true}
             adventure={this.state.adventure}
+            character={this.state.character}
           />
         )}
       </div>

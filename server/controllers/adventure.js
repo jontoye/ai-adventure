@@ -35,3 +35,12 @@ exports.adventure_delete_get = (req,res) => {
   })
   .catch((err)=>{console.log(err); res.send("Error deleting selected adventure.")})
 }
+
+//HTTP PUT - Adventure Update
+exports.adventure_update_put = (req,res) => {
+  Adventure.findByIdAndUpdate(req.body._id, req.body, {new: true})
+  .then((adventure)=>{
+      res.json({adventure});
+  })
+  .catch((err)=>{console.log(err); res.send("Error updating adventure.")})
+}

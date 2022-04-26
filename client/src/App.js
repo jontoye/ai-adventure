@@ -98,11 +98,12 @@ export default class App extends Component {
     });
   }
 
-  startStory(logs) {
-    // console.log("start story triggered");
-    // console.log("navigate test", this.props.navigate);
+  startStory(adventure,character) {
+    console.log("start story triggered");
+    console.log(adventure)
     this.setState({
-      log: logs,
+      adventure: adventure,
+      character: character,
     });
     // this.props.navigate("/adventure");
   }
@@ -116,16 +117,15 @@ export default class App extends Component {
   createAdventure(character) {
     // console.log("create adventure triggered");
     // console.log(character)
-    // console.log("navigate test", this.props.navigate);
     this.setState({
       character: character,
     });
-    // this.props.navigate("/adventure");
   }
 
-  continueAdventure(adventure) {
+  continueAdventure(adventure,character) {
     this.setState({
       adventure: adventure,
+      character: character,
     });
   }
 
@@ -319,8 +319,8 @@ export default class App extends Component {
             exact
             element={
               <Adventure
-                log={this.state.log}
                 adventure={this.state.adventure}
+                character={this.state.character}
               />
             }
           />
@@ -329,7 +329,6 @@ export default class App extends Component {
             exact
             element={
               <Characters
-                log={this.state.log}
                 createAdventure={this.createAdventure}
                 setCharacter={this.setCharacter}
               />
@@ -340,7 +339,6 @@ export default class App extends Component {
             exact
             element={
               <CharacterDetail
-                log={this.state.log}
                 character={this.state.character}
               />
             }
