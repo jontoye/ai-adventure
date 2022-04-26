@@ -19,6 +19,7 @@ import "./App.scss";
 import { Link } from "react-router-dom";
 import Users from "./components/Users";
 import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 export default class App extends Component {
   constructor(props) {
@@ -42,6 +43,7 @@ export default class App extends Component {
     character: {},
     adventure: {},
   };
+
 
   componentDidMount() {
     let token = localStorage.getItem("token");
@@ -179,9 +181,14 @@ export default class App extends Component {
       });
   };
 
-  logoutHandler = (e) => {
+    logoutHandler = (e) => {
     e.preventDefault();
+
     localStorage.removeItem("token");
+    const redirect = () =>{
+        window.location.href = '/'
+    }
+    redirect()
     this.setState({
       isAuth: false,
       user: null,
@@ -191,9 +198,13 @@ export default class App extends Component {
       successMessage: null,
       logoutRedirect: true,
     });
+    
   };
 
   render() {
+
+    
+
     const message = this.state.message ? (
       <Alert variant='info'>{this.state.message}</Alert>
     ) : null;
