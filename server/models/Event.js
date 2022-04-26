@@ -18,10 +18,6 @@ const eventSchema = mongoose.Schema(
     optionChosen: {
       type: Number,
     },
-    previousLog: {
-      type: Array,
-      default: [],
-    },
     fullLog: {
       type: Array,
       default: [],

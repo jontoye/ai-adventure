@@ -26,3 +26,12 @@ exports.event_index_get = (req, res) => {
   });
 }
 
+//HTTP PUT - Event Update
+exports.event_update_put = (req,res) => {
+  Event.findByIdAndUpdate(req.body._id, req.body, {new: true})
+  .then((event)=>{
+      res.json({event});
+  })
+  .catch((err)=>{console.log(err); res.send("Error updating event.")})
+}
+

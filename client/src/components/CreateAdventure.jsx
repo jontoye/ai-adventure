@@ -140,7 +140,7 @@ export default class CreateAdventure extends Component {
           options: [],
           selectedOption: null,
           fullLog: logs,
-          displayedLog: logs,
+          displayedLog: [character.backstory, story],
         }
 
         this.createEvent(event);
