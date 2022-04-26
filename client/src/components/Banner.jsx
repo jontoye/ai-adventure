@@ -1,13 +1,8 @@
 // import React, { Component } from "react";
-import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import { Container, Row, Col, Card, Button, Tooltip, OverlayTrigger } from "react-bootstrap";
 import {
-  //   BrowserRouter as Router,
-  //   Route,
-  //   Routes,
-  //   Link,
   useNavigate,
 } from "react-router-dom";
-// import CreateCharacter from "./CreateCharacter";
 import "./css/Banner.css";
 
 export default function Banner(props) {
@@ -17,6 +12,19 @@ export default function Banner(props) {
     props.createRandomCharacter();
     navigate("/create-character");
   }
+
+  const renderTooltip_qs = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Generate a character with random attributes
+    </Tooltip>
+  );
+
+  const renderTooltip_tut = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Learn how to play the game!
+    </Tooltip>
+  );
+
   return (
     <>
       <Container>
@@ -40,20 +48,32 @@ export default function Banner(props) {
               </Card.Body>
             </Card>
             <div className='banner__buttons'>
-              <Button
-                className='banner-button'
-                variant='light'
-                onClick={() => buttonHandler()}
-              >
-                Quick Start
-              </Button>
-              <Button
-                className='banner-button'
-                href='#tutorial'
-                variant='light'
-              >
-                Tutorial
-              </Button>
+                <OverlayTrigger
+                    placement="right"
+                    delay={{ show: 250, hide: 400 }}
+                    overlay={renderTooltip_qs}
+                >
+                    <Button
+                        className='banner-button'
+                        variant='light'
+                        onClick={() => buttonHandler()}
+                    >
+                        Quick Start
+                    </Button>
+                </OverlayTrigger>
+                <OverlayTrigger
+                    placement="right"
+                    delay={{ show: 250, hide: 400 }}
+                    overlay={renderTooltip_tut}
+                >
+                    <Button
+                        className='banner-button'
+                        href='#tutorial'
+                        variant='light'
+                    >
+                        Tutorial
+                    </Button>
+                </OverlayTrigger>
             </div>
           </Col>
           <Col md={12} lg={4} className='banner-right'>

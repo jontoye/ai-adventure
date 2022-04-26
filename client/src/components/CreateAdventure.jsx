@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Container, Form, Button } from "react-bootstrap";
 import Axios from "axios";
-import Log from "./Log";
 import { Navigate } from "react-router-dom";
+import './css/CreateAdventure.css';
 
 const { Configuration, OpenAIApi } = require("openai");
 
@@ -15,14 +15,19 @@ export default class CreateAdventure extends Component {
       response: "",
       newAdventure: {},
       characters: [],
+      character: {},
       log: [],
+      name: '',
       prompt: "",
       redirect: false,
+      
     };
+    // console.log(this.props)
   }
 
   componentDidMount() {
     this.loadCharacterList();
+    this.setState({ name: this.props.character.name });
   }
 
   loadCharacterList = () => {
@@ -31,7 +36,7 @@ export default class CreateAdventure extends Component {
       .then((response) => {
         // console.log(response.data.characters);
         this.setState({
-          characters: response.data.characters,
+          characters: response.data.characters.reverse(),
         });
       })
       .catch((err) => {
@@ -69,7 +74,7 @@ export default class CreateAdventure extends Component {
   };
 
   startStory() {
-    console.log("start-story triggered2");
+    // console.log("start-story triggered2");
     this.setState({
       redirect: true,
     });
@@ -82,10 +87,18 @@ export default class CreateAdventure extends Component {
     const formData = new FormData(e.target),
       formDataObj = Object.fromEntries(formData.entries());
     // console.log(formDataObj);
+    let character = this.state.characters.find(v=>{
+      return formDataObj.character === v.name;
+    })
+    console.log('character: '+ character.name)
+    console.log('story: '+ character.backstory)
 
-    let intro = `${formDataObj.characterStory}`;
-    let prompt = `Begin a ${formDataObj.genre} story to ${formDataObj.quest} in a ${formDataObj.setting} setting.`;
-    let AIprompt = intro + "\n" + prompt + "\n";
+    let intro = `${character.backstory}`;
+    let prompt = `Begin a ${formDataObj.genre} story to ${formDataObj.quest} in a ${formDataObj.setting} setting. Create a detailed story in 50 words about ${character.name} starting the quest`;
+    let AIprompt = intro + "\n\n" + prompt + "\n";
+    // console.log("intro", intro);
+    // console.log("prompt", prompt);
+    // console.log("aiPrompt", AIprompt);
     // console.log("prompt test", AIprompt);
     ////Open Ai Goes here
 
@@ -95,7 +108,7 @@ export default class CreateAdventure extends Component {
     const openai = new OpenAIApi(configuration);
 
     openai
-      .createCompletion("text-davinci-002", {
+      .createCompletion(process.env.REACT_APP_API_ENGINE, {
         prompt: AIprompt,
         temperature: 0.8,
         max_tokens: 256,
@@ -105,33 +118,29 @@ export default class CreateAdventure extends Component {
       })
       .then((response) => {
         let intro = response.data.choices[0].text;
+        // console.log("after response intro test", intro);
         if (intro[0] === "\n") {
           intro = intro.slice(1, intro.length);
         }
-        let logs = [
-          ...this.state.log,
-          intro,
-          prompt,
-          response.data.choices[0].text,
-        ];
-        console.log("logs test", logs);
-        formDataObj.log = [AIprompt, response.data.choices[0].text];
-        this.props.startStory(logs);
+        //the important one
+        let logs = [character.backstory, prompt, intro];
+        // console.log("formDataObj", formDataObj);
+        // console.log("logs test", logs);
+        formDataObj.log = logs;
+        formDataObj.character = character;
+        this.addAdventure(formDataObj);
         this.setState({
           newAdventure: formDataObj,
+          character: character,
           placeholder: `Adventure successfully created. Enjoy!`,
           response: `${intro}`,
-          log: [
-            ...this.state.log,
-            intro,
-            prompt,
-            response.data.choices[0].text,
-          ],
+          log: [character.backstory, prompt, intro],
         });
-        this.addAdventure(formDataObj);
+
+        this.props.startStory(logs);
       })
       .catch((error) => {
-        console.log("error log:", error);
+        // console.log("error log:", error);
       });
     this.setState({
       placeholder: `Generating Adventure. Please wait...`,
@@ -141,21 +150,32 @@ export default class CreateAdventure extends Component {
 
   render() {
     const characters = this.state.characters.map((c) => {
-      return (
-        <option value={c.backstory}>
-          {c.name} ({c.class})
-        </option>
-      );
+      if (c.name === this.state.name) {
+        return (
+          <option value={c.name} selected className={c.name}>
+            {c.name} ({c.class})
+          </option>
+        );
+
+      } else {
+        return (
+          <option value={c.name} className={c.name}>
+            {c.name} ({c.class})
+          </option>
+        );
+
+      }
     });
+    // console.log(this.props)
 
     return (
       <div>
         <Container>
           <h1>Begin an Adventure</h1>
 
-          <h4 className='text-white'>Set up your adventure</h4>
 
-          <Form onSubmit={this.onFormSubmit}>
+          <Form onSubmit={this.onFormSubmit} className="form-container">
+            <h4 className='text-white'>Set up your adventure</h4>
             <Form.Group className='mb-3' controlId=''>
               <Form.Label className='text-white'>Adventure name</Form.Label>
               <Form.Control
@@ -184,8 +204,8 @@ export default class CreateAdventure extends Component {
                 <option value='Alternate Universe'>Alternate Universe</option>
                 <option value='Ancient Egypt'>Ancient Egypt</option>
                 <option value='Classical Greece'>Classical Greece</option>
-                <option value='Dystopia'>Dystopia</option>
-                <option value='Future'>Future</option>
+                <option value='Dystopian'>Dystopian</option>
+                <option value='Futuristic'>Futuristic</option>
                 <option value='Medieval'>Medieval</option>
                 <option value='Modern'>Modern</option>
                 <option value='Roman Empire'>Roman Empire</option>
@@ -196,16 +216,16 @@ export default class CreateAdventure extends Component {
             <Form.Group className='mb-3' controlId=''>
               <Form.Label className='text-white'>Length</Form.Label>
               <Form.Select name='length' onChange={this.handleChange}>
-                <option value='very short'>Short Story</option>
-                <option value='short'>Novelette</option>
-                <option value='moderate'>Novella</option>
-                <option value='long'>Novel</option>
-                <option value='very long'>Epic</option>
+                <option value='short story'>Short Story</option>
+                <option value='novelette'>Novelette</option>
+                <option value='novella'>Novella</option>
+                <option value='novel'>Novel</option>
+                <option value='epic'>Epic</option>
               </Form.Select>
             </Form.Group>
             <Form.Group className='mb-3' controlId=''>
               <Form.Label className='text-white'>Character</Form.Label>
-              <Form.Select name='characterStory' onChange={this.handleChange}>
+              <Form.Select name='character' onChange={this.handleChange}>
                 {characters}
               </Form.Select>
             </Form.Group>
@@ -224,19 +244,22 @@ export default class CreateAdventure extends Component {
             <Button variant='primary' size='lg' type='submit'>
               Start Adventure
             </Button>
-            <Form.Text>{this.state.placeholder}</Form.Text>
+            <Form.Text>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {this.state.placeholder}
+            </Form.Text>
           </Form>
           <br />
           <br></br>
           <br></br>
           {this.state.redirect && (
-            <Navigate to='/adventure' replace={true} log={this.state.log} />
+            <Navigate
+              to='/adventure'
+              replace={true}
+              adventure={this.state.newAdventure}
+            />
           )}
-          <Log log={this.state.log} />
         </Container>
       </div>
     );
   }
 }
-
-

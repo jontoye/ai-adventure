@@ -2,9 +2,12 @@ import React, { Component } from "react";
 import { Container, Form, Button } from "react-bootstrap";
 import GSignup from "./GSignup";
 import axios from "axios";
+import { Navigate } from "react-router-dom";
 
 export default class Signin extends Component {
-  state = {};
+  state = {
+    redirect: false,
+  };
 
   componentDidMount() { 
     
@@ -25,6 +28,9 @@ export default class Signin extends Component {
 
   loginHandler = () => {
     this.props.login(this.state);
+    this.setState({
+      redirect: true,
+    })
   };
 
 
@@ -49,6 +55,12 @@ export default class Signin extends Component {
         </Container>
         <GSignup></GSignup>
         </div>
+        {this.state.redirect && (
+          <Navigate
+            to='/'
+            replace={true}
+          />
+        )}
       </div>
     );
   }

@@ -10,15 +10,25 @@ import Home from "./components/Home";
 import Footer from "./components/Footer";
 import CreateCharacter from "./components/CreateCharacter";
 import CreateAdventure from "./components/CreateAdventure";
+import Characters from "./components/Characters";
+import Adventures from "./components/Adventures";
 import Adventure from "./components/Adventure";
+import Profile from "./components/Profile";
+import CharacterDetail from "./components/CharacterDetail";
 import "./App.scss";
+import { Link } from "react-router-dom";
+import Users from "./components/Users";
 
 export default class App extends Component {
   constructor(props) {
     super(props);
     this.createRandomCharacter = this.createRandomCharacter.bind(this);
     this.startStory = this.startStory.bind(this);
+    this.createAdventure = this.createAdventure.bind(this);
+    this.continueAdventure = this.continueAdventure.bind(this);
+    this.setCharacter = this.setCharacter.bind(this);
   }
+
   state = {
     isAuth: false,
     user: null,
@@ -27,6 +37,8 @@ export default class App extends Component {
     successMessage: null,
     randomCharacter: false,
     log: [],
+    character: {},
+    adventure: {},
   };
 
   componentDidMount() {
@@ -54,12 +66,34 @@ export default class App extends Component {
   }
 
   startStory(logs) {
-    console.log("start story triggered");
+    // console.log("start story triggered");
     // console.log("navigate test", this.props.navigate);
     this.setState({
       log: logs,
     });
     // this.props.navigate("/adventure");
+  }
+
+  setCharacter(character) {
+    this.setState({
+      character: character,
+    });
+  }
+
+  createAdventure(character) {
+    // console.log("create adventure triggered");
+    // console.log(character)
+    // console.log("navigate test", this.props.navigate);
+    this.setState({
+      character: character,
+    });
+    // this.props.navigate("/adventure");
+  }
+
+  continueAdventure(adventure) {
+    this.setState({
+      adventure: adventure,
+    });
   }
 
   registerHandler = (user) => {
@@ -123,49 +157,77 @@ export default class App extends Component {
 
   render() {
     const message = this.state.message ? (
-      <Alert variant='info'>{this.state.message}</Alert>
+      <Alert variant="info">{this.state.message}</Alert>
     ) : null;
     const failMessage = this.state.failMessage ? (
-      <Alert variant='danger'>{this.state.failMessage}</Alert>
+      <Alert variant="danger">{this.state.failMessage}</Alert>
     ) : null;
     const successMessage = this.state.successMessage ? (
-      <Alert variant='success'>{this.state.successMessage}</Alert>
+      <Alert variant="success">{this.state.successMessage}</Alert>
     ) : null;
     const { isAuth } = this.state;
     return (
       <Router>
-        <Navbar fixed='top' variant='dark' bg='dark' expand='lg'>
+        <Navbar fixed="top" variant="dark" bg="dark" expand="lg">
           <Container>
-            <Navbar.Brand href='/'>| AI Adventure |</Navbar.Brand>
+            <Link to="/" className="navbar-brand">
+              | AI Adventure |
+            </Link>
 
-            <Navbar.Toggle aria-controls='basic-navbar-nav' />
-            <Navbar.Collapse id='basic-navbar-nav'>
-              <Nav className='me-auto'>
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse id="basic-navbar-nav">
+              <Nav className="me-auto">
                 {isAuth ? (
                   <>
-                    <Nav.Link href='/'>Home</Nav.Link>
-                    <Nav.Link href='/create-character'>
+                    <Link to="/users" className="nav-link">
+                      Explore
+                    </Link>
+                    <Link to="/create-character" className="nav-link">
                       Create Character
-                    </Nav.Link>
-                    <Nav.Link href='/create-adventure'>
+                    </Link>
+                    <Link to="/create-adventure" className="nav-link">
                       Create Adventure
-                    </Nav.Link>
-                    <Nav.Link href='/signout' onClick={this.logoutHandler}>
-                      Sign Out
-                    </Nav.Link>
+                    </Link>
+                    <Link to="/characters" className="nav-link">
+                      Characters
+                    </Link>
+                    <Link to="/adventure-list" className="nav-link">
+                      Adventures
+                    </Link>
                   </>
                 ) : (
                   <>
-                    <Nav.Link href='/signup'>Sign Up</Nav.Link>
-                    <Nav.Link href='/signin'>Sign In</Nav.Link>
+                    <Link to="/signup" className="nav-link">
+                      Sign Up
+                    </Link>
+                    <Link to="/signin" className="nav-link">
+                      Sign In
+                    </Link>
                   </>
                 )}
               </Nav>
 
-              <span id='main-greeting'>
-                {this.state.user
-                  ? "Welcome " + this.state.user.username
-                  : null}{" "}
+
+              <span id="main-greeting">
+                {this.state.user ? (
+                  <div className="right-nav">
+                    <Link
+                      to={`/profile/${this.state.user.user.id}`}
+                      className="nav-link"
+                    >
+                      {"Welcome " + this.state.user.user.name}
+                    </Link>
+
+                    <Link
+                      to="/signout"
+                      className="nav-link"
+                      onClick={this.logoutHandler}
+                    >
+                      Sign Out
+                    </Link>
+                  </div>
+                ) : null}{" "}
+
               </span>
             </Navbar.Collapse>
           </Container>
@@ -177,40 +239,100 @@ export default class App extends Component {
 
         <Routes>
           <Route
-            path='/'
+            path="/"
             element={
               isAuth ? (
-                <Home createRandomCharacter={this.createRandomCharacter} />
+                <Home
+                  createRandomCharacter={this.createRandomCharacter}
+                  user={this.state.user}
+                />
               ) : (
                 <Signin login={this.loginHandler} />
               )
             }
           ></Route>
           <Route
-            path='/create-character'
+            path="/create-character"
             exact
             element={
-              <CreateCharacter randomCharacter={this.state.randomCharacter} />
+              <CreateCharacter
+                randomCharacter={this.state.randomCharacter}
+                createAdventure={this.createAdventure}
+              />
             }
           />
           <Route
-            path='/create-adventure'
+            path="/create-adventure"
             exact
-            element={<CreateAdventure startStory={this.startStory} />}
+            element={
+              <CreateAdventure
+                startStory={this.startStory}
+                character={this.state.character}
+              />
+            }
           />
           <Route
-            path='/adventure'
+            path="/adventure-list"
             exact
-            element={<Adventure log={this.state.log} />}
+            element={<Adventures continueAdventure={this.continueAdventure} />}
           />
           <Route
-            path='/signup'
-            element={<Signup register={this.registerHandler} />}
+            path="/adventure"
+            exact
+            element={
+              <Adventure
+                log={this.state.log}
+                adventure={this.state.adventure}
+              />
+            }
+          />
+          <Route
+            path="/characters"
+            exact
+            element={
+              <Characters
+                log={this.state.log}
+                createAdventure={this.createAdventure}
+                setCharacter={this.setCharacter}
+              />
+            }
+          />
+          <Route
+            path="/character-detail"
+            exact
+            element={
+              <CharacterDetail
+                log={this.state.log}
+                character={this.state.character}
+              />
+            }
+          />
+          <Route
+            path="/users"
+            element={<Users currentUser={this.state.user} />}
+          />
+
+          <Route
+            path="/signup"
+            element={
+              <Signup
+                register={this.registerHandler}
+                login={this.loginHandler}
+              />
+            }
           ></Route>
           <Route
-            path='/signin'
-            element={<Signin login={this.loginHandler} />}
+            path="/signin"
+            element={
+              <Signin login={this.loginHandler} isAuth={this.state.isAuth} />
+            }
           ></Route>
+          <Route
+            path="/profile"
+            element={<Profile currentUser={this.state.user} />}
+          >
+            <Route path=":userId" element={<Profile />} />
+          </Route>
         </Routes>
 
         <Footer />
