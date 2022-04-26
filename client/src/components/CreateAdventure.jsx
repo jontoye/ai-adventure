@@ -20,6 +20,7 @@ export default class CreateAdventure extends Component {
       name: '',
       prompt: "",
       redirect: false,
+      event: {},
       
     };
     // console.log(this.props)
@@ -141,19 +142,21 @@ export default class CreateAdventure extends Component {
           displayedLog: logs,
         }
 
-        let eventObj = this.createEvent(event);
-        formDataObj.events = [eventObj];
-
-        this.addAdventure(formDataObj);
-        this.setState({
-          newAdventure: formDataObj,
-          character: character,
-          placeholder: `Adventure successfully created. Enjoy!`,
-          response: `${story}`,
-          log: logs,
-        });
+        this.createEvent(event);
         setTimeout(()=>{
-          this.props.startStory(this.state.newAdventure, this.state.character);
+          formDataObj.events = [this.state.event];
+
+          this.addAdventure(formDataObj);
+          this.setState({
+            newAdventure: formDataObj,
+            character: character,
+            placeholder: `Adventure successfully created. Enjoy!`,
+            response: `${story}`,
+            log: logs,
+          });
+          setTimeout(()=>{
+            this.props.startStory(this.state.newAdventure, this.state.character);
+          },100)
         },100)
       })
       .catch((error) => {
@@ -173,7 +176,9 @@ export default class CreateAdventure extends Component {
     })
     .then((response) => {
       console.log("Event created successfully.", response);
-      return response.data.event
+      this.setState({
+        event: response.data.event,
+      })
     })
     .catch((error) => {
       console.log("Error creating event.", error);
