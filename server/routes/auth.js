@@ -5,11 +5,15 @@ const router = require("express").Router();
 const { application } = require("express");
 const { body } = require("express-validator");
 const passport = require("passport");
+const {OAuth2Client} = require("google-auth-library")
+const jwt = require("jsonwebtoken");
 require('../helper/ppConfig.js')
 const GoogleUser = require("../models/GoogleUser.js");
 
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
 //import authentication controller
 const authCtrl = require("../controllers/auth");
+const User = require("../models/User.js");
 
 //routes for authentication
 // router.get("/auth/signup", authCtrl.auth_signup_get);
@@ -35,6 +39,56 @@ router.post("/auth/signin", authCtrl.auth_signin_post);
 router.get('/auth/google',
   passport.authenticate('google', {scope: ['profile', 'email']})
 )
+
+router.post('/auth/google', (req,res)=>{
+  const{tokenId} = req.body;
+
+  client.verifyIdToken({idToken: tokenId, audience: process.env.GOOGLE_CLIENT_ID})
+  .then(res=>{
+    const {email_verified, name, email} = res.payload
+    console.log({email_verified,name,email})
+    if(email_verified){
+      User.findOne({emailAddress : email}).exec((err,user)=>{
+        if(err) {
+          console.log({
+            error: "Something went wrong..."
+          })
+        }else{
+          if(user){
+            const token = jwt.sign({id: user._id}, process.env.secret, {expiresIn: '7d'})
+            const {_id, username, emailAddress} = user;
+
+            console.log({
+              token,
+              user: {_id, username, emailAddress}
+            })
+          }else{
+            let password = email + process.env.secret
+            let newUser = new User({username:name, emailAddress:email, password:password})
+            newUser.save((err, data)=>{
+              if(err){
+                console.log({
+                  error: "Something went wrong..."
+                })
+              }
+              const token = jwt.sign({id: data._id}, process.env.secret, {expiresIn: '7d'})
+              const {_id, username, emailAddress} = newUser;
+              
+  
+              console.log({
+                token,
+                user: {_id, username, emailAddress}
+              })
+            })
+
+          }
+        }
+        
+      })
+    }
+  })
+
+})
 
 router.get('/google/callback',
 passport.authenticate('google', {

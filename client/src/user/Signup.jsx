@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Container, Form, Button } from "react-bootstrap";
-import { GoogleLogin } from 'react-google-login';
+import GSignup from "./GSignup";
 import axios from "axios";
 import './Signup.scss'
 
@@ -16,10 +16,6 @@ export default class Signup extends Component {
   registerHandler = () => {
       this.props.register(this.state)
   }
-
-  googleAuth = (res) => {
-    console.log(res) 
-   }
 
   render() {
     // console.log(this.state);
@@ -48,14 +44,7 @@ export default class Signup extends Component {
           
         </Container>
 
-        <GoogleLogin
-            clientId = {process.env.REACT_APP_GOOGLE_CLIENT_ID}
-            onSuccess = {this.googleAuth}
-            onFailure = {'error' + this.googleAuth}
-            cookiePolicy={"single_host_origin"}
-          >
-            <span>Sign Up with Google</span>
-          </GoogleLogin>
+        <GSignup></GSignup>
         
         
         </div>

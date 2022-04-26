@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Container, Form, Button } from "react-bootstrap";
+import GSignup from "./GSignup";
 import axios from "axios";
 
 export default class Signin extends Component {
@@ -46,6 +47,7 @@ export default class Signin extends Component {
           <br></br>
           <Button id="create-user-button" onClick={this.loginHandler}>Sign In</Button>
         </Container>
+        <GSignup></GSignup>
         </div>
       </div>
     );
