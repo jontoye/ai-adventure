@@ -6,9 +6,7 @@ import Axios from "axios";
 export default class AdventureInfo extends Component {
   state = {
     adventure: this.props.adventure,
-    name: this.props.name,
     character: {},
-    log: [this.props.adventure.log],
     redirect: false,
     image: "images/saad.png",
   };
@@ -31,7 +29,6 @@ export default class AdventureInfo extends Component {
     this.imageSelect();
   }
   continueAdventure = (e) => {
-    // console.log('fancy frontend stuff')
     console.log('continuing adventure...')
     Axios.get("event/index")
     .then((response) => {

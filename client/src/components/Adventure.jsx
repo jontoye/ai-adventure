@@ -106,7 +106,7 @@ export default class Adventure extends Component {
             optionPrompt: prompt,
             options: [split_choices[1],split_choices[2],split_choices[3]],
             fullLog: [...this.state.event.fullLog, prompt, rejoined_choices],
-            displayedLog: [...this.state.event.fullLog, rejoined_choices],
+            displayedLog: [...this.state.event.displayedLog, rejoined_choices],
           }
         });
 

@@ -50,7 +50,6 @@ export default class Adventures extends Component {
     const adventures = this.state.adventures.map((a, index) => {
       return (
         <AdventureInfo
-          name={a.name}
           adventure={a}
           key={index}
           id={index}
