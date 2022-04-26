@@ -16,6 +16,7 @@ export default class Adventure extends Component {
       character: {},
       stories: [],
       log: [],
+      previousLog: [],
       name: "",
       prompt: "",
       option1: "Generating your first choice, hold on one second",
@@ -33,6 +34,7 @@ export default class Adventure extends Component {
       adventure: this.props.adventure,
       character: this.props.character,
       log: this.props.adventure.log,
+      previousLog: this.props.adventure.log,
       name: this.props.adventure.name,
     });
     //async!
@@ -98,6 +100,10 @@ export default class Adventure extends Component {
           option2: split_choices[2],
           option3: split_choices[3],
         });
+        setTimeout(()=>{
+          this.saveEvent(prompt);
+        },100)
+
       })
       .catch((error) => {
         console.log("error log:", error);
@@ -107,6 +113,17 @@ export default class Adventure extends Component {
       response: "",
     });
   };
+
+  saveEvent = (prompt) => {
+    this.setState = {
+      event: {
+        previousLog: this.state.previousLog,
+        story: this.state.previousLog,
+        prompt: prompt,
+        options: [this.state.option1,this.state.option2,this.state.option3],
+      }
+    }
+  }
 
   chooseOption = (option, x) => {
     console.log('Option');

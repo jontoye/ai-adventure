@@ -63,14 +63,14 @@ export default class CreateAdventure extends Component {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
     })
-      .then((response) => {
-        console.log("Adventure created successfully.", response);
-        this.startStory();
-        // this.loadCharacterList();
-      })
-      .catch((error) => {
-        console.log("Error creating adventure.", error);
-      });
+    .then((response) => {
+      console.log("Adventure created successfully.", response);
+      this.startStory();
+      // this.loadCharacterList();
+    })
+    .catch((error) => {
+      console.log("Error creating adventure.", error);
+    });
   };
 
   startStory() {
@@ -119,37 +119,67 @@ export default class CreateAdventure extends Component {
         presence_penalty: 0,
       })
       .then((response) => {
-        let intro = response.data.choices[0].text;
+        let story = response.data.choices[0].text;
         // console.log("after response intro test", intro);
-        if (intro[0] === "\n") {
-          intro = intro.slice(1, intro.length);
+        if (story[0] === "\n") {
+          story = story.slice(1, story.length);
         }
         //the important one
-        let logs = [character.backstory, prompt, intro];
+        let logs = [character.backstory, prompt, story];
         // console.log("formDataObj", formDataObj);
         // console.log("logs test", logs);
         formDataObj.log = logs;
         formDataObj.character = character;
+
+        let event = {
+          previousLog: [intro],
+          storyPrompt: prompt,
+          story: story,
+          optionPrompt: '',
+          options: ['','',''],
+          fullLog: logs,
+          displayedLog: logs,
+        }
+
+        let eventObj = this.createEvent(event);
+        formDataObj.events = [eventObj];
+
         this.addAdventure(formDataObj);
         this.setState({
           newAdventure: formDataObj,
           character: character,
           placeholder: `Adventure successfully created. Enjoy!`,
-          response: `${intro}`,
-          log: [character.backstory, prompt, intro],
+          response: `${story}`,
+          log: logs,
         });
         setTimeout(()=>{
           this.props.startStory(this.state.newAdventure, this.state.character);
         },100)
       })
       .catch((error) => {
-        // console.log("error log:", error);
+        console.log("error log:", error);
       });
     this.setState({
       placeholder: `Generating Adventure. Please wait...`,
       response: "",
     });
   };
+
+  createEvent = (event) => {
+    Axios.post("event/add", event, {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    })
+    .then((response) => {
+      console.log("Event created successfully.", response);
+      return response.data.event
+    })
+    .catch((error) => {
+      console.log("Error creating event.", error);
+    });
+    
+  }
 
   render() {
     const characters = this.state.characters.map((c) => {
