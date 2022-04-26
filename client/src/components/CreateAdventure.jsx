@@ -75,9 +75,11 @@ export default class CreateAdventure extends Component {
 
   startStory() {
     // console.log("start-story triggered2");
-    this.setState({
-      redirect: true,
-    });
+    setTimeout(()=>{
+      this.setState({
+        redirect: true,
+      })
+    },200)
   }
   appendResponse = (response) => {};
 
@@ -136,8 +138,9 @@ export default class CreateAdventure extends Component {
           response: `${intro}`,
           log: [character.backstory, prompt, intro],
         });
-
-        this.props.startStory(logs, this.state.character);
+        setTimeout(()=>{
+          this.props.startStory(this.state.newAdventure, this.state.character);
+        },100)
       })
       .catch((error) => {
         // console.log("error log:", error);
