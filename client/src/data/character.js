@@ -366,7 +366,7 @@ const DECOR = [ //Epithet/byname
   "the Merciful",
   "the Pious",
   "the Navigator",
-  "the Unfortunately",
+  "the Unfortunate",
   "the Unlucky",
   "the Young",
   "the Strong",

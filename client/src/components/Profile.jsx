@@ -54,7 +54,7 @@ function Profile({ currentUser }) {
         <div className="row mb-5"> 
           <div className="col-8 mx-auto d-flex justify-content-between">
             <Link to="/characters" className="display-6">My Characters</Link>
-            <Link to="#" className="display-6">My Adventures</Link>
+            <Link to="/adventure-list" className="display-6">My Adventures</Link>
           </div>
         </div>
       }
