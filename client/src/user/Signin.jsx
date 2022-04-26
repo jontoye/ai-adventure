@@ -1,8 +1,11 @@
 import React, { Component } from "react";
 import { Container, Form, Button } from "react-bootstrap";
+import { Navigate } from "react-router-dom";
 
 export default class Signin extends Component {
-  state = {};
+  state = {
+    redirect: false,
+  };
 
   changeHandler = (e) => {
     let temp = { ...this.state };
@@ -12,6 +15,9 @@ export default class Signin extends Component {
 
   loginHandler = () => {
     this.props.login(this.state);
+    this.setState({
+      redirect: true,
+    })
   };
 
   render() {
@@ -34,6 +40,12 @@ export default class Signin extends Component {
           <Button id="create-user-button" onClick={this.loginHandler}>Sign In</Button>
         </Container>
         </div>
+        {this.state.redirect && (
+          <Navigate
+            to='/'
+            replace={true}
+          />
+        )}
       </div>
     );
   }

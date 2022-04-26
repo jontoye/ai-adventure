@@ -1,9 +1,12 @@
 import React, { Component } from "react";
 import { Container, Button } from "react-bootstrap";
+import { Navigate } from "react-router-dom";
 import "./Signup.scss";
 
 export default class Signup extends Component {
-  state = {};
+  state = {
+    redirect: false,
+  };
 
   changeHandler = (e) => {
     let temp = { ...this.state };
@@ -13,6 +16,10 @@ export default class Signup extends Component {
 
   registerHandler = () => {
     this.props.register(this.state);
+    this.props.login(this.state);
+    this.setState({
+      redirect: true,
+    })
   };
 
   render() {
@@ -68,6 +75,12 @@ export default class Signup extends Component {
             </Button>
           </Container>
         </div>
+        {this.state.redirect && (
+          <Navigate
+            to='/'
+            replace={true}
+          />
+        )}
       </div>
     );
   }
