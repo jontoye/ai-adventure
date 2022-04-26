@@ -18,8 +18,8 @@ export default class Adventure extends Component {
       log: [],
       name: "",
       prompt: "",
-      option1: "Generating your first choice, hold on one second.",
-      option2: "Generating your second choice, hold on one second.",
+      option1: "Generating your first choice, hold on one second",
+      option2: "Generating your second choice, hold on one second",
       option3: "Generating your third choice, hold on one second",
     };
   }
@@ -29,12 +29,12 @@ export default class Adventure extends Component {
     this.populateLog();
     this.firstPrompt();
     this.setState({
-      name: this.props.name,
+      name: this.props.adventure.name,
     });
   }
   populateLog = () => {
     this.setState({
-      log: this.props.log,
+      log: this.props.adventure.log,
     });
   };
 
@@ -69,7 +69,7 @@ export default class Adventure extends Component {
       apiKey: process.env.REACT_APP_API_KEY,
     });
     const openai = new OpenAIApi(configuration);
-    let AIprompt = this.props.log.join("");
+    let AIprompt = this.props.adventure.log.join("");
     AIprompt =
       AIprompt +
       `\nGive ${this.state.name} 3 detailed options for what to do next`;
@@ -109,12 +109,12 @@ export default class Adventure extends Component {
       apiKey: process.env.REACT_APP_API_KEY,
     });
     const openai = new OpenAIApi(configuration);
-    let AIprompt = this.props.log.join("");
+    let AIprompt = this.state.log.join("");
     AIprompt =
       AIprompt +
       `\n ${this.state.name} chooses ${x}. ${option}. Give a long, detailed account of what happens next.`;
     openai
-      .createCompletion("text-davinci-002", {
+      .createCompletion(process.env.REACT_APP_API_ENGINE, {
         prompt: AIprompt,
         temperature: 0.8,
         max_tokens: 256,
@@ -146,12 +146,12 @@ export default class Adventure extends Component {
       apiKey: process.env.REACT_APP_API_KEY,
     });
     const openai = new OpenAIApi(configuration);
-    let AIprompt = this.props.log.join("");
+    let AIprompt = this.state.log.join("");
     AIprompt =
       AIprompt +
       `\nGive ${this.state.name} 3 detailed options for what to do next`;
     openai
-      .createCompletion("text-davinci-002", {
+      .createCompletion(process.env.REACT_APP_API_ENGINE, {
         prompt: AIprompt,
         temperature: 0.8,
         max_tokens: 256,
