@@ -16,7 +16,7 @@ export default class AdventureInfo extends Component {
     .then((response) => {
       // console.log(response.data.characters);
       let character = response.data.characters.find(v=>{
-        return this.state.adventure.character === v._id;
+        return this.state.adventure.character === v.id;
       })
       // console.log(character.name)
       this.setState({
@@ -44,6 +44,7 @@ export default class AdventureInfo extends Component {
     let css = `adventure-${this.state.id}`;
     let a_an = 'aeiou'.includes(this.state.adventure.setting[0].toLowerCase()) ? 'An' : 'A';
     let quest = this.state.adventure.quest.charAt(0).toLowerCase() + this.state.adventure.quest.slice(1)
+
     return (
       <div>
         <Card className={css} style={{ width: "18rem", margin: "15px" }}>
