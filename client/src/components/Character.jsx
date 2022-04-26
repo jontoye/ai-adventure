@@ -31,6 +31,7 @@ export default class Character extends Component {
   };
 
   characterDetail = () => {
+    this.props.setCharacter(this.state.character)
     this.setState({
       redirected: true,
     });

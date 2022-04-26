@@ -33,18 +33,18 @@ export default class Characters extends Component {
   deleteCharacter = (name) => {
     Axios.delete(`character/delete?name=${name}`, {
       headers: {
-          "Authorization": "Bearer " + localStorage.getItem("token"),
-      }
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
     })
-    .then(response => {
-      // console.log("Deleted character.")
-      this.loadCharacterList();
-    })
-    .catch(err=>{
-      console.log(`Error deleting character: ${name}`)
-      console.log(err)
-    })
-  }
+      .then((response) => {
+        // console.log("Deleted character.")
+        this.loadCharacterList();
+      })
+      .catch((err) => {
+        console.log(`Error deleting character: ${name}`);
+        console.log(err);
+      });
+  };
 
   render() {
     const characters = this.state.characters.map((c, index) => {
@@ -59,6 +59,7 @@ export default class Characters extends Component {
           weakness={c.weakness}
           createAdventure={this.props.createAdventure}
           deleteCharacter={this.deleteCharacter}
+          setCharacter={this.props.setCharacter}
         />
       );
     });
