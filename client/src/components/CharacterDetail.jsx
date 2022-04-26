@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Card, Button } from "react-bootstrap";
 import Axios from "axios";
 import AdventureInfo from "./AdventureInfo";
+import "./css/CharacterDetail.css";
 
 export default class CharacterDetail extends Component {
   constructor(props) {
@@ -83,8 +84,10 @@ export default class CharacterDetail extends Component {
             <Card.Title>
               {this.state.character.name} the {this.state.character.class}
             </Card.Title>
-            <Card.Text>
-              {this.state.character.backstory}
+            <Card.Text className='character-backstory'>
+              <div className='character-backstory'>
+                {this.state.character.backstory}
+              </div>
               <br />
               <br />
               Ability: {this.state.character.ability}
