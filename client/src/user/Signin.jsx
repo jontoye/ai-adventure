@@ -56,8 +56,12 @@ export default class Signin extends Component {
           </div>
           <br></br>
           <Button id="create-user-button" onClick={this.loginHandler}>Sign In</Button>
-        </Container>
+        </Container><br></br><br></br>
+        <hr className="signin-line"></hr>
+        <div id="google-signin-wrapper">
+          <span>OR</span>
         <GSignup login={this.props.googleLogin}></GSignup>
+        </div>
         </div>
         {this.state.redirect && (
           <Navigate
