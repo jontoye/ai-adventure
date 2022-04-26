@@ -19,3 +19,7 @@
 .user-card__img img {
     width: 100%;
 }
+.circular-square {
+  border-radius: 50%;
+  border: 5px white solid;
+}
