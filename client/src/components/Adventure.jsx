@@ -28,32 +28,19 @@ export default class Adventure extends Component {
 
   componentDidMount() {
     console.log('LOAD')
-
-    Axios.get("event/index")
-    .then((response) => {
-      console.log(response.data.events)
-      console.log(this.props.adventure.events)
-      let event = response.data.events.find(v=>{
-        return this.props.adventure.events.reverse()[0] === v._id;
-      })
-      console.log('successfully loaded event: ', event)
-      this.setState({
-        event: event,
-        adventure: this.props.adventure,
-        character: this.props.character,
-        log: this.props.adventure.log,
-        previousLog: this.props.adventure.log,
-        name: this.props.adventure.name,
-      });
-      //async!
-      setTimeout(()=>{
-        this.generatePrompt();
-      },100)
-    })
-    .catch((err) => {
-      console.log("Error fetching events.");
-      console.log(err);
+    console.log('event loaded: ',this.props.adventure.events.reverse()[0])
+    this.setState({
+      event: this.props.adventure.events.reverse()[0],
+      adventure: this.props.adventure,
+      character: this.props.character,
+      log: this.props.adventure.log,
+      previousLog: this.props.adventure.log,
+      name: this.props.adventure.name,
     });
+    //async!
+    setTimeout(()=>{
+      this.generatePrompt();
+    },100)
 
   }
 
@@ -90,10 +77,8 @@ export default class Adventure extends Component {
     });
     const openai = new OpenAIApi(configuration);
     let previousLog = this.state.log.join("");
-    let prompt = `\nGive ${this.state.character.name} 3 detailed options for what to do next.`;
-    let AIprompt = previousLog + prompt;
-
-    console.log(this.state.event[0])
+    let prompt = `Give ${this.state.character.name} 3 detailed options for what to do next.`;
+    let AIprompt = previousLog + '\n' + prompt;
       
     openai
       .createCompletion(process.env.REACT_APP_API_ENGINE, {
@@ -109,6 +94,7 @@ export default class Adventure extends Component {
         if (choices[0] === "\n") {
           choices = choices.slice(1, choices.length);
         }
+        console.log(choices)
         let split_choices = choices.split(/\s?\d+\.\s/);
         this.setState({
           log: [...this.state.log, prompt, '1. ' + split_choices[1]+'\n2. ' + split_choices[2]+'\n3. ' +split_choices[3]],
