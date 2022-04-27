@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import Characters from "./Characters";
 import Adventures from "./Adventures";
 
-function Users() {
+function Users({ continueAdventure, createAdventure, setCharacter }) {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -49,8 +49,11 @@ function Users() {
         </div>
       </div>
 
-      <Adventures />
-      <Characters />
+      <Adventures continueAdventure={continueAdventure}/>
+      <Characters
+        createAdventure={createAdventure}
+        setCharacter={setCharacter}
+       />
     </>
   );
 }

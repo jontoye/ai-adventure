@@ -21,7 +21,6 @@ import Users from "./components/Users";
 import { Navigate } from "react-router-dom";
 import { useNavigate } from "react-router";
 
-
 export default class App extends Component {
   constructor(props) {
     super(props);
@@ -47,17 +46,17 @@ export default class App extends Component {
     adventure: {},
   };
 
-  setNavExpanded = (expanded) =>{
-      this.setState({
-          navExpanded: expanded,
-      })
-  }
+  setNavExpanded = (expanded) => {
+    this.setState({
+      navExpanded: expanded,
+    });
+  };
 
-  setNavClose=()=>{
-      this.setState({
-          navExpanded: false
-      })
-  }
+  setNavClose = () => {
+    this.setState({
+      navExpanded: false,
+    });
+  };
 
   componentDidMount() {
     let token = localStorage.getItem("token");
@@ -248,19 +247,25 @@ export default class App extends Component {
     const { isAuth } = this.state;
     return (
       <Router>
-        <Navbar fixed='top' variant='dark' bg='dark' expand='lg'  onToggle={this.setNavExpanded} expanded={this.state.navExpanded}>
+        <Navbar
+          fixed="top"
+          variant="dark"
+          bg="dark"
+          expand="lg"
+          onToggle={this.setNavExpanded}
+          expanded={this.state.navExpanded}
+        >
           <Container>
-            <Link to='/' className='navbar-brand' >
+            <Link to="/" className="navbar-brand">
               | AI Adventure |
             </Link>
 
-            <Navbar.Toggle aria-controls='basic-navbar-nav'/>
-            <Navbar.Collapse id='basic-navbar-nav'>
-              <Nav className='me-auto' onClick={this.setNavClose} >
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse id="basic-navbar-nav">
+              <Nav className="me-auto" onClick={this.setNavClose}>
                 {isAuth ? (
                   <>
-                    <Link to='/users' className='nav-link' >
-
+                    <Link to="/users" className="nav-link">
                       Explore
                     </Link>
                     <Link to="/create-character" className="nav-link">
@@ -386,7 +391,14 @@ export default class App extends Component {
           />
           <Route
             path="/users"
-            element={<Users currentUser={this.state.user} />}
+            element={
+              <Users
+                currentUser={this.state.user}
+                continueAdventure={this.continueAdventure}
+                createAdventure={this.createAdventure}
+                setCharacter={this.setCharacter}
+              />
+            }
           />
 
           <Route
