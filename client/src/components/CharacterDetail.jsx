@@ -94,7 +94,6 @@ export default class CharacterDetail extends Component {
               <div className='character-backstory'>
                 <p className='overflow'>{this.state.character.backstory}</p>
               </div>
-              <br />
               Ability: {this.state.character.ability}
               <br />
               Weakness: {this.state.character.weakness}
@@ -110,7 +109,9 @@ export default class CharacterDetail extends Component {
           {this.state.character.name} the {this.state.character.class}'s
           Adventures
         </h1>
-        <div className='adventure-list'>{adventures}</div>
+        <div className='section-explore container my-5'>
+          <div className='adventure-list'>{adventures}</div>
+        </div>
       </div>
     );
   }
