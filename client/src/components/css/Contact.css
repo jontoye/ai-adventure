@@ -23,6 +23,10 @@
     align-items: top;
 }
 
+.feedback_heading {
+    font-size: 46px;
+}
+
 .dev-img {
     margin-bottom: 10px;
     width: 100%;

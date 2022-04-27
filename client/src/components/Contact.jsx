@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Container } from 'react-bootstrap'
+import Feedback from "./Feedback";
 import "./css/Contact.css";
 
 export default class Contact extends Component {
@@ -31,9 +32,9 @@ export default class Contact extends Component {
             </div>
         </div>
         <br></br>
-        <div className="tutorial__content">
-            <h2 className="tutorial__heading">Leave us a message!</h2>
-            <p>insert form here</p>
+        <div className="feedback_form">
+            <h2 className="feedback_heading">Leave us a message!</h2>
+            <Feedback />
         </div>
     </Container>
     )
