@@ -1,24 +1,25 @@
 .section-profile {
-    color: white;
-    font-size: larger;
-    line-height: 1.6;
+  color: white;
+  font-size: larger;
+  line-height: 1.6;
 }
 
 .profile-img {
-    display: block;
-    max-width: 300px;
-    margin: 
-    50px auto;
+  display: block;
+  max-width: 300px;
+  margin: 50px auto;
 }
 
 .profile-connections {
-    letter-spacing: 3px;
+  letter-spacing: 3px;
 }
 
 .social-button img {
-    width: 50px;
+  width: 50px;
 }
 .circular-square {
   border-radius: 50%;
   border: 5px white solid;
+  display: block;
+  max-width: 300px;
 }

@@ -175,7 +175,7 @@ function Profile({ currentUser }) {
               Launch demo modal
             </Button>
 
-            <Modal show={show} onHide={handleClose}>
+            <Modal size='xl' show={show} onHide={handleClose}>
               <Modal.Header closeButton>
                 <Modal.Title>Select Your Profile Image</Modal.Title>
               </Modal.Header>

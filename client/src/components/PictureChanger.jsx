@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import ProfileImage from "./ProfileImage";
+import "./css/PictureChanger.css";
 
 export default class PictureChanger extends Component {
   constructor(props) {
