@@ -92,7 +92,7 @@ export default class CharacterDetail extends Component {
             </Card.Title>
             <Card.Text className='character-backstory'>
               <div className='character-backstory'>
-                {this.state.character.backstory}
+                <p className='overflow'>{this.state.character.backstory}</p>
               </div>
               <br />
               Ability: {this.state.character.ability}
@@ -105,6 +105,7 @@ export default class CharacterDetail extends Component {
             <Button variant='primary'>Start Adventure</Button>
           </Card.Body>
         </Card>
+        <br />
         <h1>
           {this.state.character.name} the {this.state.character.class}'s
           Adventures
