@@ -48,7 +48,8 @@ const adventureRoute = require("./routes/adventure");
 const eventRoute = require("./routes/event");
 const authRoute = require("./routes/auth");
 const userRoute = require("./routes/user");
-const characterRoute = require("./routes/character")
+const characterRoute = require("./routes/character");
+const feedbackRoute = require("./routes/feedback");
 //Mount routes
 app.get("/", (req, res, next) => {
     res.redirect("/home");
@@ -58,6 +59,7 @@ app.use("/", eventRoute);
 app.use("/", authRoute);
 app.use("/", userRoute);
 app.use("/", characterRoute);
+app.use("/", feedbackRoute);
 
 app.get('/*', function(req, res) {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
