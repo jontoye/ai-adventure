@@ -1,4 +1,5 @@
 const Adventure = require("../models/Adventure");
+const Event = require("../models/Event");
 
 exports.adventure_create_post = (req, res) => {
   let adventure = new Adventure(req.body);
@@ -29,6 +30,8 @@ exports.adventure_index_get = (req, res) => {
 //HTTP DELETE - Adventure
 exports.adventure_delete_get = (req,res) => {
   // console.log("Deleting " + req.query.name);
+  // Event.deleteMany()
+
   Adventure.deleteOne({name: req.query.name})
   .then((adventure)=>{
     res.json({adventure});
