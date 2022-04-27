@@ -5,12 +5,10 @@
 }
 
 .profile-img {
-
-    display: block;
-    max-width: 300px;
-    margin: 50px auto;
-    border-radius: 50%;
-
+  display: block;
+  max-width: 300px;
+  margin: 50px auto;
+  border-radius: 50%;
 }
 
 .profile-connections {
@@ -27,8 +25,11 @@
   display: block;
   max-width: 300px;
 
-
   width: 300px;
   height: 300px;
 }
 
+.center-me {
+  display: flex;
+  justify-content: center;
+}
