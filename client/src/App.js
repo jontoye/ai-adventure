@@ -26,6 +26,7 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.createRandomCharacter = this.createRandomCharacter.bind(this);
+    this.dontCreateRandomCharacter = this.dontCreateRandomCharacter.bind(this);
     this.startStory = this.startStory.bind(this);
     this.createAdventure = this.createAdventure.bind(this);
     this.continueAdventure = this.continueAdventure.bind(this);
@@ -114,6 +115,12 @@ export default class App extends Component {
   createRandomCharacter() {
     this.setState({
       randomCharacter: true,
+    });
+  }
+
+  dontCreateRandomCharacter() {
+    this.setState({
+      randomCharacter: false,
     });
   }
 
@@ -367,6 +374,7 @@ export default class App extends Component {
               <Characters
                 createAdventure={this.createAdventure}
                 setCharacter={this.setCharacter}
+                dontCreateRandomCharacter={this.dontCreateRandomCharacter}
               />
             }
           />

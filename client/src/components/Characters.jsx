@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import Axios from "axios";
 import Character from "./Character";
+import { Navigate } from "react-router-dom";
+import { Button, Container } from "react-bootstrap";
 import "./css/Characters.css";
 
 export default class Characters extends Component {
@@ -46,6 +48,13 @@ export default class Characters extends Component {
       });
   };
 
+  createCharacter = (e) => {
+    this.props.dontCreateRandomCharacter()
+    this.setState({
+      redirect: true,
+    });
+  };
+
   render() {
     const characters = this.state.characters.map((c, index) => {
       return (
@@ -67,6 +76,15 @@ export default class Characters extends Component {
       <div>
         <h1>Character List</h1>
         <div className='character-list my-5 container'>{characters}</div>
+        <Container className="text-center">
+          <Button variant='secondary' onClick={this.createCharacter}>Create New Character</Button>
+        </Container>
+        {this.state.redirect && (
+          <Navigate
+            to='/create-character'
+            replace={true}
+          />
+        )}
       </div>
     );
   }
