@@ -51,19 +51,18 @@ export default class Character extends Component {
             </Card.Title>
             <Card.Text>
               <p className='overflow-char'>{this.props.backstory}</p>
-              <br />
-              <br />
               Ability: {this.props.ability}
               <br />
               Weakness: {this.props.weakness}
             </Card.Text>
-            <Button variant='primary' onClick={this.startAdventure}>
-              Start Adventure
-            </Button>
-            &nbsp; &nbsp; &nbsp; &nbsp;
-            <Button variant='danger' onClick={this.characterDetail}>
-              Details
-            </Button>
+            <div className='buttons-container'>
+              <Button variant='primary' onClick={this.startAdventure}>
+                Start Adventure
+              </Button>
+              <Button variant='danger' onClick={this.characterDetail}>
+                Details
+              </Button>
+            </div>
           </Card.Body>
         </Card>
         {this.state.redirect && (
