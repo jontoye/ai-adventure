@@ -49,7 +49,7 @@ passport.use(new GoogleStrategy({
   callbackURL: "http://localhost:3001/google/callback",
 },
 function(accessToken, refreshToken, profile, cb) {
-  console.log(profile)
+  // console.log(profile)
   GoogleUser.findOne({ 'googleId': profile.id }, function(err, user) {
     if (err) return cb(err);
     if (user) {

@@ -169,7 +169,7 @@ exports.googleLoginPost = (req, resp) => {
                   name: user.username,
                   email: user.emailAddress,
                 },
-                process.env.secret,
+                process.env.SECRET,
                 {
                   expiresIn: "7d",
                 }
@@ -181,7 +181,7 @@ exports.googleLoginPost = (req, resp) => {
                 user: { _id, username, emailAddress },
               });
             } else {
-              let password = email + process.env.secret;
+              let password = email + process.env.SECRET;
               let newUser = new User({
                 username: name,
                 emailAddress: email,

@@ -17,7 +17,7 @@ let passport = require("./helper/ppConfig");
 
 app.use(
     session({
-        secret: process.env.secret,
+        secret: process.env.SECRET,
         saveUninitialized: true,
         resave: false, //don't resave if cookie is modified
         cookie: { maxAge: 3600000 }, //milliseconds until cookie timeout (1hr)
@@ -55,7 +55,7 @@ app.use("/", userRoute);
 app.use("/", characterRoute);
 
 mongoose.connect(
-    process.env.mongoDBURL,
+    process.env.MONGODBURL,
     {
         useNewUrlParser: true,
         useUnifiedTopology: true,
