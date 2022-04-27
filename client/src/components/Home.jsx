@@ -4,6 +4,7 @@ import Tutorial from './Tutorial';
 import TechStack from './TechStack';
 import './css/Home.css';
 import Axios from "axios";
+import Contact from './Contact';
 
 export default class Home extends Component {
 	state = {
@@ -47,6 +48,7 @@ export default class Home extends Component {
 				/>
 				<Tutorial />
 				<TechStack />
+				<Contact />
 			</>
 		)
 	}
