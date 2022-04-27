@@ -6,8 +6,8 @@ export default class Footer extends Component {
     return (
       <footer className='main-footer'>
           <h5>AI Adventure</h5>
-          <p>Learn More about <a href="https://openai.com/">OpenAI</a></p>
-          <p>Contact Us</p>
+          <p>Learn more about <a href="https://openai.com/">OpenAI</a></p>
+          <a href="/#contact">Contact Us</a>
 
       </footer>
     )

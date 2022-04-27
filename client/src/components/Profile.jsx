@@ -175,28 +175,26 @@ function Profile({ currentUser }) {
 
         {params.userId === currentUser.id && (
           <div>
-            <>
+          <>
+            <div className='center-me'>
               <Button className='center' variant='primary' onClick={handleShow}>
                 Change Profile Image
               </Button>
-
-              <Modal size='xl' show={show} onHide={handleClose}>
-                <Modal.Header closeButton>
-                  <Modal.Title>Select Your Profile Image</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                  <PictureChanger changeUserImg={changeUserImg}></PictureChanger>
-                </Modal.Body>
-                <Modal.Footer>
-                  <Button variant='secondary' onClick={handleClose}>
-                    Close
-                  </Button>
-                  <Button variant='primary' onClick={handleClose}>
-                    Save Changes
-                  </Button>
-                </Modal.Footer>
-              </Modal>
-            </>
+            </div>
+            <Modal size='xl' show={show} onHide={handleClose}>
+              <Modal.Header closeButton>
+                <Modal.Title>Select Your Profile Image</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <PictureChanger changeUserImg={changeUserImg}></PictureChanger>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant='secondary' onClick={handleClose}>
+                  Cancel
+                </Button>
+              </Modal.Footer>
+            </Modal>
+          </>
 
             <div className='row mb-5'>
               <div className='col-8 mx-auto d-flex justify-content-between'>

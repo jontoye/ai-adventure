@@ -50,7 +50,7 @@ export default class Character extends Component {
               {this.props.name} the {this.props.class}
             </Card.Title>
             <Card.Text>
-              {this.props.backstory}
+              <p className='overflow-char'>{this.props.backstory}</p>
               <br />
               <br />
               Ability: {this.props.ability}
