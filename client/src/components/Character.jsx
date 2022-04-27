@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Card, Button } from "react-bootstrap";
 import { Navigate } from "react-router-dom";
+import "./css/Character.css";
 
 export default class Character extends Component {
   state = {
@@ -31,14 +32,14 @@ export default class Character extends Component {
   };
 
   characterDetail = () => {
-    this.props.setCharacter(this.state.character)
+    this.props.setCharacter(this.state.character);
     this.setState({
       redirected: true,
     });
   };
 
   render() {
-    let css = `character-${this.props.id}`;
+    let css = `characters character-${this.props.id}`;
     // console.log(this.state)
     return (
       <div>

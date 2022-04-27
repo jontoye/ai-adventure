@@ -25,8 +25,8 @@ function Users() {
       <h1>Explore Current Users</h1>
 
       <div className='users-list d-flex flex-column align-items-center gap-5 my-5'>
-        {users.map((user) => (
-          <div className='user-card d-flex align-items-center' key={user._id}>
+        {users.map(user => (
+          <div className='user-card d-flex align-items-center justify-content-between' key={user._id}>
             <div className='user-card__img'>
               <img
                 className='circular-square'
