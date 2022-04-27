@@ -2,20 +2,35 @@
     color: white;
 }
 
+.users-list {
+    padding: 20px 0;
+    overflow-x: scroll;
+}
+
+.users-list::-webkit-scrollbar {
+    display: none;
+}
+
 .user-card {
-    width: 600px;
+    /* width: 400px; */
     border: 2px solid white;
     border-radius: 10px;
-    padding: 20px 50px;
+    padding: 20px 30px;
     font-size: larger;
   
-    box-shadow: rgba(255, 255, 255, 0.35) 0px 5px 15px;    
+    box-shadow: rgba(255, 255, 255, 0.35) 0px 5px 15px; 
+    transition: all 0.3s ease;   
+}
+
+.user-card:hover {
+    transform: scale(1.06);
 }
 
 .user-card__img {
-    padding: 15px;
-
+    /* padding: 15px;
+    display: flex; */
 }
+
 
 .user-card__img img {
     /* border-radius: 50%; */

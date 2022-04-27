@@ -1,0 +1,11 @@
+.preview-image {
+  border-radius: 50%;
+  border: 5px white solid;
+  display: block;
+  max-width: 300px;
+}
+
+.preview-image:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+}
