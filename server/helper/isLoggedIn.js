@@ -25,7 +25,7 @@ module.exports = (req, res, next) => {
     return res.json({message: "You must sign in to view this page."}).status(401);
   }
   try {
-    const decoded = jwt.verify(token, process.env.secret);
+    const decoded = jwt.verify(token, process.env.SECRET);
     req.user = decoded.user;
     next();
   } catch (error) {
