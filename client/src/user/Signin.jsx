@@ -44,7 +44,7 @@ export default class Signin extends Component {
       <div >
 
         <div>
-        <h1>Welcome to Adventure</h1>
+        <h1>Welcome to AI Adventure</h1>
         <Container id="sign-up-container">
         <div className="form__group field">
           <input type="input" className="form__field" placeholder="Name" name="username" id='name' onChange={this.changeHandler} required />
