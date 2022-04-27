@@ -5,3 +5,7 @@
 .card {
   margin: 0;
 }
+
+.overflow {
+  white-space: pre-line;
+}
