@@ -38,12 +38,24 @@ export default class App extends Component {
     message: null,
     failMessage: null,
     successMessage: null,
+    navExpanded: false,
     randomCharacter: false,
     log: [],
     character: {},
     adventure: {},
   };
 
+  setNavExpanded = (expanded) =>{
+      this.setState({
+          navExpanded: expanded,
+      })
+  }
+
+  setNavClose=()=>{
+      this.setState({
+          navExpanded: false
+      })
+  }
 
   componentDidMount() {
     let token = localStorage.getItem("token");
@@ -228,18 +240,18 @@ export default class App extends Component {
     const { isAuth } = this.state;
     return (
       <Router>
-        <Navbar fixed='top' variant='dark' bg='dark' expand='lg'>
+        <Navbar fixed='top' variant='dark' bg='dark' expand='lg'  onToggle={this.setNavExpanded} expanded={this.state.navExpanded}>
           <Container>
-            <Link to='/' className='navbar-brand'>
+            <Link to='/' className='navbar-brand' >
               | AI Adventure |
             </Link>
 
-            <Navbar.Toggle aria-controls='basic-navbar-nav' />
+            <Navbar.Toggle aria-controls='basic-navbar-nav'/>
             <Navbar.Collapse id='basic-navbar-nav'>
-              <Nav className='me-auto'>
+              <Nav className='me-auto' onClick={this.setNavClose} >
                 {isAuth ? (
                   <>
-                    <Link to='/users' className='nav-link'>
+                    <Link to='/users' className='nav-link' >
                       Explore
                     </Link>
                     <Link to='/create-character' className='nav-link'>
