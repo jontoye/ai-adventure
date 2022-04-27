@@ -1,9 +1,8 @@
 // import React, { Component } from "react";
 import { Container, Row, Col, Card, Button, Tooltip, OverlayTrigger } from "react-bootstrap";
-import {
-  useNavigate,
-} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import "./css/Banner.css";
+import Axios from "axios";
 
 export default function Banner(props) {
   let navigate = useNavigate();
@@ -13,17 +12,38 @@ export default function Banner(props) {
     navigate("/create-character");
   }
 
-  const renderTooltip_qs = (props) => (
-    <Tooltip id="button-tooltip" {...props}>
-      Generate a character with random attributes
+  function continueAdventure() {
+    console.log('continue adventure...')
+    Axios.get("event/index")
+    .then((response) => {
+      let events = response.data.events.filter(v=>{
+        return props.adventure.events.includes(v._id);
+      })
+      props.adventure.events = events;
+      setTimeout(()=>{
+        props.continueAdventure(props.adventure, props.character)
+        navigate("/adventure");
+      },100)
+    })
+  }
+
+  const renderTooltip_qs = (info) => (
+    <Tooltip id="button-tooltip" {...info}>
+      Generate a character with random attributes!
     </Tooltip>
   );
 
-  const renderTooltip_tut = (props) => (
-    <Tooltip id="button-tooltip" {...props}>
+  const renderTooltip_tut = (info) => (
+    <Tooltip id="button-tooltip" {...info}>
       Learn how to play the game!
     </Tooltip>
   );
+
+  const renderTooltip_cont = (info) => {
+    return <Tooltip id="button-tooltip" {...info}>
+      {props.character.name} and the quest to {props.adventure.quest.toLowerCase()}!
+    </Tooltip>
+  };
 
   return (
     <>
@@ -50,19 +70,6 @@ export default function Banner(props) {
                 <OverlayTrigger
                     placement="right"
                     delay={{ show: 250, hide: 400 }}
-                    overlay={renderTooltip_qs}
-                >
-                    <Button
-                        className='banner-button'
-                        variant='light'
-                        onClick={() => buttonHandler()}
-                    >
-                        Quick Start
-                    </Button>
-                </OverlayTrigger>
-                <OverlayTrigger
-                    placement="right"
-                    delay={{ show: 250, hide: 400 }}
                     overlay={renderTooltip_tut}
                 >
                     <Button
@@ -73,6 +80,36 @@ export default function Banner(props) {
                         Tutorial
                     </Button>
                 </OverlayTrigger>
+                <OverlayTrigger
+                    placement="right"
+                    delay={{ show: 250, hide: 400 }}
+                    overlay={renderTooltip_qs}
+                >
+                    <Button
+                        className='banner-button'
+                        variant='light'
+                        onClick={() => buttonHandler()}
+                    >
+                        Quick Start
+                    </Button>
+                </OverlayTrigger>
+                {props.adventure ?
+                <OverlayTrigger
+                    placement="right"
+                    delay={{ show: 250, hide: 400 }}
+                    overlay={renderTooltip_cont}
+                    character={props.character}
+                    adventure={props.adventure}
+                >
+                    <Button
+                        className='banner-button'
+                        variant='light'
+                        onClick={() => continueAdventure()}
+                    >
+                        Continue Adventure
+                    </Button>
+                </OverlayTrigger>
+                : null}
             </div>
           </Col>
           <Col md={12} lg={4} className='banner-right'>

@@ -322,6 +322,7 @@ export default class App extends Component {
               isAuth ? (
                 <Home
                   createRandomCharacter={this.createRandomCharacter}
+                  continueAdventure={this.continueAdventure}
                   user={this.state.user}
                 />
               ) : (
