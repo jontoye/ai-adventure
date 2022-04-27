@@ -86,6 +86,7 @@ export default class App extends Component {
             successMessage: "User logged in successfully.",
             logoutRedirect: false,
           });
+          this.setBannerTimeout('successMessage');
         }
       })
       .catch((err) => {
@@ -142,6 +143,7 @@ export default class App extends Component {
           failMessage: null,
           successMessage: null,
         });
+        this.setBannerTimeout('message');
       })
       .catch((error) => {
         console.log(error);
@@ -150,37 +152,39 @@ export default class App extends Component {
 
   loginHandler = (cred) => {
     Axios.post("auth/signin", cred)
-      .then((response) => {
-        // console.log("response data token", response.data.token);
-        console.log(response.data.message);
+    .then((response) => {
+      // console.log("response data token", response.data.token);
+      console.log(response.data.message);
 
-        this.setState({
-          message: response.data.message,
-        });
-
-        if (response.data.token != null) {
-          //localStorage refers to localStorage of browser
-          localStorage.setItem("token", response.data.token);
-          let user = jwt_decode(response.data.token);
-
-          console.log("USER", user);
-
-          this.setState({
-            isAuth: true,
-            user: user,
-            message: null,
-            failMessage: null,
-            successMessage: "User logged in successfully.",
-            logoutRedirect: false,
-          });
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-        this.setState({
-          isAuth: false,
-        });
+      this.setState({
+        message: response.data.message,
       });
+      this.setBannerTimeout('message');
+
+      if (response.data.token != null) {
+        //localStorage refers to localStorage of browser
+        localStorage.setItem("token", response.data.token);
+        let user = jwt_decode(response.data.token);
+
+        console.log("USER", user);
+
+        this.setState({
+          isAuth: true,
+          user: user,
+          message: null,
+          failMessage: null,
+          successMessage: "User logged in successfully.",
+          logoutRedirect: false,
+        });
+        this.setBannerTimeout('successMessage');
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      this.setState({
+        isAuth: false,
+      });
+    });
   };
 
   logoutHandler = (e) => {
@@ -200,8 +204,19 @@ export default class App extends Component {
       successMessage: null,
       logoutRedirect: true,
     });
+<<<<<<< HEAD
+=======
+    this.setBannerTimeout('failMessage');
+>>>>>>> 7a3d63381bd839f47cdcf3a23ca232fa1b639ebe
   };
 
+  setBannerTimeout = (key) => {
+    setTimeout(()=>{
+      this.setState({
+        [key]: null,
+      });
+    },10000)
+  }
   render() {
     const message = this.state.message ? (
       <Alert variant="info">{this.state.message}</Alert>
