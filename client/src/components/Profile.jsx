@@ -104,10 +104,10 @@ function Profile({ currentUser }) {
   };
 
   const changeUserImg = async (imgUrl) => {
-    await axios.put(`/profile/${currentUser.id}/avatar`, { avatar: imgUrl } )
+    await axios.put(`/profile/${currentUser.id}/avatar`, { avatar: imgUrl });
     getUser(params.userId);
     setShow(false);
-  }
+  };
 
   return (
     <div className='section-profile container py-3'>
@@ -178,8 +178,8 @@ function Profile({ currentUser }) {
       {params.userId === currentUser.id && (
         <div>
           <>
-            <Button variant='primary' onClick={handleShow}>
-              Launch demo modal
+            <Button className='center' variant='primary' onClick={handleShow}>
+              Change Profile Image
             </Button>
 
             <Modal size='xl' show={show} onHide={handleClose}>
@@ -228,7 +228,6 @@ function Profile({ currentUser }) {
           <div className='display-6'>Achievements</div>
         </div>
       </div>
-    
     </div>
   );
 }
