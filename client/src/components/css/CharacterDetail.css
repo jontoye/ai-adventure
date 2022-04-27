@@ -1,0 +1,12 @@
+.character-backstory {
+  max-height: 200px;
+}
+
+p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 10; /* number of lines to show */
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+}

@@ -18,7 +18,12 @@
 }
 
 .user-card__img img {
-    border-radius: 50%;
+    /* border-radius: 50%; */
     width: 150px; 
     height: 150px;
+}
+
+.circular-square {
+  border-radius: 50%;
+  border: 5px white solid;
 }

@@ -23,7 +23,6 @@ h1{
 #create-user-button:hover{
     cursor: pointer;
     background-color: rgb(255,255,255,0.3);
-    border: 1px solid rgb(255,255,255,0.3);
 }
 
 
@@ -113,4 +112,48 @@ $gray: #9b9b9b;
 
   #main-greeting{
       color: white;
+  }
+
+  #google-button{
+    border: none;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 20px;
+    background-color: rgb(255, 255, 255, 0.02);
+    background-image: "client/src/images/google-logo.webp";
+    width: 120px
+  }
+
+  #google-button:hover{
+    cursor: pointer;
+    background-color: rgb(255,255,255,0.1);
+}
+
+  #google-signin-wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #google-signin-wrapper span{
+    font-size: 20pt;
+    font-weight:900;
+  }
+
+  #google-logo-img{
+    width: 35px;
+  }
+
+  #google-button span{
+    font-size: 14pt;
+  }
+
+  .signin-line{
+    margin: 0 auto;
+    width: 80%;
   }

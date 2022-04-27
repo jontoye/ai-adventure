@@ -18,16 +18,16 @@ export default class Characters extends Component {
   loadCharacterList = () => {
     // console.log("getting characters...");
     Axios.get("character/index")
-      .then((response) => {
-        // console.log(response.data.characters);
-        this.setState({
-          characters: response.data.characters.reverse(),
-        });
-      })
-      .catch((err) => {
-        console.log("Error fetching characters.");
-        console.log(err);
+    .then((response) => {
+      // console.log(response.data.characters);
+      this.setState({
+        characters: response.data.characters.reverse(),
       });
+    })
+    .catch((err) => {
+      console.log("Error fetching characters.");
+      console.log(err);
+    });
   };
 
   deleteCharacter = (name) => {

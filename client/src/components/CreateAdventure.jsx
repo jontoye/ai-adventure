@@ -20,6 +20,7 @@ export default class CreateAdventure extends Component {
       name: '',
       prompt: "",
       redirect: false,
+      event: {},
       
     };
     // console.log(this.props)
@@ -63,21 +64,23 @@ export default class CreateAdventure extends Component {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
     })
-      .then((response) => {
-        console.log("Adventure created successfully.", response);
-        this.startStory();
-        // this.loadCharacterList();
-      })
-      .catch((error) => {
-        console.log("Error creating adventure.", error);
-      });
+    .then((response) => {
+      console.log("Adventure created successfully.", response);
+      this.startStory();
+      // this.loadCharacterList();
+    })
+    .catch((error) => {
+      console.log("Error creating adventure.", error);
+    });
   };
 
   startStory() {
     // console.log("start-story triggered2");
-    this.setState({
-      redirect: true,
-    });
+    setTimeout(()=>{
+      this.setState({
+        redirect: true,
+      })
+    },200)
   }
   appendResponse = (response) => {};
 
@@ -94,7 +97,7 @@ export default class CreateAdventure extends Component {
     console.log('story: '+ character.backstory)
 
     let intro = `${character.backstory}`;
-    let prompt = `Begin a ${formDataObj.genre} story to ${formDataObj.quest} in a ${formDataObj.setting} setting. Create a detailed story in 50 words about ${character.name} starting the quest`;
+    let prompt = `Begin a ${formDataObj.genre} story to ${formDataObj.quest} in a ${formDataObj.setting} setting. Create a detailed introduction in 50 words about ${character.name} starting the quest`;
     let AIprompt = intro + "\n\n" + prompt + "\n";
     // console.log("intro", intro);
     // console.log("prompt", prompt);
@@ -117,36 +120,71 @@ export default class CreateAdventure extends Component {
         presence_penalty: 0,
       })
       .then((response) => {
-        let intro = response.data.choices[0].text;
+        let story = response.data.choices[0].text;
         // console.log("after response intro test", intro);
-        if (intro[0] === "\n") {
-          intro = intro.slice(1, intro.length);
+        if (story[0] === "\n") {
+          story = story.slice(1, story.length);
         }
         //the important one
-        let logs = [character.backstory, prompt, intro];
+        let logs = [character.backstory, prompt, story];
         // console.log("formDataObj", formDataObj);
         // console.log("logs test", logs);
         formDataObj.log = logs;
         formDataObj.character = character;
-        this.addAdventure(formDataObj);
-        this.setState({
-          newAdventure: formDataObj,
-          character: character,
-          placeholder: `Adventure successfully created. Enjoy!`,
-          response: `${intro}`,
-          log: [character.backstory, prompt, intro],
-        });
 
-        this.props.startStory(logs);
+        let event = {
+          previousLog: [intro],
+          storyPrompt: prompt,
+          story: story,
+          optionPrompt: '',
+          options: [],
+          selectedOption: null,
+          fullLog: logs,
+          displayedLog: [character.backstory, story],
+        }
+
+        this.createEvent(event);
+        setTimeout(()=>{
+          formDataObj.events = [this.state.event];
+
+          this.addAdventure(formDataObj);
+          this.setState({
+            newAdventure: formDataObj,
+            character: character,
+            placeholder: `Adventure successfully created. Enjoy!`,
+            response: `${story}`,
+            log: logs,
+          });
+          setTimeout(()=>{
+            this.props.startStory(this.state.newAdventure, this.state.character);
+          },100)
+        },100)
       })
       .catch((error) => {
-        // console.log("error log:", error);
+        console.log("error log:", error);
       });
     this.setState({
       placeholder: `Generating Adventure. Please wait...`,
       response: "",
     });
   };
+
+  createEvent = (event) => {
+    Axios.post("event/add", event, {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    })
+    .then((response) => {
+      console.log("Event created successfully.", response);
+      this.setState({
+        event: response.data.event,
+      })
+    })
+    .catch((error) => {
+      console.log("Error creating event.", error);
+    });
+  }
 
   render() {
     const characters = this.state.characters.map((c) => {
@@ -256,6 +294,7 @@ export default class CreateAdventure extends Component {
               to='/adventure'
               replace={true}
               adventure={this.state.newAdventure}
+              character={this.state.character}
             />
           )}
         </Container>

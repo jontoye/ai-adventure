@@ -2,14 +2,14 @@ const mongoose = require("mongoose");
 
 const eventSchema = mongoose.Schema(
   {
-    name: {
-      type: String,
-    },
-    prompt: {
+    storyPrompt: {
       type: String,
     },
     story: {
       type: String,
+    },
+    optionPrompt: {
+        type: String,
     },
     options: {
       type: Array,
@@ -18,7 +18,11 @@ const eventSchema = mongoose.Schema(
     optionChosen: {
       type: Number,
     },
-    log: {
+    fullLog: {
+      type: Array,
+      default: [],
+    },
+    displayedLog: {
       type: Array,
       default: [],
     },
