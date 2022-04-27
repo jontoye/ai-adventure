@@ -13,6 +13,7 @@ router.post(
   "/profile/:userId/removesocial",
   userCtrl.user_profile_removesocial_post
 );
+router.put("/profile/:userId/avatar", userCtrl.user_profile_avatar_put);
 
 router.get("/profile/:username/edit", userCtrl.user_edit_get);
 router.post("/profile/:username/edit", userCtrl.user_edit_post);
