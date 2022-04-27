@@ -44,7 +44,6 @@ export default class App extends Component {
     adventure: {},
   };
 
-
   componentDidMount() {
     let token = localStorage.getItem("token");
     if (token != null) {
@@ -85,13 +84,16 @@ export default class App extends Component {
             message: null,
             failMessage: null,
             successMessage: "User logged in successfully.",
-            logoutRedirect: "false",
+            logoutRedirect: false,
           });
-          this.setBannerTimeout('successMessage');
+          this.setBannerTimeout("successMessage");
         }
       })
       .catch((err) => {
         console.log(err);
+        this.setState({
+          isAuth: false,
+        });
       });
   };
 
@@ -141,7 +143,7 @@ export default class App extends Component {
           failMessage: null,
           successMessage: null,
         });
-        this.setBannerTimeout('message');
+        this.setBannerTimeout("message");
       })
       .catch((error) => {
         console.log(error);
@@ -150,49 +152,49 @@ export default class App extends Component {
 
   loginHandler = (cred) => {
     Axios.post("auth/signin", cred)
-    .then((response) => {
-      // console.log("response data token", response.data.token);
-      console.log(response.data.message);
-
-      this.setState({
-        message: response.data.message,
-      });
-      this.setBannerTimeout('message');
-
-      if (response.data.token != null) {
-        //localStorage refers to localStorage of browser
-        localStorage.setItem("token", response.data.token);
-        let user = jwt_decode(response.data.token);
-
-        console.log("USER", user);
+      .then((response) => {
+        // console.log("response data token", response.data.token);
+        console.log(response.data.message);
 
         this.setState({
-          isAuth: true,
-          user: user,
-          message: null,
-          failMessage: null,
-          successMessage: "User logged in successfully.",
-          logoutRedirect: false,
+          message: response.data.message,
         });
-        this.setBannerTimeout('successMessage');
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-      this.setState({
-        isAuth: false,
+        this.setBannerTimeout("message");
+
+        if (response.data.token != null) {
+          //localStorage refers to localStorage of browser
+          localStorage.setItem("token", response.data.token);
+          let user = jwt_decode(response.data.token);
+
+          console.log("USER", user);
+
+          this.setState({
+            isAuth: true,
+            user: user,
+            message: null,
+            failMessage: null,
+            successMessage: "User logged in successfully.",
+            logoutRedirect: false,
+          });
+          this.setBannerTimeout("successMessage");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        this.setState({
+          isAuth: false,
+        });
       });
-    });
   };
 
   logoutHandler = (e) => {
     e.preventDefault();
 
     localStorage.removeItem("token");
-    const redirect = () =>{
-        window.location.href = '/'
-    }
-    redirect()
+    const redirect = () => {
+      window.location.href = "/";
+    };
+    redirect();
     this.setState({
       isAuth: false,
       user: null,
@@ -202,83 +204,80 @@ export default class App extends Component {
       successMessage: null,
       logoutRedirect: true,
     });
-    this.setBannerTimeout('failMessage');
+    this.setBannerTimeout("failMessage");
   };
 
   setBannerTimeout = (key) => {
-    setTimeout(()=>{
+    setTimeout(() => {
       this.setState({
         [key]: null,
       });
-    },10000)
-  }
+    }, 10000);
+  };
   render() {
-
-    
-
     const message = this.state.message ? (
-      <Alert variant='info'>{this.state.message}</Alert>
+      <Alert variant="info">{this.state.message}</Alert>
     ) : null;
     const failMessage = this.state.failMessage ? (
-      <Alert variant='danger'>{this.state.failMessage}</Alert>
+      <Alert variant="danger">{this.state.failMessage}</Alert>
     ) : null;
     const successMessage = this.state.successMessage ? (
-      <Alert variant='success'>{this.state.successMessage}</Alert>
+      <Alert variant="success">{this.state.successMessage}</Alert>
     ) : null;
     const { isAuth } = this.state;
     return (
       <Router>
-        <Navbar fixed='top' variant='dark' bg='dark' expand='lg'>
+        <Navbar fixed="top" variant="dark" bg="dark" expand="lg">
           <Container>
-            <Link to='/' className='navbar-brand'>
+            <Link to="/" className="navbar-brand">
               | AI Adventure |
             </Link>
 
-            <Navbar.Toggle aria-controls='basic-navbar-nav' />
-            <Navbar.Collapse id='basic-navbar-nav'>
-              <Nav className='me-auto'>
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse id="basic-navbar-nav">
+              <Nav className="me-auto">
                 {isAuth ? (
                   <>
-                    <Link to='/users' className='nav-link'>
+                    <Link to="/users" className="nav-link">
                       Explore
                     </Link>
-                    <Link to='/create-character' className='nav-link'>
+                    <Link to="/create-character" className="nav-link">
                       Create Character
                     </Link>
-                    <Link to='/create-adventure' className='nav-link'>
+                    <Link to="/create-adventure" className="nav-link">
                       Create Adventure
                     </Link>
-                    <Link to='/characters' className='nav-link'>
+                    <Link to="/characters" className="nav-link">
                       Characters
                     </Link>
-                    <Link to='/adventure-list' className='nav-link'>
+                    <Link to="/adventure-list" className="nav-link">
                       Adventures
                     </Link>
                   </>
                 ) : (
                   <>
-                    <Link to='/signup' className='nav-link'>
+                    <Link to="/signup" className="nav-link">
                       Sign Up
                     </Link>
-                    <Link to='/signin' className='nav-link'>
+                    <Link to="/signin" className="nav-link">
                       Sign In
                     </Link>
                   </>
                 )}
               </Nav>
 
-              <span id='main-greeting'>
+              <span id="main-greeting">
                 {this.state.user ? (
-                  <div className='right-nav'>
+                  <div className="right-nav">
                     <Link
                       to={`/profile/${this.state.user.id}`}
-                      className='nav-link'
+                      className="nav-link"
                     >
                       {"Welcome " + this.state.user.name}
                     </Link>
                     <Link
-                      to='/signout'
-                      className='nav-link'
+                      to="/signout"
+                      className="nav-link"
                       onClick={this.logoutHandler}
                     >
                       Sign Out
@@ -296,7 +295,7 @@ export default class App extends Component {
 
         <Routes>
           <Route
-            path='/'
+            path="/"
             element={
               isAuth ? (
                 <Home
@@ -312,7 +311,7 @@ export default class App extends Component {
             }
           ></Route>
           <Route
-            path='/create-character'
+            path="/create-character"
             exact
             element={
               <CreateCharacter
@@ -322,7 +321,7 @@ export default class App extends Component {
             }
           />
           <Route
-            path='/create-adventure'
+            path="/create-adventure"
             exact
             element={
               <CreateAdventure
@@ -332,12 +331,12 @@ export default class App extends Component {
             }
           />
           <Route
-            path='/adventure-list'
+            path="/adventure-list"
             exact
             element={<Adventures continueAdventure={this.continueAdventure} />}
           />
           <Route
-            path='/adventure'
+            path="/adventure"
             exact
             element={
               <Adventure
@@ -347,7 +346,7 @@ export default class App extends Component {
             }
           />
           <Route
-            path='/characters'
+            path="/characters"
             exact
             element={
               <Characters
@@ -357,17 +356,17 @@ export default class App extends Component {
             }
           />
           <Route
-            path='/character-detail'
+            path="/character-detail"
             exact
             element={<CharacterDetail character={this.state.character} />}
           />
           <Route
-            path='/users'
+            path="/users"
             element={<Users currentUser={this.state.user} />}
           />
 
           <Route
-            path='/signup'
+            path="/signup"
             element={
               <Signup
                 register={this.registerHandler}
@@ -376,21 +375,21 @@ export default class App extends Component {
             }
           ></Route>
           <Route
-            path='/signin'
+            path="/signin"
             element={
               <Signin login={this.loginHandler} isAuth={this.state.isAuth} />
             }
           ></Route>
           <Route
-            path='/profile'
+            path="/profile"
             element={<Profile currentUser={this.state.user} />}
           >
-            <Route path=':userId' element={<Profile />} />
+            <Route path=":userId" element={<Profile />} />
           </Route>
         </Routes>
 
         <Footer />
-        {this.state.logoutRedirect && <Navigate to='/' replace={true} />}
+        {this.state.logoutRedirect && <Navigate to="/" replace={true} />}
       </Router>
     );
   }

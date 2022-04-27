@@ -5,38 +5,38 @@ import jwt_decode from "jwt-decode";
 import { GoogleLogin } from 'react-google-login';
 import { useNavigate } from "react-router";
 
-export default function GSignup(){
+export default function GSignup({ login }){
     const [state, setState] = useState({isAuth: false, user: null, message: null, failMessage: null, successMessage: ""})
     const navigate = useNavigate();
 
-  const googleAuth = (response) => {
-    axios({
-        method: 'post',
-        url: "http://localhost:3001/auth/google",
-        data: {tokenId: response.tokenId}
-    })
-    .then(res=>{
-        console.log("google login success",res.data.user);
+  // const googleAuth = (response) => {
+  //   axios({
+  //       method: 'post',
+  //       url: "http://localhost:3001/auth/google",
+  //       data: {tokenId: response.tokenId}
+  //   })
+  //   .then(res=>{
+  //       console.log("google login success",res.data.user);
 
-        if (res.data.token != null) {
-            //localStorage refers to localStorage of browser
-            localStorage.setItem("token", res.data.token);
-            let user = jwt_decode(res.data.token);
+  //       if (res.data.token != null) {
+  //           //localStorage refers to localStorage of browser
+  //           localStorage.setItem("token", res.data.token);
+  //           let user = jwt_decode(res.data.token);
   
-            setState({
-              isAuth: true,
-              user: user,
-              message: null,
-              failMessage: null,
-              successMessage: "User logged in successfully.",
-            });
-          }
-          navigate("/")
-    })
-    .catch(err=>{
-        console.log(err)
-    })
-   }
+  //           setState({
+  //             isAuth: true,
+  //             user: user,
+  //             message: null,
+  //             failMessage: null,
+  //             successMessage: "User logged in successfully.",
+  //           });
+  //         }
+  //         navigate("/")
+  //   })
+  //   .catch(err=>{
+  //       console.log(err)
+  //   })
+  //  }
 
   return (
     <div>
@@ -48,8 +48,8 @@ export default function GSignup(){
                   <span> Sign in</span>
                 </button>
               )}
-            onSuccess = {googleAuth}
-            onFailure = {'error' + googleAuth}
+            onSuccess = {login}
+            onFailure = {'error' + login}
             cookiePolicy={"single_host_origin"}
              >
           </GoogleLogin>
