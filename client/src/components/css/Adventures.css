@@ -15,6 +15,7 @@
 
 .adventure-card {
   transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .adventure-card:hover {

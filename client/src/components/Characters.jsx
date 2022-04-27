@@ -58,18 +58,20 @@ export default class Characters extends Component {
   render() {
     const characters = this.state.characters.map((c, index) => {
       return (
-        <Character
-          name={c.name}
-          backstory={c.backstory}
-          class={c.class}
-          key={index}
-          id={index}
-          ability={c.ability}
-          weakness={c.weakness}
-          createAdventure={this.props.createAdventure}
-          deleteCharacter={this.deleteCharacter}
-          setCharacter={this.props.setCharacter}
-        />
+        <div className="character-card">
+          <Character
+            name={c.name}
+            backstory={c.backstory}
+            class={c.class}
+            key={index}
+            id={index}
+            ability={c.ability}
+            weakness={c.weakness}
+            createAdventure={this.props.createAdventure}
+            deleteCharacter={this.deleteCharacter}
+            setCharacter={this.props.setCharacter}
+          />
+        </div>
       );
     });
     return (
