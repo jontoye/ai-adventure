@@ -2,6 +2,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 require("dotenv").config();
 const cors = require('cors')
+const favicon = require('serve-favicon');
+const path = require('path');
 
 const PORT = process.env.PORT || 3001;
 
@@ -10,6 +12,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use(express.json());
 app.use(cors())
+
+// app.use(favicon(path.join(__dirname, 'build', 'favicon.ico')));
+app.use(express.static(path.join(__dirname, 'build')));
 
 // initialise session/cookies
 let session = require("express-session");
@@ -53,6 +58,10 @@ app.use("/", eventRoute);
 app.use("/", authRoute);
 app.use("/", userRoute);
 app.use("/", characterRoute);
+
+app.get('/*', function(req, res) {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 mongoose.connect(
     process.env.MONGODBURL,
