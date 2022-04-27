@@ -58,7 +58,7 @@ export default class Adventures extends Component {
   render() {
     const adventures = this.state.adventures.map((a, index) => {
       return (
-        <a href="" className="adventure-card">
+        <div className="adventure-card">
           <AdventureInfo
             adventure={a}
             key={index}
@@ -66,7 +66,7 @@ export default class Adventures extends Component {
             continueAdventure={this.props.continueAdventure}
             deleteAdventure={this.deleteAdventure}
           />         
-        </a>
+        </div>
       );
     });
     return (
