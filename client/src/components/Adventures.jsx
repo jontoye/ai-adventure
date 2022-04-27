@@ -21,16 +21,16 @@ export default class Adventures extends Component {
   loadAdventureList = () => {
     // console.log("getting adventures...");
     Axios.get("adventure/index")
-      .then((response) => {
-        // console.log(response.data.adventures);
-        this.setState({
-          adventures: response.data.adventures.reverse(),
-        });
-      })
-      .catch((err) => {
-        console.log("Error fetching adventures.");
-        console.log(err);
+    .then((response) => {
+      // console.log(response.data.adventures);
+      this.setState({
+        adventures: response.data.adventures.reverse(),
       });
+    })
+    .catch((err) => {
+      console.log("Error fetching adventures.");
+      console.log(err);
+    });
   };
 
   deleteAdventure = (name) => {

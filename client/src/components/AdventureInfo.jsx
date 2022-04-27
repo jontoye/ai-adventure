@@ -12,20 +12,20 @@ export default class AdventureInfo extends Component {
   };
   componentDidMount() {
     Axios.get("character/index")
-      .then((response) => {
-        // console.log(response.data.characters);
-        let character = response.data.characters.find((v) => {
-          return this.state.adventure.character === v._id;
-        });
-        // console.log(character.name)
-        this.setState({
-          character: character,
-        });
-      })
-      .catch((err) => {
-        console.log("Error fetching characters.");
-        console.log(err);
+    .then((response) => {
+      // console.log(response.data.characters);
+      let character = response.data.characters.find((v) => {
+        return this.state.adventure.character === v._id;
       });
+      // console.log(character.name)
+      this.setState({
+        character: character,
+      });
+    })
+    .catch((err) => {
+      console.log("Error fetching characters.");
+      console.log(err);
+    });
     this.imageSelect();
   }
   continueAdventure = (e) => {
