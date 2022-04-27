@@ -18,17 +18,27 @@ export default class Feedback extends Component {
       feedbackHandler = () => {
         Axios.post("feedback", this.state)
         .then((response) => {
-            console.log(response.data);
+            // console.log(response.data);
             let feedback = response.data.result ? 'Thank you for your message!' : null;
             let error = response.data.error ? response.data.error._message + ". Have you correctly filled out all the fields?" : null;
             this.setState({
                 confirmationMessage: feedback,
                 errorMessage: error,
             })
+            this.setBannerTimeout('confirmationMessage');
+            this.setBannerTimeout('errorMessage');
         })
         .catch((error) => {
             console.log(error);
         });
+      };
+
+      setBannerTimeout = (key) => {
+        setTimeout(() => {
+          this.setState({
+            [key]: null,
+          });
+        }, 10000);
       };
     
       render() {
