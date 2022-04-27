@@ -30,7 +30,7 @@ export default class CharacterDetail extends Component {
           (character) => character.name === this.state.character.name
         );
         this.setState({ adventures: id });
-        console.log("id", id);
+        console.log("state adventures", this.state.adventures);
       })
       .catch();
   };
@@ -58,10 +58,6 @@ export default class CharacterDetail extends Component {
 
   render() {
     const adventures = this.state.adventures.map((a, index) => {
-      this.setState({
-        adventureCount: this.state.adventures.length,
-      });
-
       return (
         <AdventureInfo
           name={a.name}
