@@ -62,12 +62,17 @@ export default class App extends Component {
     let token = localStorage.getItem("token");
     if (token != null) {
       let user = jwt_decode(token);
+      console.log("BEFORE", user);
       if (user) {
+        console.log("user = true");
+        console.log(user);
         this.setState({
           isAuth: true,
           user: user,
         });
       } else {
+        console.log("user = false");
+        console.log(user);
         localStorage.removeItem("token");
         this.setState({
           isAuth: false,

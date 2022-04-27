@@ -195,9 +195,17 @@ exports.googleLoginPost = (req, resp) => {
                     error: "Something went wrong...",
                   });
                 }
-                const token = jwt.sign({ id: data._id }, process.env.secret, {
-                  expiresIn: "7d",
-                });
+                const token = jwt.sign(
+                  {
+                    id: data._id,
+                    name: data.username,
+                    email: data.emailAddress,
+                  },
+                  process.env.secret,
+                  {
+                    expiresIn: "7d",
+                  }
+                );
                 const { _id, username, emailAddress, password } = newUser;
 
                 return resp.json({
