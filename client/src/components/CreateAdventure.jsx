@@ -190,14 +190,14 @@ export default class CreateAdventure extends Component {
     const characters = this.state.characters.map((c) => {
       if (c.name === this.state.name) {
         return (
-          <option value={c.name} selected className={c.name}>
+          <option value={c.name} selected className={c.name} key={c._id} index={c._id}>
             {c.name} ({c.class})
           </option>
         );
 
       } else {
         return (
-          <option value={c.name} className={c.name}>
+          <option value={c.name} className={c.name} key={c._id} index={c._id}>
             {c.name} ({c.class})
           </option>
         );

@@ -22,7 +22,6 @@ export default class Adventures extends Component {
     // console.log("getting adventures...");
     Axios.get("adventure/index")
     .then((response) => {
-      // console.log(response.data.adventures);
       this.setState({
         adventures: response.data.adventures.reverse(),
       });
@@ -56,13 +55,13 @@ export default class Adventures extends Component {
   };
 
   render() {
-    const adventures = this.state.adventures.map((a, index) => {
+    const adventures = this.state.adventures.map((a) => {
       return (
         <div className="adventure-card">
           <AdventureInfo
             adventure={a}
-            key={index}
-            id={index}
+            key={a._id}
+            id={a._id}
             continueAdventure={this.props.continueAdventure}
             deleteAdventure={this.deleteAdventure}
           />         

@@ -62,8 +62,8 @@ export default class CharacterDetail extends Component {
         <AdventureInfo
           name={a.name}
           adventure={a}
-          key={index}
-          id={index}
+          key={a._id}
+          id={a._id}
           continueAdventure={this.props.continueAdventure}
           deleteAdventure={this.deleteAdventure}
         />

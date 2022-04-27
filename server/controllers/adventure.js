@@ -29,28 +29,25 @@ exports.adventure_index_get = (req, res) => {
 
 //HTTP DELETE - Adventure
 exports.adventure_delete_get = (req,res) => {
-  console.log(req.query.id);
-
+  //STEP ONE: FIND THE ADVENTURE DATA
   Adventure.findOne({_id: req.query.id})
   .then((adventure) => {
-    console.log("Found Adventure: ", adventure.name);
-
+    // console.log("Found Adventure: ", adventure.name);
+    //STEP TWO: DELETE THE EVENTS WITHIN THE ADVENTURE
     adventure.events.forEach(e=>{
-      console.log("Deleting Event: ", e);
       Event.deleteOne({_id: e})
       .then((info)=>{
-        console.log(info)
-        console.log('Successfully deleted event.')
+        // console.log('Successfully deleted event.')
       })
       .catch((err) => {
         console.log(err);
         res.send("Error deleting events.");
       });
     }) 
-
+    //STEP THREE: DELETE THE ADVENTURE
     Adventure.deleteOne({_id: adventure.id})
     .then((info)=>{
-      console.log('Successfully deleted adventure: ' + adventure.name)
+      // console.log('Successfully deleted adventure: ' + adventure.name)
       res.json({info});
     })
     .catch((err)=>{console.log(err); res.send("Error deleting selected adventure.")})

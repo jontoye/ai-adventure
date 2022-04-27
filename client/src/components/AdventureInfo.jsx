@@ -62,8 +62,6 @@ export default class AdventureInfo extends Component {
   };
 
   deleteAdventure = (e) => {
-    console.log('Deleting: ' + this.state.adventure.name)
-    console.log('Deleting: ' + this.state.adventure._id)
     this.props.deleteAdventure(this.state.adventure);
   };
   render() {
