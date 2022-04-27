@@ -178,10 +178,11 @@ function Profile({ currentUser }) {
       {params.userId === currentUser.id && (
         <div>
           <>
-            <Button className='center' variant='primary' onClick={handleShow}>
-              Change Profile Image
-            </Button>
-
+            <div className='center-me'>
+              <Button className='center' variant='primary' onClick={handleShow}>
+                Change Profile Image
+              </Button>
+            </div>
             <Modal size='xl' show={show} onHide={handleClose}>
               <Modal.Header closeButton>
                 <Modal.Title>Select Your Profile Image</Modal.Title>
@@ -191,10 +192,7 @@ function Profile({ currentUser }) {
               </Modal.Body>
               <Modal.Footer>
                 <Button variant='secondary' onClick={handleClose}>
-                  Close
-                </Button>
-                <Button variant='primary' onClick={handleClose}>
-                  Save Changes
+                  Cancel
                 </Button>
               </Modal.Footer>
             </Modal>
