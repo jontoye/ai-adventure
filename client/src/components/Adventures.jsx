@@ -22,7 +22,6 @@ export default class Adventures extends Component {
     // console.log("getting adventures...");
     Axios.get("adventure/index")
     .then((response) => {
-      // console.log(response.data.adventures);
       this.setState({
         adventures: response.data.adventures.reverse(),
       });
@@ -33,8 +32,8 @@ export default class Adventures extends Component {
     });
   };
 
-  deleteAdventure = (name) => {
-    Axios.delete(`adventure/delete?name=${name}`, {
+  deleteAdventure = (adventure) => {
+    Axios.delete(`adventure/delete?id=${adventure._id}`, {
       headers: {
           "Authorization": "Bearer " + localStorage.getItem("token"),
       }
@@ -44,7 +43,7 @@ export default class Adventures extends Component {
       this.loadAdventureList();
     })
     .catch(err=>{
-      console.log(`Error deleting adventure: ${name}`)
+      console.log(`Error deleting adventure: ${adventure.name}`)
       console.log(err)
     })
   }
@@ -56,13 +55,13 @@ export default class Adventures extends Component {
   };
 
   render() {
-    const adventures = this.state.adventures.map((a, index) => {
+    const adventures = this.state.adventures.map((a) => {
       return (
         <div className="adventure-card">
           <AdventureInfo
             adventure={a}
-            key={index}
-            id={index}
+            key={a._id}
+            id={a._id}
             continueAdventure={this.props.continueAdventure}
             deleteAdventure={this.deleteAdventure}
           />         

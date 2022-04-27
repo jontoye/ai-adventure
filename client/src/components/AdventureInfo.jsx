@@ -62,7 +62,7 @@ export default class AdventureInfo extends Component {
   };
 
   deleteAdventure = (e) => {
-    this.props.deleteAdventure(this.state.adventure.name);
+    this.props.deleteAdventure(this.state.adventure);
   };
   render() {
     let css = `adventure-${this.state.id}`;
