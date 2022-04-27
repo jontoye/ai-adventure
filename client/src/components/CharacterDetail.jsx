@@ -10,38 +10,45 @@ export default class CharacterDetail extends Component {
 
     this.state = {
       character: {},
+      myadventures: [],
       adventures: [],
       char_id: null,
       adventureCount: 0,
+      id: null,
     };
   }
 
   componentDidMount() {
-    this.setCharacter();
-    this.loadAdventureList();
     this.loadName();
+    this.setCharacter();
   }
 
   loadName = () => {
     Axios.get("character/index")
       .then((response) => {
-        console.log(response.data.characters);
+        // console.log("response.data.characters", response.data.characters);
         let id = response.data.characters.filter(
           (character) => character.name === this.state.character.name
         );
-        this.setState({ adventures: id });
+        let char_id = id[0]._id;
+        this.setState({ id: id[0]._id });
         console.log("state adventures", this.state.adventures);
+        this.loadAdventureList(char_id);
       })
       .catch();
   };
 
-  loadAdventureList = () => {
+  loadAdventureList = (char_id) => {
     // console.log("getting adventures...");
     Axios.get("adventure/index")
       .then((response) => {
-        console.log(response.data.adventures);
+        let adventures = response.data.adventures.filter(
+          (adventure) => adventure.character === char_id
+        );
+        console.log("filtered adventures", adventures);
         this.setState({
-          adventures: response.data.adventures.reverse(),
+          myadventures: adventures.reverse(),
+          adventureCount: adventures.length,
         });
       })
       .catch((err) => {
@@ -56,8 +63,10 @@ export default class CharacterDetail extends Component {
     });
   }
 
+  setAdventures() {}
+
   render() {
-    const adventures = this.state.adventures.map((a, index) => {
+    let adventures = this.state.myadventures.map((a) => {
       return (
         <AdventureInfo
           name={a.name}
@@ -69,11 +78,12 @@ export default class CharacterDetail extends Component {
         />
       );
     });
+    // const
     return (
-      <div>
+      <div className='centered'>
         <Card
           className='character-detail-card'
-          style={{ width: "50rem", margin: "15px" }}
+          style={{ width: "50rem", margin: "0 auto" }}
         >
           <Card.Img variant='top' src='images/saad.png' />
           <Card.Body>
@@ -85,19 +95,21 @@ export default class CharacterDetail extends Component {
                 {this.state.character.backstory}
               </div>
               <br />
-              <br />
               Ability: {this.state.character.ability}
               <br />
               Weakness: {this.state.character.weakness}
               <br />
               Favorites: ♡ 9001
-              <br /> Stories: 5
+              <br /> Adventures: {this.state.adventureCount}
             </Card.Text>
             <Button variant='primary'>Start Adventure</Button>
           </Card.Body>
         </Card>
-        <h1>Adventure List {this.state.adventureCount}</h1>
-        <div className='adventure-list'>x adventures goes here</div>
+        <h1>
+          {this.state.character.name} the {this.state.character.class}'s
+          Adventures
+        </h1>
+        <div className='adventure-list'>{adventures}</div>
       </div>
     );
   }

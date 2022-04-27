@@ -33,3 +33,21 @@
   display: flex;
   justify-content: center;
 }
+
+.modal-content {
+  background-color: #212529;
+  color: white;
+  text-align: center;
+}
+.modal-header {
+  text-align: center;
+  border-bottom: none;
+}
+.modal-title {
+  margin: 0 auto;
+  text-align: center;
+  width: fit-content;
+}
+.btn-close {
+  display: none;
+}

@@ -8,4 +8,5 @@
 .preview-image:hover {
   cursor: pointer;
   transform: scale(1.1);
+  border: 5px green solid;
 }
