@@ -29,14 +29,38 @@ exports.adventure_index_get = (req, res) => {
 
 //HTTP DELETE - Adventure
 exports.adventure_delete_get = (req,res) => {
-  // console.log("Deleting " + req.query.name);
-  // Event.deleteMany()
+  console.log(req.query.id);
 
-  Adventure.deleteOne({name: req.query.name})
-  .then((adventure)=>{
-    res.json({adventure});
+  Adventure.findOne({_id: req.query.id})
+  .then((adventure) => {
+    console.log("Found Adventure: ", adventure.name);
+
+    adventure.events.forEach(e=>{
+      console.log("Deleting Event: ", e);
+      Event.deleteOne({_id: e})
+      .then((info)=>{
+        console.log(info)
+        console.log('Successfully deleted event.')
+      })
+      .catch((err) => {
+        console.log(err);
+        res.send("Error deleting events.");
+      });
+    }) 
+
+    Adventure.deleteOne({_id: adventure.id})
+    .then((info)=>{
+      console.log('Successfully deleted adventure: ' + adventure.name)
+      res.json({info});
+    })
+    .catch((err)=>{console.log(err); res.send("Error deleting selected adventure.")})
   })
-  .catch((err)=>{console.log(err); res.send("Error deleting selected adventure.")})
+  .catch((err) => {
+    console.log(err);
+    res.send("Error locating adventures.");
+  });
+
+
 }
 
 //HTTP PUT - Adventure Update

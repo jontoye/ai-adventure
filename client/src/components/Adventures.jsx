@@ -33,8 +33,8 @@ export default class Adventures extends Component {
     });
   };
 
-  deleteAdventure = (name) => {
-    Axios.delete(`adventure/delete?name=${name}`, {
+  deleteAdventure = (adventure) => {
+    Axios.delete(`adventure/delete?id=${adventure._id}`, {
       headers: {
           "Authorization": "Bearer " + localStorage.getItem("token"),
       }
@@ -44,7 +44,7 @@ export default class Adventures extends Component {
       this.loadAdventureList();
     })
     .catch(err=>{
-      console.log(`Error deleting adventure: ${name}`)
+      console.log(`Error deleting adventure: ${adventure.name}`)
       console.log(err)
     })
   }
