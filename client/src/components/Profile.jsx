@@ -11,10 +11,16 @@ function Profile({ currentUser }) {
     followers: [],
     following: [],
   });
+
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  
+  const [editImg, setEditImg] = useState(false);
+  const [imgUrl, setImgUrl] = useState();
+
 
   let params = useParams();
 
@@ -102,6 +108,20 @@ function Profile({ currentUser }) {
     removeFollowing();
   };
 
+  const toggleEditImgInput = () => {
+    setEditImg(!editImg);
+  }
+
+  const handleInputChange = (e) => {
+    setImgUrl(e.target.value)
+  }
+
+  const changeUserImg = async () => {
+    await axios.put(`/profile/${currentUser.id}/avatar`, { avatar: imgUrl }, {new: true} )
+    
+    getUser(params.userId);
+  }
+
   return (
     <div className='section-profile container py-3'>
       <h1>{user.username}'s Profile Page</h1>
@@ -110,6 +130,22 @@ function Profile({ currentUser }) {
         alt='profile-img'
         className='profile-img circular-square '
       />
+
+      {params.userId === currentUser.id &&
+        <div className="image-edit text-center">
+          <button className='btn btn-light' onClick={toggleEditImgInput}>Change Profile Image</button>
+          {editImg &&
+            <div className="row">
+              <div className="col-9">
+                <input className="form-control" type="text" placeholder="image url..." onChange={handleInputChange}/>
+              </div>
+              <div className="col-3">
+                <button className="btn btn-light" onClick={changeUserImg}>Submit</button>
+              </div>
+            </div>
+          }
+        </div>
+      }
 
       {params.userId !== currentUser.id && (
         <div className='row mb-5'>
@@ -221,6 +257,7 @@ function Profile({ currentUser }) {
           <div className='display-6'>Achievements</div>
         </div>
       </div>
+    
     </div>
   );
 }

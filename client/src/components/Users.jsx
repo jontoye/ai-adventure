@@ -3,6 +3,8 @@ import axios from "axios";
 import "./css/Users.css";
 import moment from "moment";
 import { Link } from "react-router-dom";
+import Characters from "./Characters";
+import Adventures from "./Adventures";
 
 function Users() {
   const [users, setUsers] = useState([]);
@@ -21,30 +23,35 @@ function Users() {
   }, []);
 
   return (
-    <div className='section-explore container'>
-      <h1>Explore Current Users</h1>
+    <>
+      <div className='section-explore container my-5'>
+        <h1>Active Users</h1>
 
-      <div className='users-list d-flex flex-column align-items-center gap-5 my-5'>
-        {users.map((user) => (
-          <div className='user-card d-flex align-items-center' key={user._id}>
-            <div className='user-card__img'>
-              <img
-                className='circular-square'
-                src={user.avatar}
-                alt='user-avatar'
-              />
-            </div>
-            <Link to={`/profile/${user._id}/`}>
-              <div className='user-card__content mx-5'>
-                <h3 className='p-2'>{user.username}</h3>
-                <p className='p-2'>Joined {moment(user.createdAt).fromNow()}</p>
-                <p>{user._id}</p>
+        {/* <div className='users-list d-flex flex-column align-items-center gap-5 my-5'> */}
+        <div className='users-list d-flex align-items-center gap-5'>
+          {users.map(user => (
+            <Link to={`/profile/${user._id}/`} key={user._id}>
+              <div className='user-card'>
+                <div className='user-card__img'>
+                  <img
+                    className='circular-square'
+                    src={user.avatar}
+                    alt='user-avatar'
+                  />
+                </div>
+                  <div className='user-card__content mx-2'>
+                    <h3>{user.username}</h3>
+                    <p>Joined {moment(user.createdAt).fromNow()}</p>
+                  </div>
               </div>
             </Link>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
+
+      <Adventures />
+      <Characters />
+    </>
   );
 }
 

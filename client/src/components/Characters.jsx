@@ -66,7 +66,7 @@ export default class Characters extends Component {
     return (
       <div>
         <h1>Character List</h1>
-        <div className='character-list'>{characters}</div>
+        <div className='character-list my-5 container'>{characters}</div>
       </div>
     );
   }

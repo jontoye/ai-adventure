@@ -5,9 +5,12 @@
 }
 
 .profile-img {
-  display: block;
-  max-width: 300px;
-  margin: 50px auto;
+
+    display: block;
+    max-width: 300px;
+    margin: 50px auto;
+    border-radius: 50%;
+
 }
 
 .profile-connections {
@@ -20,6 +23,12 @@
 .circular-square {
   border-radius: 50%;
   border: 5px white solid;
+
   display: block;
   max-width: 300px;
+
+
+  width: 300px;
+  height: 300px;
 }
+
