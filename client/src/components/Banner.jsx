@@ -93,6 +93,7 @@ export default function Banner(props) {
                         Quick Start
                     </Button>
                 </OverlayTrigger>
+                {props.adventure ?
                 <OverlayTrigger
                     placement="right"
                     delay={{ show: 250, hide: 400 }}
@@ -108,6 +109,7 @@ export default function Banner(props) {
                         Continue Adventure
                     </Button>
                 </OverlayTrigger>
+                : null}
             </div>
           </Col>
           <Col md={12} lg={4} className='banner-right'>
