@@ -49,13 +49,15 @@ export default class Adventures extends Component {
   render() {
     const adventures = this.state.adventures.map((a, index) => {
       return (
-        <AdventureInfo
-          adventure={a}
-          key={index}
-          id={index}
-          continueAdventure={this.props.continueAdventure}
-          deleteAdventure={this.deleteAdventure}
-        />
+        <a href="" className="adventure-card">
+          <AdventureInfo
+            adventure={a}
+            key={index}
+            id={index}
+            continueAdventure={this.props.continueAdventure}
+            deleteAdventure={this.deleteAdventure}
+          />         
+        </a>
       );
     });
     return (

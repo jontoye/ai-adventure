@@ -12,3 +12,11 @@
 .adventure-list::-webkit-scrollbar {
   display: none;
 }
+
+.adventure-card {
+  transition: all 0.3s ease;
+}
+
+.adventure-card:hover {
+  transform: scale(1.06);
+}
