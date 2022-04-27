@@ -5,11 +5,11 @@ exports.feedback_create_post = (req, res) => {
 
   //save feedback
   feedback.save()
-  .then((feedback) => {
-    res.json({ feedback });
+  .then((result) => {
+    res.json({ result });
   })
   .catch((err) => {
     console.log(err);
-    res.status(418).json({ error: err });
+    res.json({ error: err }).status(418);
   });
 };

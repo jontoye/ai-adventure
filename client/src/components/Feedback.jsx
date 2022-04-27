@@ -1,10 +1,13 @@
-import React, { Component } from 'react'
-import { Container, Button, Form, Row, Col } from 'react-bootstrap'
+import React, { Component } from 'react';
+import { Container, Button, Form, Row, Col, Alert } from 'react-bootstrap';
+import Axios from "axios";
 
 export default class Feedback extends Component {
     state = {
-        redirect: false,
-      };
+        message: null,
+        confirmationMessage: null,
+        errorMessage: null,
+    };
     
       changeHandler = (e) => {
         let temp = { ...this.state };
@@ -13,11 +16,29 @@ export default class Feedback extends Component {
       };
     
       feedbackHandler = () => {
-          console.log('feedback')
+        Axios.post("feedback", this.state)
+        .then((response) => {
+            console.log(response.data);
+            let feedback = response.data.result ? 'Thank you for your message!' : null;
+            let error = response.data.error ? response.data.error._message + ". Have you correctly filled out all the fields?" : null;
+            this.setState({
+                confirmationMessage: feedback,
+                errorMessage: error,
+            })
+        })
+        .catch((error) => {
+            console.log(error);
+        });
       };
     
       render() {
-        // console.log(this.state);
+        const confirmationMessage = this.state.confirmationMessage ? (
+            <Alert variant="success">{this.state.confirmationMessage}</Alert>
+        ) : null;
+
+        const errorMessage = this.state.errorMessage ? (
+            <Alert variant="danger">{this.state.errorMessage}</Alert>
+        ) : null;
           
         return (
           <div>
@@ -51,9 +72,17 @@ export default class Feedback extends Component {
                         </Col>
                     </Row>
                 </Form.Group>
-                <Button id='' onClick={this.feedbackHandler}>
-                    Send feedback
-                </Button>
+                <Row>
+                    <Col xs="3">
+                        <Button id='' onClick={this.feedbackHandler}>
+                            Send feedback
+                        </Button>
+                    </Col>
+                    <Col>
+                        {confirmationMessage}
+                        {errorMessage}
+                    </Col>
+                </Row>
             </Container>
           </div>
         );
