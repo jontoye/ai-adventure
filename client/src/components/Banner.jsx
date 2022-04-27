@@ -36,13 +36,12 @@ export default function Banner(props) {
                 <p>
                   {" "}
                   Welcome to AI Adventure, the best randomly-generated AI-driven
-                  choose-your-own adventure game. If this is your first time
+                  choose-your-own adventure game on the internet. If this is your first time
                   playing we recommend you go through the tutorial.
                 </p>
                 <p>
-                  If you are a returning adventurer you can continue your
-                  character's adventure by clicking{" "}
-                  <span className='text-info'>continue</span> below.
+                  If you are in a hurry to get adventuring, you can immediately begin a new one by clicking {" "}
+                  <span className='text-info'>quick start</span> below.
                 </p>
                 <p>Good luck on your next adventure!</p>
               </Card.Body>
