@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import Axios from "axios";
 import AdventureInfo from "./AdventureInfo";
+import { Navigate } from "react-router-dom";
+import { Button, Container } from "react-bootstrap";
 import "./css/Adventures.css";
 
 export default class Adventures extends Component {
@@ -9,6 +11,7 @@ export default class Adventures extends Component {
 
     this.state = {
       adventures: [],
+      redirect: false,
     };
   }
   componentDidMount() {
@@ -46,6 +49,12 @@ export default class Adventures extends Component {
     })
   }
 
+  createAdventure = (e) => {
+    this.setState({
+      redirect: true,
+    });
+  };
+
   render() {
     const adventures = this.state.adventures.map((a, index) => {
       return (
@@ -64,6 +73,15 @@ export default class Adventures extends Component {
       <div>
         <h1>Adventure List</h1>
         <div className='adventure-list my-5 container'>{adventures}</div>
+        <Container className="text-center">
+          <Button variant='secondary' onClick={this.createAdventure}>Create New Adventure</Button>
+        </Container>
+        {this.state.redirect && (
+          <Navigate
+            to='/create-adventure'
+            replace={true}
+          />
+        )}
       </div>
     );
   }
