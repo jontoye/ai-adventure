@@ -60,9 +60,7 @@ export default function Banner(props) {
                   playing we recommend you go through the <span className='text-info'>tutorial</span>.
                 </p>
                 <p>
-                  If you are in a hurry to get adventuring, you can immediately begin a new one by clicking {" "}
-                  <span className='text-info'>quick start</span> below. Otherwise, you can pick up where your last adventure left off by selecting {" "}
-                  <span className='text-info'>continue</span>.
+                  If you are in a hurry to get adventuring, you can immediately begin a new one by clicking <span className='text-info'>quick start</span> below. Otherwise, you can pick up where your last adventure left off by selecting <span className='text-info'>continue</span>.
                 </p>
                 <p>Good luck on your next adventure!</p>
               </Card.Body>
