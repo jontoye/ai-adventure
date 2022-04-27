@@ -32,7 +32,7 @@ export default class Signup extends Component {
     return (
       <div>
         <div>
-          <h1>Welcome to Adventure</h1>
+          <h1>Welcome to AI Adventure</h1>
           <Container id='sign-up-container'>
             <div className='form__group field'>
               <input
