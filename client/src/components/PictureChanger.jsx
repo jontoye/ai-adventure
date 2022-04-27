@@ -31,11 +31,9 @@ export default class PictureChanger extends Component {
     };
   }
 
-  combine;
-
   render() {
     const images = this.state.images.map((image, index) => {
-      return <ProfileImage image={image} />;
+      return <ProfileImage image={image} changeUserImg={this.props.changeUserImg} />;
     });
     return <div className='images-holder'>{images}</div>;
   }
