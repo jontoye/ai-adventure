@@ -126,7 +126,7 @@ exports.auth_signin_post = async (req, res) => {
         name: user.username,
         email: user.emailAddress,
       },
-      process.env.secret,
+      process.env.SECRET,
       { expiresIn: "7d" },
       (err, token) => {
         if (err) throw err;
