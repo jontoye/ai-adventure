@@ -2,6 +2,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import "./css/Profile.css";
+import PictureChanger from "./PictureChanger";
+import { Modal, Button } from "react-bootstrap";
 
 function Profile({ currentUser }) {
   const [user, setUser] = useState({
@@ -9,6 +11,10 @@ function Profile({ currentUser }) {
     followers: [],
     following: [],
   });
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   let params = useParams();
 
@@ -163,14 +169,39 @@ function Profile({ currentUser }) {
       </div>
 
       {params.userId === currentUser.id && (
-        <div className='row mb-5'>
-          <div className='col-8 mx-auto d-flex justify-content-between'>
-            <Link to='/characters' className='display-6'>
-              My Characters
-            </Link>
-            <Link to='/adventure-list' className='display-6'>
-              My Adventures
-            </Link>
+        <div>
+          <>
+            <Button variant='primary' onClick={handleShow}>
+              Launch demo modal
+            </Button>
+
+            <Modal show={show} onHide={handleClose}>
+              <Modal.Header closeButton>
+                <Modal.Title>Select Your Profile Image</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <PictureChanger></PictureChanger>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant='secondary' onClick={handleClose}>
+                  Close
+                </Button>
+                <Button variant='primary' onClick={handleClose}>
+                  Save Changes
+                </Button>
+              </Modal.Footer>
+            </Modal>
+          </>
+
+          <div className='row mb-5'>
+            <div className='col-8 mx-auto d-flex justify-content-between'>
+              <Link to='/characters' className='display-6'>
+                My Characters
+              </Link>
+              <Link to='/adventure-list' className='display-6'>
+                My Adventures
+              </Link>
+            </div>
           </div>
         </div>
       )}
