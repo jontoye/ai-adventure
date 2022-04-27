@@ -2,10 +2,10 @@
 import { Container, Row, Col, Card, Button, Tooltip, OverlayTrigger } from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
 import "./css/Banner.css";
+import Axios from "axios";
 
 export default function Banner(props) {
   let navigate = useNavigate();
-  // console.log(props)
 
   function buttonHandler() {
     props.createRandomCharacter();
@@ -14,13 +14,22 @@ export default function Banner(props) {
 
   function continueAdventure() {
     console.log('continue adventure...')
-    props.continueAdventure(props.adventure, props.character)
-    navigate("/adventure");
+    Axios.get("event/index")
+    .then((response) => {
+      let events = response.data.events.filter(v=>{
+        return props.adventure.events.includes(v._id);
+      })
+      props.adventure.events = events;
+      setTimeout(()=>{
+        props.continueAdventure(props.adventure, props.character)
+        navigate("/adventure");
+      },100)
+    })
   }
 
   const renderTooltip_qs = (info) => (
     <Tooltip id="button-tooltip" {...info}>
-      Generate a character with random attributes
+      Generate a character with random attributes!
     </Tooltip>
   );
 
@@ -96,7 +105,7 @@ export default function Banner(props) {
                         variant='light'
                         onClick={() => continueAdventure()}
                     >
-                        Continue
+                        Continue Adventure
                     </Button>
                 </OverlayTrigger>
             </div>

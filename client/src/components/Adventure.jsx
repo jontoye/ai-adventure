@@ -29,6 +29,7 @@ export default class Adventure extends Component {
   componentDidMount() {
     console.log('LOAD')
     console.log('adventure loaded: ',this.props.adventure)
+    console.log('character loaded: ',this.props.character)
     this.setState({
       event: this.props.adventure.events.reverse()[0],
       adventure: this.props.adventure,
