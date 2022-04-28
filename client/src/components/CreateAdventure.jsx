@@ -33,7 +33,11 @@ export default class CreateAdventure extends Component {
 
   loadCharacterList = () => {
     // console.log("getting characters...");
-    Axios.get("character/index")
+    Axios.get("character/index", {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    })
       .then((response) => {
         // console.log(response.data.characters);
         this.setState({

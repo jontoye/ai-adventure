@@ -40,7 +40,11 @@ export default class CharacterDetail extends Component {
 
   loadAdventureList = (char_id) => {
     // console.log("getting adventures...");
-    Axios.get("adventure/index")
+    Axios.get("adventure/index", {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    })
       .then((response) => {
         let adventures = response.data.adventures.filter(
           (adventure) => adventure.character === char_id
@@ -101,7 +105,10 @@ export default class CharacterDetail extends Component {
           className='character-detail-card'
           style={{ width: "50rem", margin: "0 auto" }}
         >
-          <Card.Img variant='top' src='images/saad.png' />
+          <Card.Img variant='top' src={this.state.character.image}
+            onError={(e) => {
+              e.target.onerror = null 
+              e.target.src = `/images/class/default.png`}} />
           <Card.Body>
             <Card.Title>
               {this.state.character.name} the {this.state.character.class}

@@ -230,10 +230,10 @@ export default class CreateCharacter extends Component {
     //Use a timeout/clock here to randomly change state.response to keep things interesting while the AI thinks?
   };
 
-  setImage = () => {
+  setImage() {
     let path = '';
-    if (CLASSES.indexOf(this.props.class) !== -1) {
-      path = `/images/class/${this.props.class.replace(" ", "")}.png`;
+    if (CLASSES.indexOf(this.state.newCharacter.class.toLowerCase()) !== -1) {
+      path = `/images/class/${this.state.newCharacter.class.toLowerCase().replace(" ", "")}.png`;
     } else {
       const randomImages = ['random1','random2','random3','random4']
       const imgList = [].concat(CLASSES, randomImages);
@@ -253,11 +253,13 @@ export default class CreateCharacter extends Component {
 
     this.setImage();
 
-    this.addCharacter(this.state.newCharacter);
-    this.props.createAdventure(this.state.newCharacter);
-    this.setState({
-      redirect: true,
-    });
+    setTimeout(()=>{
+      this.addCharacter(this.state.newCharacter);
+      this.props.createAdventure(this.state.newCharacter);
+      this.setState({
+        redirect: true,
+      });
+    },100)
   };
 
   _next() {

@@ -16,7 +16,11 @@ export default class Feedback extends Component {
       };
     
       feedbackHandler = () => {
-        Axios.post("feedback", this.state)
+        Axios.post("feedback", this.state, {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          })
         .then((response) => {
             // console.log(response.data);
             let feedback = response.data.result ? 'Thank you for your message!' : null;
