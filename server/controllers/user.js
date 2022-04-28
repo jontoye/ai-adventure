@@ -39,7 +39,12 @@ exports.user_profile_avatar_put = (req, res) => {
   console.log(req.body);
   User.findOneAndUpdate({ _id: req.params.userId }, { avatar: req.body.avatar })
     .then((user) => {
-      res.json({ message: "success", user: user });
+      user.activity.push(
+        `Updated profile image on ${moment().format("MMMM Do YYYY, h:mm a")}`
+      );
+      user.save().then(() => {
+        res.json({ message: "success", user: user });
+      });
     })
     .catch((err) => {
       console.error(err);
@@ -52,7 +57,12 @@ exports.user_profile_biography_post = (req, res) => {
     { biography: req.body.biography }
   )
     .then((user) => {
-      res.json({ message: "success", user: user });
+      user.activity.push(
+        `Updated biography on ${moment().format("MMMM Do YYYY, h:mm a")}`
+      );
+      user.save().then(() => {
+        res.json({ message: "success", user: user });
+      });
     })
     .catch((err) => {
       console.error(err);
@@ -63,18 +73,21 @@ exports.user_profile_biography_post = (req, res) => {
 exports.user_profile_addsocial_post = (req, res) => {
   User.findOne({ _id: req.params.userId })
     .then((user) => {
-      if (req.body.add === "friend") {
-        user.friends.push(req.body.user);
-      }
-      if (req.body.add === "follower") {
-        user.followers.push(req.body.user);
-      }
-      if (req.body.add === "following") {
-        user.following.push(req.body.user);
-      }
-      user.save().then((updatedUser) => {
-        console.log(updatedUser);
-        res.json({ message: "success" });
+      User.findById(req.body.user).then((otherUser) => {
+        if (req.body.add === "friend") {
+          user.friends.push(otherUser);
+          user.activity.push(`Became friends with ${otherUser.username}`);
+        }
+        if (req.body.add === "follower") {
+          user.followers.push(otherUser);
+        }
+        if (req.body.add === "following") {
+          user.following.push(otherUser);
+          user.activity.push(`Started following ${otherUser.username}`);
+        }
+        user.save().then(() => {
+          res.json({ message: "success" });
+        });
       });
     })
     .catch((err) => {
@@ -86,27 +99,30 @@ exports.user_profile_addsocial_post = (req, res) => {
 exports.user_profile_removesocial_post = (req, res) => {
   User.findOne({ _id: req.params.userId })
     .then((user) => {
-      if (req.body.remove === "friend") {
-        user.friends.splice(
-          user.friends.findIndex((friend) => friend.id === req.body.user),
-          1
-        );
-      }
-      if (req.body.remove === "follower") {
-        user.followers.splice(
-          user.followers.findIndex((friend) => friend.id === req.body.user),
-          1
-        );
-      }
-      if (req.body.remove === "following") {
-        user.following.splice(
-          user.following.findIndex((friend) => friend.id === req.body.user),
-          1
-        );
-      }
-      user.save().then((updatedUser) => {
-        console.log(updatedUser);
-        res.json({ message: "success" });
+      User.findById(req.body.user).then((otherUser) => {
+        if (req.body.remove === "friend") {
+          user.friends.splice(
+            user.friends.findIndex((friend) => friend.id === otherUser.id),
+            1
+          );
+          user.activity.push(`Ended friendship with ${otherUser.username}`);
+        }
+        if (req.body.remove === "follower") {
+          user.followers.splice(
+            user.followers.findIndex((friend) => friend.id === otherUser.id),
+            1
+          );
+        }
+        if (req.body.remove === "following") {
+          user.following.splice(
+            user.following.findIndex((friend) => friend.id === otherUser.id),
+            1
+          );
+          user.activity.push(`Stopped following ${otherUser.username}`);
+        }
+        user.save().then(() => {
+          res.json({ message: "success" });
+        });
       });
     })
     .catch((err) => {

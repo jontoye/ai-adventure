@@ -16,7 +16,7 @@ exports.adventure_create_post = async (req, res) => {
         user.activity.push(
           `${adventure.character.name} started adventure '${
             adventure.name
-          }' on ${moment().format("dddd, MMMM Do YYYY, h:mm:ss a")}`
+          }' on ${moment().format("MMMM Do YYYY, h:mm a")}`
         );
         user.save().then(() => {
           res.json({ adventure });
