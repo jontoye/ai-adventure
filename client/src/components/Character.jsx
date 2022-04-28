@@ -2,12 +2,8 @@ import React, { Component } from "react";
 import { Card, Button } from "react-bootstrap";
 import { Navigate } from "react-router-dom";
 import "./css/Character.css";
-import { CHARACTER_DEFAULTS } from "../data/character";
 
 export default class Character extends Component {
-  CLASSES = CHARACTER_DEFAULTS.class.map(v=>{
-    return v.toLowerCase()
-  })
 
   state = {
     character: {
@@ -16,6 +12,7 @@ export default class Character extends Component {
       ability: this.props.ability,
       weakness: this.props.weakness,
       backstory: this.props.backstory,
+      image: this.props.image,
     },
     name: this.props.name,
     log: [this.props.backstory],
@@ -25,23 +22,9 @@ export default class Character extends Component {
   };
 
   componentDidMount() {
-    this.setImage();
+    // this.setImage();
   }
 
-  setImage = () => {
-    let path = '';
-    if (this.CLASSES.indexOf(this.props.class) !== -1) {
-      path = `/images/class/${this.props.class.replace(" ", "")}.png`;
-    } else {
-      const randomImages = ['random1','random2','random3','random4']
-      const imgList = [].concat(this.CLASSES, randomImages);
-      const randImg = imgList[Math.floor(Math.random() * imgList.length)];
-      path = `/images/class/${randImg.replace(" ", "")}.png`;
-    }
-    this.setState({
-      image: path,
-    });
-  };
 
   startAdventure = (e) => {
     // console.log('fancy frontend stuff')
@@ -70,7 +53,7 @@ export default class Character extends Component {
     return (
       <div>
         <Card className={css} style={{ width: "18rem", margin: "15px" }}>
-          <Card.Img variant='top' src={this.state.image} 
+          <Card.Img variant='top' src={this.props.image} 
           onError={(e) => {
             e.target.onerror = null 
             e.target.src = `/images/class/default.png`}} />
