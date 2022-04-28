@@ -396,7 +396,7 @@ export default class App extends Component {
           <Route
             path='/character-detail'
             exact
-            element={<CharacterDetail character={this.state.character} />}
+            element={<CharacterDetail character={this.state.character} continueAdventure={this.continueAdventure}/>}
           />
           <Route
             path='/users'
