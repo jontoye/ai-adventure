@@ -5,16 +5,16 @@ import "./css/Profile.css";
 import PictureChanger from "./PictureChanger";
 import { Modal, Button, Tooltip, OverlayTrigger } from "react-bootstrap";
 
-const headers = {
-  Authorization: "Bearer " + localStorage.getItem("token"),
-}
 
 function Profile({ currentUser }) {
+  const headers = {
+    Authorization: "Bearer " + localStorage.getItem("token"),
+  }
   const [user, setUser] = useState();
   const [show, setShow] = useState(false);
   const [edit, setEdit] = useState(false);
-  const [bio, setBio] = useState("Loading");
-
+  const [bio, setBio] = useState("");
+  
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   
@@ -22,6 +22,7 @@ function Profile({ currentUser }) {
     if (edit) {
       // save to database
       await axios.post(`/profile/${currentUser.id}/biography`, {biography: bio}, {headers})
+      getUser(params.userId)
     }
 
     setEdit(!edit)
@@ -32,30 +33,21 @@ function Profile({ currentUser }) {
   }
 
   let params = useParams();
-  console.log(params)
+
   useEffect(() => {
     // Get info for user who's profile currently showing
-    getUser(params.userId);
-  }, [params.userId]);
+    getUser(params.userId)
+  },[]);
 
-  const getUser = (id) => {
-
+  const getUser = async (id) => {
     axios.get(`/profile/${id}`, {headers})
-      .then(response => {
-        setUser(response.data.user);
-        setBio(response.data.user.biography);
-      })
+    .then(response => {
+      setUser(response.data.user);
+      setBio(response.data.user.biography)
+      }) 
       .catch(err => {
-        console.error(err)
+        console.error(err);
       })
-
-    // axios.get(`/profile/${id}`, {headers})
-    //   .then(response => {
-    //     setBio(response.data.user.biography)
-    //   })
-    //   .catch(err => {
-    //     console.error(err)
-    //   })
   };
 
   const handleFriendClick = () => {
