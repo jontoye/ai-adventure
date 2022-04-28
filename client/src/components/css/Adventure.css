@@ -1,5 +1,6 @@
-.game-log {
-  /* max-height: 40vh; */
+#adventure-log {
+  max-height: 40vh;
+  overflow-y: scroll;
 }
 .buttons {
   margin-top: 20px;

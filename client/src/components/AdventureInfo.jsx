@@ -9,7 +9,6 @@ export default class AdventureInfo extends Component {
     adventure: this.props.adventure,
     character: {},
     redirect: false,
-    image: "images/saad.png",
   };
   componentDidMount() {
     Axios.get("character/index", {
@@ -31,7 +30,6 @@ export default class AdventureInfo extends Component {
         console.log("Error fetching characters.");
         console.log(err);
       });
-    this.imageSelect();
   }
   continueAdventure = (e) => {
     console.log("continuing adventure...");
@@ -65,14 +63,6 @@ export default class AdventureInfo extends Component {
     // console.log(this.state.character)
   };
 
-  imageSelect = () => {
-    let fixed = this.state.adventure.setting.replace(" ", "");
-    let path = `images/setting/${fixed}.png`;
-    this.setState({
-      image: path,
-    });
-  };
-
   deleteAdventure = (e) => {
     this.props.deleteAdventure(this.state.adventure);
   };
@@ -88,7 +78,7 @@ export default class AdventureInfo extends Component {
     return (
       <div>
         <Card className={css} style={{ width: "18rem", margin: "15px" }}>
-          <Card.Img variant='top' src={this.state.image} />
+          <Card.Img variant='top' src={this.state.adventure.image} />
           <Card.Body>
             <Card.Title>{this.state.adventure.name}</Card.Title>
             <Card.Text>
