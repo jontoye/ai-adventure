@@ -29,8 +29,8 @@ function Profile({ currentUser }) {
   };
 
   const handleBioChange = (e) => {
-    getUser(params.userId)
     setBio(e.target.value);
+    // getUser(params.userId)
   }
 
   let params = useParams();
