@@ -1,0 +1,7 @@
+.buttons-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-right: 10px;
+  margin-left: 10px;
+}

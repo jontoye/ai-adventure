@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Card, Button } from "react-bootstrap";
 import { Navigate } from "react-router-dom";
 import Axios from "axios";
+import "./css/AdventureInfo.css";
 
 export default class AdventureInfo extends Component {
   state = {
@@ -12,44 +13,46 @@ export default class AdventureInfo extends Component {
   };
   componentDidMount() {
     Axios.get("character/index")
-    .then((response) => {
-      // console.log(response.data.characters);
-      let character = response.data.characters.find((v) => {
-        return this.state.adventure.character === v._id;
+      .then((response) => {
+        // console.log(response.data.characters);
+        let character = response.data.characters.find((v) => {
+          return this.state.adventure.character === v._id;
+        });
+        // console.log(character.name)
+        this.setState({
+          character: character,
+        });
+      })
+      .catch((err) => {
+        console.log("Error fetching characters.");
+        console.log(err);
       });
-      // console.log(character.name)
-      this.setState({
-        character: character,
-      });
-    })
-    .catch((err) => {
-      console.log("Error fetching characters.");
-      console.log(err);
-    });
     this.imageSelect();
   }
   continueAdventure = (e) => {
-    console.log('continuing adventure...')
-    Axios.get("event/index")
-    .then((response) => {
-      let events = response.data.events.filter(v=>{
+    console.log("continuing adventure...");
+    Axios.get("event/index").then((response) => {
+      let events = response.data.events.filter((v) => {
         return this.state.adventure.events.includes(v._id);
-      })
+      });
       // console.log('successfully found events: ', events)
       this.setState({
         adventure: {
           ...this.state.adventure,
-          events:events,
+          events: events,
         },
       });
       //async!
-      setTimeout(()=>{
-        this.props.continueAdventure(this.state.adventure, this.state.character)
+      setTimeout(() => {
+        this.props.continueAdventure(
+          this.state.adventure,
+          this.state.character
+        );
         this.setState({
           redirect: true,
-        })
-      },100)
-    })
+        });
+      }, 100);
+    });
     // console.log(this.state.character)
   };
 
@@ -85,13 +88,14 @@ export default class AdventureInfo extends Component {
               Character: {this.state.character.name} (
               {this.state.character.class})
             </Card.Text>
-            <Button variant='primary' onClick={this.continueAdventure}>
-              Continue
-            </Button>
-            &nbsp; &nbsp; &nbsp; &nbsp;
-            <Button variant='danger' onClick={this.deleteAdventure}>
-              Delete
-            </Button>
+            <div className='buttons-container'>
+              <Button variant='primary' onClick={this.continueAdventure}>
+                Continue
+              </Button>
+              <Button variant='danger' onClick={this.deleteAdventure}>
+                Delete
+              </Button>
+            </div>
           </Card.Body>
         </Card>
         {this.state.redirect && (
