@@ -7,16 +7,35 @@
 .profile-img {
   display: block;
   max-width: 300px;
-  margin: 50px auto;
+  margin: 30px auto;
   border-radius: 50%;
+}
+
+#biography {
+  white-space: pre-line;
+  color: white;
+  font-weight: 600;
+}
+
+#biography-input {
+  width: 100%;
 }
 
 .profile-connections {
   letter-spacing: 3px;
 }
 
+.social-button {
+  transition: all 0.3s all;
+  cursor: pointer;
+}
+
+.social-button:hover {
+  opacity: 0.7;
+}
+
 .social-button img {
-  width: 50px;
+  width: 70px;
 }
 .circular-square {
   border-radius: 50%;
@@ -50,4 +69,14 @@
 }
 .btn-close {
   display: none;
+}
+
+@media (max-width: 620px) {
+  .profile-links,
+  /* .profile-buttons, */
+  .profile-connections {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
 }

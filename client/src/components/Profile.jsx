@@ -3,15 +3,29 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import "./css/Profile.css";
 import PictureChanger from "./PictureChanger";
-import { Modal, Button } from "react-bootstrap";
+import { Modal, Button, Tooltip, OverlayTrigger } from "react-bootstrap";
 
 function Profile({ currentUser }) {
   const [user, setUser] = useState();
-
   const [show, setShow] = useState(false);
+  const [edit, setEdit] = useState(false);
+  const [bio, setBio] = useState();
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  
+  const handleBioClick = async () => {
+    if (edit) {
+      // save to database
+      await axios.post(`/profile/${currentUser.id}/biography`, {biography: bio})
+    }
+
+    setEdit(!edit)
+  };
+
+  const handleBioChange = (e) => {
+    setBio(e.target.value);
+  }
 
   let params = useParams();
 
@@ -24,6 +38,7 @@ function Profile({ currentUser }) {
     try {
       const response = await axios.get(`/profile/${id}`);
       setUser(response.data.user);
+      setBio(response.data.user.biography)
     } catch (err) {
       console.error(err);
     }
@@ -105,80 +120,118 @@ function Profile({ currentUser }) {
     setShow(false);
   };
 
+  const renderTooltip_follow = (info) => (
+    <Tooltip {...info}>
+      Follow me!
+    </Tooltip>
+  );
+
+  const renderTooltip_unfollow = (info) => (
+    <Tooltip {...info}>
+      Unfollow me
+    </Tooltip>
+  );
+
+  const renderTooltip_friend = (info) => (
+    <Tooltip {...info}>
+      Add me as your friend!
+    </Tooltip>
+  );
+
+  const renderTooltip_unfriend = (info) => (
+    <Tooltip {...info}>
+      Unfriend me
+    </Tooltip>
+  );
+
   return (
     <div className='section-profile container py-3'>
-      {user && (
-        <>
-          <h1>{user.username}'s Profile Page</h1>
-          <img
-            src={user.avatar}
-            alt='profile-img'
-            className='profile-img circular-square '
-          />
+      {user &&
+      <>
+        <h1 className="display-2">{user.username}</h1>
+        <img
+          src={user.avatar}
+          alt='profile-img'
+          className='profile-img circular-square '
+        />
 
-          {params.userId !== currentUser.id && (
-            <div className='row mb-5'>
-              <div className='d-flex col-4 mx-auto justify-content-between'>
-                {!user.followers.includes(currentUser.id) ? (
-                  <Link to='#'>
-                    <div className='social-button d-flex'>
-                      <img
-                        src='/images/icons/follow.png'
-                        alt='follow'
-                        onClick={handleFollowClick}
-                      />
-                    </div>
-                  </Link>
-                ) : (
-                  <Link to='#'>
-                    <div className='social-button d-flex'>
-                      <img
-                        src='/images/icons/unfollow.png'
-                        alt='unfollow'
-                        onClick={handleUnfollowClick}
-                      />
-                    </div>
-                  </Link>
-                )}
-                {!user.friends.includes(currentUser.id) ? (
-                  <Link to='#'>
-                    <div className='social-button d-flex'>
-                      <img
-                        src='/images/icons/add-friend.png'
-                        alt='add-friend'
-                        onClick={handleFriendClick}
-                      />
-                    </div>
-                  </Link>
-                ) : (
-                  <Link to='#'>
-                    <div className='social-button d-flex'>
-                      <img
-                        src='/images/icons/unfriend.png'
-                        alt='remove-friend'
-                        onClick={handleUnfriendClick}
-                      />
-                    </div>
-                  </Link>
-                )}
-              </div>
-            </div>
-          )}
+        {params.userId !== currentUser.id && (
+          <div className='row mb-5'>
+            <div className='profile-buttons d-flex col-6 col-lg-3 mx-auto justify-content-between'>
+              {!user.followers.includes(currentUser.id) ? (
+                <OverlayTrigger
+                placement="right"
+                delay={{ show: 250, hide: 400 }}
+                overlay={renderTooltip_follow}
+                >
+                  <div className='social-button d-flex'>
+                    <img
+                      src='/images/icons/follow.png'
+                      alt='follow'
+                      onClick={handleFollowClick}
+                    />
+                  </div>
+                </OverlayTrigger>
+              ) : (
 
-          <div className='row'>
-            <div className='profile-connections d-flex col-7 mx-auto justify-content-between mb-4'>
-              <h4>{user.followers.length} Followers</h4>
-              <h4>{user.following.length} Following</h4>
-              <h4>{user.friends.length} Friends</h4>
+                <OverlayTrigger
+                placement="right"
+                delay={{ show: 250, hide: 400 }}
+                overlay={renderTooltip_unfollow}
+                >
+                  <div className='social-button d-flex'>
+                    <img
+                      src='/images/icons/unfollow.png'
+                      alt='unfollow'
+                      onClick={handleUnfollowClick}
+                    />
+                  </div>
+                </OverlayTrigger>
+
+              )}
+              {!user.friends.includes(currentUser.id) ? (
+
+                <OverlayTrigger
+                  placement="right"
+                  delay={{ show: 250, hide: 400 }}
+                  overlay={renderTooltip_friend}
+                >
+                  <div className='social-button d-flex'>
+                    <img
+                      src='/images/icons/add-friend.png'
+                      alt='friend'
+                      onClick={handleFriendClick}
+                    />
+                  </div>
+                </OverlayTrigger>
+
+              ) : (
+
+                <OverlayTrigger
+                  placement="right"
+                  delay={{ show: 250, hide: 400 }}
+                  overlay={renderTooltip_unfriend}
+                >
+                  <div className='social-button d-flex'>
+                    <img
+                      src='/images/icons/unfriend.png'
+                      alt='unfriend'
+                      onClick={handleUnfriendClick}
+                    />
+                  </div>
+                </OverlayTrigger>
+     
+              )}
             </div>
           </div>
+          )}
 
           {params.userId === currentUser.id && (
             <div>
               <>
                 <div className='center-me'>
                   <Button
-                    className='center'
+                    className='center btn-light my-3'
                     variant='primary'
                     onClick={handleShow}
                   >
@@ -214,16 +267,31 @@ function Profile({ currentUser }) {
               </div>
             </div>
           )}
+
+          <div className='row'>
+            <div className='profile-connections d-flex col-md-8 mx-auto justify-content-between mb-4'>
+              <h4>{user.followers.length} Followers</h4>
+              <h4>{user.following.length} Following</h4>
+              <h4>{user.friends.length} Friends</h4>
+            </div>
+          </div>
           <div className='row text-center'>
-            <div className='col-6 mx-auto'>
-              <div className='display-6'>Biography</div>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam
-                doloribus, beatae minus aliquam facere hic animi accusamus neque
-                libero, molestias minima ipsa debitis molestiae veritatis
-                obcaecati iste quod et aspernatur?
-              </p>
-              <div className='display-6'>Activity</div>
+            <div className='col-12 col-md-10 mx-auto'>
+              <div className='display-5 mb-3'>Biography</div>
+              {edit &&
+                <textarea id="biography-input" rows="10" value={bio} onChange={handleBioChange}></textarea>
+              }
+              {!edit &&
+                <p className="lead" id="biography">
+                  {bio}
+                </p>
+              }
+              {params.userId === currentUser.id &&
+                <button className="btn btn-light my-3" onClick={handleBioClick}>
+                  {edit ? 'Save' : 'Edit Bio'}
+                </button>
+              }
+              <div className='display-6 my-4'>Activity</div>
               <p>Updated adventure [name] (3 mins ago)</p>
               <p>Created adventure [name] (yesterday)</p>
               <p>Created character [name] (2 days ago)</p>
@@ -231,7 +299,7 @@ function Profile({ currentUser }) {
             </div>
           </div>
         </>
-      )}
+        }
     </div>
   );
 }
