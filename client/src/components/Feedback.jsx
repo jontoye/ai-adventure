@@ -1,13 +1,31 @@
 import React, { Component } from 'react';
-import { Container, Button, Form, Row, Col, Alert } from 'react-bootstrap';
+import { Container, Button, Form, Row, Col, Alert, Carousel } from 'react-bootstrap';
 import Axios from "axios";
 
 export default class Feedback extends Component {
-    state = {
-        message: null,
-        confirmationMessage: null,
-        errorMessage: null,
-    };
+
+      state = {
+          message: null,
+          confirmationMessage: null,
+          errorMessage: null,
+          feedback: [],
+      };
+
+      componentDidMount() {
+        this.getFeedback();
+      }    
+
+      getFeedback = async () => {
+        const response = await Axios.get('/feedback', {
+          headers: {
+            "Authorization": "Bearer " + localStorage.getItem("token"),
+        }
+        })
+        console.log(response);
+        this.setState({
+          feedback: response.data.feedback
+        })
+      }
     
       changeHandler = (e) => {
         let temp = { ...this.state };
@@ -46,6 +64,13 @@ export default class Feedback extends Component {
       };
     
       render() {
+        const feedback = this.state.feedback.map(review => (
+          <Carousel.Item key={review._id} className="text-center">
+              <p className="lead my-2">{review.message}</p>
+              <small className="my-2">{review.name}</small>
+          </Carousel.Item>
+        ))
+
         const confirmationMessage = this.state.confirmationMessage ? (
             <Alert variant="success">{this.state.confirmationMessage}</Alert>
         ) : null;
@@ -57,6 +82,9 @@ export default class Feedback extends Component {
         return (
           <div>
             <Container className="text-start" id=''>
+                <Carousel className="my-5">
+                  {feedback}
+                </Carousel>
                 <Form.Group className='mb-3' controlId=''>
                     <Row>
                         <Col className="text-start">
