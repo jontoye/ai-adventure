@@ -252,94 +252,178 @@ export default class App extends Component {
     ) : null;
     const { isAuth } = this.state;
     return (
-      <Router>
-        <Navbar
-          fixed='top'
-          variant='dark'
-          bg='dark'
-          expand='lg'
-          onToggle={this.setNavExpanded}
-          expanded={this.state.navExpanded}
-        >
-          <Container>
-            <Link to='/' className='navbar-brand'>
-              | AI Adventure |
-            </Link>
+      <>
+        <Router>
+          <Navbar
+            fixed='top'
+            variant='dark'
+            bg='dark'
+            expand='lg'
+            onToggle={this.setNavExpanded}
+            expanded={this.state.navExpanded}
+          >
+            <Container>
+              <Link to='/' className='navbar-brand'>
+                | AI Adventure |
+              </Link>
 
-            <Navbar.Toggle aria-controls='basic-navbar-nav' />
-            <Navbar.Collapse id='basic-navbar-nav'>
-              <Nav className='me-auto' onClick={this.setNavClose}>
-                {isAuth ? (
-                  <>
-                    <Link to='/users' className='nav-link'>
-                      Explore
-                    </Link>
-                    <Link to='/create-character' className='nav-link'>
-                      Create Character
-                    </Link>
-                    <Link to='/create-adventure' className='nav-link'>
-                      Create Adventure
-                    </Link>
-                    <Link to='/characters' className='nav-link'>
-                      Characters
-                    </Link>
-                    <Link to='/adventure-list' className='nav-link'>
-                      Adventures
-                    </Link>
-                  </>
+              <Navbar.Toggle aria-controls='basic-navbar-nav' />
+              <Navbar.Collapse id='basic-navbar-nav'>
+                <Nav className='me-auto' onClick={this.setNavClose}>
+                  {isAuth ? (
+                    <>
+                      <Link to='/users' className='nav-link'>
+                        Explore
+                      </Link>
+                      <Link to='/create-character' className='nav-link'>
+                        Create Character
+                      </Link>
+                      <Link to='/create-adventure' className='nav-link'>
+                        Create Adventure
+                      </Link>
+                      <Link to='/characters' className='nav-link'>
+                        Characters
+                      </Link>
+                      <Link to='/adventure-list' className='nav-link'>
+                        Adventures
+                      </Link>
+                    </>
+                  ) : (
+                    <>
+                      <Link to='/signup' className='nav-link'>
+                        Sign Up
+                      </Link>
+                      <Link to='/signin' className='nav-link'>
+                        Sign In
+                      </Link>
+                    </>
+                  )}
+                </Nav>
+
+                <span id='main-greeting'>
+                  {this.state.user ? (
+                    <div className='right-nav'>
+                      <Link
+                        to={`/profile/${this.state.user.id}`}
+                        className='nav-link'
+                      >
+                        {"Welcome " + this.state.user.name}
+                      </Link>
+                      <Link
+                        to='/signout'
+                        className='nav-link'
+                        onClick={this.logoutHandler}
+                      >
+                        Sign Out
+                      </Link>
+                    </div>
+                  ) : null}{" "}
+                </span>
+              </Navbar.Collapse>
+            </Container>
+          </Navbar>
+
+          {message}
+          {failMessage}
+          {successMessage}
+
+          <Routes>
+            <Route
+              path='/'
+              element={
+                isAuth ? (
+                  <Home
+                    createRandomCharacter={this.createRandomCharacter}
+                    continueAdventure={this.continueAdventure}
+                    user={this.state.user}
+                  />
                 ) : (
-                  <>
-                    <Link to='/signup' className='nav-link'>
-                      Sign Up
-                    </Link>
-                    <Link to='/signin' className='nav-link'>
-                      Sign In
-                    </Link>
-                  </>
-                )}
-              </Nav>
-
-              <span id='main-greeting'>
-                {this.state.user ? (
-                  <div className='right-nav'>
-                    <Link
-                      to={`/profile/${this.state.user.id}`}
-                      className='nav-link'
-                    >
-                      {"Welcome " + this.state.user.name}
-                    </Link>
-                    <Link
-                      to='/signout'
-                      className='nav-link'
-                      onClick={this.logoutHandler}
-                    >
-                      Sign Out
-                    </Link>
-                  </div>
-                ) : null}{" "}
-              </span>
-            </Navbar.Collapse>
-          </Container>
-        </Navbar>
-
-        {message}
-        {failMessage}
-        {successMessage}
-
-        <Routes>
-          <Route
-            path='/'
-            element={
-              isAuth ? (
-                <Home
-                  createRandomCharacter={this.createRandomCharacter}
-                  continueAdventure={this.continueAdventure}
+                  <Signin
+                    login={this.loginHandler}
+                    googleLogin={this.handleGoogleLogin}
+                  />
+                )
+              }
+            ></Route>
+            <Route
+              path='/create-character'
+              exact
+              element={
+                <CreateCharacter
+                  randomCharacter={this.state.randomCharacter}
+                  createAdventure={this.createAdventure}
                   user={this.state.user}
                 />
-              ) : (
-                <Signin
+              }
+            />
+            <Route
+              path='/create-adventure'
+              exact
+              element={
+                <CreateAdventure
+                  startStory={this.startStory}
+                  character={this.state.character}
+                />
+              }
+            />
+            <Route
+              path='/adventure-list'
+              exact
+              element={
+                <Adventures continueAdventure={this.continueAdventure} />
+              }
+            />
+            <Route
+              path='/adventure'
+              exact
+              element={
+                <Adventure
+                  adventure={this.state.adventure}
+                  character={this.state.character}
+                />
+              }
+            />
+            <Route
+              path='/characters'
+              exact
+              element={
+                <Characters
+                  createAdventure={this.createAdventure}
+                  setCharacter={this.setCharacter}
+                  dontCreateRandomCharacter={this.dontCreateRandomCharacter}
+                  filtered={""}
+                />
+              }
+            />
+
+            <Route
+              path='/character-detail'
+              exact
+              element={
+                <CharacterDetail
+                  character={this.state.character}
+                  continueAdventure={this.continueAdventure}
+                />
+              }
+            />
+            <Route
+              path='/users'
+              element={
+                <Users
+                  currentUser={this.state.user}
+                  continueAdventure={this.continueAdventure}
+                  createAdventure={this.createAdventure}
+                  setCharacter={this.setCharacter}
+                />
+              }
+            />
+
+            <Route
+              path='/signup'
+              element={
+                <Signup
+                  register={this.registerHandler}
                   login={this.loginHandler}
-                  googleLogin={this.handleGoogleLogin}
                 />
               )
             }
@@ -432,10 +516,8 @@ export default class App extends Component {
             <Route path=":userId" element={<Profile currentUser={this.state.user} />} />
           </Route>
         </Routes>
-
         <Footer />
-        {this.state.logoutRedirect && <Navigate to='/' replace={true} />}
-      </Router>
+      </>
     );
   }
 }
