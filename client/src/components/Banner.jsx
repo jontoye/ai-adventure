@@ -14,7 +14,11 @@ export default function Banner(props) {
 
   function continueAdventure() {
     console.log('continue adventure...')
-    Axios.get("event/index")
+    Axios.get("event/index", {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    })
     .then((response) => {
       let events = response.data.events.filter(v=>{
         return props.adventure.events.includes(v._id);

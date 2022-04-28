@@ -442,6 +442,7 @@ const CLASS = [
   "Guardian",
   "Squire",
   "Pikeman",
+  "Giant",
   "Gunslinger",
   "Skald",
   "Engineer",
@@ -466,6 +467,7 @@ const CLASS = [
   "Lord",
   "Summoner",
   "Mime",
+  "Ogre",
   "Ninja",
   "Assassin",
   "Gambler",
@@ -479,6 +481,8 @@ const CLASS = [
   "Phantom",
   "Ghost",
   "Spectre",
+  'Centaur',
+  'Faun',
 ];
 
 const TRAIT = [

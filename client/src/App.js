@@ -396,7 +396,12 @@ export default class App extends Component {
           <Route
             path='/character-detail'
             exact
-            element={<CharacterDetail character={this.state.character} continueAdventure={this.continueAdventure}/>}
+            element={
+              <CharacterDetail
+                character={this.state.character}
+                continueAdventure={this.continueAdventure}
+              />
+            }
           />
           <Route
             path='/users'
@@ -429,7 +434,10 @@ export default class App extends Component {
             path={`/profile`}
             element={<Profile currentUser={this.state.user} />}
           >
-            <Route path=":userId" element={<Profile currentUser={this.state.user} />} />
+            <Route
+              path=':userId'
+              element={<Profile currentUser={this.state.user} />}
+            />
           </Route>
         </Routes>
 

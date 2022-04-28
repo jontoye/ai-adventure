@@ -14,8 +14,8 @@ export default class AdventureInfo extends Component {
   componentDidMount() {
     Axios.get("character/index", {
       headers: {
-        "Authorization": "Bearer " + localStorage.getItem("token"),
-    }
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
     })
       .then((response) => {
         // console.log(response.data.characters);
@@ -37,10 +37,9 @@ export default class AdventureInfo extends Component {
     console.log("continuing adventure...");
     Axios.get("event/index", {
       headers: {
-        "Authorization": "Bearer " + localStorage.getItem("token"),
-    }
-    })
-      .then((response) => {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    }).then((response) => {
       let events = response.data.events.filter((v) => {
         return this.state.adventure.events.includes(v._id);
       });
