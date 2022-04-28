@@ -37,7 +37,7 @@ function Profile({ currentUser }) {
   useEffect(() => {
     // Get info for user who's profile currently showing
     getUser(params.userId)
-  },[]);
+  },[params.userId]);
 
   const getUser = async (id) => {
     axios.get(`/profile/${id}`, {headers})
