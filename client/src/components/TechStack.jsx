@@ -28,7 +28,7 @@ export default class TechStack extends Component {
 			<div>
 				And with a little help from
 				<div >
-					<a href="https://openai.com/"><img className="openai-img" src="images/logos/openai.png" alt="" /></a>
+					<a href="https://github.com/alembics/disco-diffusion">Disco Diffusion</a> & <a href="https://openai.com/"><img className="openai-img" src="images/logos/openai.png" alt="" /></a>
 				</div>
 			</div>
 		</Container>

@@ -28,15 +28,15 @@ export default class Adventure extends Component {
   }
 
   componentDidMount() {
-    console.log("adventure test", this.props.adventure);
-    if (this.props.adventure.events.last.options.length < 1) {
-      this.generateOptions();
-    }
+
+
+    let events = this.props.adventure.events;
+    
     console.log("LOAD");
     console.log("adventure loaded: ", this.props.adventure);
-    console.log("character loaded: ", this.props.character);
+    // console.log("character loaded: ", this.props.character);
     this.setState({
-      event: this.props.adventure.events.reverse()[0],
+      event: events.reverse()[0],
       adventure: this.props.adventure,
       character: this.props.character,
       name: this.props.adventure.name,
@@ -51,7 +51,7 @@ export default class Adventure extends Component {
       });
       if (this.state.event.options.length < 1) {
         // console.log("generate options skipped");
-        // this.generateOptions();
+        this.generateOptions();
       } else {
         this.loadOptions();
       }
@@ -207,7 +207,7 @@ export default class Adventure extends Component {
       disabled: "disabled",
       event: {
         ...this.state.event,
-        selectedOption: x,
+        optionChosen: x,
       },
     });
     setTimeout(() => {
@@ -249,11 +249,11 @@ export default class Adventure extends Component {
               story: reply,
               optionPrompt: "",
               options: [],
-              selectedOption: null,
+              optionChosen: null,
               fullLog: [...this.state.log, action, prompt, reply],
               displayedLog: [...this.state.log, action, reply],
             };
-            console.log(event);
+            // console.log(event);
             this.createEvent(event);
 
             this.setState({

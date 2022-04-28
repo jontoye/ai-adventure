@@ -66,6 +66,10 @@ export default class CreateAdventure extends Component {
     })
     .then((response) => {
       console.log("Adventure created successfully.", response);
+      response.data.adventure.events = [this.state.event];
+      this.setState({
+        newAdventure: response.data.adventure,
+      });
       this.startStory();
       // this.loadCharacterList();
     })
@@ -77,6 +81,7 @@ export default class CreateAdventure extends Component {
   startStory() {
     // console.log("start-story triggered2");
     setTimeout(()=>{
+      console.log(this.state.newAdventure)
       this.setState({
         redirect: true,
       })
@@ -138,7 +143,7 @@ export default class CreateAdventure extends Component {
           story: story,
           optionPrompt: '',
           options: [],
-          selectedOption: null,
+          optionChosen: null,
           fullLog: logs,
           displayedLog: [character.backstory, story],
         }
@@ -149,7 +154,6 @@ export default class CreateAdventure extends Component {
 
           this.addAdventure(formDataObj);
           this.setState({
-            newAdventure: formDataObj,
             character: character,
             placeholder: `Adventure successfully created. Enjoy!`,
             response: `${story}`,

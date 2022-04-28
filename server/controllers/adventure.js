@@ -7,7 +7,7 @@ exports.adventure_create_post = (req, res) => {
   //save adventure
   adventure.save()
   .then((adventure) => {
-    res.json({ adventure });
+    res.json({ adventure }).status(200);
   })
   .catch((err) => {
     console.log(err);
@@ -19,7 +19,7 @@ exports.adventure_create_post = (req, res) => {
 exports.adventure_index_get = (req, res) => {
   Adventure.find()
   .then((adventures) => {
-    res.json({ adventures });
+    res.json({ adventures }).status(200);
   })
   .catch((err) => {
     console.log(err);
@@ -37,7 +37,7 @@ exports.adventure_delete_get = (req,res) => {
     adventure.events.forEach(e=>{
       Event.deleteOne({_id: e})
       .then((info)=>{
-        // console.log('Successfully deleted event.')
+        // console.log('Successfully deleted event: ', e)
       })
       .catch((err) => {
         console.log(err);
@@ -48,7 +48,7 @@ exports.adventure_delete_get = (req,res) => {
     Adventure.deleteOne({_id: adventure.id})
     .then((info)=>{
       // console.log('Successfully deleted adventure: ' + adventure.name)
-      res.json({info});
+      res.json({info}).status(200);
     })
     .catch((err)=>{console.log(err); res.send("Error deleting selected adventure.")})
   })
@@ -64,7 +64,7 @@ exports.adventure_delete_get = (req,res) => {
 exports.adventure_update_put = (req,res) => {
   Adventure.findByIdAndUpdate(req.body._id, req.body, {new: true})
   .then((adventure)=>{
-      res.json({adventure});
+      res.json({adventure}).status(200);
   })
   .catch((err)=>{console.log(err); res.send("Error updating adventure.")})
 }

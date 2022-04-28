@@ -47,7 +47,7 @@ export default function Banner(props) {
 
   return (
     <>
-      <Container>
+      <div className="container-xl">
         <Row className='banner'>
           <Col md={12} lg={8} className='banner-left'>
             <Card className='banner__intro-card'>
@@ -176,7 +176,7 @@ export default function Banner(props) {
           </Col>
         </Row>
         <div className='banner-fade'></div>
-      </Container>
+      </div>
     </>
   );
 }

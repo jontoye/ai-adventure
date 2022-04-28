@@ -54,6 +54,14 @@ export default class Adventures extends Component {
     });
   };
 
+  scrollLeft = () => {
+    document.querySelector('.adventure-list').scrollLeft += 500
+  }
+
+  scrollRight = () => {
+    document.querySelector('.adventure-list').scrollLeft -= 500
+  }
+
   render() {
     const adventures = this.state.adventures.map((a) => {
       return (
@@ -70,11 +78,23 @@ export default class Adventures extends Component {
     });
     return (
       <div>
-        <h1>Adventure List</h1>
-        <div className='adventure-list my-5 container'>{adventures}</div>
-        <Container className="text-center">
-          <Button variant='secondary' onClick={this.createAdventure}>Create New Adventure</Button>
-        </Container>
+        <h1 className="display-4">Adventure List</h1>
+        <div className="d-flex align-items-center container-xl">
+        <img 
+            className="scroll-btn" 
+            src="/images/icons/left-arrow.png" 
+            onClick={this.scrollRight} 
+            alt="left-arrow" />
+          <div className='adventure-list my-3 container'>{adventures}</div>
+          <img 
+            className="scroll-btn" 
+            src="/images/icons/right-arrow.png" 
+            onClick={this.scrollLeft} 
+            alt="right-arrow" />
+        </div>
+          <Container className="text-center my-4">
+            <Button variant='secondary' onClick={this.createAdventure}>Create New Adventure</Button>
+          </Container>
         {this.state.redirect && (
           <Navigate
             to='/create-adventure'
