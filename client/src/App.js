@@ -425,24 +425,97 @@ export default class App extends Component {
                   register={this.registerHandler}
                   login={this.loginHandler}
                 />
-              }
-            ></Route>
-            <Route
-              path='/signin'
-              element={
-                <Signin login={this.loginHandler} isAuth={this.state.isAuth} />
-              }
-            ></Route>
-            <Route
-              path='/profile'
-              element={<Profile currentUser={this.state.user} />}
-            >
-              <Route path=':userId' element={<Profile />} />
-            </Route>
-          </Routes>
+              )
+            }
+          ></Route>
+          <Route
+            path='/create-character'
+            exact
+            element={
+              <CreateCharacter
+                randomCharacter={this.state.randomCharacter}
+                createAdventure={this.createAdventure}
+                user={this.state.user}
+              />
+            }
+          />
+          <Route
+            path='/create-adventure'
+            exact
+            element={
+              <CreateAdventure
+                startStory={this.startStory}
+                character={this.state.character}
+              />
+            }
+          />
+          <Route
+            path='/adventure-list'
+            exact
+            element={<Adventures continueAdventure={this.continueAdventure} />}
+          />
+          <Route
+            path='/adventure'
+            exact
+            element={
+              <Adventure
+                adventure={this.state.adventure}
+                character={this.state.character}
+              />
+            }
+          />
+          <Route
+            path='/characters'
+            exact
+            element={
+              <Characters
+                createAdventure={this.createAdventure}
+                setCharacter={this.setCharacter}
+                dontCreateRandomCharacter={this.dontCreateRandomCharacter}
+                filtered={""}
+              />
+            }
+          />
 
-          {this.state.logoutRedirect && <Navigate to='/' replace={true} />}
-        </Router>
+          <Route
+            path='/character-detail'
+            exact
+            element={<CharacterDetail character={this.state.character} continueAdventure={this.continueAdventure}/>}
+          />
+          <Route
+            path='/users'
+            element={
+              <Users
+                currentUser={this.state.user}
+                continueAdventure={this.continueAdventure}
+                createAdventure={this.createAdventure}
+                setCharacter={this.setCharacter}
+              />
+            }
+          />
+
+          <Route
+            path='/signup'
+            element={
+              <Signup
+                register={this.registerHandler}
+                login={this.loginHandler}
+              />
+            }
+          ></Route>
+          <Route
+            path='/signin'
+            element={
+              <Signin login={this.loginHandler} isAuth={this.state.isAuth} />
+            }
+          ></Route>
+          <Route
+            path={`/profile`}
+            element={<Profile currentUser={this.state.user} />}
+          >
+            <Route path=":userId" element={<Profile currentUser={this.state.user} />} />
+          </Route>
+        </Routes>
         <Footer />
       </>
     );

@@ -32,7 +32,7 @@ function Profile({ currentUser }) {
   }
 
   let params = useParams();
-
+  console.log(params)
   useEffect(() => {
     // Get info for user who's profile currently showing
     getUser(params.userId);
@@ -43,18 +43,19 @@ function Profile({ currentUser }) {
     axios.get(`/profile/${id}`, {headers})
       .then(response => {
         setUser(response.data.user);
+        setBio(response.data.user.biography);
       })
       .catch(err => {
         console.error(err)
       })
 
-    axios.get(`/profile/${id}`, {headers})
-      .then(response => {
-        setBio(response.data.user.biography)
-      })
-      .catch(err => {
-        console.error(err)
-      })
+    // axios.get(`/profile/${id}`, {headers})
+    //   .then(response => {
+    //     setBio(response.data.user.biography)
+    //   })
+    //   .catch(err => {
+    //     console.error(err)
+    //   })
   };
 
   const handleFriendClick = () => {
