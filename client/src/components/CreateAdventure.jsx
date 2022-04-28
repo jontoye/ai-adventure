@@ -97,6 +97,14 @@ export default class CreateAdventure extends Component {
   }
   appendResponse = (response) => {};
 
+  imageSelect() {
+    let fixed = this.state.adventure.setting.replace(" ", "");
+    let path = `images/setting/${fixed}.png`;
+    this.setState({
+      image: path,
+    });
+  };
+
   onFormSubmit = (e) => {
     e.preventDefault();
 
@@ -144,6 +152,10 @@ export default class CreateAdventure extends Component {
         // console.log("logs test", logs);
         formDataObj.log = logs;
         formDataObj.character = character;
+
+        let fixed = formDataObj.setting.replace(" ", "").toLowerCase();
+        let path = `images/setting/${fixed}.png`;
+        formDataObj.image = path;
 
         let event = {
           previousLog: [intro],

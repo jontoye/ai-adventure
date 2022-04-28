@@ -42,6 +42,10 @@ const adventureSchema = mongoose.Schema(
     poem: {
       type: String,
     },
+    image: {
+      type: String,
+      default: "https://images.unsplash.com/photo-1462759353907-b2ea5ebd72e7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2231&q=80",
+    }
   },
   {
     timestamps: true,
