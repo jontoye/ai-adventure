@@ -12,7 +12,11 @@ export default class AdventureInfo extends Component {
     image: "images/saad.png",
   };
   componentDidMount() {
-    Axios.get("character/index")
+    Axios.get("character/index", {
+      headers: {
+        "Authorization": "Bearer " + localStorage.getItem("token"),
+    }
+    })
       .then((response) => {
         // console.log(response.data.characters);
         let character = response.data.characters.find((v) => {
@@ -31,7 +35,12 @@ export default class AdventureInfo extends Component {
   }
   continueAdventure = (e) => {
     console.log("continuing adventure...");
-    Axios.get("event/index").then((response) => {
+    Axios.get("event/index", {
+      headers: {
+        "Authorization": "Bearer " + localStorage.getItem("token"),
+    }
+    })
+      .then((response) => {
       let events = response.data.events.filter((v) => {
         return this.state.adventure.events.includes(v._id);
       });

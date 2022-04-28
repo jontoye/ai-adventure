@@ -12,12 +12,20 @@ export default class Home extends Component {
 		character: {},
 	};
 	componentDidMount() {
-		Axios.get("adventure/index")
+		Axios.get("adventure/index", {
+			headers: {
+				"Authorization": "Bearer " + localStorage.getItem("token"),
+			}
+		})
 		.then((response1) => {
 		  this.setState({
 			adventure: response1.data.adventures.reverse()[0],
 		  });
-		  Axios.get("character/index")
+		  Axios.get("character/index", {
+			headers: {
+				"Authorization": "Bearer " + localStorage.getItem("token"),
+			}
+		  })
 		  .then((response2) => {
 			let character = this.state.adventure ? 
 			response2.data.characters.find((v) => {
