@@ -1,6 +1,43 @@
-.game-log {
-  min-height: 40vh;
+#adventure-log {
+  max-height: 40vh;
+  overflow-y: scroll;
 }
 .buttons {
   margin-top: 20px;
+}
+
+
+
+#character-card:hover #character-overlay {
+  display: block;
+}
+
+#character-overlay {
+  display:none;
+  background-color: rgba(0,0,0,0.4);
+  color: white;
+  font-weight: bolder;
+}
+
+.adventure-screen {
+  padding-bottom: 100px;
+  padding-top: 10px;
+  font-weight: 600;
+  width: 100%;
+
+  /* background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.6)), url("https://images.unsplash.com/photo-1462759353907-b2ea5ebd72e7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2231&q=80"); */
+  
+  margin: 0 auto;
+
+  /* parallax scroll effect */
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.adventure-screen-fade {
+  height: 100px;
+  background: linear-gradient(transparent, #070707);
+  transform: translateY(-100px);
 }
