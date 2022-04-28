@@ -6,7 +6,10 @@ export default class Log extends Component {
   render() {
     // console.log(this.props.log)
     const entries = this.props.log.map((entry, index) => {
+
+
       return <Entry text={entry} key={entry[0]+index} id={index}/>;
+
     });
     return (
       <>

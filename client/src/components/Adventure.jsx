@@ -29,6 +29,7 @@ export default class Adventure extends Component {
 
   componentDidMount() {
 
+
     let events = this.props.adventure.events;
     
     console.log("LOAD");
