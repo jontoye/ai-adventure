@@ -37,7 +37,7 @@ exports.adventure_delete_get = (req,res) => {
     adventure.events.forEach(e=>{
       Event.deleteOne({_id: e})
       .then((info)=>{
-        // console.log('Successfully deleted event.')
+        // console.log('Successfully deleted event: ', e)
       })
       .catch((err) => {
         console.log(err);
