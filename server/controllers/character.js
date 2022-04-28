@@ -13,7 +13,7 @@ exports.character_create_post = (req, res) => {
       User.findById(req.user).then((user) => {
         user.activity.push(
           `Created ${character.name} on ${moment().format(
-            "dddd, MMMM Do YYYY, h:mm:ss a"
+            "MMMM Do YYYY, h:mm a"
           )}`
         );
         user.save().then(() => {

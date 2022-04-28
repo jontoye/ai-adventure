@@ -29,6 +29,7 @@ function Profile({ currentUser }) {
   };
 
   const handleBioChange = (e) => {
+    getUser(params.userId)
     setBio(e.target.value);
   }
 
@@ -37,7 +38,7 @@ function Profile({ currentUser }) {
   useEffect(() => {
     // Get info for user who's profile currently showing
     getUser(params.userId)
-  },[]);
+  },[params.userId]);
 
   const getUser = async (id) => {
     axios.get(`/profile/${id}`, {headers})
@@ -154,134 +155,138 @@ function Profile({ currentUser }) {
     <div className='section-profile container py-3'>
       {user &&
       <>
-        <h1 className="display-2">{user.username}</h1>
-        <img
-          src={user.avatar}
-          alt='profile-img'
-          className='profile-img circular-square '
-        />
+          <div className="profile-header container-fluid">
+            <h1 className="display-2 profile-title py-3">{user.username}</h1>
+            <img
+              src={user.avatar}
+              alt='profile-img'
+              className='profile-img circular-square '
+            />
 
-        {params.userId !== currentUser.id && (
-          <div className='row mb-5'>
-            <div className='profile-buttons d-flex col-6 col-lg-3 mx-auto justify-content-between'>
-              {!user.followers.includes(currentUser.id) ? (
-                <OverlayTrigger
-                placement="right"
-                delay={{ show: 250, hide: 400 }}
-                overlay={renderTooltip_follow}
-                >
-                  <div className='social-button d-flex'>
-                    <img
-                      src='/images/icons/follow.png'
-                      alt='follow'
-                      onClick={handleFollowClick}
-                    />
-                  </div>
-                </OverlayTrigger>
-              ) : (
-
-                <OverlayTrigger
-                placement="right"
-                delay={{ show: 250, hide: 400 }}
-                overlay={renderTooltip_unfollow}
-                >
-                  <div className='social-button d-flex'>
-                    <img
-                      src='/images/icons/unfollow.png'
-                      alt='unfollow'
-                      onClick={handleUnfollowClick}
-                    />
-                  </div>
-                </OverlayTrigger>
-
-              )}
-              {!user.friends.includes(currentUser.id) ? (
-
-                <OverlayTrigger
-                  placement="right"
-                  delay={{ show: 250, hide: 400 }}
-                  overlay={renderTooltip_friend}
-                >
-                  <div className='social-button d-flex'>
-                    <img
-                      src='/images/icons/add-friend.png'
-                      alt='friend'
-                      onClick={handleFriendClick}
-                    />
-                  </div>
-                </OverlayTrigger>
-
-              ) : (
-
-                <OverlayTrigger
-                  placement="right"
-                  delay={{ show: 250, hide: 400 }}
-                  overlay={renderTooltip_unfriend}
-                >
-                  <div className='social-button d-flex'>
-                    <img
-                      src='/images/icons/unfriend.png'
-                      alt='unfriend'
-                      onClick={handleUnfriendClick}
-                    />
-                  </div>
-                </OverlayTrigger>
-     
-              )}
-            </div>
-          </div>
-          )}
-
-          {params.userId === currentUser.id && (
-            <div>
-              <>
-                <div className='center-me'>
-                  <Button
-                    className='center btn-light my-3'
-                    variant='primary'
-                    onClick={handleShow}
-                  >
-                    Change Profile Image
-                  </Button>
-                </div>
-                <Modal size='xl' show={show} onHide={handleClose}>
-                  <Modal.Header closeButton>
-                    <Modal.Title>Select Your Profile Image</Modal.Title>
-                  </Modal.Header>
-                  <Modal.Body>
-                    <PictureChanger
-                      changeUserImg={changeUserImg}
-                    ></PictureChanger>
-                  </Modal.Body>
-                  <Modal.Footer>
-                    <Button variant='secondary' onClick={handleClose}>
-                      Cancel
-                    </Button>
-                  </Modal.Footer>
-                </Modal>
-              </>
-
+            {params.userId !== currentUser.id && (
               <div className='row mb-5'>
-                <div className='col-8 mx-auto d-flex justify-content-between'>
-                  <Link to='/characters' className='display-6'>
-                    My Characters
-                  </Link>
-                  <Link to='/adventure-list' className='display-6'>
-                    My Adventures
-                  </Link>
+                <div className='profile-buttons d-flex col-6 col-lg-3 mx-auto justify-content-between'>
+                  {!user.followers.includes(currentUser.id) ? (
+                    <OverlayTrigger
+                    placement="right"
+                    delay={{ show: 250, hide: 400 }}
+                    overlay={renderTooltip_follow}
+                    >
+                      <div className='social-button d-flex'>
+                        <img
+                          src='/images/icons/follow.png'
+                          alt='follow'
+                          onClick={handleFollowClick}
+                        />
+                      </div>
+                    </OverlayTrigger>
+                  ) : (
+
+                    <OverlayTrigger
+                    placement="right"
+                    delay={{ show: 250, hide: 400 }}
+                    overlay={renderTooltip_unfollow}
+                    >
+                      <div className='social-button d-flex'>
+                        <img
+                          src='/images/icons/unfollow.png'
+                          alt='unfollow'
+                          onClick={handleUnfollowClick}
+                        />
+                      </div>
+                    </OverlayTrigger>
+
+                  )}
+                  {!user.friends.includes(currentUser.id) ? (
+
+                    <OverlayTrigger
+                      placement="right"
+                      delay={{ show: 250, hide: 400 }}
+                      overlay={renderTooltip_friend}
+                    >
+                      <div className='social-button d-flex'>
+                        <img
+                          src='/images/icons/add-friend.png'
+                          alt='friend'
+                          onClick={handleFriendClick}
+                        />
+                      </div>
+                    </OverlayTrigger>
+
+                  ) : (
+
+                    <OverlayTrigger
+                      placement="right"
+                      delay={{ show: 250, hide: 400 }}
+                      overlay={renderTooltip_unfriend}
+                    >
+                      <div className='social-button d-flex'>
+                        <img
+                          src='/images/icons/unfriend.png'
+                          alt='unfriend'
+                          onClick={handleUnfriendClick}
+                        />
+                      </div>
+                    </OverlayTrigger>
+        
+                  )}
                 </div>
               </div>
-            </div>
-          )}
+              )}
 
-          <div className='row'>
-            <div className='profile-connections d-flex col-md-8 mx-auto justify-content-between mb-4'>
-              <h4>{user.followers.length} Followers</h4>
-              <h4>{user.following.length} Following</h4>
-              <h4>{user.friends.length} Friends</h4>
-            </div>
+              {params.userId === currentUser.id && (
+                <div>
+                  <>
+                    <div className='center-me'>
+                      <Button
+                        className='center btn-dark my-3'
+                        variant='primary'
+                        onClick={handleShow}
+                      >
+                        Change Profile Image
+                      </Button>
+                    </div>
+                    <Modal size='xl' show={show} onHide={handleClose}>
+                      <Modal.Header closeButton>
+                        <Modal.Title>Select Your Profile Image</Modal.Title>
+                      </Modal.Header>
+                      <Modal.Body>
+                        <PictureChanger
+                          changeUserImg={changeUserImg}
+                        ></PictureChanger>
+                      </Modal.Body>
+                      <Modal.Footer>
+                        <Button variant='secondary' onClick={handleClose}>
+                          Cancel
+                        </Button>
+                      </Modal.Footer>
+                    </Modal>
+                  </>
+
+                  <div className='row mb-5'>
+                    <div className='col-10 mx-auto d-flex justify-content-between'>
+                      <Link to='/characters' className='display-6'>
+                        My Characters
+                      </Link>
+                      <Link to='/adventure-list' className='display-6'>
+                        My Adventures
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              <div className='row'>
+                <div className='profile-connections d-flex col-md-8 mx-auto justify-content-between mb-4'>
+                  <h4>{user.followers.length} Followers</h4>
+                  <h4>{user.following.length} Following</h4>
+                  <h4>{user.friends.length} Friends</h4>
+                </div>
+              </div>
           </div>
-          <div className='row text-center'>
+
+
+          <div className='row text-center py-5'>
             <div className='col-12 col-md-10 mx-auto'>
               <div className='display-5 mb-3'>Biography</div>
               {edit &&
@@ -297,10 +302,14 @@ function Profile({ currentUser }) {
                   {edit ? 'Save' : 'Edit Bio'}
                 </button>
               }
-              <div className='display-6 my-4'>Activity</div>
-              <p>Updated adventure [name] (3 mins ago)</p>
-              <p>Created adventure [name] (yesterday)</p>
-              <p>Created character [name] (2 days ago)</p>
+              <div className='display-6 my-4'>Recent Activity</div>
+                <div className="">
+                  {user.activity &&
+                    user.activity.reverse().slice(0, 10).map((event, index) => (
+                      <p key={index}>{event}</p>
+                    ))
+                  }
+                </div>
               <div className='display-6'>Achievements</div>
             </div>
           </div>
