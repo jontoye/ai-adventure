@@ -4,6 +4,108 @@ import { Navigate } from "react-router-dom";
 import "./css/Character.css";
 
 export default class Character extends Component {
+  CLASSES = [
+    "busker",
+    "merchant",
+    "warrior",
+    "archer",
+    "bard",
+    "sapper",
+    "thief",
+    "druid",
+    "lockpicking lawyer",
+    "priest",
+    "archangel",
+    "zookeeper",
+    "ranger",
+    "dwarf",
+    "elf",
+    "ent",
+    "goblin",
+    "orc",
+    "brute",
+    "grunt",
+    "elite",
+    "marine",
+    "orator",
+    "hunter",
+    "trapper",
+    "fisherman",
+    "cleric",
+    "barbarian",
+    "paladin",
+    "monk",
+    "mage",
+    "mystic",
+    "wizard",
+    "horseman",
+    "knight",
+    "necromancer",
+    "dragonborn",
+    "warlock",
+    "rogue",
+    "sorcerer",
+    "forager",
+    "illusionist",
+    "shaman",
+    "vampire",
+    "werewolf",
+    "shapeshifter",
+    "dragon",
+    "alchemist",
+    "sniper",
+    "medic",
+    "scientist",
+    "gladiator",
+    "astronomer",
+    "blacksmith",
+    "scholar",
+    "pirate",
+    "mafioso",
+    "cyborg",
+    "jester",
+    "guardian",
+    "squire",
+    "pikeman",
+    "gunslinger",
+    "skald",
+    "engineer",
+    "psychic",
+    "beastmaster",
+    "librarian",
+    "sharpshooter",
+    "grenadier",
+    "inventor",
+    "bishop",
+    "leader",
+    "gypsy",
+    "wanderer",
+    "duellist",
+    "crusader",
+    "beserker",
+    "samurai",
+    "templar",
+    "skirmisher",
+    "bandit",
+    "outlaw",
+    "lord",
+    "summoner",
+    "mime",
+    "ninja",
+    "assassin",
+    "gambler",
+    "scout",
+    "spy",
+    "cultist",
+    "zealot",
+    "inquisitor",
+    "headhunter",
+    "nobility",
+    "phantom",
+    "ghost",
+    "spectre",
+  ];
+
   state = {
     character: {
       name: this.props.name,
@@ -16,7 +118,25 @@ export default class Character extends Component {
     log: [this.props.backstory],
     redirect: false,
     redirected: false,
+    image: "images/saad.png",
   };
+
+  componentDidMount() {
+    this.setImage();
+  }
+
+  setImage = () => {
+    console.log(this.props.class);
+    console.log("class test", this.CLASSES.indexOf(this.props.class));
+    if (this.CLASSES.indexOf(this.props.class) !== -1) {
+      console.log("class detected");
+      let path = `/images/class/${this.props.class.replace(" ", "")}.png`;
+      this.setState({
+        image: path,
+      });
+    }
+  };
+
   startAdventure = (e) => {
     // console.log('fancy frontend stuff')
     this.props.createAdventure(this.state.character);
@@ -44,7 +164,7 @@ export default class Character extends Component {
     return (
       <div>
         <Card className={css} style={{ width: "18rem", margin: "15px" }}>
-          <Card.Img variant='top' src='images/saad.png' />
+          <Card.Img variant='top' src={this.state.image} />
           <Card.Body>
             <Card.Title>
               {this.props.name} the {this.props.class}

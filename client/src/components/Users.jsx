@@ -29,7 +29,7 @@ function Users({ continueAdventure, createAdventure, setCharacter }) {
 
         {/* <div className='users-list d-flex flex-column align-items-center gap-5 my-5'> */}
         <div className='users-list d-flex align-items-center gap-5'>
-          {users.map(user => (
+          {users.map((user) => (
             <Link to={`/profile/${user._id}/`} key={user._id}>
               <div className='user-card'>
                 <div className='user-card__img'>
@@ -39,21 +39,21 @@ function Users({ continueAdventure, createAdventure, setCharacter }) {
                     alt='user-avatar'
                   />
                 </div>
-                  <div className='user-card__content mx-2'>
-                    <h3>{user.username}</h3>
-                    <p>Joined {moment(user.createdAt).fromNow()}</p>
-                  </div>
+                <div className='user-card__content mx-2'>
+                  <h3>{user.username}</h3>
+                  <p>Joined {moment(user.createdAt).fromNow()}</p>
+                </div>
               </div>
             </Link>
           ))}
         </div>
       </div>
 
-      <Adventures continueAdventure={continueAdventure}/>
+      <Adventures continueAdventure={continueAdventure} />
       <Characters
         createAdventure={createAdventure}
         setCharacter={setCharacter}
-       />
+      />
     </>
   );
 }

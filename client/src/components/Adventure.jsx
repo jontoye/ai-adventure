@@ -28,7 +28,8 @@ export default class Adventure extends Component {
   }
 
   componentDidMount() {
-    if (this.props.adventure.events.reverse()[0].options.length < 1) {
+    console.log("adventure test", this.props.adventure);
+    if (this.props.adventure.events.last.options.length < 1) {
       this.generateOptions();
     }
     console.log("LOAD");
