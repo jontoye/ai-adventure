@@ -442,6 +442,7 @@ const CLASS = [
   "Guardian",
   "Squire",
   "Pikeman",
+  "Giant",
   "Gunslinger",
   "Skald",
   "Engineer",
