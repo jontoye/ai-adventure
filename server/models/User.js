@@ -54,6 +54,11 @@ const userSchema = mongoose.Schema(
         ref: "User",
       },
     ],
+    activity: [
+      {
+        type: String,
+      },
+    ],
   },
   {
     timestamps: true,

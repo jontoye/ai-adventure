@@ -1,5 +1,7 @@
 const Adventure = require("../models/Adventure");
 const Event = require("../models/Event");
+const User = require("../models/User");
+const moment = require("moment");
 
 exports.adventure_create_post = (req, res) => {
   console.log("USER CREATED ADVENTURE", req.user);
@@ -9,11 +11,20 @@ exports.adventure_create_post = (req, res) => {
   adventure
     .save()
     .then((adventure) => {
-      res.json({ adventure }).status(200);
+      User.findById(req.user).then((user) => {
+        user.activity.push(
+          `Started adventure '${adventure.name}' on ${moment().format(
+            "dddd, MMMM Do YYYY, h:mm:ss a"
+          )}`
+        );
+        user.save().then(() => {
+          res.json({ adventure });
+        });
+      });
     })
     .catch((err) => {
       console.log(err);
-      res.send("Error 418");
+      res.send("CREATE ADVENTURE ERROR", err);
     });
 };
 
