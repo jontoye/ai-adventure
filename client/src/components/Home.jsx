@@ -13,15 +13,16 @@ export default class Home extends Component {
 	};
 	componentDidMount() {
 		Axios.get("adventure/index")
-		.then((response) => {
+		.then((response1) => {
 		  this.setState({
-			adventure: response.data.adventures.reverse()[0],
+			adventure: response1.data.adventures.reverse()[0],
 		  });
 		  Axios.get("character/index")
-		  .then((response) => {
-			let character = response.data.characters.find((v) => {
+		  .then((response2) => {
+			let character = this.state.adventure ? 
+			response2.data.characters.find((v) => {
 			  return this.state.adventure.character === v._id;
-			});
+			}) : {};
 			this.setState({
 			  character: character,
 			});
