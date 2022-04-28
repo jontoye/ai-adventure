@@ -29,8 +29,6 @@ export default class Adventure extends Component {
   }
 
   componentDidMount() {
-
-
     let events = this.props.adventure.events;
 
     console.log("LOAD");
@@ -41,10 +39,12 @@ export default class Adventure extends Component {
       adventure: this.props.adventure,
       character: this.props.character,
       name: this.props.adventure.name,
+      background: "url("+this.props.adventure.image+")",
     });
     //async!
     setTimeout(() => {
       console.log("event loaded: ", this.state.event);
+      console.log("background: ", this.state.background);
 
       this.setState({
         log: this.state.event.displayedLog,
@@ -125,6 +125,7 @@ export default class Adventure extends Component {
         });
 
         setTimeout(() => {
+          window.scrollTo(0, document.body.scrollHeight);
           this.saveEvent();
         }, 100);
       })
@@ -263,6 +264,7 @@ export default class Adventure extends Component {
               previousLog: [...this.state.log, action, prompt, reply],
             });
             setTimeout(() => {
+              window.scrollTo(0, document.body.scrollHeight);
               this.generateOptions();
             }, 100);
           })
@@ -279,15 +281,14 @@ export default class Adventure extends Component {
   };
 
   render() {
-    
     return (
       <div>
         <Container>
           <div className='game-log mb-3'>
             <Log log={this.state.log} />
           </div>
-          <Row>
-            <Col xs="6">
+          <Row className="adventure-screen" style={{backgroundImage: this.state.background}}>
+            <Col xs="9">
               <div className='buttons'>
                 <Button
                   variant='primary'
@@ -333,7 +334,7 @@ export default class Adventure extends Component {
                   <Card.Text>Weakness: {this.state.character.weakness}</Card.Text>
                   <br></br>
                   <Card.Text>
-                    {this.state.character.backstory}
+                    {/* {this.state.character.backstory} */}
                   </Card.Text>
                 </Card.ImgOverlay>
                 <Card.Body>
@@ -344,12 +345,8 @@ export default class Adventure extends Component {
               </Card>
             </Col>
           </Row>
-          <br></br>
-          <br />
+          <div className='adventure-screen-fade'></div>
 
-          <br />
-          <br></br>
-          <br></br>
         </Container>
       </div>
     );
