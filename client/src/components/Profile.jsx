@@ -43,18 +43,19 @@ function Profile({ currentUser }) {
     axios.get(`/profile/${id}`, {headers})
       .then(response => {
         setUser(response.data.user);
+        setBio(response.data.user.biography);
       })
       .catch(err => {
         console.error(err)
       })
 
-    axios.get(`/profile/${id}`, {headers})
-      .then(response => {
-        setBio(response.data.user.biography)
-      })
-      .catch(err => {
-        console.error(err)
-      })
+    // axios.get(`/profile/${id}`, {headers})
+    //   .then(response => {
+    //     setBio(response.data.user.biography)
+    //   })
+    //   .catch(err => {
+    //     console.error(err)
+    //   })
   };
 
   const handleFriendClick = () => {
