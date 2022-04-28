@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Button } from "react-bootstrap";
+import { Container, Button, Card, Row, Col } from "react-bootstrap";
 import Axios from "axios";
 import Log from "./Log";
 import "./css/Adventure.css";
@@ -31,7 +31,7 @@ export default class Adventure extends Component {
 
 
     let events = this.props.adventure.events;
-    
+
     console.log("LOAD");
     console.log("adventure loaded: ", this.props.adventure);
     // console.log("character loaded: ", this.props.character);
@@ -283,36 +283,53 @@ export default class Adventure extends Component {
           <div className='game-log'>
             <Log log={this.state.log} />
           </div>
-          <div className='buttons'>
-            <Button
-              variant='primary'
-              size='lg'
-              disabled={this.state.disabled}
-              onClick={this.buttonOneClick}
-            >
-              {this.state.option1}
-            </Button>
-            <br></br>
-            <br />
-            <Button
-              variant='primary'
-              size='lg'
-              disabled={this.state.disabled}
-              onClick={this.buttonTwoClick}
-            >
-              {this.state.option2}
-            </Button>
-            <br></br>
-            <br />
-            <Button
-              variant='primary'
-              size='lg'
-              disabled={this.state.disabled}
-              onClick={this.buttonThreeClick}
-            >
-              {this.state.option3}
-            </Button>
-          </div>
+          <Row>
+            <Col xs="6">
+              <div className='buttons'>
+                <Button
+                  variant='primary'
+                  size='lg'
+                  disabled={this.state.disabled}
+                  onClick={this.buttonOneClick}
+                >
+                  {this.state.option1}
+                </Button>
+                <br></br>
+                <br />
+                <Button
+                  variant='primary'
+                  size='lg'
+                  disabled={this.state.disabled}
+                  onClick={this.buttonTwoClick}
+                >
+                  {this.state.option2}
+                </Button>
+                <br></br>
+                <br />
+                <Button
+                  variant='primary'
+                  size='lg'
+                  disabled={this.state.disabled}
+                  onClick={this.buttonThreeClick}
+                >
+                  {this.state.option3}
+                </Button>
+              </div>
+            </Col>
+            <Col>
+              <Card>
+                <Card.Img variant='top' src={this.state.character.image} 
+                  onError={(e) => {
+                    e.target.onerror = null 
+                    e.target.src = `/images/class/default.png`}} />
+                <Card.Body>
+                  <Card.Title>
+                    {this.state.character.name} the {this.state.character.class}
+                  </Card.Title>
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
           <br></br>
           <br />
 

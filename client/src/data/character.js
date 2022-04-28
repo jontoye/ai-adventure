@@ -481,6 +481,8 @@ const CLASS = [
   "Phantom",
   "Ghost",
   "Spectre",
+  'Centaur',
+  'Faun',
 ];
 
 const TRAIT = [

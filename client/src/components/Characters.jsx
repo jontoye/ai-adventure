@@ -15,8 +15,6 @@ export default class Characters extends Component {
   }
   componentDidMount() {
     this.loadCharacterList();
-
-    console.log("filter props test", this.props.filtered);
   }
 
   loadCharacterList = () => {
@@ -91,6 +89,7 @@ export default class Characters extends Component {
             id={c._id}
             ability={c.ability}
             weakness={c.weakness}
+            image={c.image}
             createAdventure={this.props.createAdventure}
             deleteCharacter={this.deleteCharacter}
             setCharacter={this.props.setCharacter}

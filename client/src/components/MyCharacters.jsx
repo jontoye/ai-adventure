@@ -21,7 +21,11 @@ export default class Characters extends Component {
 
   loadCharacterList = () => {
     // console.log("getting characters...");
-    Axios.get("character/index")
+    Axios.get("character/index", {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    })
       .then((response) => {
         // console.log(response.data.characters);
         if (this.props.filtered !== true) {
@@ -79,6 +83,7 @@ export default class Characters extends Component {
             id={c._id}
             ability={c.ability}
             weakness={c.weakness}
+            image={c.image}
             createAdventure={this.props.createAdventure}
             deleteCharacter={this.deleteCharacter}
             setCharacter={this.props.setCharacter}
