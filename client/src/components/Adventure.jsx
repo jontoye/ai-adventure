@@ -23,6 +23,7 @@ export default class Adventure extends Component {
       option2: "Generating your second choice, hold on one second",
       option3: "Generating your third choice, hold on one second",
       event: {},
+      disabled: "disabled",
     };
   }
 
@@ -48,7 +49,7 @@ export default class Adventure extends Component {
         previousLog: this.state.event.fullLog,
       });
       if (this.state.event.options.length < 1) {
-        console.log("generate options skipped");
+        // console.log("generate options skipped");
         // this.generateOptions();
       } else {
         this.loadOptions();
@@ -117,6 +118,7 @@ export default class Adventure extends Component {
             fullLog: [...this.state.event.fullLog, prompt, rejoined_choices],
             displayedLog: [...this.state.event.displayedLog, rejoined_choices],
           },
+          disabled: "",
         });
 
         setTimeout(() => {
@@ -138,6 +140,7 @@ export default class Adventure extends Component {
       option1: this.state.event.options[0],
       option2: this.state.event.options[1],
       option3: this.state.event.options[2],
+      disabled: "",
     });
   };
 
@@ -197,6 +200,10 @@ export default class Adventure extends Component {
     console.log("OPTION");
     //UPDATE & SAVE EXISTING EVENT
     this.setState({
+      option1: "Generating Choice. Please wait...",
+      option2: "Generating Choice. Please wait...",
+      option3: "Generating Choice. Please wait...",
+      disabled: "disabled",
       event: {
         ...this.state.event,
         selectedOption: x,
@@ -276,17 +283,32 @@ export default class Adventure extends Component {
             <Log log={this.state.log} />
           </div>
           <div className='buttons'>
-            <Button variant='primary' size='lg' onClick={this.buttonOneClick}>
+            <Button
+              variant='primary'
+              size='lg'
+              disabled={this.state.disabled}
+              onClick={this.buttonOneClick}
+            >
               {this.state.option1}
             </Button>
             <br></br>
             <br />
-            <Button variant='primary' size='lg' onClick={this.buttonTwoClick}>
+            <Button
+              variant='primary'
+              size='lg'
+              disabled={this.state.disabled}
+              onClick={this.buttonTwoClick}
+            >
               {this.state.option2}
             </Button>
             <br></br>
             <br />
-            <Button variant='primary' size='lg' onClick={this.buttonThreeClick}>
+            <Button
+              variant='primary'
+              size='lg'
+              disabled={this.state.disabled}
+              onClick={this.buttonThreeClick}
+            >
               {this.state.option3}
             </Button>
           </div>
