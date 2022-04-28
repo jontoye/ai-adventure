@@ -46,6 +46,19 @@ exports.user_profile_avatar_put = (req, res) => {
     });
 };
 
+exports.user_profile_biography_post = (req, res) => {
+  User.findOneAndUpdate(
+    { _id: req.params.userId },
+    { biography: req.body.biography }
+  )
+    .then((user) => {
+      res.json({ message: "success", user: user });
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+};
+
 // HTTP POST - adds friends and followers
 exports.user_profile_addsocial_post = (req, res) => {
   User.findOne({ _id: req.params.userId })

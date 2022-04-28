@@ -8,6 +8,7 @@ router.get("/users", userCtrl.user_index_get);
 // router.get("/users/:userId", userCtrl.user_info_get);
 
 router.get("/profile/:userId", userCtrl.user_profile_get);
+router.post("/profile/:userId/biography", userCtrl.user_profile_biography_post);
 router.post("/profile/:userId/addsocial", userCtrl.user_profile_addsocial_post);
 router.post(
   "/profile/:userId/removesocial",
