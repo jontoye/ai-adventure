@@ -20,7 +20,10 @@ export default class Adventures extends Component {
 
   loadAdventureList = () => {
     // console.log("getting adventures...");
-    Axios.get("adventure/index")
+    Axios.get("adventure/index", {
+      headers: {
+      "Authorization": "Bearer " + localStorage.getItem("token"),
+      }})
     .then((response) => {
       this.setState({
         adventures: response.data.adventures.reverse(),

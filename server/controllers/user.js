@@ -113,18 +113,3 @@ exports.user_profile_removesocial_post = (req, res) => {
       console.error(err);
     });
 };
-
-// HTTP GET - Edit user profile
-exports.user_edit_get = (req, res) => {
-  return;
-};
-
-// HTTP POST - Edit user profile
-exports.user_edit_post = (req, res) => {
-  return;
-};
-
-// HTTP GET - delete user profile
-exports.user_delete_get = (req, res) => {
-  return;
-};

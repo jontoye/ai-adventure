@@ -29,6 +29,7 @@ const userSchema = mongoose.Schema(
       required: true,
     },
     biography: {
+      default: "",
       type: String,
     },
     avatar: {

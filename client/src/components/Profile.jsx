@@ -5,11 +5,15 @@ import "./css/Profile.css";
 import PictureChanger from "./PictureChanger";
 import { Modal, Button, Tooltip, OverlayTrigger } from "react-bootstrap";
 
+const headers = {
+  Authorization: "Bearer " + localStorage.getItem("token"),
+}
+
 function Profile({ currentUser }) {
   const [user, setUser] = useState();
   const [show, setShow] = useState(false);
   const [edit, setEdit] = useState(false);
-  const [bio, setBio] = useState();
+  const [bio, setBio] = useState("Loading");
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -17,7 +21,7 @@ function Profile({ currentUser }) {
   const handleBioClick = async () => {
     if (edit) {
       // save to database
-      await axios.post(`/profile/${currentUser.id}/biography`, {biography: bio})
+      await axios.post(`/profile/${currentUser.id}/biography`, {biography: bio}, {headers})
     }
 
     setEdit(!edit)
@@ -34,14 +38,23 @@ function Profile({ currentUser }) {
     getUser(params.userId);
   }, [params.userId]);
 
-  const getUser = async (id) => {
-    try {
-      const response = await axios.get(`/profile/${id}`);
-      setUser(response.data.user);
-      setBio(response.data.user.biography)
-    } catch (err) {
-      console.error(err);
-    }
+  const getUser = (id) => {
+
+    axios.get(`/profile/${id}`, {headers})
+      .then(response => {
+        setUser(response.data.user);
+      })
+      .catch(err => {
+        console.error(err)
+      })
+
+    axios.get(`/profile/${id}`, {headers})
+      .then(response => {
+        setBio(response.data.user.biography)
+      })
+      .catch(err => {
+        console.error(err)
+      })
   };
 
   const handleFriendClick = () => {
@@ -50,11 +63,11 @@ function Profile({ currentUser }) {
       await axios.post(`/profile/${params.userId}/addsocial`, {
         user: currentUser.id,
         add: "friend",
-      });
+      }, {headers});
       await axios.post(`/profile/${currentUser.id}/addsocial`, {
         user: params.userId,
         add: "friend",
-      });
+      }, {headers});
       getUser(params.userId);
     };
     addFriend();
@@ -66,11 +79,11 @@ function Profile({ currentUser }) {
       await axios.post(`/profile/${params.userId}/removesocial`, {
         user: currentUser.id,
         remove: "friend",
-      });
+      }, {headers});
       await axios.post(`/profile/${currentUser.id}/removesocial`, {
         user: params.userId,
         remove: "friend",
-      });
+      }, {headers});
       getUser(params.userId);
     };
     removeFriend();
@@ -81,14 +94,14 @@ function Profile({ currentUser }) {
       await axios.post(`/profile/${params.userId}/addsocial`, {
         user: currentUser.id,
         add: "follower",
-      });
+      }, {headers});
       getUser(params.userId);
     };
     const addFollowing = async () => {
       await axios.post(`/profile/${currentUser.id}/addsocial`, {
         user: params.userId,
         add: "following",
-      });
+      }, {headers});
     };
 
     addFollower();
@@ -100,14 +113,14 @@ function Profile({ currentUser }) {
       await axios.post(`/profile/${params.userId}/removesocial`, {
         user: currentUser.id,
         remove: "follower",
-      });
+      }, {headers});
       getUser(params.userId);
     };
     const removeFollowing = async () => {
       await axios.post(`/profile/${currentUser.id}/removesocial`, {
         user: params.userId,
         remove: "following",
-      });
+      }, {headers});
     };
 
     removeFollower();
@@ -115,7 +128,7 @@ function Profile({ currentUser }) {
   };
 
   const changeUserImg = async (imgUrl) => {
-    await axios.put(`/profile/${currentUser.id}/avatar`, { avatar: imgUrl });
+    await axios.put(`/profile/${currentUser.id}/avatar`, { avatar: imgUrl }, {headers});
     getUser(params.userId);
     setShow(false);
   };

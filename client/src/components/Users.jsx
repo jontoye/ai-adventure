@@ -12,7 +12,11 @@ function Users({ continueAdventure, createAdventure, setCharacter }) {
   useEffect(() => {
     const getUsers = async () => {
       try {
-        const response = await axios.get("/users");
+        const response = await axios.get("/users", {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          }
+        });
         setUsers(response.data.users);
         return response;
       } catch (err) {
