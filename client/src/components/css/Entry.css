@@ -1,6 +1,11 @@
 .entry-key0 {
   color: green;
 }
+
+.entry {
+  white-space: pre-line;
+}
+
 .entry-key1 {
   color: blue;
 }
