@@ -3,19 +3,20 @@ const Event = require("../models/Event");
 const User = require("../models/User");
 const moment = require("moment");
 
-exports.adventure_create_post = (req, res) => {
-  console.log("USER CREATED ADVENTURE", req.user);
+exports.adventure_create_post = async (req, res) => {
   let adventure = new Adventure(req.body);
 
   //save adventure
-  adventure
-    .save()
+  await adventure.save();
+  // console.log(adventure.id);
+  Adventure.findById(adventure.id)
+    .populate("character")
     .then((adventure) => {
       User.findById(req.user).then((user) => {
         user.activity.push(
-          `Started adventure '${adventure.name}' on ${moment().format(
-            "dddd, MMMM Do YYYY, h:mm:ss a"
-          )}`
+          `${adventure.character.name} started adventure '${
+            adventure.name
+          }' on ${moment().format("dddd, MMMM Do YYYY, h:mm:ss a")}`
         );
         user.save().then(() => {
           res.json({ adventure });
