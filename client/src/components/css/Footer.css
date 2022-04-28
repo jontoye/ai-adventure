@@ -4,7 +4,7 @@
   justify-content: space-evenly;
   color: white;
   background-color: rgb(33, 37, 41);
-  padding: 50px;
+  padding-top: 5px;
 }
 
 @media (max-width: 650px) {
