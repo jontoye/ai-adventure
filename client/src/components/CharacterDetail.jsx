@@ -26,7 +26,7 @@ export default class CharacterDetail extends Component {
   loadName = () => {
     Axios.get("character/index")
       .then((response) => {
-        // console.log("response.data.characters", response.data.characters);
+        console.log("response.data.characters", response.data.characters);
         let id = response.data.characters.filter(
           (character) => character.name === this.state.character.name
         );
@@ -70,18 +70,18 @@ export default class CharacterDetail extends Component {
   deleteAdventure = (adventure) => {
     Axios.delete(`adventure/delete?id=${adventure._id}`, {
       headers: {
-          "Authorization": "Bearer " + localStorage.getItem("token"),
-      }
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
     })
-    .then(response => {
-      // console.log("Deleted adventure.")
-      this.loadAdventureList();
-    })
-    .catch(err=>{
-      console.log(`Error deleting adventure: ${adventure.name}`)
-      console.log(err)
-    })
-  }
+      .then((response) => {
+        // console.log("Deleted adventure.")
+        this.loadAdventureList();
+      })
+      .catch((err) => {
+        console.log(`Error deleting adventure: ${adventure.name}`);
+        console.log(err);
+      });
+  };
 
   setAdventures() {}
 
@@ -105,10 +105,14 @@ export default class CharacterDetail extends Component {
           className='character-detail-card'
           style={{ width: "50rem", margin: "0 auto" }}
         >
-          <Card.Img variant='top' src={this.state.character.image}
+          <Card.Img
+            variant='top'
+            src={this.state.character.image}
             onError={(e) => {
-              e.target.onerror = null 
-              e.target.src = `/images/class/default.png`}} />
+              e.target.onerror = null;
+              e.target.src = `/images/class/default.png`;
+            }}
+          />
           <Card.Body>
             <Card.Title>
               {this.state.character.name} the {this.state.character.class}
