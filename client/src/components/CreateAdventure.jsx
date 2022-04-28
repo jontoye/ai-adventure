@@ -9,7 +9,7 @@ const { Configuration, OpenAIApi } = require("openai");
 export default class CreateAdventure extends Component {
   constructor() {
     super();
-    this.startStory = this.startStory.bind(this);
+    this.setRedirect = this.setRedirect.bind(this);
     this.state = {
       placeholder: "Click to generate a new adventure!",
       response: "",
@@ -62,7 +62,7 @@ export default class CreateAdventure extends Component {
     });
   };
 
-  addAdventure = (adventure) => {
+  addAdventure = (adventure, character) => {
     Axios.post("adventure/add", adventure, {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),
@@ -73,8 +73,12 @@ export default class CreateAdventure extends Component {
       response.data.adventure.events = [this.state.event];
       this.setState({
         newAdventure: response.data.adventure,
+        character: character,
       });
-      this.startStory();
+      setTimeout(()=>{
+        this.props.startStory(this.state.newAdventure, this.state.character);
+        this.setRedirect();
+      },100)
       // this.loadCharacterList();
     })
     .catch((error) => {
@@ -82,7 +86,7 @@ export default class CreateAdventure extends Component {
     });
   };
 
-  startStory() {
+  setRedirect() {
     // console.log("start-story triggered2");
     setTimeout(()=>{
       console.log(this.state.newAdventure)
@@ -156,16 +160,12 @@ export default class CreateAdventure extends Component {
         setTimeout(()=>{
           formDataObj.events = [this.state.event];
 
-          this.addAdventure(formDataObj);
+          this.addAdventure(formDataObj, character);
           this.setState({
-            character: character,
             placeholder: `Adventure successfully created. Enjoy!`,
             response: `${story}`,
             log: logs,
           });
-          setTimeout(()=>{
-            this.props.startStory(this.state.newAdventure, this.state.character);
-          },100)
         },100)
       })
       .catch((error) => {
