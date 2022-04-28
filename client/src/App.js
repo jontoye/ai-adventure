@@ -426,10 +426,10 @@ export default class App extends Component {
             }
           ></Route>
           <Route
-            path='/profile'
+            path={`/profile`}
             element={<Profile currentUser={this.state.user} />}
           >
-            <Route path=':userId' element={<Profile />} />
+            <Route path=":userId" element={<Profile currentUser={this.state.user} />} />
           </Route>
         </Routes>
 

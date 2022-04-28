@@ -32,7 +32,7 @@ function Profile({ currentUser }) {
   }
 
   let params = useParams();
-
+  console.log(params)
   useEffect(() => {
     // Get info for user who's profile currently showing
     getUser(params.userId);
