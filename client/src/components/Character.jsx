@@ -37,8 +37,6 @@ export default class Character extends Component {
       const imgList = [].concat(this.CLASSES, randomImages);
       const randImg = imgList[Math.floor(Math.random() * imgList.length)];
       path = `/images/class/${randImg.replace(" ", "")}.png`;
-
-
     }
     this.setState({
       image: path,
