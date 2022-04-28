@@ -32,8 +32,10 @@ export default class Contact extends Component {
             </div>
         </div>
         <br></br>
+        <br />
+        <br />
         <div className="feedback_form">
-            <h2 className="feedback_heading">Leave us a message!</h2>
+            <h2 className="feedback_heading py-3">Leave us a message!</h2>
             <Feedback />
         </div>
     </Container>

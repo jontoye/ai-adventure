@@ -26,3 +26,7 @@ a {
   max-width: 1320px;
   height: 100%;
 }
+
+.carousel-indicators {
+  display: none;
+}
