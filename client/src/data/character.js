@@ -390,7 +390,7 @@ const CLASS = [
   "Druid",
   "Lockpicking Lawyer",
   "Priest",
-  "Arcangel",
+  "Archangel",
   "Zookeeper",
   "Ranger",
   "Dwarf",

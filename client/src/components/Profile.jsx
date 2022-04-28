@@ -224,78 +224,82 @@ function Profile({ currentUser }) {
               )}
             </div>
           </div>
-        )}
+          )}
 
-        {params.userId === currentUser.id && (
-          <div>
-          <>
-            <div className='center-me'>
-              <Button className='center btn-light' variant='primary' onClick={handleShow}>
-                Change Profile Image
-              </Button>
-            </div>
-            <Modal size='xl' show={show} onHide={handleClose}>
-              <Modal.Header closeButton>
-                <Modal.Title>Select Your Profile Image</Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
-                <PictureChanger changeUserImg={changeUserImg}></PictureChanger>
-              </Modal.Body>
-              <Modal.Footer>
-                <Button variant='secondary' onClick={handleClose}>
-                  Cancel
-                </Button>
-              </Modal.Footer>
-            </Modal>
-          </>
+          {params.userId === currentUser.id && (
+            <div>
+              <>
+                <div className='center-me'>
+                  <Button
+                    className='center btn-light my-3'
+                    variant='primary'
+                    onClick={handleShow}
+                  >
+                    Change Profile Image
+                  </Button>
+                </div>
+                <Modal size='xl' show={show} onHide={handleClose}>
+                  <Modal.Header closeButton>
+                    <Modal.Title>Select Your Profile Image</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <PictureChanger
+                      changeUserImg={changeUserImg}
+                    ></PictureChanger>
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button variant='secondary' onClick={handleClose}>
+                      Cancel
+                    </Button>
+                  </Modal.Footer>
+                </Modal>
+              </>
 
-            <div className='row my-3'>
-              <div className='profile-links col-12 col-md-10 col-xl-8 mx-auto d-flex justify-content-between'>
-                <Link to='/characters' className='display-6'>
-                  My Characters
-                </Link>
-                <Link to='/adventure-list' className='display-6'>
-                  My Adventures
-                </Link>
+              <div className='row mb-5'>
+                <div className='col-8 mx-auto d-flex justify-content-between'>
+                  <Link to='/characters' className='display-6'>
+                    My Characters
+                  </Link>
+                  <Link to='/adventure-list' className='display-6'>
+                    My Adventures
+                  </Link>
+                </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
 
-        <div className='row'>
-          <div className='profile-connections d-flex col-md-8 mx-auto justify-content-between mb-4'>
-            <h4>{user.followers.length} Followers</h4>
-            <h4>{user.following.length} Following</h4>
-            <h4>{user.friends.length} Friends</h4>
+          <div className='row'>
+            <div className='profile-connections d-flex col-md-8 mx-auto justify-content-between mb-4'>
+              <h4>{user.followers.length} Followers</h4>
+              <h4>{user.following.length} Following</h4>
+              <h4>{user.friends.length} Friends</h4>
+            </div>
           </div>
-        </div>
-
-        <div className='row text-center'>
-          <div className='col-12 col-md-10 mx-auto'>
-            <div className='display-5 mb-3'>Biography</div>
-            {edit &&
-              <textarea id="biography-input" rows="10" value={bio} onChange={handleBioChange}></textarea>
-            }
-            {!edit &&
-              <p className="lead" id="biography">
-                {bio}
-              </p>
-            }
-            {params.userId === currentUser.id &&
-              <button className="btn btn-light my-3" onClick={handleBioClick}>
-                {edit ? 'Save' : 'Edit Bio'}
-              </button>
-            }
-            <div className='display-6 my-4'>Activity</div>
-            <p>Updated adventure [name] (3 mins ago)</p>
-            <p>Created adventure [name] (yesterday)</p>
-            <p>Created character [name] (2 days ago)</p>
-            <div className='display-6'>Achievements</div>
+          <div className='row text-center'>
+            <div className='col-12 col-md-10 mx-auto'>
+              <div className='display-5 mb-3'>Biography</div>
+              {edit &&
+                <textarea id="biography-input" rows="10" value={bio} onChange={handleBioChange}></textarea>
+              }
+              {!edit &&
+                <p className="lead" id="biography">
+                  {bio}
+                </p>
+              }
+              {params.userId === currentUser.id &&
+                <button className="btn btn-light my-3" onClick={handleBioClick}>
+                  {edit ? 'Save' : 'Edit Bio'}
+                </button>
+              }
+              <div className='display-6 my-4'>Activity</div>
+              <p>Updated adventure [name] (3 mins ago)</p>
+              <p>Created adventure [name] (yesterday)</p>
+              <p>Created character [name] (2 days ago)</p>
+              <div className='display-6'>Achievements</div>
+            </div>
           </div>
-        </div>
-      </>
-      }
-
+        </>
+        }
     </div>
   );
 }
