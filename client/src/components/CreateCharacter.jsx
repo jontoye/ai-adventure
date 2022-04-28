@@ -11,7 +11,12 @@ import "./css/CreateCharacter.css";
 
 const { Configuration, OpenAIApi } = require("openai");
 
+const CLASSES = CHARACTER_DEFAULTS.class.map(v=>{
+  return v.toLowerCase()
+})
 export default class CreateCharacter extends Component {
+  
+
   constructor(props) {
     super(props);
     this.state = {
@@ -26,6 +31,7 @@ export default class CreateCharacter extends Component {
         backstory: "",
         tone: "dark",
         user: "",
+        image: "/images/class/default.png",
       },
       character: "",
       log: [],
@@ -224,15 +230,29 @@ export default class CreateCharacter extends Component {
     //Use a timeout/clock here to randomly change state.response to keep things interesting while the AI thinks?
   };
 
+  setImage = () => {
+    let path = '';
+    if (CLASSES.indexOf(this.props.class) !== -1) {
+      path = `/images/class/${this.props.class.replace(" ", "")}.png`;
+    } else {
+      const randomImages = ['random1','random2','random3','random4']
+      const imgList = [].concat(CLASSES, randomImages);
+      const randImg = imgList[Math.floor(Math.random() * imgList.length)];
+      path = `/images/class/${randImg.replace(" ", "")}.png`;
+    }
+    this.setState({
+      newCharacter: {
+        ...this.state.newCharacter,
+        image: path,
+      }
+    });
+  };
+
   onFormSubmit = (e) => {
     e.preventDefault();
 
-    // const formData = new FormData(e.target),
-    //   formDataObj = Object.fromEntries(formData.entries());
-    // console.log(formDataObj);
-    // console.log(this.state.newCharacter);
+    this.setImage();
 
-    // this.addCharacter(formDataObj);
     this.addCharacter(this.state.newCharacter);
     this.props.createAdventure(this.state.newCharacter);
     this.setState({
