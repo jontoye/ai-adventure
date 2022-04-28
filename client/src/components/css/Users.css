@@ -5,6 +5,7 @@
 .users-list {
     padding: 20px;
     overflow-x: scroll;
+    scroll-behavior: smooth;
 }
 
 .users-list::-webkit-scrollbar {
@@ -41,4 +42,14 @@
 .circular-square {
   border-radius: 50%;
   border: 5px white solid;
+}
+
+.scroll-btn {
+    height: 60px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.scroll-btn:hover {
+    opacity: 0.7;
 }

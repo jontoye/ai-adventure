@@ -37,3 +37,13 @@
 .dev-img:hover {
     transform: scale(1.03);
 }
+
+@media (max-width: 790px) {
+    .developer-profiles {
+        flex-direction: column;
+    }
+
+    .dev-img {
+        width: 50%;
+    }
+}

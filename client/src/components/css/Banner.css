@@ -108,6 +108,7 @@
 @media (max-width: 991px) {
   .banner__intro-card {
     margin-top: 30px;
+    width: 100%;
   }
   .banner__achievement-card {
     margin-bottom: 150px;

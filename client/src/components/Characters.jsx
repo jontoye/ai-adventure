@@ -55,6 +55,14 @@ export default class Characters extends Component {
     });
   };
 
+  scrollLeft = () => {
+    document.querySelector('.character-list').scrollLeft += 500
+  }
+
+  scrollRight = () => {
+    document.querySelector('.character-list').scrollLeft -= 500
+  }
+
   render() {
     const characters = this.state.characters.map((c) => {
       return (
@@ -76,9 +84,21 @@ export default class Characters extends Component {
     });
     return (
       <div>
-        <h1>Character List</h1>
-        <div className='character-list my-5 container'>{characters}</div>
-        <Container className="text-center">
+        <h1 className="display-4">Character List</h1>
+        <div className="d-flex align-items-center container-xl">
+        <img 
+            className="scroll-btn" 
+            src="/images/icons/left-arrow.png" 
+            onClick={this.scrollRight} 
+            alt="left-arrow" />
+          <div className='character-list my-2 container'>{characters}</div>
+          <img 
+            className="scroll-btn" 
+            src="/images/icons/right-arrow.png" 
+            onClick={this.scrollLeft} 
+            alt="right-arrow" />
+        </div>
+        <Container className="text-center my-4">
           <Button variant='secondary' onClick={this.createCharacter}>Create New Character</Button>
         </Container>
         {this.state.redirect && (
