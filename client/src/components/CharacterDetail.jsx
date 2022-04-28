@@ -63,6 +63,22 @@ export default class CharacterDetail extends Component {
     });
   }
 
+  deleteAdventure = (adventure) => {
+    Axios.delete(`adventure/delete?id=${adventure._id}`, {
+      headers: {
+          "Authorization": "Bearer " + localStorage.getItem("token"),
+      }
+    })
+    .then(response => {
+      // console.log("Deleted adventure.")
+      this.loadAdventureList();
+    })
+    .catch(err=>{
+      console.log(`Error deleting adventure: ${adventure.name}`)
+      console.log(err)
+    })
+  }
+
   setAdventures() {}
 
   render() {
