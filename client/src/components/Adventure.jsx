@@ -24,6 +24,7 @@ export default class Adventure extends Component {
       option3: "Generating your third choice, hold on one second",
       event: {},
       disabled: "disabled",
+      classText:"",
     };
   }
 
@@ -48,6 +49,7 @@ export default class Adventure extends Component {
       this.setState({
         log: this.state.event.displayedLog,
         previousLog: this.state.event.fullLog,
+        classText: this.state.character.class.charAt(0).toUpperCase() + this.state.character.class.slice(1),
       });
       if (this.state.event.options.length < 1) {
         // console.log("generate options skipped");
@@ -277,10 +279,11 @@ export default class Adventure extends Component {
   };
 
   render() {
+    
     return (
       <div>
         <Container>
-          <div className='game-log'>
+          <div className='game-log mb-3'>
             <Log log={this.state.log} />
           </div>
           <Row>
@@ -317,14 +320,25 @@ export default class Adventure extends Component {
               </div>
             </Col>
             <Col>
-              <Card>
-                <Card.Img variant='top' src={this.state.character.image} 
+              <Card id="character-card">
+                <Card.Img id="character-image"  variant='top' src={this.state.character.image} 
                   onError={(e) => {
                     e.target.onerror = null 
                     e.target.src = `/images/class/default.png`}} />
+                <Card.ImgOverlay id="character-overlay">
+                  <Card.Title><b>{this.state.character.name}</b></Card.Title>
+                  <Card.Subtitle><b>{this.state.classText}</b></Card.Subtitle>
+                  <br></br>
+                  <Card.Text>Strength: {this.state.character.ability}</Card.Text>
+                  <Card.Text>Weakness: {this.state.character.weakness}</Card.Text>
+                  <br></br>
+                  <Card.Text>
+                    {this.state.character.backstory}
+                  </Card.Text>
+                </Card.ImgOverlay>
                 <Card.Body>
-                  <Card.Title>
-                    {this.state.character.name} the {this.state.character.class}
+                  <Card.Title className="text-center">
+                    {this.state.character.name} the {this.state.classText}
                   </Card.Title>
                 </Card.Body>
               </Card>

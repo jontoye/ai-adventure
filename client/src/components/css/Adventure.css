@@ -4,3 +4,16 @@
 .buttons {
   margin-top: 20px;
 }
+
+
+
+#character-card:hover #character-overlay {
+  display: block;
+}
+
+#character-overlay {
+  display:none;
+  background-color: rgba(0,0,0,0.4);
+  color: white;
+  font-weight: bolder;
+}

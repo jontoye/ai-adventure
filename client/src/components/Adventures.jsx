@@ -22,7 +22,7 @@ export default class Adventures extends Component {
     // console.log("getting adventures...");
     Axios.get("adventure/index", {
       headers: {
-      "Authorization": "Bearer " + localStorage.getItem("token"),
+        "Authorization": "Bearer " + localStorage.getItem("token"),
       }})
     .then((response) => {
       this.setState({
