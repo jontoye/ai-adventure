@@ -466,6 +466,7 @@ const CLASS = [
   "Lord",
   "Summoner",
   "Mime",
+  "Ogre",
   "Ninja",
   "Assassin",
   "Gambler",
