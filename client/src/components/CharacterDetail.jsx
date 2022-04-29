@@ -24,12 +24,18 @@ export default class CharacterDetail extends Component {
   }
 
   loadName = () => {
-    Axios.get("character/index")
+    console.log("before axios get");
+    Axios.get("character/index", {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    })
       .then((response) => {
         console.log("response.data.characters", response.data.characters);
         let id = response.data.characters.filter(
           (character) => character.name === this.state.character.name
         );
+        console.log("id test", id);
         let char_id = id[0]._id;
         this.setState({ id: id[0]._id });
         console.log("state adventures", this.state.adventures);
