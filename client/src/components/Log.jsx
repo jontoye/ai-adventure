@@ -4,9 +4,6 @@ import Entry from "./Entry";
 
 export default class Log extends Component {
 
-  constructor() {
-    super();
-  }
 
   componentDidMount() { 
     // let element = document.getElementById('adventure-log');
