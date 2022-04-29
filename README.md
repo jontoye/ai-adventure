@@ -29,6 +29,7 @@ To create a character, go to 'Create Character' and fill in the required form, o
 ## Explore
 
 Navigate to the 'Explore' page to view:
+
 <ul>
 <li>Users who you can follow and add to your friends list</li>
 <li>All of your created adventures</li>
@@ -44,6 +45,9 @@ Navigate to the 'Explore' page to view:
 
 Your profile page contains links to your characters and adventures, as well as a follower/friend counter.<br>
 Also included is an editable "About me" section and activity log
+
+<p><small>Profile page</small></p>
+<img src="screenshots/profile.png">
 
 <br>
 
