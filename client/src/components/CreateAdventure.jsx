@@ -299,12 +299,21 @@ export default class CreateAdventure extends Component {
               ></Form.Control>
             </Form.Group>
 
-            <Button variant='primary' size='lg' type='submit'>
-              Start Adventure
-            </Button>
-            <Form.Text>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {this.state.placeholder}
-            </Form.Text>
+            {this.state.newAdventure.quest && this.state.newAdventure.name ? 
+              <>
+                <Button 
+                variant='primary' 
+                size='lg' 
+                type='submit'
+                >
+                Start Adventure
+                </Button>
+                <Form.Text>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {this.state.placeholder}
+                </Form.Text> 
+              </> :
+              <p className="text-white"><small>You must provide an adventure <span className="text-info">name</span> and <span className="text-info">quest</span> to begin your story...</small></p>
+            }
           </Form>
           <br />
           <br></br>
