@@ -21,7 +21,6 @@ export default class Feedback extends Component {
             "Authorization": "Bearer " + localStorage.getItem("token"),
         }
         })
-        console.log(response);
         this.setState({
           feedback: response.data.feedback
         })

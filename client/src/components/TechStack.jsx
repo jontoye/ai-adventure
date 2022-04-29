@@ -23,7 +23,7 @@ export default class TechStack extends Component {
 				</div>
 			</div>
 
-			<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro consequuntur nam vel suscipit aperiam atque inventore consectetur asperiores dignissimos saepe molestiae eius velit, sed iste nemo cupiditate nostrum enim voluptatum.</p>
+			<p>This is a MERN-stack app, designed and built from scratch by a team of four software developers over two weeks.</p>
 
 			<div>
 				And with a little help from

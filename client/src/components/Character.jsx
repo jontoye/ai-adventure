@@ -96,7 +96,7 @@ export default class Character extends Component {
             replace={true}
             character={this.state.character}
             deleteCharacter={this.props.deleteCharacter}
-            startAdventure={this.startAdventure}
+            createAdventure={this.props.createAdventure}
           />
         )}
       </div>

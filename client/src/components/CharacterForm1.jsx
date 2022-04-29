@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Container } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 
 class CharacterForm1 extends Component {
     render() {

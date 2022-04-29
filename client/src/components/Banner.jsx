@@ -1,5 +1,5 @@
 // import React, { Component } from "react";
-import { Modal, Container, Row, Col, Card, Button, Tooltip, OverlayTrigger } from "react-bootstrap";
+import { Modal, Row, Col, Card, Button, Tooltip, OverlayTrigger } from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
 import "./css/Banner.css";
 import Axios from "axios";
@@ -16,7 +16,7 @@ export default function Banner(props) {
   })
 
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  // const handleShow = () => setShow(true);
 
   const achievement1 = () => {
     setAchievement({

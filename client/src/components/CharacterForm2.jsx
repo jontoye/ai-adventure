@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Form, Button, Container, Col, Row } from 'react-bootstrap';
-import Log from "./Log";
+// import Log from "./Log";
 
 export default class CharacterForm2 extends Component {
   render() {

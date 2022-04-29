@@ -21,27 +21,22 @@ export default class CharacterDetail extends Component {
   }
 
   componentDidMount() {
-    console.log("star adve", this.props.createAdventure);
     this.loadName();
     this.setCharacter();
   }
 
   loadName = () => {
-    console.log("before axios get");
     Axios.get("character/index", {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
     })
       .then((response) => {
-        console.log("response.data.characters", response.data.characters);
         let id = response.data.characters.filter(
           (character) => character.name === this.state.character.name
         );
-        console.log("id test", id);
         let char_id = id[0]._id;
         this.setState({ id: id[0]._id });
-        console.log("state adventures", this.state.adventures);
         this.loadAdventureList(char_id);
       })
       .catch();
@@ -58,7 +53,6 @@ export default class CharacterDetail extends Component {
         let adventures = response.data.adventures.filter(
           (adventure) => adventure.character === char_id
         );
-        console.log("filtered adventures", adventures);
         this.setState({
           myadventures: adventures.reverse(),
           adventureCount: adventures.length,

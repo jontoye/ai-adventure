@@ -336,7 +336,7 @@ const DECOR = [ //Epithet/byname
   "the Bald",
   "the Fat",
   "the Lionheart",
-  "the Steel",
+  "the Steelfist",
   "the Ironclad",
   "the Kindhearted",
   "the Peaceful",
@@ -377,6 +377,8 @@ const DECOR = [ //Epithet/byname
   "the Dreadful",
   "the Dreamy",
   "the Raven",
+  "of Many Worlds",
+  "Worldeater",
 ];
 
 const CLASS = [
@@ -483,6 +485,7 @@ const CLASS = [
   "Spectre",
   'Centaur',
   'Faun',
+  "Time Traveller",
 ];
 
 const TRAIT = [
@@ -565,7 +568,7 @@ const TRAIT = [
   "Puzzles",
   "Gaming",
   "Mining",
-  "Bitcoins",
+  "Bitcoin",
   "the Force",
   "Sewing",
   "Knitting",
