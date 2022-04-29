@@ -80,6 +80,8 @@ function Users({ continueAdventure, createAdventure, setCharacter }) {
         createAdventure={createAdventure}
         setCharacter={setCharacter}
       />
+      <br></br>
+      <br></br>
     </>
   );
 }

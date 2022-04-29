@@ -338,7 +338,7 @@ export default class CreateCharacter extends Component {
         <Container>
           <h1>Create a Character</h1>
 
-          <Form onSubmit={this.onFormSubmit} className='form-container'>
+          <Form onSubmit={this.onFormSubmit} className="form-container">
             <CharacterForm1
               currentStep={this.state.currentStep}
               placeholder={this.state.placeholder}

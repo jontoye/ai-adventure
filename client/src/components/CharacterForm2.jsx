@@ -8,7 +8,7 @@ export default class CharacterForm2 extends Component {
         return null;
     }
     return (
-      <div>
+      <Container>
         <h4 className='text-white'>
             Write a short backstory for <span className="text-info">{this.props.newCharacter.name}</span>, or let OpenAI do the work for you!
         </h4>
@@ -78,11 +78,11 @@ export default class CharacterForm2 extends Component {
             }
 
             <br />
-            <br></br>
-            <br></br>
-            <Log log={this.props.log} />
+            {/* <br></br> */}
+            {/* <br></br> */}
+            {/* <Log log={this.props.log} /> */}
         </Form.Group>          
-      </div>
+      </Container>
     )
   }
 }

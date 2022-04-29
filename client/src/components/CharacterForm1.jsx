@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form } from 'react-bootstrap';
+import { Form, Container } from 'react-bootstrap';
 
 class CharacterForm1 extends Component {
     render() {
@@ -8,13 +8,14 @@ class CharacterForm1 extends Component {
         }
 
         return (
-            <div>
-              <h4 className='text-white'>Define your character</h4>
-              <Form.Group className='mb-3' controlId=''>
-                <Form.Label className='text-white'>Character name</Form.Label>
-                <Form.Control
+            <Container>
+              <h4 className='text-white form__group field'>Define your character</h4>
+              <div className='mb-3 form__group field' controlId=''>
+                <label className=' form__label'>Character name</label>
+                <input
                   type='text'
                   name='name'
+                  className='form__field'
                   placeholder={this.props.placeholder.name}
                   value={
                     this.props.generateRandomCharacter
@@ -22,15 +23,16 @@ class CharacterForm1 extends Component {
                       : this.props.newCharacter.name
                   }
                   onChange={this.props.handleChange}
-                ></Form.Control>
-              </Form.Group>
-              <Form.Group className='mb-3' controlId=''>
-                <Form.Label className='text-white'>
+                ></input>
+              </div>
+              <div className='mb-3 form__group field' controlId=''>
+                <label className=' form__label'>
                   Class/role/occupation
-                </Form.Label>
-                <Form.Control
+                </label>
+                <input
                   type='text'
                   name='class'
+                  className='form__field'
                   placeholder={this.props.placeholder.class}
                   value={
                     this.props.generateRandomCharacter
@@ -38,13 +40,14 @@ class CharacterForm1 extends Component {
                       : this.props.newCharacter.class
                   }
                   onChange={this.props.handleChange}
-                ></Form.Control>
-              </Form.Group>
-              <Form.Group className='mb-3' controlId=''>
-                <Form.Label className='text-white'>Special ability</Form.Label>
-                <Form.Control
+                ></input>
+              </div>
+              <div className='mb-3 form__group field' controlId=''>
+                <label className=' form__label'>Special ability</label>
+                <input
                   type='text'
                   name='ability'
+                  className='form__field'
                   placeholder={this.props.placeholder.ability}
                   value={
                     this.props.generateRandomCharacter
@@ -52,13 +55,14 @@ class CharacterForm1 extends Component {
                       : this.props.newCharacter.ability
                   }
                   onChange={this.props.handleChange}
-                ></Form.Control>
-              </Form.Group>
-              <Form.Group className='mb-3' controlId=''>
-                <Form.Label className='text-white'>Weakness</Form.Label>
-                <Form.Control
+                ></input>
+              </div>
+              <div className='mb-3 form__group field' controlId=''>
+                <label className=' form__label'>Weakness</label>
+                <input
                   type='text'
                   name='weakness'
+                  className='form__field'
                   placeholder={this.props.placeholder.weakness}
                   value={
                     this.props.generateRandomCharacter
@@ -66,9 +70,9 @@ class CharacterForm1 extends Component {
                       : this.props.newCharacter.weakness
                   }
                   onChange={this.props.handleChange}
-                ></Form.Control>
-              </Form.Group>                
-            </div>
+                ></input>
+              </div>                
+            </Container>
         );
     }
 }

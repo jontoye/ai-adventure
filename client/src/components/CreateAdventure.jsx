@@ -234,18 +234,20 @@ export default class CreateAdventure extends Component {
 
           <Form onSubmit={this.onFormSubmit} className="form-container">
             <h4 className='text-white'>Set up your adventure</h4>
-            <Form.Group className='mb-3' controlId=''>
-              <Form.Label className='text-white'>Adventure name</Form.Label>
-              <Form.Control
+            <div className='mb-3 form__group field' controlId=''>
+              <label className='form__label'>Adventure name</label>
+              <input
                 type='text'
                 name='name'
+                className='form__field'
                 placeholder='Monty Python and the Holy Grail'
                 onChange={this.handleChange}
-              ></Form.Control>
-            </Form.Group>
-            <Form.Group className='mb-3' controlId=''>
-              <Form.Label className='text-white'>Genre</Form.Label>
-              <Form.Select name='genre' onChange={this.handleChange}>
+              ></input>
+            </div>
+            <div className='mb-3 form__group field' controlId=''>
+              <label className='form__label'>Genre</label>
+              <Form.Select name='genre' onChange={this.handleChange}
+                  className='form__field'>
                 <option value='Action'>Action</option>
                 <option value='Fantasy'>Fantasy</option>
                 <option value='Historical Fiction'>Historical Fiction</option>
@@ -255,10 +257,11 @@ export default class CreateAdventure extends Component {
                 <option value='Science Fiction'>Science Fiction</option>
                 <option value='Thriller'>Thriller</option>
               </Form.Select>
-            </Form.Group>
-            <Form.Group className='mb-3' controlId=''>
-              <Form.Label className='text-white'>Setting</Form.Label>
-              <Form.Select name='setting' onChange={this.handleChange}>
+            </div>
+            <div className='mb-3 form__group field' controlId=''>
+              <label className='form__label'>Setting</label>
+              <Form.Select name='setting' onChange={this.handleChange}
+                  className='form__field'>
                 <option value='Alternate Universe'>Alternate Universe</option>
                 <option value='Ancient Egypt'>Ancient Egypt</option>
                 <option value='Classical Greece'>Classical Greece</option>
@@ -270,34 +273,37 @@ export default class CreateAdventure extends Component {
                 <option value='Prehistoric'>Prehistory</option>
                 <option value='Steampunk'>Steampunk</option>
               </Form.Select>
-            </Form.Group>
-            <Form.Group className='mb-3' controlId=''>
-              <Form.Label className='text-white'>Length</Form.Label>
-              <Form.Select name='length' onChange={this.handleChange}>
+            </div>
+            <div className='mb-3 form__group field' controlId=''>
+              <label className='form__label'>Length</label>
+              <Form.Select name='length' onChange={this.handleChange}
+                  className='form__field'>
                 <option value='short story'>Short Story</option>
                 <option value='novelette'>Novelette</option>
                 <option value='novella'>Novella</option>
                 <option value='novel'>Novel</option>
                 <option value='epic'>Epic</option>
               </Form.Select>
-            </Form.Group>
-            <Form.Group className='mb-3' controlId=''>
-              <Form.Label className='text-white'>Character</Form.Label>
-              <Form.Select name='character' onChange={this.handleChange}>
+            </div>
+            <div className='mb-3 form__group field' controlId=''>
+              <label className='form__label'>Character</label>
+              <Form.Select name='character' onChange={this.handleChange}
+                  className='form__field'>
                 {characters}
               </Form.Select>
-            </Form.Group>
-            <Form.Group className='mb-3' controlId=''>
-              <Form.Label className='text-white'>
+            </div>
+            <div className='mb-3 form__group field' controlId=''>
+              <label className='form__label'>
                 What is your quest?
-              </Form.Label>
-              <Form.Control
+              </label>
+              <input
                 type='text'
                 name='quest'
+                className='form__field'
                 placeholder='Find the Holy Grail'
                 onChange={this.handleChange}
-              ></Form.Control>
-            </Form.Group>
+              ></input>
+            </div>
 
             {this.state.newAdventure.quest && this.state.newAdventure.name ? 
               <>

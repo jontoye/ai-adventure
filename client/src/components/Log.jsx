@@ -40,7 +40,7 @@ export default class Log extends Component {
       <>
         <Card id="log-card">
           <Card.Body id="log-card-body">
-            <Card.Title><span class="adventure-log-text">Adventure Log</span></Card.Title>
+            <Card.Title><span className="adventure-log-text">Adventure Log</span></Card.Title>
             {/* <Card.Subtitle>(for development purposes only)</Card.Subtitle> */}
             <hr />
             <Card.Text id="adventure-log" onChange={this.scrollToBottom}>
