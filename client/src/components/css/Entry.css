@@ -1,10 +1,17 @@
 .entry-key0 {
   color: green;
+  
 }
 
 .entry {
   white-space: pre-line;
+  background-color: rgb(255, 251, 251, 1);
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: black 0px 0px 15px;
+  font-weight: bold;
 }
+
 
 .entry-key1 {
   color: blue;
@@ -44,4 +51,14 @@
 }
 .entry-key11 {
   color: green;
+}
+
+#adventure-log{
+  background-color: 1px solid blue;
+}
+
+.card{
+  background-color: rgb(255, 255, 255, 0.2);
+  color: white;
+  padding: 20px;
 }

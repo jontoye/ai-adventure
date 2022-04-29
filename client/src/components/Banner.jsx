@@ -1,11 +1,95 @@
 // import React, { Component } from "react";
-import { Container, Row, Col, Card, Button, Tooltip, OverlayTrigger } from "react-bootstrap";
+import { Modal, Container, Row, Col, Card, Button, Tooltip, OverlayTrigger } from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
 import "./css/Banner.css";
 import Axios from "axios";
+import { useState } from "react";
+
 
 export default function Banner(props) {
   let navigate = useNavigate();
+  const [show, setShow] = useState(false);
+  const [achievement, setAchievement] = useState({
+    title:"",
+    img:"",
+    description:""
+  })
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const achievement1 = () => {
+    setAchievement({
+    title:"Create a Character",
+    img:"images/badges/rank-1.png",
+    description: "Created your first Character! Good luck on your adventure"
+  })
+  setShow(true)
+}
+  const achievement2 = () => {
+    setAchievement({
+    title:"Start an Adventure",
+    img:"images/badges/ninja-heroic-stance.png",
+    description: "The first step is always the hardest, but you've taken it. You've began an amazing adventure!"
+  })
+  setShow(true)
+}
+const achievement3 = () => {
+  setAchievement({
+  title:"I would code 100 miles",
+  img:"images/badges/rank-2.png",
+  description: "Played through 100 events"
+})
+setShow(true)
+}
+const achievement4 = () => {
+  setAchievement({
+  title:"Pl",
+  img:"images/badges/rank-3.png",
+  description: "The first step is always the hardest, but you've taken it. You've began an amazing adventure!"
+})
+setShow(true)
+}
+const achievement5 = () => {
+  setAchievement({
+  title:"Start an Adventure",
+  img:"images/badges/dragon-head.png",
+  description: "The first step is always the hardest, but you've taken it. You've began an amazing adventure!"
+})
+setShow(true)
+}
+const achievement6 = () => {
+  setAchievement({
+  title:"Start an Adventure",
+  img:"images/badges/sabers-choc.png",
+  description: "The first step is always the hardest, but you've taken it. You've began an amazing adventure!"
+})
+setShow(true)
+}
+const achievement7 = () => {
+  setAchievement({
+  title:"Start an Adventure",
+  img:"images/badges/drink-me.png",
+  description: "The first step is always the hardest, but you've taken it. You've began an amazing adventure!"
+})
+setShow(true)
+}
+const achievement8 = () => {
+  setAchievement({
+  title:"Start an Adventure",
+  img:"images/badges/drink-me-2.png",
+  description: "The first step is always the hardest, but you've taken it. You've began an amazing adventure!"
+})
+setShow(true)
+}
+const achievement9 = () => {
+  setAchievement({
+  title:"Start an Adventure",
+  img:"images/badges/wheat.png",
+  description: "The first step is always the hardest, but you've taken it. You've began an amazing adventure!"
+})
+setShow(true)
+}
 
   function buttonHandler() {
     props.createRandomCharacter();
@@ -122,65 +206,98 @@ export default function Banner(props) {
               <Card.Body>
                 <h3>Achievements</h3>
                 <div className='achievement-list'>
+                  <button id="achievement-button" onClick={achievement1}>
                   <img
                     className='achievement-badge badge-1'
                     src='images/badges/rank-1.png'
                     alt='Achievement 1'
                     title='Achievement 1'
                   />
+                  </button>
+                  <button id="achievement-button" onClick={achievement2}>
                   <img
                     className='achievement-badge badge-2'
                     src='images/badges/ninja-heroic-stance.png'
                     alt='Achievement 2'
                     title='Achievement 2'
                   />
+                  </button>
+                  <button id="achievement-button" onClick={achievement3}>
                   <img
                     className='achievement-badge badge-3'
                     src='images/badges/rank-2.png'
                     alt='Achievement 3'
                     title='Achievement 3'
                   />
+                  </button>
+                  <button id="achievement-button" onClick={achievement4}>
                   <img
                     className='achievement-badge badge-4'
                     src='images/badges/rank-3.png'
                     alt='Achievement 4'
                     title='Achievement 4'
                   />
+                  </button>
+                  <button id="achievement-button" onClick={achievement5}>
                   <img
                     className='achievement-badge badge-5'
                     src='images/badges/dragon-head.png'
                     alt='Achievement 5'
                     title='Achievement 5'
                   />
+                  </button>
+                  <button id="achievement-button" onClick={achievement6}>
                   <img
                     className='achievement-badge badge-6'
                     src='images/badges/sabers-choc.png'
                     alt='Achievement 6'
                     title='Achievement 6'
                   />
+                  </button>
+                  <button id="achievement-button" onClick={achievement7}>
                   <img
                     className='achievement-badge badge-7'
                     src='images/badges/drink-me.png'
                     alt='Achievement 7'
                     title='Achievement 7'
                   />
+                  </button>
+                  <button id="achievement-button" onClick={achievement8}>
                   <img
                     className='achievement-badge badge-8'
                     src='images/badges/drink-me-2.png'
                     alt='Achievement 8'
                     title='Achievement 8'
                   />
+                  </button>
+                  <button id="achievement-button" onClick={achievement9}>
                   <img
                     className='achievement-badge badge-9'
                     src='images/badges/wheat.png'
                     alt='Achievement 9'
                     title='Achievement 9'
                   />
+                  </button>
                 </div>
               </Card.Body>
             </Card>
           </Col>
         </Row>
+
+        <Modal show={show} onHide={handleClose} id="achievement-modal">
+        <Modal.Header closeButton>
+          <Modal.Title>{achievement.title}</Modal.Title>
+        </Modal.Header>
+        <img width="300px" id = "achievement-image" src={achievement.img}/>
+        <Modal.Body>{achievement.description}
+        </Modal.Body>
+        
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
         <div className='banner-fade'></div>
       </div>
     </>

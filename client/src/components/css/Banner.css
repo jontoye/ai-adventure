@@ -136,3 +136,12 @@
 .badge-9 {
   opacity: 0.4;
 }
+
+#achievement-button{
+  background-color: rgb(255,255,255,0.001);
+  border: none;
+}
+
+#achievement-image{
+  margin: 0 auto;
+}
