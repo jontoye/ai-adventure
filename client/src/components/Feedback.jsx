@@ -22,7 +22,7 @@ export default class Feedback extends Component {
         }
         })
         this.setState({
-          feedback: response.data.feedback
+          feedback: response.data.feedback.reverse()
         })
       }
     
@@ -48,6 +48,7 @@ export default class Feedback extends Component {
             })
             this.setBannerTimeout('confirmationMessage');
             this.setBannerTimeout('errorMessage');
+            this.getFeedback();
         })
         .catch((error) => {
             console.log(error);
