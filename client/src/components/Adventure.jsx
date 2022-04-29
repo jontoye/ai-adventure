@@ -31,6 +31,8 @@ export default class Adventure extends Component {
 
   componentDidMount() {
     let events = this.props.adventure.events;
+    let rawImageURL = this.props.adventure.image;
+    let hiResImageURL = rawImageURL.replace('setting/',"setting/hi_res/");
 
     console.log("LOAD");
     console.log("adventure loaded: ", this.props.adventure);
@@ -40,7 +42,7 @@ export default class Adventure extends Component {
       adventure: this.props.adventure,
       character: this.props.character,
       name: this.props.adventure.name,
-      background: "url(" + this.props.adventure.image + ")",
+      background: "url(" + hiResImageURL + ")",
     });
     //async!
     setTimeout(() => {
