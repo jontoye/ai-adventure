@@ -10,7 +10,7 @@
 [Camiel van Schoonhoven](https://github.com/Runite-Drill)<br>
 [Jon Cannata](https://github.com/cannatajon)<br>
 
-This app created as the final project for [General Assembly](https://generalassemb.ly/)'s Software Engineering Immersive.
+This app created in ten days as the final project for [General Assembly](https://generalassemb.ly/)'s Software Engineering Immersive.
 
 ## Getting Started
 
