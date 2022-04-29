@@ -23,7 +23,7 @@ exports.adventure_create_post = async (req, res) => {
         });
       });
     })
-    .catch((err) => {
+    .catch((err) => {zx
       console.log(err);
       res.send("CREATE ADVENTURE ERROR", err);
     });
