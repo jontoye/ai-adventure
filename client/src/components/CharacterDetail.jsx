@@ -19,6 +19,7 @@ export default class CharacterDetail extends Component {
   }
 
   componentDidMount() {
+    console.log("star adve", this.props.startAdventure);
     this.loadName();
     this.setCharacter();
   }
