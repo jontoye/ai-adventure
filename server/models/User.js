@@ -54,6 +54,13 @@ const userSchema = mongoose.Schema(
         ref: "User",
       },
     ],
+    achievement: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Achievement",
+      },
+    ],
+
     activity: [
       {
         type: String,
