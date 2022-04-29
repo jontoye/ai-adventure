@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import "./css/Banner.css"
 import "./css/Profile.css";
 import PictureChanger from "./PictureChanger";
 import { Modal, Button, Tooltip, OverlayTrigger } from "react-bootstrap";
@@ -239,7 +240,7 @@ function Profile({ currentUser }) {
                   <>
                     <div className='center-me'>
                       <Button
-                        className='center btn-dark my-3'
+                        className='center btn-light btn-lg my-3'
                         variant='primary'
                         onClick={handleShow}
                       >
@@ -264,7 +265,7 @@ function Profile({ currentUser }) {
                   </>
 
                   <div className='row mb-5'>
-                    <div className='col-10 mx-auto d-flex justify-content-between'>
+                    <div className='col-md-9 col-xl-6 mx-auto d-flex justify-content-between'>
                       <Link to='/characters' className='display-6'>
                         My Characters
                       </Link>
@@ -288,7 +289,7 @@ function Profile({ currentUser }) {
 
           <div className='row text-center py-5'>
             <div className='col-12 col-md-10 mx-auto'>
-              <div className='display-5 mb-3'>Biography</div>
+              <div className='display-5 mb-3'>About Me</div>
               {edit &&
                 <textarea id="biography-input" rows="10" value={bio} onChange={handleBioChange}></textarea>
               }
@@ -298,12 +299,12 @@ function Profile({ currentUser }) {
                 </p>
               }
               {params.userId === currentUser.id &&
-                <button className="btn btn-light my-3" onClick={handleBioClick}>
+                <button className="btn btn-light my-3 edit-btn" onClick={handleBioClick}>
                   {edit ? 'Save' : 'Edit Bio'}
                 </button>
               }
               <div className='display-6 my-4'>Recent Activity</div>
-                <div className="">
+                <div className="activity-log">
                   {user.activity &&
                     user.activity.reverse().slice(0, 10).map((event, index) => (
                       <p key={index}>{event}</p>
@@ -311,6 +312,32 @@ function Profile({ currentUser }) {
                   }
                 </div>
               <div className='display-6'>Achievements</div>
+              <div className='achievement-list'>
+                  <img
+                    className='achievement-badge badge-1'
+                    src='/images/badges/rank-1.png'
+                    alt='Achievement 1'
+                    title='Achievement 1'
+                  />
+                  <img
+                    className='achievement-badge badge-2'
+                    src='/images/badges/ninja-heroic-stance.png'
+                    alt='Achievement 2'
+                    title='Achievement 2'
+                  />
+                  <img
+                    className='achievement-badge badge-3'
+                    src='/images/badges/rank-2.png'
+                    alt='Achievement 3'
+                    title='Achievement 3'
+                  />
+                  <img
+                    className='achievement-badge badge-4'
+                    src='/images/badges/dragon-head.png'
+                    alt='Achievement 4'
+                    title='Achievement 4'
+                  />
+                </div>
             </div>
           </div>
         </>

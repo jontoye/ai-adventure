@@ -82,13 +82,13 @@ export default class Adventures extends Component {
     return (
       <div>
         <h1 className="display-4">Adventure List</h1>
-        <div className="d-flex align-items-center container-xl">
+        <div className="d-flex align-items-center container-fluid">
         <img 
             className="scroll-btn" 
             src="/images/icons/left-arrow.png" 
             onClick={this.scrollRight} 
             alt="left-arrow" />
-          <div className='adventure-list my-3 container'>{adventures}</div>
+          <div className='adventure-list my-3 container-fluid'>{adventures}</div>
           <img 
             className="scroll-btn" 
             src="/images/icons/right-arrow.png" 

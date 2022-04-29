@@ -101,13 +101,13 @@ export default class Characters extends Component {
       <div>
 
         <h1 className="display-4">Character List</h1>
-        <div className="d-flex align-items-center container-xl">
+        <div className="d-flex align-items-center container-fluid">
         <img 
             className="scroll-btn" 
             src="/images/icons/left-arrow.png" 
             onClick={this.scrollRight} 
             alt="left-arrow" />
-          <div className='character-list my-2 container'>{characters}</div>
+          <div className='character-list my-2 container-fluid'>{characters}</div>
           <img 
             className="scroll-btn" 
             src="/images/icons/right-arrow.png" 

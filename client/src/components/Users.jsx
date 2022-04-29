@@ -36,7 +36,7 @@ function Users({ continueAdventure, createAdventure, setCharacter }) {
 
   return (
     <>
-      <div className='section-explore container-xl my-5'>
+      <div className='section-explore container-fluid my-5'>
         <h1 className='display-4'>Explore</h1>
 
         {/* <div className='users-list d-flex flex-column align-items-center gap-5 my-5'> */}
@@ -59,7 +59,7 @@ function Users({ continueAdventure, createAdventure, setCharacter }) {
                     />
                   </div>
                   <div className='user-card__content mx-2'>
-                    <h3>{user.username}</h3>
+                    <h3 id="user-name">{user.username}</h3>
                     <p>Joined {moment(user.createdAt).fromNow()}</p>
                   </div>
                 </div>
