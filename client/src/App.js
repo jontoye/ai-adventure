@@ -401,6 +401,7 @@ export default class App extends Component {
               <CharacterDetail
                 character={this.state.character}
                 continueAdventure={this.continueAdventure}
+                createAdventure={this.createAdventure}
               />
             }
           />

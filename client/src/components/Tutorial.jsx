@@ -14,7 +14,7 @@ export default class Tutorial extends Component {
             create and share your characters and adventures.
             <br /> AI Adventure is powered by GPT3, allowing you to effortlessly
             create any type of adventure you can put in to words. <br />
-            All of the art on the site was made using the Disco Diffusion AI
+            Nearly all of the art on the site was made using the Disco Diffusion AI.
           </p>
         </div>
 

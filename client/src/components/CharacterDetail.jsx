@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Card, Button } from "react-bootstrap";
+import { Navigate } from "react-router-dom";
 import Axios from "axios";
 import AdventureInfo from "./AdventureInfo";
 import "./css/CharacterDetail.css";
@@ -15,11 +16,12 @@ export default class CharacterDetail extends Component {
       char_id: null,
       adventureCount: 0,
       id: null,
+      redirect: false,
     };
   }
 
   componentDidMount() {
-    console.log("star adve", this.props.startAdventure);
+    console.log("star adve", this.props.createAdventure);
     this.loadName();
     this.setCharacter();
   }
@@ -90,7 +92,13 @@ export default class CharacterDetail extends Component {
       });
   };
 
-  setAdventures() {}
+  handleClick = (e) => {
+    e.preventDefault();
+    this.props.createAdventure(this.state.character);
+    this.setState({
+      redirect: true,
+    });
+  }
 
   render() {
     let adventures = this.state.myadventures.map((a) => {
@@ -135,7 +143,7 @@ export default class CharacterDetail extends Component {
               Favorites: ♡ 9001
               <br /> Adventures: {this.state.adventureCount}
             </Card.Text>
-            <Button variant='primary'>Start Adventure</Button>
+            <Button variant='primary' onClick={this.handleClick}>Start Adventure</Button>
           </Card.Body>
         </Card>
         <br />
@@ -146,6 +154,13 @@ export default class CharacterDetail extends Component {
         <div className='section-explore container my-5'>
           <div className='adventure-list'>{adventures}</div>
         </div>
+        {this.state.redirect && (
+          <Navigate
+            to='/create-adventure'
+            replace={true}
+            character={this.state.character}
+          />
+        )}
       </div>
     );
   }
