@@ -97,7 +97,7 @@ const TITLE_M = [
   "Coach",
   "Comrade",
   "Sultan",
-  "The High King"
+  "The High King",
 ];
 
 const NAME_F = [
@@ -201,6 +201,7 @@ const NAME_M = [
   "Jack",
   "Isaac",
   "Alex",
+  "Marty",
   "Martin",
   "Brandon",
   "Derek",
@@ -312,7 +313,8 @@ const NAME_M = [
   "Zachary",
 ];
 
-const DECOR = [ //Epithet/byname
+const DECOR = [
+  //Epithet/byname
   "the Changeling",
   "the Brave",
   "the Bold",
@@ -407,6 +409,9 @@ const CLASS = [
   "Orator",
   "Hunter",
   "Trapper",
+  "Hacker",
+  "Programmer",
+  "SEI Teacher",
   "Fisherman",
   "Cleric",
   "Barbarian",
@@ -483,8 +488,8 @@ const CLASS = [
   "Phantom",
   "Ghost",
   "Spectre",
-  'Centaur',
-  'Faun',
+  "Centaur",
+  "Faun",
   "Time Traveller",
 ];
 
@@ -604,4 +609,4 @@ export const CHARACTER_DEFAULTS = {
   decor: DECOR,
   class: CLASS,
   trait: TRAIT,
-}
+};
