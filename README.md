@@ -1,11 +1,16 @@
 # AI Adventure
+<img src="client/public/favicon.ico">
 
 ## Project Team
+
+<img src="screenshots/developers.png">
 
 [Jon Toye](https://github.com/jontoye)<br>
 [Dylan Kotzer](https://github.com/DKotzer)<br>
 [Camiel van Schoonhoven](https://github.com/Runite-Drill)<br>
 [Jon Cannata](https://github.com/cannatajon)<br>
+
+This app created as the final project for [General Assembly](https://generalassemb.ly/)'s Software Engineering Immersive.
 
 ## Getting Started
 
@@ -21,10 +26,24 @@ To get started, users sign up for an account (or sign in with Google)
 
 ## Creating a Character
 
-To create a character, go to 'Create Character' and fill in the required form, or let the Randomize Character button do it for you!
+To create a character, go to 'Create Character' and fill in the required form, or let the Randomize Character button do it for you! You will then need to come up with a backstory for your character, or you can ask the AI to write one for you.
 
 <p><small>Create a Character page</small></p>
 <img src="screenshots/create-character.png">
+
+## Creating an Adventure
+
+To create an Adventure, go to 'Create Adventure', or click "Start Adventure" from the character's page and fill in the required form. Upon beggining the adventurer the AI will spend a little bit of time thinking up a great story for you to play through!
+
+<p><small>Create an Adventure page</small></p>
+<img src="screenshots/create-adventure.png">
+
+## Adventure Gameplay
+
+Once you start an adventure, or continue a saved adventure, you will begin your AIAdventure! AIAdventure is a text-based choose-your-own adventure game, so gameplay consists of reading through a short story and selecting one of the options provided to yuo by the AI. Once you select an option the AI will begin thinking about where to take your story next!
+
+<p><small>AIAdventure Gameplay</small></p>
+<img src="screenshots/adventure-gameplay.png">
 
 ## Explore
 
@@ -54,18 +73,25 @@ Also included is an editable "About me" section and activity log
 ## Technologies
 
 This project was built with HTML, CSS, JavaScript, React, Node.js, Express.js, NoSQL, MongoDB, and deployed with Heroku.<br>
-AI technology by OpenAI, utilizing the Davinci text engine<br>
-Artwork rendered by utilizing Disco Diffusion
+AI technology by OpenAI, utilizing the Davinci text engine.<br>
+All artwork is AI-generated using Disco Diffusion.
 
 ## Next Steps
 
 Future releases of AI Adventure will include:
 
 <ul>
-    <li>Bug fixes</li>
-    <li>Firefox Optimization</li>
-    <li>Improved prompt generation and handling</li>
-    <li>Complete implementation of Achievements</li>
-    <li>Increase image variation and handle female/male/other images for classes</li>
-    <li>Switch class images to dallE-2</li>
+    <li>Bug fixes and stability improvements</li>
+    <li>Firefox and Safari optimization</li>
+    <li>AI-generated end-point for an Adventure</li>
+    <li>Utilise dallE-2 AI for image generation
+    <li>Gender-diverse character images and generation</li>
+    <li>Inventory system</li>
+    <li>Complete implementation of achievements</li>
+    <li>Journal/scrap to read through completed adventures</li>
+    <li>Epic Bard poems</li>
+    <li>Localise characters and adventures to their user</li>
+    <li>Dynamic image generation</li>
+    <li>Improved AI and option parsing</li>
+    <li>Sound effects and music</li>
 </ul>
