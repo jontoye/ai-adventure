@@ -255,10 +255,12 @@ export default class CreateCharacter extends Component {
 
     setTimeout(()=>{
       this.addCharacter(this.state.newCharacter);
-      this.props.createAdventure(this.state.newCharacter);
-      this.setState({
-        redirect: true,
-      });
+      setTimeout(()=>{
+        this.props.createAdventure(this.state.newCharacter);
+        this.setState({
+          redirect: true,
+        });
+      },100)
     },100)
   };
 
