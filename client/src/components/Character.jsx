@@ -4,7 +4,6 @@ import { Navigate } from "react-router-dom";
 import "./css/Character.css";
 
 export default class Character extends Component {
-
   state = {
     character: {
       name: this.props.name,
@@ -25,13 +24,14 @@ export default class Character extends Component {
     // this.setImage();
   }
 
-
   startAdventure = (e) => {
+    e.preventDefault();
     // console.log('fancy frontend stuff')
     this.props.createAdventure(this.state.character);
     this.setState({
       redirect: true,
     });
+
     // console.log(this.state.character)
   };
 
@@ -40,7 +40,8 @@ export default class Character extends Component {
     this.props.deleteCharacter(this.props.name);
   };
 
-  characterDetail = () => {
+  characterDetail = (e) => {
+    e.preventDefault();
     this.props.setCharacter(this.state.character);
     this.setState({
       redirected: true,
@@ -53,12 +54,17 @@ export default class Character extends Component {
     return (
       <div>
         <Card className={css} style={{ width: "18rem", margin: "15px" }}>
-          <Card.Img variant='top' src={this.props.image} 
-          onError={(e) => {
-            e.target.onerror = null 
-            e.target.src = `/images/class/default.png`}} />
+          <Card.Img
+            onClick={this.characterDetail}
+            variant='top'
+            src={this.props.image}
+            onError={(e) => {
+              e.target.onerror = null;
+              e.target.src = `/images/class/default.png`;
+            }}
+          />
           <Card.Body>
-            <Card.Title>
+            <Card.Title onClick={this.characterDetail}>
               {this.props.name} the {this.props.class}
             </Card.Title>
             <Card.Text>

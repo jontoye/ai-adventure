@@ -24,7 +24,7 @@ export default class Adventure extends Component {
       option3: "Generating your third choice, hold on one second",
       event: {},
       disabled: "disabled",
-      classText:"",
+      classText: "",
     };
   }
 
@@ -39,7 +39,7 @@ export default class Adventure extends Component {
       adventure: this.props.adventure,
       character: this.props.character,
       name: this.props.adventure.name,
-      background: "url("+this.props.adventure.image+")",
+      background: "url(" + this.props.adventure.image + ")",
     });
     //async!
     setTimeout(() => {
@@ -49,7 +49,9 @@ export default class Adventure extends Component {
       this.setState({
         log: this.state.event.displayedLog,
         previousLog: this.state.event.fullLog,
-        classText: this.state.character.class.charAt(0).toUpperCase() + this.state.character.class.slice(1),
+        classText:
+          this.state.character.class.charAt(0).toUpperCase() +
+          this.state.character.class.slice(1),
       });
       if (this.state.event.options.length < 1) {
         // console.log("generate options skipped");
@@ -86,8 +88,8 @@ export default class Adventure extends Component {
         temperature: 0.8,
         max_tokens: 256,
         top_p: 1,
-        frequency_penalty: 0,
-        presence_penalty: 0,
+        frequency_penalty: 1.5,
+        presence_penalty: 0.8,
       })
       .then((response) => {
         let choices = response.data.choices[0].text;
@@ -237,7 +239,7 @@ export default class Adventure extends Component {
             temperature: 0.8,
             max_tokens: 256,
             top_p: 1,
-            frequency_penalty: 1,
+            frequency_penalty: 1.8,
             presence_penalty: 1,
           })
           .then((response) => {
@@ -287,8 +289,11 @@ export default class Adventure extends Component {
           <div className='game-log mb-3'>
             <Log log={this.state.log} />
           </div>
-          <Row className="adventure-screen" style={{backgroundImage: this.state.background}}>
-            <Col xs="9">
+          <Row
+            className='adventure-screen'
+            style={{ backgroundImage: this.state.background }}
+          >
+            <Col xs='9'>
               <div className='buttons'>
                 <Button
                   variant='primary'
@@ -321,24 +326,37 @@ export default class Adventure extends Component {
               </div>
             </Col>
             <Col>
-              <Card id="character-card">
-                <Card.Img id="character-image"  variant='top' src={this.state.character.image} 
+              <Card id='character-card'>
+                <Card.Img
+                  id='character-image'
+                  variant='top'
+                  src={this.state.character.image}
                   onError={(e) => {
-                    e.target.onerror = null 
-                    e.target.src = `/images/class/default.png`}} />
-                <Card.ImgOverlay id="character-overlay">
-                  <Card.Title><b>{this.state.character.name}</b></Card.Title>
-                  <Card.Subtitle><b>{this.state.classText}</b></Card.Subtitle>
+                    e.target.onerror = null;
+                    e.target.src = `/images/class/default.png`;
+                  }}
+                />
+                <Card.ImgOverlay id='character-overlay'>
+                  <Card.Title>
+                    <b>{this.state.character.name}</b>
+                  </Card.Title>
+                  <Card.Subtitle>
+                    <b>{this.state.classText}</b>
+                  </Card.Subtitle>
                   <br></br>
-                  <Card.Text>Strength: {this.state.character.ability}</Card.Text>
-                  <Card.Text>Weakness: {this.state.character.weakness}</Card.Text>
+                  <Card.Text>
+                    Strength: {this.state.character.ability}
+                  </Card.Text>
+                  <Card.Text>
+                    Weakness: {this.state.character.weakness}
+                  </Card.Text>
                   <br></br>
                   <Card.Text>
                     {/* {this.state.character.backstory} */}
                   </Card.Text>
                 </Card.ImgOverlay>
                 <Card.Body>
-                  <Card.Title className="text-center">
+                  <Card.Title className='text-center'>
                     {this.state.character.name} the {this.state.classText}
                   </Card.Title>
                 </Card.Body>
@@ -346,7 +364,6 @@ export default class Adventure extends Component {
             </Col>
           </Row>
           <div className='adventure-screen-fade'></div>
-
         </Container>
       </div>
     );
