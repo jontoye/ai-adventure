@@ -44,49 +44,49 @@ setShow(true)
 }
 const achievement4 = () => {
   setAchievement({
-  title:"Pl",
+  title:"Play for 10 hours",
   img:"images/badges/rank-3.png",
-  description: "The first step is always the hardest, but you've taken it. You've began an amazing adventure!"
+  description: "You're a true adventurer! But take a break!"
 })
 setShow(true)
 }
 const achievement5 = () => {
   setAchievement({
-  title:"Start an Adventure",
+  title:"Play for 10 minutes",
   img:"images/badges/dragon-head.png",
-  description: "The first step is always the hardest, but you've taken it. You've began an amazing adventure!"
+  description: "That was an easy one huh"
 })
 setShow(true)
 }
 const achievement6 = () => {
   setAchievement({
-  title:"Start an Adventure",
+  title:"Finish a story",
   img:"images/badges/sabers-choc.png",
-  description: "The first step is always the hardest, but you've taken it. You've began an amazing adventure!"
+  description: "Finish a noble quest"
 })
 setShow(true)
 }
 const achievement7 = () => {
   setAchievement({
-  title:"Start an Adventure",
+  title:"Play as Saad",
   img:"images/badges/drink-me.png",
-  description: "The first step is always the hardest, but you've taken it. You've began an amazing adventure!"
+  description: "Play as our brave leader throughout your mission"
 })
 setShow(true)
 }
 const achievement8 = () => {
   setAchievement({
-  title:"Start an Adventure",
+  title:"Play as Marty",
   img:"images/badges/drink-me-2.png",
-  description: "The first step is always the hardest, but you've taken it. You've began an amazing adventure!"
+  description: "Play as the Marty, the brash warrior ready to conquer any quest"
 })
 setShow(true)
 }
 const achievement9 = () => {
   setAchievement({
-  title:"Start an Adventure",
+  title:"Play 5 adventures",
   img:"images/badges/wheat.png",
-  description: "The first step is always the hardest, but you've taken it. You've began an amazing adventure!"
+  description: "Thanks for joining us on your adventures!"
 })
 setShow(true)
 }
@@ -135,7 +135,7 @@ setShow(true)
 
   return (
     <>
-      <div className="container-xl">
+      <div className="fluid-xl">
         <Row className='banner'>
           <Col md={12} lg={8} className='banner-left'>
             <Card className='banner__intro-card'>
