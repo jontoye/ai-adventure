@@ -4,6 +4,7 @@ import Axios from "axios";
 import Log from "./Log";
 import "./css/Adventure.css";
 
+import { OPTION_DEFAULTS } from "../data/options";
 const { Configuration, OpenAIApi } = require("openai");
 
 export default class Adventure extends Component {
@@ -101,39 +102,69 @@ export default class Adventure extends Component {
           choices = choices.slice(7, choices.length);
         }
         // console.log(choices)
-        let split_choices = choices.split(/\s?\d+\.\s/);
-        split_choices[1] = split_choices[1] ? split_choices[1] : "Ask a close friend for help"
-        split_choices[2] = split_choices[2] ? split_choices[2] : "Take a long walk and think about the situation"
-        split_choices[3] = split_choices[3] ? split_choices[3] : "Try to discover the meaning of life"
+        let splitLines = choices.split('\n').filter(str => {
+          return str != '';
+        })
+        // console.log(splitLines)
+        let imavar = splitLines.map(str=>{
+          let strIndex = str.search(/[a-z]/i);
+          console.log(str.slice(strIndex,str.length))
+          return str.slice(strIndex,str.length)
+        })
+        // console.log(imavar)
+        setTimeout(()=>{
+          // console.log(imavar)
 
-        let rejoined_choices =
-          "1. " +
-          split_choices[1] +
-          "\n2. " +
-          split_choices[2] +
-          "\n3. " +
-          split_choices[3];
-
-        this.setState({
-          log: [...this.state.log, rejoined_choices],
-          previousLog: [...this.state.log, prompt, rejoined_choices],
-          option1: split_choices[1],
-          option2: split_choices[2],
-          option3: split_choices[3],
-          event: {
-            ...this.state.event,
-            optionPrompt: prompt,
-            options: [split_choices[1], split_choices[2], split_choices[3]],
-            fullLog: [...this.state.event.fullLog, prompt, rejoined_choices],
-            displayedLog: [...this.state.event.displayedLog, rejoined_choices],
-          },
-          disabled: "",
-        });
-
-        setTimeout(() => {
-          window.scrollTo(0, document.body.scrollHeight);
-          this.saveEvent();
-        }, 100);
+          // let split_choices = choices.split(/\s?\d+\.\s?/);
+          let split_choices = imavar;
+  
+          //check the option exists
+          split_choices[0] = split_choices[0] ? split_choices[0] : OPTION_DEFAULTS[Math.floor(Math.random()*OPTION_DEFAULTS.length)];
+          split_choices[1] = split_choices[1] ? split_choices[1] : OPTION_DEFAULTS[Math.floor(Math.random()*OPTION_DEFAULTS.length)];
+          split_choices[2] = split_choices[2] ? split_choices[2] : OPTION_DEFAULTS[Math.floor(Math.random()*OPTION_DEFAULTS.length)];
+  
+  
+          //reduce the option down to one sentence
+          // split_choices[0] = split_choices[0].split(".").reverse()[0]
+          // split_choices[1] = split_choices[1].split(".").reverse()[0]
+          // split_choices[2] = split_choices[2].split(".").reverse()[0]
+  
+  
+          // //check the option is longer than 4 characters
+          // split_choices[0] = split_choices[0].length < 5 ? split_choices[0] : OPTION_DEFAULTS[Math.floor(Math.random()*OPTION_DEFAULTS.length)];
+          // split_choices[1] = split_choices[1].length < 5 ? split_choices[1] : OPTION_DEFAULTS[Math.floor(Math.random()*OPTION_DEFAULTS.length)];
+          // split_choices[2] = split_choices[2].length < 5 ? split_choices[2] : OPTION_DEFAULTS[Math.floor(Math.random()*OPTION_DEFAULTS.length)];
+  
+          let rejoined_choices =
+            "1. " +
+            split_choices[0] +
+            "\n2. " +
+            split_choices[1] +
+            "\n3. " +
+            split_choices[2];
+  
+          this.setState({
+            log: [...this.state.log, rejoined_choices],
+            previousLog: [...this.state.log, prompt, rejoined_choices],
+            option1: split_choices[0],
+            option2: split_choices[1],
+            option3: split_choices[2],
+            event: {
+              ...this.state.event,
+              optionPrompt: prompt,
+              options: [split_choices[0], split_choices[1], split_choices[2]],
+              fullLog: [...this.state.event.fullLog, prompt, rejoined_choices],
+              displayedLog: [...this.state.event.displayedLog, rejoined_choices],
+            },
+            disabled: "",
+          });
+  
+          setTimeout(() => {
+            window.scrollTo(0, document.body.scrollHeight);
+            this.saveEvent();
+          }, 100);
+        },1000)
+        
       })
       .catch((error) => {
         console.log("error log:", error);
