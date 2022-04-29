@@ -206,6 +206,7 @@ exports.googleLoginPost = (req, resp) => {
                     expiresIn: "7d",
                   }
                 );
+                // this is a comment
                 const { _id, username, emailAddress, password } = newUser;
 
                 return resp.json({
