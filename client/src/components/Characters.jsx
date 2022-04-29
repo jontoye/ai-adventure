@@ -98,7 +98,7 @@ export default class Characters extends Component {
       );
     });
     return (
-      <div>
+      <div className='container-fluid my-5'>
 
         <h1 className="display-4">Character List</h1>
         <div className="d-flex align-items-center container-fluid">

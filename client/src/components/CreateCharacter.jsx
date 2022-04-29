@@ -335,8 +335,8 @@ export default class CreateCharacter extends Component {
     // console.log(this.props)
     return (
       <>
-        <Container>
-          <h1>Create a Character</h1>
+        <Container className='container-fluid my-5'>
+          <h1 className='display-4'>Create a Character</h1>
 
           <Form onSubmit={this.onFormSubmit} className="form-container">
             <CharacterForm1

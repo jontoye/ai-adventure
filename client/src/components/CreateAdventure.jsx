@@ -228,7 +228,7 @@ export default class CreateAdventure extends Component {
 
     return (
       <div>
-        <Container>
+        <Container className='container-fluid my-5'>
           <h1>Begin an Adventure</h1>
 
 
