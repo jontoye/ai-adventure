@@ -13,3 +13,7 @@
 .mb-3 .form-container {
   height: 500px;
 }
+select.form__field.form-select {
+  color: white;
+  background-color: #020202f1;
+}
