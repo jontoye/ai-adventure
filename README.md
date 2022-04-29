@@ -1,5 +1,5 @@
 # AI Adventure
-<img src="client/public/favicon.ico">
+<img src="client/public/ai_adventure_logo.png">
 
 ## Project Team
 
