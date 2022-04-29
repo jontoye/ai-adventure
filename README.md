@@ -63,4 +63,9 @@ Future releases of AI Adventure will include:
 
 <ul>
     <li>Bug fixes</li>
+    <li>Firefox Optimization</li>
+    <li>Improved prompt generation and handling</li>
+    <li>Complete implementation of Achievements</li>
+    <li>Increase image variation and handle female/male/other images for classes</li>
+    <li>Switch class images to dallE-2</li>
 </ul>
