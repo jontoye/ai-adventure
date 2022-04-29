@@ -1,18 +1,16 @@
-.color_start {
-  color: purple;
-  
-}
-
 .entry {
   white-space: pre-line;
-  background-color: rgb(255, 255, 255);
+  background-color: rgba(255, 255, 255, 0.9);
+  text-shadow: 2px 2px rgba(234, 234, 234, 0.9);
   padding: 15px;
   border-radius: 10px;
   font-weight: bold;
   margin: 5px;
 }
 
-
+.color_start {
+  color: purple;
+}
 .color_0 {
   color: blue;
 }
@@ -32,18 +30,24 @@
 
 
 #log-card{
-  background-color: rgb(255, 255, 255, 0.0);
+  background-color: rgb(255, 255, 255, 0);
   color: black;
   padding: 20px;
+  border: none;
 }
 
 #log-card-body{
-  background-color: rgba(42, 42, 42);
+  background-color: rgba(21, 21, 21,0.0);
   border-radius: 10px;
 }
 
 .adventure-log-text{
-  color: white;
+  color: rgba(234, 234, 234);
+  font-weight: bolder;
+  background-color: rgba(33, 37, 41,0.9);
+  /* text-shadow: 2px 2px rgba(234, 234, 234, 0.9); */
+  padding: 10px;
+  border-radius: 5px;
 }
 
 .banner__intro-card{

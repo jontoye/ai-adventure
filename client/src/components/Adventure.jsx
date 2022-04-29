@@ -285,18 +285,19 @@ export default class Adventure extends Component {
   render() {
     return (
       <div>
-        <Container>
+        <Container
+            className='adventure-screen'
+            style={{ backgroundImage: this.state.background }}>
           <div className='game-log mb-3'>
             <Log log={this.state.log} adventureName={this.state.adventure.name} />
           </div>
           <Row
-            className='adventure-screen'
-            style={{ backgroundImage: this.state.background }}
+            className='adventure-container'
           >
             <Col xs='9'>
               <div className='buttons'>
                 <Button
-                  variant='primary'
+                  variant='dark'
                   size='lg'
                   disabled={this.state.disabled}
                   onClick={this.buttonOneClick}
@@ -306,7 +307,7 @@ export default class Adventure extends Component {
                 <br></br>
                 <br />
                 <Button
-                  variant='primary'
+                  variant='dark'
                   size='lg'
                   disabled={this.state.disabled}
                   onClick={this.buttonTwoClick}
@@ -316,7 +317,7 @@ export default class Adventure extends Component {
                 <br></br>
                 <br />
                 <Button
-                  variant='primary'
+                  variant='dark'
                   size='lg'
                   disabled={this.state.disabled}
                   onClick={this.buttonThreeClick}
@@ -363,8 +364,8 @@ export default class Adventure extends Component {
               </Card>
             </Col>
           </Row>
-          <div className='adventure-screen-fade'></div>
         </Container>
+        <Container className='adventure-screen-fade'></Container>
       </div>
     );
   }

@@ -41,9 +41,9 @@ export default class Log extends Component {
       <>
         <Card id="log-card">
           <Card.Body id="log-card-body">
-            <Card.Title>{logTitle()}</Card.Title>
+            <Card.Title variant="dark">{logTitle()}</Card.Title>
             {/* <Card.Subtitle>(for development purposes only)</Card.Subtitle> */}
-            <hr />
+            <br />
             <Card.Text id="adventure-log">
               {entries}
             </Card.Text>
