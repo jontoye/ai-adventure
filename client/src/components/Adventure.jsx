@@ -4,6 +4,7 @@ import Axios from "axios";
 import Log from "./Log";
 import "./css/Adventure.css";
 
+import { OPTION_DEFAULTS } from "../data/options";
 const { Configuration, OpenAIApi } = require("openai");
 
 export default class Adventure extends Component {
@@ -102,9 +103,9 @@ export default class Adventure extends Component {
         }
         // console.log(choices)
         let split_choices = choices.split(/\s?\d+\.\s/);
-        split_choices[1] = split_choices[1] ? split_choices[1] : "Ask a close friend for help"
-        split_choices[2] = split_choices[2] ? split_choices[2] : "Take a long walk and think about the situation"
-        split_choices[3] = split_choices[3] ? split_choices[3] : "Try to discover the meaning of life"
+        split_choices[1] = split_choices[1] ? split_choices[1] : OPTION_DEFAULTS[Math.floor(Math.random()*OPTION_DEFAULTS.length)];
+        split_choices[2] = split_choices[2] ? split_choices[2] : OPTION_DEFAULTS[Math.floor(Math.random()*OPTION_DEFAULTS.length)];
+        split_choices[3] = split_choices[3] ? split_choices[3] : OPTION_DEFAULTS[Math.floor(Math.random()*OPTION_DEFAULTS.length)];
 
         let rejoined_choices =
           "1. " +
