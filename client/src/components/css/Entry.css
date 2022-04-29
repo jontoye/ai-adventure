@@ -1,10 +1,17 @@
 .entry-key0 {
   color: green;
+  
 }
 
 .entry {
   white-space: pre-line;
+  background-color: rgb(255, 255, 255);
+  padding: 15px;
+  border-radius: 10px;
+  font-weight: bold;
+  margin: 5px;
 }
+
 
 .entry-key1 {
   color: blue;
@@ -44,4 +51,34 @@
 }
 .entry-key11 {
   color: green;
+}
+
+#adventure-log{
+  background-color: 1px solid blue;
+}
+
+
+#log-card{
+  background-color: rgb(255, 255, 255, 0.0);
+  color: black;
+  padding: 20px;
+}
+
+#log-card-body{
+  background-color: rgba(42, 42, 42);
+  border-radius: 10px;
+}
+
+.adventure-log-text{
+  color: white;
+}
+
+.banner__intro-card{
+  background-color:rgba(37, 37, 37, 0.625);
+  color: white;
+}
+
+.banner__achievement-card{
+  background-color:rgba(37, 37, 37, 0.625);
+  color: white;
 }

@@ -85,7 +85,7 @@ export default class App extends Component {
   handleGoogleLogin = (response) => {
     Axios({
       method: "post",
-      url: "http://localhost:3001/auth/google",
+      url: "/auth/google",
       data: { tokenId: response.tokenId },
     })
       .then((res) => {
@@ -300,7 +300,7 @@ export default class App extends Component {
                 )}
               </Nav>
 
-              <span id="main-greeting">
+              <span id='main-greeting' onClick={this.setNavClose}>
                 {this.state.user ? (
                   <div className="right-nav">
                     <Link

@@ -201,7 +201,7 @@ exports.googleLoginPost = (req, resp) => {
                     name: data.username,
                     email: data.emailAddress,
                   },
-                  process.env.secret,
+                  process.env.SECRET,
                   {
                     expiresIn: "7d",
                   }
