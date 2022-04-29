@@ -45,6 +45,8 @@ export default class App extends Component {
     log: [],
     character: {},
     adventure: {},
+    achievments: [],
+    charCreateA: false,
   };
 
   setNavExpanded = (expanded) => {
@@ -176,11 +178,6 @@ export default class App extends Component {
       });
   };
 
-
-  achievementCheck = (e) => {
-    
-  }
-
   loginHandler = (cred) => {
     Axios.post("auth/signin", cred)
       .then((response) => {
@@ -245,60 +242,73 @@ export default class App extends Component {
       });
     }, 10000);
   };
+
+  charCreateAchievement = () => {
+    this.setState({
+      charCreateA: true,
+    });
+  };
+
+  achievementCheck = (achievement) => {
+    this.setState({
+      achievement: [...this.state.achievments, achievement],
+    });
+  };
+
   render() {
     const message = this.state.message ? (
-      <Alert variant="info">{this.state.message}</Alert>
+      <Alert variant='info'>{this.state.message}</Alert>
     ) : null;
     const failMessage = this.state.failMessage ? (
-      <Alert variant="danger">{this.state.failMessage}</Alert>
+      <Alert variant='danger'>{this.state.failMessage}</Alert>
     ) : null;
     const successMessage = this.state.successMessage ? (
-      <Alert variant="success">{this.state.successMessage}</Alert>
+      <Alert variant='success'>{this.state.successMessage}</Alert>
     ) : null;
     const { isAuth } = this.state;
     return (
       <Router>
         <Navbar
-          fixed="top"
-          variant="dark"
-          bg="dark"
-          expand="lg"
+          fixed='top'
+          variant='dark'
+          bg='dark'
+          expand='lg'
           onToggle={this.setNavExpanded}
           expanded={this.state.navExpanded}
-          className="main-navbar"
+          className='main-navbar'
         >
           <Container>
-            <Link to="/" className="navbar-brand">
+            <Link to='/' className='navbar-brand'>
               | AI Adventure |
             </Link>
 
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
-              <Nav className="me-auto" onClick={this.setNavClose}>
+            <Navbar.Toggle aria-controls='basic-navbar-nav' />
+            <Navbar.Collapse id='basic-navbar-nav'>
+              <Nav className='me-auto' onClick={this.setNavClose}>
                 {isAuth ? (
                   <>
-                    <Link to="/users" className="nav-link">
+                    <Link to='/users' className='nav-link'>
                       Explore
                     </Link>
-                    <Link to="/create-character" className="nav-link">
+                    <Link to='/create-character' className='nav-link'>
                       Create Character
                     </Link>
-                    <Link to="/create-adventure" className="nav-link">
+                    <Link to='/create-adventure' className='nav-link'>
                       Create Adventure
                     </Link>
-                    <Link to="/characters" className="nav-link">
+                    <Link to='/characters' className='nav-link'>
                       Characters
                     </Link>
-                    <Link to="/adventure-list" className="nav-link">
+                    <Link to='/adventure-list' className='nav-link'>
                       Adventures
                     </Link>
                   </>
                 ) : (
                   <>
-                    <Link to="/signup" className="nav-link">
+                    <Link to='/signup' className='nav-link'>
                       Sign Up
                     </Link>
-                    <Link to="/signin" className="nav-link">
+                    <Link to='/signin' className='nav-link'>
                       Sign In
                     </Link>
                   </>
@@ -307,16 +317,16 @@ export default class App extends Component {
 
               <span id='main-greeting' onClick={this.setNavClose}>
                 {this.state.user ? (
-                  <div className="right-nav">
+                  <div className='right-nav'>
                     <Link
                       to={`/profile/${this.state.user.id}`}
-                      className="nav-link"
+                      className='nav-link'
                     >
                       {"Welcome " + this.state.user.name}
                     </Link>
                     <Link
-                      to="/signout"
-                      className="nav-link"
+                      to='/signout'
+                      className='nav-link'
                       onClick={this.logoutHandler}
                     >
                       Sign Out
@@ -334,7 +344,7 @@ export default class App extends Component {
 
         <Routes>
           <Route
-            path="/"
+            path='/'
             element={
               isAuth ? (
                 <Home
@@ -351,33 +361,36 @@ export default class App extends Component {
             }
           ></Route>
           <Route
-            path="/create-character"
+            path='/create-character'
             exact
             element={
               <CreateCharacter
                 randomCharacter={this.state.randomCharacter}
                 createAdventure={this.createAdventure}
                 user={this.state.user}
+                charCreateAchievement={this.charCreateAchievement}
               />
             }
           />
           <Route
-            path="/create-adventure"
+            path='/create-adventure'
             exact
             element={
               <CreateAdventure
                 startStory={this.startStory}
                 character={this.state.character}
+                achievement={this.state.charCreateA}
+                achievementCheck={this.achievementCheck}
               />
             }
           />
           <Route
-            path="/adventure-list"
+            path='/adventure-list'
             exact
             element={<Adventures continueAdventure={this.continueAdventure} />}
           />
           <Route
-            path="/adventure"
+            path='/adventure'
             exact
             element={
               <Adventure
@@ -387,7 +400,7 @@ export default class App extends Component {
             }
           />
           <Route
-            path="/characters"
+            path='/characters'
             exact
             element={
               <Characters
@@ -400,7 +413,7 @@ export default class App extends Component {
           />
 
           <Route
-            path="/character-detail"
+            path='/character-detail'
             exact
             element={
               <CharacterDetail
@@ -411,7 +424,7 @@ export default class App extends Component {
             }
           />
           <Route
-            path="/users"
+            path='/users'
             element={
               <Users
                 currentUser={this.state.user}
@@ -423,7 +436,7 @@ export default class App extends Component {
           />
 
           <Route
-            path="/signup"
+            path='/signup'
             element={
               <Signup
                 register={this.registerHandler}
@@ -432,7 +445,7 @@ export default class App extends Component {
             }
           ></Route>
           <Route
-            path="/signin"
+            path='/signin'
             element={
               <Signin login={this.loginHandler} isAuth={this.state.isAuth} />
             }
@@ -442,14 +455,14 @@ export default class App extends Component {
             element={<Profile currentUser={this.state.user} />}
           >
             <Route
-              path=":userId"
+              path=':userId'
               element={<Profile currentUser={this.state.user} />}
             />
           </Route>
         </Routes>
 
         <Footer />
-        {this.state.logoutRedirect && <Navigate to="/" replace={true} />}
+        {this.state.logoutRedirect && <Navigate to='/' replace={true} />}
       </Router>
     );
   }

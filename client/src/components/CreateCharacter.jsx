@@ -11,12 +11,10 @@ import "./css/CreateCharacter.css";
 
 const { Configuration, OpenAIApi } = require("openai");
 
-const CLASSES = CHARACTER_DEFAULTS.class.map(v=>{
-  return v.toLowerCase()
-})
+const CLASSES = CHARACTER_DEFAULTS.class.map((v) => {
+  return v.toLowerCase();
+});
 export default class CreateCharacter extends Component {
-  
-
   constructor(props) {
     super(props);
     this.state = {
@@ -231,11 +229,13 @@ export default class CreateCharacter extends Component {
   };
 
   setImage() {
-    let path = '';
+    let path = "";
     if (CLASSES.indexOf(this.state.newCharacter.class.toLowerCase()) !== -1) {
-      path = `/images/class/${this.state.newCharacter.class.toLowerCase().replace(" ", "")}.png`;
+      path = `/images/class/${this.state.newCharacter.class
+        .toLowerCase()
+        .replace(" ", "")}.png`;
     } else {
-      const randomImages = ['random1','random2','random3','random4']
+      const randomImages = ["random1", "random2", "random3", "random4"];
       const imgList = [].concat(CLASSES, randomImages);
       const randImg = imgList[Math.floor(Math.random() * imgList.length)];
       path = `/images/class/${randImg.replace(" ", "")}.png`;
@@ -244,24 +244,25 @@ export default class CreateCharacter extends Component {
       newCharacter: {
         ...this.state.newCharacter,
         image: path,
-      }
+      },
     });
-  };
+  }
 
   onFormSubmit = (e) => {
+    this.props.charCreateAchievement()
     e.preventDefault();
 
     this.setImage();
 
-    setTimeout(()=>{
+    setTimeout(() => {
       this.addCharacter(this.state.newCharacter);
-      setTimeout(()=>{
+      setTimeout(() => {
         this.props.createAdventure(this.state.newCharacter);
         this.setState({
           redirect: true,
         });
-      },100)
-    },100)
+      }, 100);
+    }, 100);
   };
 
   _next() {
@@ -338,7 +339,7 @@ export default class CreateCharacter extends Component {
         <Container className='container-fluid my-5'>
           <h1 className='display-4'>Create a Character</h1>
 
-          <Form onSubmit={this.onFormSubmit} className="form-container">
+          <Form onSubmit={this.onFormSubmit} className='form-container'>
             <CharacterForm1
               currentStep={this.state.currentStep}
               placeholder={this.state.placeholder}
@@ -367,6 +368,7 @@ export default class CreateCharacter extends Component {
             to='/create-adventure'
             replace={true}
             character={this.state.newCharacter}
+            achievement={true}
           />
         )}
       </>

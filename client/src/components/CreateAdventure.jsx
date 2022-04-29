@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Container, Form, Button } from "react-bootstrap";
 import Axios from "axios";
 import { Navigate } from "react-router-dom";
-import './css/CreateAdventure.css';
+import "./css/CreateAdventure.css";
 
 const { Configuration, OpenAIApi } = require("openai");
 
@@ -17,18 +17,23 @@ export default class CreateAdventure extends Component {
       characters: [],
       character: {},
       log: [],
-      name: '',
+      name: "",
       prompt: "",
       redirect: false,
       event: {},
-      
     };
     // console.log(this.props)
   }
 
   componentDidMount() {
+    this.log("test", this.props.achivement);
     this.loadCharacterList();
     this.setState({ name: this.props.character.name });
+    this.achieveHandle(this.props.achievement);
+  }
+
+  log(e) {
+    console.log("this props achievement", this.props.achievement);
   }
 
   loadCharacterList = () => {
@@ -68,32 +73,32 @@ export default class CreateAdventure extends Component {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
     })
-    .then((response) => {
-      console.log("Adventure created successfully.", response);
-      response.data.adventure.events = [this.state.event];
-      this.setState({
-        newAdventure: response.data.adventure,
-        character: character,
+      .then((response) => {
+        console.log("Adventure created successfully.", response);
+        response.data.adventure.events = [this.state.event];
+        this.setState({
+          newAdventure: response.data.adventure,
+          character: character,
+        });
+        setTimeout(() => {
+          this.props.startStory(this.state.newAdventure, this.state.character);
+          this.setRedirect();
+        }, 100);
+        // this.loadCharacterList();
+      })
+      .catch((error) => {
+        console.log("Error creating adventure.", error);
       });
-      setTimeout(()=>{
-        this.props.startStory(this.state.newAdventure, this.state.character);
-        this.setRedirect();
-      },100)
-      // this.loadCharacterList();
-    })
-    .catch((error) => {
-      console.log("Error creating adventure.", error);
-    });
   };
 
   setRedirect() {
     // console.log("start-story triggered2");
-    setTimeout(()=>{
-      console.log(this.state.newAdventure)
+    setTimeout(() => {
+      console.log(this.state.newAdventure);
       this.setState({
         redirect: true,
-      })
-    },200)
+      });
+    }, 200);
   }
   appendResponse = (response) => {};
 
@@ -103,7 +108,14 @@ export default class CreateAdventure extends Component {
     this.setState({
       image: path,
     });
-  };
+  }
+
+  achieveHandle(e) {
+    console.log("achieve handle check", e);
+    if (e === true) {
+      console.log("achievement detected");
+    }
+  }
 
   onFormSubmit = (e) => {
     e.preventDefault();
@@ -111,11 +123,11 @@ export default class CreateAdventure extends Component {
     const formData = new FormData(e.target),
       formDataObj = Object.fromEntries(formData.entries());
     // console.log(formDataObj);
-    let character = this.state.characters.find(v=>{
+    let character = this.state.characters.find((v) => {
       return formDataObj.character === v.name;
-    })
-    console.log('character: '+ character.name)
-    console.log('story: '+ character.backstory)
+    });
+    console.log("character: " + character.name);
+    console.log("story: " + character.backstory);
 
     let intro = `${character.backstory}`;
     let prompt = `Begin a ${formDataObj.genre} story to ${formDataObj.quest} in a ${formDataObj.setting} setting. Create a detailed introduction in 50 words about ${character.name} starting the quest`;
@@ -161,15 +173,15 @@ export default class CreateAdventure extends Component {
           previousLog: [intro],
           storyPrompt: prompt,
           story: story,
-          optionPrompt: '',
+          optionPrompt: "",
           options: [],
           optionChosen: null,
           fullLog: logs,
           displayedLog: [character.backstory, story],
-        }
+        };
 
         this.createEvent(event);
-        setTimeout(()=>{
+        setTimeout(() => {
           formDataObj.events = [this.state.event];
 
           this.addAdventure(formDataObj, character);
@@ -178,7 +190,7 @@ export default class CreateAdventure extends Component {
             response: `${story}`,
             log: logs,
           });
-        },100)
+        }, 100);
       })
       .catch((error) => {
         console.log("error log:", error);
@@ -195,33 +207,37 @@ export default class CreateAdventure extends Component {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
     })
-    .then((response) => {
-      console.log("Event created successfully.", response);
-      this.setState({
-        event: response.data.event,
+      .then((response) => {
+        console.log("Event created successfully.", response);
+        this.setState({
+          event: response.data.event,
+        });
       })
-    })
-    .catch((error) => {
-      console.log("Error creating event.", error);
-    });
-  }
+      .catch((error) => {
+        console.log("Error creating event.", error);
+      });
+  };
 
   render() {
     const characters = this.state.characters.map((c) => {
       if (c.name === this.state.name) {
         return (
-          <option value={c.name} selected className={c.name} key={c._id} index={c._id}>
+          <option
+            value={c.name}
+            selected
+            className={c.name}
+            key={c._id}
+            index={c._id}
+          >
             {c.name} ({c.class})
           </option>
         );
-
       } else {
         return (
           <option value={c.name} className={c.name} key={c._id} index={c._id}>
             {c.name} ({c.class})
           </option>
         );
-
       }
     });
     // console.log(this.props)
@@ -231,8 +247,7 @@ export default class CreateAdventure extends Component {
         <Container className='container-fluid my-5'>
           <h1>Begin an Adventure</h1>
 
-
-          <Form onSubmit={this.onFormSubmit} className="form-container">
+          <Form onSubmit={this.onFormSubmit} className='form-container'>
             <h4 className='text-white'>Set up your adventure</h4>
             <div className='mb-3 form__group field' controlId=''>
               <label className='form__label'>Adventure name</label>
@@ -246,8 +261,11 @@ export default class CreateAdventure extends Component {
             </div>
             <div className='mb-3 form__group field' controlId=''>
               <label className='form__label'>Genre</label>
-              <Form.Select name='genre' onChange={this.handleChange}
-                  className='form__field'>
+              <Form.Select
+                name='genre'
+                onChange={this.handleChange}
+                className='form__field'
+              >
                 <option value='Action'>Action</option>
                 <option value='Fantasy'>Fantasy</option>
                 <option value='Historical Fiction'>Historical Fiction</option>
@@ -260,8 +278,11 @@ export default class CreateAdventure extends Component {
             </div>
             <div className='mb-3 form__group field' controlId=''>
               <label className='form__label'>Setting</label>
-              <Form.Select name='setting' onChange={this.handleChange}
-                  className='form__field'>
+              <Form.Select
+                name='setting'
+                onChange={this.handleChange}
+                className='form__field'
+              >
                 <option value='Alternate Universe'>Alternate Universe</option>
                 <option value='Ancient Egypt'>Ancient Egypt</option>
                 <option value='Classical Greece'>Classical Greece</option>
@@ -276,8 +297,11 @@ export default class CreateAdventure extends Component {
             </div>
             <div className='mb-3 form__group field' controlId=''>
               <label className='form__label'>Length</label>
-              <Form.Select name='length' onChange={this.handleChange}
-                  className='form__field'>
+              <Form.Select
+                name='length'
+                onChange={this.handleChange}
+                className='form__field'
+              >
                 <option value='short story'>Short Story</option>
                 <option value='novelette'>Novelette</option>
                 <option value='novella'>Novella</option>
@@ -287,15 +311,16 @@ export default class CreateAdventure extends Component {
             </div>
             <div className='mb-3 form__group field' controlId=''>
               <label className='form__label'>Character</label>
-              <Form.Select name='character' onChange={this.handleChange}
-                  className='form__field'>
+              <Form.Select
+                name='character'
+                onChange={this.handleChange}
+                className='form__field'
+              >
                 {characters}
               </Form.Select>
             </div>
             <div className='mb-3 form__group field' controlId=''>
-              <label className='form__label'>
-                What is your quest?
-              </label>
+              <label className='form__label'>What is your quest?</label>
               <input
                 type='text'
                 name='quest'
@@ -305,21 +330,25 @@ export default class CreateAdventure extends Component {
               ></input>
             </div>
 
-            {this.state.newAdventure.quest && this.state.newAdventure.name ? 
+            {this.state.newAdventure.quest && this.state.newAdventure.name ? (
               <>
-                <Button 
-                variant='primary' 
-                size='lg' 
-                type='submit'
-                >
-                Start Adventure
+                <Button variant='primary' size='lg' type='submit'>
+                  Start Adventure
                 </Button>
                 <Form.Text>
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {this.state.placeholder}
-                </Form.Text> 
-              </> :
-              <p className="text-white"><small>You must provide an adventure <span className="text-info">name</span> and <span className="text-info">quest</span> to begin your story...</small></p>
-            }
+                </Form.Text>
+              </>
+            ) : (
+              <p className='text-white'>
+                <small>
+                  You must provide an adventure{" "}
+                  <span className='text-info'>name</span> and{" "}
+                  <span className='text-info'>quest</span> to begin your
+                  story...
+                </small>
+              </p>
+            )}
           </Form>
           <br />
           <br></br>
@@ -330,6 +359,7 @@ export default class CreateAdventure extends Component {
               replace={true}
               adventure={this.state.newAdventure}
               character={this.state.character}
+              achievementCheck={this.props.achievementCheck}
             />
           )}
         </Container>
