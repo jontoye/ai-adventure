@@ -40,9 +40,9 @@ To create an Adventure, go to 'Create Adventure', or click "Start Adventure" fro
 
 ## Adventure Gameplay
 
-Once you start an adventure, or continue a saved adventure, you will begin your AIAdventure! AIAdventure is a text-based choose-your-own adventure game, so gameplay consists of reading through a short story and selecting one of the options provided to yuo by the AI. Once you select an option the AI will begin thinking about where to take your story next!
+Once you start an adventure, or continue a saved adventure, you will begin your adventure! AI Adventure is a text-based choose-your-own adventure game, so gameplay consists of reading through a short story and selecting one of the options provided to you by the AI. Once you select an option the AI will begin thinking about where to take your story next!
 
-<p><small>AIAdventure Gameplay</small></p>
+<p><small>AI Adventure Gameplay</small></p>
 <img src="screenshots/adventure-gameplay.png">
 
 ## Explore
@@ -72,7 +72,7 @@ Also included is an editable "About me" section and activity log
 
 ## Technologies
 
-This project was built with HTML, CSS, JavaScript, React, Node.js, Express.js, NoSQL, MongoDB, and deployed with Heroku.<br>
+This project was built with HTML, CSS, JavaScript, Bootsrap, MongoDB, Express.js, React, Node.js, NoSQL, and deployed with Heroku.<br>
 AI technology by OpenAI, utilizing the Davinci text engine.<br>
 All artwork is AI-generated using Disco Diffusion.
 
