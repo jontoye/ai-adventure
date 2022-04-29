@@ -10,16 +10,16 @@ export default class TechStack extends Component {
 
 			<div className="tech-logos">
 				<div>
-					<a href="https://www.mongodb.com/"><img className="logo-img" src="images/logos/mongodb.png" alt="" /></a>
+					<a href="https://www.mongodb.com/" target="_blank" rel="noreferrer"><img className="logo-img" src="images/logos/mongodb.png" alt="mongodb" /></a>
 				</div>
 				<div >
-					<a href="https://expressjs.com/"><img className="logo-img" src="images/logos/express-js.png" alt="" /></a>
+					<a href="https://expressjs.com/" target="_blank" rel="noreferrer"><img className="logo-img" src="images/logos/express-js.png" alt="express" /></a>
 				</div>
 				<div>
-					<a href="https://reactjs.org/"><img className="logo-img" src="images/logos/react.png" alt="" /></a>
+					<a href="https://reactjs.org/" target="_blank" rel="noreferrer"><img className="logo-img" src="images/logos/react.png" alt="react" /></a>
 				</div>
 				<div>
-					<a href="https://nodejs.dev/"><img className="logo-img" src="images/logos/nodejs.png" alt="" /></a>
+					<a href="https://nodejs.dev/" target="_blank" rel="noreferrer"><img className="logo-img" src="images/logos/nodejs.png" alt="node" /></a>
 				</div>
 			</div>
 
@@ -28,7 +28,7 @@ export default class TechStack extends Component {
 			<div>
 				And with a little help from
 				<div >
-					<a href="https://github.com/alembics/disco-diffusion">Disco Diffusion</a> & <a href="https://openai.com/"><img className="openai-img" src="images/logos/openai.png" alt="" /></a>
+					<a href="https://github.com/alembics/disco-diffusion" target="_blank" rel="noreferrer">Disco Diffusion</a> & <a href="https://openai.com/" target="_blank" rel="noreferrer"><img className="openai-img" src="images/logos/openai.png" alt="" /></a>
 				</div>
 			</div>
 		</Container>
