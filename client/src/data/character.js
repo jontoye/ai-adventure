@@ -43,6 +43,7 @@ const TITLE_F = [
   "Coach",
   "Comrade",
   "Sultana",
+  "The Great",
 ];
 
 const TITLE_M = [
@@ -98,6 +99,7 @@ const TITLE_M = [
   "Comrade",
   "Sultan",
   "The High King",
+  "The Great",
 ];
 
 const NAME_F = [
