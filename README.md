@@ -1,4 +1,4 @@
-# Calendar.io
+# AI Adventure
 
 ## Project Team
 
@@ -15,54 +15,48 @@ See the [live demo here](https://adventure-ai-app.herokuapp.com/)
 
 To get started, users sign up for an account (or sign in with Google)
 
-<p><small>Profile Screenshot</small></p>
-<img src="screenshots/profile.png">
+<p><small>Main Page</small></p>
+<img src="screenshots/home.png">
 <br>
 
-## Creating an Event
+## Creating a Character
 
-To create an event, go to the 'Add Event' page and fill out the form provided. Custom events can be color coded to help categorize events on the grid view page. You may also attach a photo to the event to make it stand out.
+To create a character, go to 'Create Character' and fill in the required form, or let the Randomize Character button do it for you!
 
-<p><small>Grid View Screenshot</small></p>
-<img src="screenshots/grid.png">
+<p><small>Create a Character page</small></p>
+<img src="screenshots/create-character.png">
 
-## Viewing Your Events
+## Explore
 
-Calender.io provides three main ways to view your events from your homepage: Grid View, Pin View, and List View. You can also view a list of all the events you have created and events you are attending from your profile page.<br>
-Clicking on an event brings up that event's detail page. Each event may contain multiple 'tags' representing the categories this event falls under. Clicking on one of these tags will redirect you to the search page where all events containing that same tag will be displayed.
+Navigate to the 'Explore' page to view:
+<ul>
+<li>Users who you can follow and add to your friends list</li>
+<li>All of your created adventures</li>
+<li>All of your created users</li>
+</ul>
 
-<p><small>List View Screenshot</small></p>
-<img src="screenshots/list.png">
+<p><small>Explore page</small></p>
+<img src="screenshots/explore.png">
 
-<p><small>Pin View Screenshot</small></p>
-<img src="screenshots/pin.png">
-
-<p><small>Event Detail Screenshot</small></p>
-<img src="screenshots/detail.png">
 <br>
 
-## Searching for Events
+## Profile page
 
-Looking for something to do? Calender.io brings in real data from Eventbrite that you can search through using keywords and locations. Add and remove events as needed using the + and - buttons on the event detail page.
+Your profile page contains links to your characters and adventures, as well as a follower/friend counter.<br>
+Also included is an editable "About me" section and activity log
 
-<p>Search</p>
-<img src="screenshots/search.png">
 <br>
 
 ## Technologies
 
-This project was built with Django, PostgreSQL, and Materialize.<br>
-Event data is being generated using an API from Eventbrite.<br>
-Heroku was used for deployment.<br>
+This project was built with HTML, CSS, JavaScript, React, Node.js, Express.js, NoSQL, MongoDB, and deployed with Heroku.<br>
+AI technology by OpenAI, utilizing the Davinci text engine<br>
+Artwork rendered by utilizing Disco Diffusion
 
 ## Next Steps
 
-Future releases of Calender.io will include:
+Future releases of AI Adventure will include:
 
 <ul>
-    <li>Ability to update the events you created</li>
-    <li>Draggable tile cards on the pin view page so you can arrange the events however you like</li>
-    <li>Improved date and time selection when creating an event</li>
-    <li>Alowing users to leave comments/reviews on event detail pages</li>
-    <li>Additional searching and sorting filters</li>
+    <li>Bug fixes</li>
 </ul>
