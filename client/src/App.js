@@ -176,6 +176,11 @@ export default class App extends Component {
       });
   };
 
+
+  achievementCheck = (e) => {
+    
+  }
+
   loginHandler = (cred) => {
     Axios.post("auth/signin", cred)
       .then((response) => {
