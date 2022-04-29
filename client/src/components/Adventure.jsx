@@ -102,6 +102,10 @@ export default class Adventure extends Component {
         }
         // console.log(choices)
         let split_choices = choices.split(/\s?\d+\.\s/);
+        split_choices[1] = split_choices[1] ? split_choices[1] : "Ask a close friend for help"
+        split_choices[2] = split_choices[2] ? split_choices[2] : "Take a long walk and think about the situation"
+        split_choices[3] = split_choices[3] ? split_choices[3] : "Try to discover the meaning of life"
+
         let rejoined_choices =
           "1. " +
           split_choices[1] +
