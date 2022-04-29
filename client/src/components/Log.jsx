@@ -6,22 +6,17 @@ export default class Log extends Component {
 
 
   componentDidMount() { 
-    // let element = document.getElementById('adventure-log');
-    // console.log(element)
-    // element.scrollIntoView({block: "end", inline: "nearest"});
-    // element.scroll({ top: element.scrollHeight, behavior: 'smooth' });
-
-    // element.scrollIntoView();
-    // element.scrollIntoView(false);
-    // element.scrollIntoView({block: "end"});
-    // element.scrollIntoView({behavior: "smooth", block: "end", inline: "nearest"});
+    this.scrollToBottom()
    }  
 
-  scrollToBottom = () => {
+   componentDidUpdate(prevProps, prevState) { 
+    this.scrollToBottom()
+   } 
+
+  scrollToBottom() {
     let element = document.getElementById('adventure-log');
-    console.log(element)
+    element.scrollIntoView({block: "end", inline: "nearest"});
     element.scroll({ top: element.scrollHeight, behavior: 'smooth' });
-    // scrollIntoView(alignToTop)
   }
 
 
@@ -30,20 +25,26 @@ export default class Log extends Component {
   render() {
     // console.log(this.props.log)
     const entries = this.props.log.map((entry, index) => {
+      let colorID = 'color_' + String((index - 1) % 3 + 1);
+      if (index < 1) {
+        colorID='color_start';
+      }
 
-      return <Entry text={entry} key={entry[0]+index} id={index}/>;
-
+      return <Entry text={entry} key={entry[0]+index} colorID={colorID}/>;
     });
 
+    const logTitle = () => {
+      return this.props.adventureName ? <span className="adventure-log-text">Adventure Log | {this.props.adventureName}</span> :  <span className="adventure-log-text">Adventure Log</span> 
+    }
 
     return (
       <>
         <Card id="log-card">
           <Card.Body id="log-card-body">
-            <Card.Title><span className="adventure-log-text">Adventure Log</span></Card.Title>
+            <Card.Title>{logTitle()}</Card.Title>
             {/* <Card.Subtitle>(for development purposes only)</Card.Subtitle> */}
             <hr />
-            <Card.Text id="adventure-log" onChange={this.scrollToBottom}>
+            <Card.Text id="adventure-log">
               {entries}
             </Card.Text>
           </Card.Body>

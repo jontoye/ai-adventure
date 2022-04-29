@@ -36,7 +36,7 @@ exports.user_profile_get = (req, res) => {
 };
 
 exports.user_profile_avatar_put = (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   User.findOneAndUpdate({ _id: req.params.userId }, { avatar: req.body.avatar })
     .then((user) => {
       user.activity.push(

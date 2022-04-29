@@ -287,7 +287,7 @@ export default class Adventure extends Component {
       <div>
         <Container>
           <div className='game-log mb-3'>
-            <Log log={this.state.log} />
+            <Log log={this.state.log} adventureName={this.state.adventure.name} />
           </div>
           <Row
             className='adventure-screen'

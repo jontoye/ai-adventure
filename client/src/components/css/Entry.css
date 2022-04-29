@@ -1,5 +1,5 @@
-.entry-key0 {
-  color: green;
+.color_start {
+  color: purple;
   
 }
 
@@ -13,44 +13,17 @@
 }
 
 
-.entry-key1 {
+.color_0 {
   color: blue;
 }
-
-.entry-key2 {
+.color_1 {
   color: green;
 }
-.entry-key3 {
+.color_2 {
   color: blue;
 }
-
-.entry-key4 {
+.color_3 {
   color: red;
-}
-.entry-key5 {
-  color: green;
-}
-
-.entry-key6 {
-  color: blue;
-}
-
-.entry-key7 {
-  color: red;
-}
-.entry-key8 {
-  color: green;
-}
-
-.entry-key9 {
-  color: blue;
-}
-
-.entry-key10 {
-  color: red;
-}
-.entry-key11 {
-  color: green;
 }
 
 #adventure-log{

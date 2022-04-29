@@ -154,7 +154,7 @@ exports.googleLoginPost = (req, resp) => {
     .verifyIdToken({ idToken: tokenId, audience: process.env.GOOGLE_CLIENT_ID })
     .then((res) => {
       const { email_verified, name, email } = res.payload;
-      console.log({ email_verified, name, email });
+      // console.log({ email_verified, name, email });
       if (email_verified) {
         User.findOne({ emailAddress: email }).exec((err, user) => {
           if (err) {
