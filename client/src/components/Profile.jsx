@@ -18,7 +18,7 @@ function Profile({ currentUser }) {
   
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  
+
   const handleBioClick = async () => {
     if (edit) {
       // save to database
@@ -44,6 +44,7 @@ function Profile({ currentUser }) {
   const getUser = async (id) => {
     axios.get(`/profile/${id}`, {headers})
     .then(response => {
+      response.data.user.activity = response.data.user.activity.reverse();
       setUser(response.data.user);
       setBio(response.data.user.biography)
       }) 
@@ -306,7 +307,7 @@ function Profile({ currentUser }) {
               <div className='display-6 my-4'>Recent Activity</div>
                 <div className="activity-log">
                   {user.activity &&
-                    user.activity.reverse().slice(0, 10).map((event, index) => (
+                    user.activity.slice(0, 10).map((event, index) => (
                       <p key={index}>{event}</p>
                     ))
                   }
