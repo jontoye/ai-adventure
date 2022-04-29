@@ -82,9 +82,12 @@ Future releases of AI Adventure will include:
 
 <ul>
     <li>Bug fixes and stability improvements</li>
+    <li>Firefox and Safari optimization</li>
     <li>AI-generated end-point for an Adventure</li>
+    <li>Utilise dallE-2 AI for image generation
+    <li>Gender-diverse character images and generation</li>
     <li>Inventory system</li>
-    <li>Achievements</li>
+    <li>Complete implementation of achievements</li>
     <li>Journal/scrap to read through completed adventures</li>
     <li>Epic Bard poems</li>
     <li>Localise characters and adventures to their user</li>
