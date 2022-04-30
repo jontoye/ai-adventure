@@ -19,9 +19,6 @@ export default class Log extends Component {
     element.scroll({ top: element.scrollHeight, behavior: 'smooth' });
   }
 
-
-    // document.getElementById('adventure-log').scrollTop = document.getElementById('adventure-log').scrollHeight;
-
   render() {
     // console.log(this.props.log)
     const entries = this.props.log.map((entry, index) => {

@@ -39,7 +39,9 @@ export default class CharacterDetail extends Component {
         this.setState({ id: id[0]._id });
         this.loadAdventureList(char_id);
       })
-      .catch();
+      .catch((error)=>{
+        console.log("Error finding character.", error);
+      });
   };
 
   loadAdventureList = (char_id) => {

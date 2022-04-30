@@ -10,7 +10,7 @@ class CharacterForm1 extends Component {
         return (
             <Container>
               <h4 className='text-white form__group field'>Define your character</h4>
-              <div className='mb-3 form__group field' controlId=''>
+              <div className='mb-3 form__group field'>
                 <label className=' form__label'>Character name</label>
                 <input
                   type='text'
@@ -25,7 +25,7 @@ class CharacterForm1 extends Component {
                   onChange={this.props.handleChange}
                 ></input>
               </div>
-              <div className='mb-3 form__group field' controlId=''>
+              <div className='mb-3 form__group field'>
                 <label className=' form__label'>
                   Class/role/occupation
                 </label>
@@ -42,7 +42,7 @@ class CharacterForm1 extends Component {
                   onChange={this.props.handleChange}
                 ></input>
               </div>
-              <div className='mb-3 form__group field' controlId=''>
+              <div className='mb-3 form__group field'>
                 <label className=' form__label'>Special ability</label>
                 <input
                   type='text'
@@ -57,7 +57,7 @@ class CharacterForm1 extends Component {
                   onChange={this.props.handleChange}
                 ></input>
               </div>
-              <div className='mb-3 form__group field' controlId=''>
+              <div className='mb-3 form__group field'>
                 <label className=' form__label'>Weakness</label>
                 <input
                   type='text'

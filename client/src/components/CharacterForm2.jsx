@@ -54,7 +54,7 @@ export default class CharacterForm2 extends Component {
             </Row>
         </Container>
         <br></br>
-        <Form.Group className='mb-3' controlId=''>
+        <Form.Group className='mb-3'>
             <Form.Label className='text-white'>Backstory</Form.Label>
             <Form.Control
             as='textarea'

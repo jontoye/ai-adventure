@@ -149,12 +149,12 @@ export default class CreateCharacter extends Component {
       },
     })
       .then((response) => {
-        console.log("character success", character);
+        // console.log("character success", character);
         console.log("Character added successfully.", response);
         // this.loadCharacterList();
       })
       .catch((error) => {
-        console.log("character attempt", character);
+        // console.log("character attempt", character);
         console.log("Error adding character.", error);
       });
   };

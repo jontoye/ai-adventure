@@ -26,7 +26,7 @@ export default class CreateAdventure extends Component {
   }
 
   componentDidMount() {
-    this.log("test", this.props.achivement);
+    // this.log("test", this.props.achivement);
     this.loadCharacterList();
     this.setState({ name: this.props.character.name });
     this.achieveHandle(this.props.achievement);
@@ -126,8 +126,8 @@ export default class CreateAdventure extends Component {
     let character = this.state.characters.find((v) => {
       return formDataObj.character === v.name;
     });
-    console.log("character: " + character.name);
-    console.log("story: " + character.backstory);
+    // console.log("character: " + character.name);
+    // console.log("story: " + character.backstory);
 
     let intro = `${character.backstory}`;
     let prompt = `Begin a ${formDataObj.genre} story to ${formDataObj.quest} in a ${formDataObj.setting} setting. Create a detailed introduction in 50 words about ${character.name} starting the quest`;
@@ -249,7 +249,7 @@ export default class CreateAdventure extends Component {
 
           <Form onSubmit={this.onFormSubmit} className='form-container'>
             <h4 className='text-white'>Set up your adventure</h4>
-            <div className='mb-3 form__group field' controlId=''>
+            <div className='mb-3 form__group field'>
               <label className='form__label'>Adventure name</label>
               <input
                 type='text'
@@ -259,7 +259,7 @@ export default class CreateAdventure extends Component {
                 onChange={this.handleChange}
               ></input>
             </div>
-            <div className='mb-3 form__group field' controlId=''>
+            <div className='mb-3 form__group field'>
               <label className='form__label'>Genre</label>
               <Form.Select
                 name='genre'
@@ -276,7 +276,7 @@ export default class CreateAdventure extends Component {
                 <option value='Thriller'>Thriller</option>
               </Form.Select>
             </div>
-            <div className='mb-3 form__group field' controlId=''>
+            <div className='mb-3 form__group field'>
               <label className='form__label'>Setting</label>
               <Form.Select
                 name='setting'
@@ -295,7 +295,7 @@ export default class CreateAdventure extends Component {
                 <option value='Steampunk'>Steampunk</option>
               </Form.Select>
             </div>
-            <div className='mb-3 form__group field' controlId=''>
+            <div className='mb-3 form__group field'>
               <label className='form__label'>Length</label>
               <Form.Select
                 name='length'
@@ -309,7 +309,7 @@ export default class CreateAdventure extends Component {
                 <option value='epic'>Epic</option>
               </Form.Select>
             </div>
-            <div className='mb-3 form__group field' controlId=''>
+            <div className='mb-3 form__group field'>
               <label className='form__label'>Character</label>
               <Form.Select
                 name='character'
@@ -319,7 +319,7 @@ export default class CreateAdventure extends Component {
                 {characters}
               </Form.Select>
             </div>
-            <div className='mb-3 form__group field' controlId=''>
+            <div className='mb-3 form__group field'>
               <label className='form__label'>What is your quest?</label>
               <input
                 type='text'

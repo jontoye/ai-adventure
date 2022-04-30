@@ -113,6 +113,9 @@ setShow(true)
         navigate("/adventure");
       },100)
     })
+    .catch((error)=>{
+      console.log("Error continuing adventure.",error);
+    });
   }
 
   const renderTooltip_qs = (info) => (

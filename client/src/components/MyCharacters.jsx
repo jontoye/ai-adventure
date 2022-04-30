@@ -16,7 +16,7 @@ export default class Characters extends Component {
   componentDidMount() {
     this.loadCharacterList();
 
-    console.log("filter props test", this.props.filtered);
+    // console.log("filter props test", this.props.filtered);
   }
 
   loadCharacterList = () => {
