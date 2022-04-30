@@ -6,10 +6,10 @@ exports.user_index_get = (req, res) => {
   User.find()
     .select("-password -emailAddress")
     .then((users) => {
-      res.json({ users: users });
+      res.json({ users: users }).status(200);
     })
     .catch((err) => {
-      res.json({ error: err });
+      res.json({ error: err, message: "Error fetching user list." }).status(400);
     });
 };
 
@@ -28,10 +28,11 @@ exports.user_index_get = (req, res) => {
 exports.user_profile_get = (req, res) => {
   User.findOne({ _id: req.params.userId })
     .then((user) => {
-      res.json({ user: user });
+      res.json({ user: user }).status(200);
     })
     .catch((err) => {
-      res.json({ error: err });
+      console.log(err)
+      res.json({ error: err, message: "Error getting user profile." }).status(400);
     });
 };
 
@@ -43,11 +44,12 @@ exports.user_profile_avatar_put = (req, res) => {
         `Updated profile image on ${moment().format("MMMM Do YYYY, h:mm a")}`
       );
       user.save().then(() => {
-        res.json({ message: "success", user: user });
+        res.json({ message: "success", user: user }).status(200);
       });
     })
     .catch((err) => {
       console.error(err);
+      res.json({ error: err, message: "Error updating profile picture." }).status(400);
     });
 };
 
@@ -61,11 +63,12 @@ exports.user_profile_biography_post = (req, res) => {
         `Updated biography on ${moment().format("MMMM Do YYYY, h:mm a")}`
       );
       user.save().then(() => {
-        res.json({ message: "success", user: user });
+        res.json({ message: "success", user: user }).status(200);
       });
     })
     .catch((err) => {
       console.error(err);
+      res.json({ error: err, message: "Error updating user bio." }).status(400);
     });
 };
 
@@ -86,12 +89,13 @@ exports.user_profile_addsocial_post = (req, res) => {
           user.activity.push(`Started following ${otherUser.username}`);
         }
         user.save().then(() => {
-          res.json({ message: "success" });
+          res.json({ message: "success" }).status(200);
         });
       });
     })
     .catch((err) => {
       console.error(err);
+      res.json({ error: err, message: "Error friending user profile." }).status(400);
     });
 };
 
@@ -121,11 +125,12 @@ exports.user_profile_removesocial_post = (req, res) => {
           user.activity.push(`Stopped following ${otherUser.username}`);
         }
         user.save().then(() => {
-          res.json({ message: "success" });
+          res.json({ message: "success" }).status(200);
         });
       });
     })
     .catch((err) => {
       console.error(err);
+      res.json({ error: err, message: "Error unfriending user profile." }).status(400);
     });
 };

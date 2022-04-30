@@ -17,14 +17,14 @@ exports.character_create_post = (req, res) => {
           )}`
         );
         user.save().then(() => {
-          res.json({ character });
+          res.json({ character }).status(200);
         });
       });
     })
     .catch((err) => {
       console.log(err);
       // res.send("Error 418");
-      res.status(418).json({ error: err });
+      res.json({ error: err, message: "Error creating Character." }).status(400);
     });
 };
 
@@ -32,11 +32,11 @@ exports.character_create_post = (req, res) => {
 exports.character_index_get = (req, res) => {
   Character.find()
     .then((characters) => {
-      res.json({ characters });
+      res.json({ characters }).status(200);
     })
     .catch((err) => {
       console.log(err);
-      res.send("Error locating Characters.");
+      res.json({error:err, message: "Error locating Characters."}).status(400);
     });
 };
 
@@ -45,10 +45,10 @@ exports.character_delete_get = (req, res) => {
   // console.log("Deleting " + req.query.name);
   Character.deleteOne({ name: req.query.name })
     .then((character) => {
-      res.json({ character });
+      res.json({ character }).status(200);
     })
     .catch((err) => {
       console.log(err);
-      res.send("Error deleting selected character.");
+      res.json({error: err, message: "Error deleting selected character."}).status(400);
     });
 };
