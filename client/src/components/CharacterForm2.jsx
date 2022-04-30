@@ -73,9 +73,8 @@ export default class CharacterForm2 extends Component {
                 type='submit'
                 >
                 Create Character
-                </Button> :
-                <p className="text-white"><small>You must create a backstory to continue...</small></p>
-            }
+                </Button> 
+                : <p className="text-white"><small>You must create a backstory to continue...</small></p>}
 
             <br />
             {/* <br></br> */}
