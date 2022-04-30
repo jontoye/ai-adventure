@@ -28,6 +28,7 @@ export default class Feedback extends Component {
         })
         .catch((error)=>{
           console.log("Error fetching feedback.",error)
+          this.props.setMessage(error.message,'danger');
         })
       }
     
@@ -57,6 +58,7 @@ export default class Feedback extends Component {
         })
         .catch((error) => {
             console.log(error);
+            this.props.setMessage(error.message,'danger');
         });
       };
 

@@ -3,13 +3,13 @@ const Event = require("../models/Event");
 const User = require("../models/User");
 const moment = require("moment");
 
-exports.adventure_create_post = async (req, res) => {
+exports.adventure_create_post = (req, res) => {
   let adventure = new Adventure(req.body);
 
   //save adventure
-  await adventure.save();
-  // console.log(adventure.id);
-  Adventure.findById(adventure.id)
+  adventure.save()
+  .then(()=>{
+    Adventure.findById(adventure.id)
     .populate("character")
     .then((adventure) => {
       User.findById(req.user).then((user) => {
@@ -27,6 +27,11 @@ exports.adventure_create_post = async (req, res) => {
       console.log(err);
       res.json({error: err, message: "Error creating adventure."}).status(400);
     });
+  })
+  .catch((err) => {
+    console.log(err);
+    res.json({error: err, message: "Error creating adventure."}).status(400);
+  });
 };
 
 //HTTP GET
@@ -45,34 +50,34 @@ exports.adventure_index_get = (req, res) => {
 exports.adventure_delete_get = (req, res) => {
   //STEP ONE: FIND THE ADVENTURE DATA
   Adventure.findOne({ _id: req.query.id })
-    .then((adventure) => {
-      // console.log("Found Adventure: ", adventure.name);
-      //STEP TWO: DELETE THE EVENTS WITHIN THE ADVENTURE
-      adventure.events.forEach((e) => {
-        Event.deleteOne({ _id: e })
-          .then((info) => {
-            // console.log('Successfully deleted event: ', e)
-          })
-          .catch((err) => {
-            console.log(err);
-            res.json({error: err, message: "Error deleting events."}).status(400);
-          });
+  .then((adventure) => {
+    // console.log("Found Adventure: ", adventure.name);
+    //STEP TWO: DELETE THE EVENTS WITHIN THE ADVENTURE
+    adventure.events.forEach((e) => {
+      Event.deleteOne({ _id: e })
+      .then((info) => {
+        // console.log('Successfully deleted event: ', e)
+      })
+      .catch((err) => {
+        console.log(err);
+        res.json({error: err, message: "Error deleting events."}).status(400);
       });
-      //STEP THREE: DELETE THE ADVENTURE
-      Adventure.deleteOne({ _id: adventure.id })
-        .then((info) => {
-          // console.log('Successfully deleted adventure: ' + adventure.name)
-          res.json({ info }).status(200);
-        })
-        .catch((err) => {
-          console.log(err);
-          res.json({error: err, message: "Error deleting adventure."}).status(400);
-        });
+    });
+    //STEP THREE: DELETE THE ADVENTURE
+    Adventure.deleteOne({ _id: adventure.id })
+    .then((info) => {
+      // console.log('Successfully deleted adventure: ' + adventure.name)
+      res.json({ info }).status(200);
     })
     .catch((err) => {
       console.log(err);
-      res.json({error: err, message: "Error fetching adventures."}).status(400);
+      res.json({error: err, message: "Error deleting adventure."}).status(400);
     });
+  })
+  .catch((err) => {
+    console.log(err);
+    res.json({error: err, message: "Error fetching adventures."}).status(400);
+  });
 };
 
 //HTTP PUT - Adventure Update

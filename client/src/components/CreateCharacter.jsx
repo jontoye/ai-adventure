@@ -150,12 +150,22 @@ export default class CreateCharacter extends Component {
     })
       .then((response) => {
         // console.log("character success", character);
-        console.log("Character added successfully.", response);
+        if (response.data.error) {
+          console.log("Error adding character.", response.data.error);
+          this.props.setMessage(response.data.error._message+". Please confirm you have correctly filled out all the fields in the character creation form.\nIf the issue persists please contact the developers and quote: Character/"+response.data.error.name,'danger');
+        } else {
+          console.log("Character added successfully.", response);
+          this.props.createAdventure(this.state.newCharacter);
+          this.setState({
+            redirect: true,
+          });
+        }
         // this.loadCharacterList();
       })
       .catch((error) => {
         // console.log("character attempt", character);
         console.log("Error adding character.", error);
+        this.props.setMessage(error.message,'danger');
       });
   };
 
@@ -223,6 +233,7 @@ export default class CreateCharacter extends Component {
       })
       .catch((error) => {
         console.log("error log:", error);
+        this.props.setMessage(error.message,'danger');
       });
 
     //Use a timeout/clock here to randomly change state.response to keep things interesting while the AI thinks?
@@ -256,12 +267,6 @@ export default class CreateCharacter extends Component {
 
     setTimeout(() => {
       this.addCharacter(this.state.newCharacter);
-      setTimeout(() => {
-        this.props.createAdventure(this.state.newCharacter);
-        this.setState({
-          redirect: true,
-        });
-      }, 100);
     }, 100);
   };
 
@@ -369,6 +374,7 @@ export default class CreateCharacter extends Component {
             replace={true}
             character={this.state.newCharacter}
             achievement={true}
+            setMessage={this.props.setMessage}
           />
         )}
       </>

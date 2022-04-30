@@ -32,6 +32,7 @@ export default class Adventures extends Component {
     .catch((err) => {
       console.log("Error fetching adventures.");
       console.log(err);
+      this.props.setMessage(err.message,'danger');
     });
   };
 
@@ -48,6 +49,7 @@ export default class Adventures extends Component {
     .catch(err=>{
       console.log(`Error deleting adventure: ${adventure.name}`)
       console.log(err)
+      this.props.setMessage(err.message,'danger');
     })
   }
 
@@ -75,6 +77,7 @@ export default class Adventures extends Component {
             id={a._id}
             continueAdventure={this.props.continueAdventure}
             deleteAdventure={this.deleteAdventure}
+            setmessage={this.setMessage}
           />         
         </div>
       );
@@ -102,6 +105,7 @@ export default class Adventures extends Component {
           <Navigate
             to='/create-adventure'
             replace={true}
+            setMessage={this.props.setMessage}
           />
         )}
       </div>

@@ -68,9 +68,11 @@ export default class Adventure extends Component {
   buttonOneClick = () => {
     this.chooseOption(this.state.option1, 1);
   };
+
   buttonTwoClick = () => {
     this.chooseOption(this.state.option2, 2);
   };
+
   buttonThreeClick = () => {
     this.chooseOption(this.state.option3, 3);
   };
@@ -170,6 +172,7 @@ export default class Adventure extends Component {
       })
       .catch((error) => {
         console.log("error log:", error);
+        this.props.setMessage(error.message,'danger');
       });
     this.setState({
       placeholder: `Generating Choice. Please wait...`,
@@ -198,6 +201,7 @@ export default class Adventure extends Component {
       })
       .catch((error) => {
         console.log("Error creating event.", error);
+        this.props.setMessage(error.message,'danger');
       });
   };
 
@@ -207,22 +211,23 @@ export default class Adventure extends Component {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
     })
-      .then((response) => {
-        console.log("Event created successfully.", response);
-        this.setState({
-          event: response.data.event,
-          adventure: {
-            ...this.state.adventure,
-            events: [...this.state.adventure.events, response.data.event],
-          },
-        });
-        setTimeout(() => {
-          this.updateAdventureData();
-        }, 100);
-      })
-      .catch((error) => {
-        console.log("Error saving event.", error);
+    .then((response) => {
+      console.log("Event created successfully.", response);
+      this.setState({
+        event: response.data.event,
+        adventure: {
+          ...this.state.adventure,
+          events: [...this.state.adventure.events, response.data.event],
+        },
       });
+      setTimeout(() => {
+        this.updateAdventureData();
+      }, 100);
+    })
+    .catch((error) => {
+      console.log("Error saving event.", error);
+      this.props.setMessage(error.message,'danger');
+    });
   };
 
   updateAdventureData = () => {
@@ -231,12 +236,13 @@ export default class Adventure extends Component {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
     })
-      .then((response) => {
-        console.log("Adventure updated successfully.", response.data);
-      })
-      .catch((error) => {
-        console.log("Error updating adventure.", error);
-      });
+    .then((response) => {
+      console.log("Adventure updated successfully.", response);
+    })
+    .catch((error) => {
+      console.log("Error updating adventure.", error);
+      this.props.setMessage(error.message,'danger');
+    });
   };
 
   chooseOption = (option, x) => {
@@ -309,6 +315,7 @@ export default class Adventure extends Component {
           })
           .catch((error) => {
             console.log("error log:", error);
+            this.props.setMessage(error.message,'danger');
           });
       }, 100);
     }, 100);

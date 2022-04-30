@@ -10,6 +10,7 @@ export default class AdventureInfo extends Component {
     character: {},
     redirect: false,
   };
+
   componentDidMount() {
     Axios.get("character/index", {
       headers: {
@@ -29,8 +30,10 @@ export default class AdventureInfo extends Component {
       .catch((err) => {
         console.log("Error fetching characters.");
         console.log(err);
+        this.props.setMessage(err.message,'danger');
       });
   }
+
   continueAdventure = (e) => {
     console.log("continuing adventure...");
     Axios.get("event/index", {
@@ -61,6 +64,7 @@ export default class AdventureInfo extends Component {
     })
     .catch((error)=>{
       console.log("Error continuing adventure.", error);
+      this.props.setMessage(error.message,'danger');
     });
     // console.log(this.state.character)
   };
@@ -68,6 +72,7 @@ export default class AdventureInfo extends Component {
   deleteAdventure = (e) => {
     this.props.deleteAdventure(this.state.adventure);
   };
+
   render() {
     let css = `adventure-${this.state.id}`;
     let a_an = "aeiou".includes(this.state.adventure.setting[0].toLowerCase())
@@ -105,6 +110,7 @@ export default class AdventureInfo extends Component {
             replace={true}
             adventure={this.state.adventure}
             character={this.state.character}
+            setMessage={this.props.setMessage}
           />
         )}
       </div>

@@ -31,14 +31,16 @@ export default class App extends Component {
     this.createAdventure = this.createAdventure.bind(this);
     this.continueAdventure = this.continueAdventure.bind(this);
     this.setCharacter = this.setCharacter.bind(this);
+    this.setMessage = this.setMessage.bind(this);
   }
 
   state = {
     isAuth: false,
     logoutRedirect: false,
     user: null,
-    message: null,
+    infoMessage: null,
     failMessage: null,
+    warningMessage: null,
     successMessage: null,
     navExpanded: false,
     randomCharacter: false,
@@ -91,28 +93,26 @@ export default class App extends Component {
       data: { tokenId: response.tokenId },
     })
       .then((res) => {
-        console.log("google login success", res);
+        // console.log("google login success", res);
 
         if (res.data.token != null) {
           //localStorage refers to localStorage of browser
           localStorage.setItem("token", res.data.token);
           let user = jwt_decode(res.data.token);
 
-          console.log("GOOGLE USER", user);
+          // console.log("GOOGLE USER", user);
 
           this.setState({
             isAuth: true,
             user: user,
-            message: null,
-            failMessage: null,
-            successMessage: "User logged in successfully.",
             logoutRedirect: false,
           });
-          this.setBannerTimeout("successMessage");
+          this.setMessage("User logged in successfully.",'success')
         }
       })
-      .catch((err) => {
-        console.log(err);
+      .catch((error) => {
+        console.log(error);
+        this.setMessage(error.message,'danger')
         this.setState({
           isAuth: false,
         });
@@ -165,16 +165,11 @@ export default class App extends Component {
   registerHandler = (user) => {
     Axios.post("auth/signup", user)
       .then((response) => {
-        console.log(response.data.message);
-        this.setState({
-          message: response.data.message,
-          failMessage: null,
-          successMessage: null,
-        });
-        this.setBannerTimeout("message");
+        this.setMessage(response.data.message,'success')
       })
       .catch((error) => {
         console.log(error);
+        this.setMessage(error.message,'danger')
       });
   };
 
@@ -182,12 +177,9 @@ export default class App extends Component {
     Axios.post("auth/signin", cred)
       .then((response) => {
         // console.log("response data token", response.data.token);
-        console.log(response.data.message);
+        // console.log(response.data.message);
 
-        this.setState({
-          message: response.data.message,
-        });
-        this.setBannerTimeout("message");
+        this.setMessage(response.data.message,'warning')
 
         if (response.data.token != null) {
           //localStorage refers to localStorage of browser
@@ -199,16 +191,14 @@ export default class App extends Component {
           this.setState({
             isAuth: true,
             user: user,
-            message: null,
-            failMessage: null,
-            successMessage: "User logged in successfully.",
             logoutRedirect: false,
           });
-          this.setBannerTimeout("successMessage");
+          this.setMessage("User logged in successfully.",'success')
         }
       })
       .catch((error) => {
         console.log(error);
+        this.setMessage(error.message,'danger')
         this.setState({
           isAuth: false,
         });
@@ -227,12 +217,9 @@ export default class App extends Component {
       isAuth: false,
       user: null,
       isGoogleUser: false,
-      message: null,
-      failMessage: "User logged out successfully.",
-      successMessage: null,
       logoutRedirect: true,
     });
-    this.setBannerTimeout("failMessage");
+    this.setMessage("User logged out successfully.",'danger')
   };
 
   setBannerTimeout = (key) => {
@@ -242,6 +229,19 @@ export default class App extends Component {
       });
     }, 10000);
   };
+
+  setMessage = (message, type) => {
+    this.setState({
+      infoMessage: null,
+      failMessage: null,
+      successMessage: null,
+      warningMessage: null,
+    })
+    this.setState({
+      [type.toLowerCase()+'Message']: message,
+    })
+    this.setBannerTimeout(`${type.toLowerCase()}Message`);
+  }
 
   charCreateAchievement = () => {
     this.setState({
@@ -256,11 +256,14 @@ export default class App extends Component {
   };
 
   render() {
-    const message = this.state.message ? (
-      <Alert variant='info'>{this.state.message}</Alert>
+    const infoMessage = this.state.infoMessage ? (
+      <Alert variant='info'>{this.state.infoMessage}</Alert>
     ) : null;
-    const failMessage = this.state.failMessage ? (
-      <Alert variant='danger'>{this.state.failMessage}</Alert>
+    const warningMessage = this.state.warningMessage ? (
+      <Alert variant='warning'>{this.state.warningMessage}</Alert>
+    ) : null;
+    const dangerMessage = this.state.dangerMessage ? (
+      <Alert variant='danger'>{this.state.dangerMessage}</Alert>
     ) : null;
     const successMessage = this.state.successMessage ? (
       <Alert variant='success'>{this.state.successMessage}</Alert>
@@ -338,9 +341,10 @@ export default class App extends Component {
           </Container>
         </Navbar>
 
-        {message}
-        {failMessage}
+        {dangerMessage}
+        {warningMessage}
         {successMessage}
+        {infoMessage}
 
         <Routes>
           <Route
@@ -351,11 +355,13 @@ export default class App extends Component {
                   createRandomCharacter={this.createRandomCharacter}
                   continueAdventure={this.continueAdventure}
                   user={this.state.user}
+                  setMessage={this.setMessage}
                 />
               ) : (
                 <Signin
                   login={this.loginHandler}
                   googleLogin={this.handleGoogleLogin}
+                  setMessage={this.setMessage}
                 />
               )
             }
@@ -369,6 +375,7 @@ export default class App extends Component {
                 createAdventure={this.createAdventure}
                 user={this.state.user}
                 charCreateAchievement={this.charCreateAchievement}
+                setMessage={this.setMessage}
               />
             }
           />
@@ -381,13 +388,17 @@ export default class App extends Component {
                 character={this.state.character}
                 achievement={this.state.charCreateA}
                 achievementCheck={this.achievementCheck}
+                setMessage={this.setMessage}
               />
             }
           />
           <Route
             path='/adventure-list'
             exact
-            element={<Adventures continueAdventure={this.continueAdventure} />}
+            element={<Adventures 
+              continueAdventure={this.continueAdventure}
+              setMessage={this.setMessage}
+            />}
           />
           <Route
             path='/adventure'
@@ -396,6 +407,7 @@ export default class App extends Component {
               <Adventure
                 adventure={this.state.adventure}
                 character={this.state.character}
+                setMessage={this.setMessage}
               />
             }
           />
@@ -408,6 +420,7 @@ export default class App extends Component {
                 setCharacter={this.setCharacter}
                 dontCreateRandomCharacter={this.dontCreateRandomCharacter}
                 filtered={""}
+                setMessage={this.setMessage}
               />
             }
           />
@@ -420,6 +433,7 @@ export default class App extends Component {
                 character={this.state.character}
                 continueAdventure={this.continueAdventure}
                 createAdventure={this.createAdventure}
+                setMessage={this.setMessage}
               />
             }
           />
@@ -431,6 +445,8 @@ export default class App extends Component {
                 continueAdventure={this.continueAdventure}
                 createAdventure={this.createAdventure}
                 setCharacter={this.setCharacter}
+                setMessage={this.setMessage}
+                dontCreateRandomCharacter={this.dontCreateRandomCharacter}
               />
             }
           />
@@ -441,22 +457,33 @@ export default class App extends Component {
               <Signup
                 register={this.registerHandler}
                 login={this.loginHandler}
+                setMessage={this.setMessage}
               />
             }
           ></Route>
           <Route
             path='/signin'
             element={
-              <Signin login={this.loginHandler} isAuth={this.state.isAuth} />
+              <Signin 
+              login={this.loginHandler} 
+              isAuth={this.state.isAuth}
+              setMessage={this.setMessage}
+              />
             }
           ></Route>
           <Route
             path={`/profile`}
-            element={<Profile currentUser={this.state.user} />}
+            element={<Profile 
+              currentUser={this.state.user}
+              setMessage={this.setMessage} 
+            />}
           >
             <Route
               path=':userId'
-              element={<Profile currentUser={this.state.user} />}
+              element={<Profile 
+                currentUser={this.state.user}
+                setMessage={this.setMessage} 
+              />}
             />
           </Route>
         </Routes>

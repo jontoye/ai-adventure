@@ -52,6 +52,7 @@ export default class CreateAdventure extends Component {
       .catch((err) => {
         console.log("Error fetching characters.");
         console.log(err);
+        this.props.setMessage(err.message,'danger');
       });
   };
 
@@ -74,20 +75,27 @@ export default class CreateAdventure extends Component {
       },
     })
       .then((response) => {
-        console.log("Adventure created successfully.", response);
-        response.data.adventure.events = [this.state.event];
-        this.setState({
-          newAdventure: response.data.adventure,
-          character: character,
-        });
-        setTimeout(() => {
-          this.props.startStory(this.state.newAdventure, this.state.character);
-          this.setRedirect();
-        }, 100);
-        // this.loadCharacterList();
+        if (response.data.error) {
+          console.log("Error adding adventure.", response.data.error);
+          this.props.setMessage(response.data.error._message+". Please confirm you have correctly filled out all the fields in the adventure creation form.\nIf the issue persists please contact the developers and quote: Adventure/"+response.data.error.name,'danger');
+        } else {
+          console.log("Adventure created successfully.", response);
+          response.data.adventure.events = [this.state.event];
+          this.setState({
+            newAdventure: response.data.adventure,
+            character: character,
+          });
+          setTimeout(() => {
+            this.props.startStory(this.state.newAdventure, this.state.character);
+            this.setRedirect();
+          }, 100);
+          // this.loadCharacterList();
+        }
       })
       .catch((error) => {
         console.log("Error creating adventure.", error);
+        console.log(error)
+        this.props.setMessage(error.message,'danger');
       });
   };
 
@@ -100,7 +108,6 @@ export default class CreateAdventure extends Component {
       });
     }, 200);
   }
-  appendResponse = (response) => {};
 
   imageSelect() {
     let fixed = this.state.adventure.setting.replace(" ", "");
@@ -194,6 +201,7 @@ export default class CreateAdventure extends Component {
       })
       .catch((error) => {
         console.log("error log:", error);
+        this.props.setMessage(error.message,'danger');
       });
     this.setState({
       placeholder: `Generating Adventure. Please wait...`,
@@ -207,15 +215,21 @@ export default class CreateAdventure extends Component {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
     })
-      .then((response) => {
+    .then((response) => {
+      if (response.data.error) {
+        console.log("Error adding event.", response.data.error);
+        this.props.setMessage(response.data.error._message+". Please confirm you have correctly filled out all the fields in the adventure creation form.\nIf the issue persists please contact the developers and quote: Event/"+response.data.error.name,'danger');
+      } else {
         console.log("Event created successfully.", response);
         this.setState({
           event: response.data.event,
         });
-      })
-      .catch((error) => {
-        console.log("Error creating event.", error);
-      });
+      }
+    })
+    .catch((error) => {
+      console.log("Error creating event.", error);
+      this.props.setMessage(error.message,'danger');
+    });
   };
 
   render() {
@@ -360,6 +374,7 @@ export default class CreateAdventure extends Component {
               adventure={this.state.newAdventure}
               character={this.state.character}
               achievementCheck={this.props.achievementCheck}
+              setMessage={this.props.setMessage}
             />
           )}
         </Container>
