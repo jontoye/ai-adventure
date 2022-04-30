@@ -52,6 +52,7 @@ export default class CreateAdventure extends Component {
       .catch((err) => {
         console.log("Error fetching characters.");
         console.log(err);
+        this.props.setMessage(err.message,'danger');
       });
   };
 
@@ -88,6 +89,7 @@ export default class CreateAdventure extends Component {
       })
       .catch((error) => {
         console.log("Error creating adventure.", error);
+        this.props.setMessage(error.message,'danger');
       });
   };
 
@@ -100,7 +102,6 @@ export default class CreateAdventure extends Component {
       });
     }, 200);
   }
-  appendResponse = (response) => {};
 
   imageSelect() {
     let fixed = this.state.adventure.setting.replace(" ", "");
@@ -194,6 +195,7 @@ export default class CreateAdventure extends Component {
       })
       .catch((error) => {
         console.log("error log:", error);
+        this.props.setMessage(error.message,'danger');
       });
     this.setState({
       placeholder: `Generating Adventure. Please wait...`,
@@ -215,6 +217,7 @@ export default class CreateAdventure extends Component {
       })
       .catch((error) => {
         console.log("Error creating event.", error);
+        this.props.setMessage(error.message,'danger');
       });
   };
 

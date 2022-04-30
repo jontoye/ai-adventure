@@ -156,6 +156,7 @@ export default class CreateCharacter extends Component {
       .catch((error) => {
         // console.log("character attempt", character);
         console.log("Error adding character.", error);
+        this.props.setMessage(error.message,'danger');
       });
   };
 
@@ -223,6 +224,7 @@ export default class CreateCharacter extends Component {
       })
       .catch((error) => {
         console.log("error log:", error);
+        this.props.setMessage(error.message,'danger');
       });
 
     //Use a timeout/clock here to randomly change state.response to keep things interesting while the AI thinks?

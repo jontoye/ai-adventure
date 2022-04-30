@@ -88,6 +88,7 @@ export default class Character extends Component {
             to='/create-adventure'
             replace={true}
             character={this.state.character}
+            setMessage={this.props.setMessage}
           />
         )}
         {this.state.redirected && (
@@ -97,6 +98,7 @@ export default class Character extends Component {
             character={this.state.character}
             deleteCharacter={this.props.deleteCharacter}
             createAdventure={this.props.createAdventure}
+            setMessage={this.props.setMessage}
           />
         )}
       </div>

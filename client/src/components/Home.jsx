@@ -54,10 +54,11 @@ export default class Home extends Component {
 					character={this.state.character}
 					continueAdventure={this.props.continueAdventure}
 					createRandomCharacter={this.props.createRandomCharacter} 
+					setMessage={this.props.setMessage}
 				/>
 				<Tutorial />
 				<TechStack />
-				<Contact />
+				<Contact setMessage={this.setMessage}/>
 			</>
 		)
 	}

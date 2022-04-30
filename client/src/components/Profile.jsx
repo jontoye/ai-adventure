@@ -7,7 +7,7 @@ import PictureChanger from "./PictureChanger";
 import { Modal, Button, Tooltip, OverlayTrigger } from "react-bootstrap";
 
 
-function Profile({ currentUser }) {
+function Profile({ currentUser, setMessage }) {
   const headers = {
     Authorization: "Bearer " + localStorage.getItem("token"),
   }
@@ -50,6 +50,7 @@ function Profile({ currentUser }) {
       }) 
       .catch(err => {
         console.error(err);
+        setMessage(err.message,'danger');
       })
   };
 

@@ -23,7 +23,7 @@ export default class CharacterDetail extends Component {
   componentDidMount() {
     this.loadName();
     this.setCharacter();
-  }
+  };
 
   loadName = () => {
     Axios.get("character/index", {
@@ -31,17 +31,18 @@ export default class CharacterDetail extends Component {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
     })
-      .then((response) => {
-        let id = response.data.characters.filter(
-          (character) => character.name === this.state.character.name
-        );
-        let char_id = id[0]._id;
-        this.setState({ id: id[0]._id });
-        this.loadAdventureList(char_id);
-      })
-      .catch((error)=>{
-        console.log("Error finding character.", error);
-      });
+    .then((response) => {
+      let id = response.data.characters.filter(
+        (character) => character.name === this.state.character.name
+      );
+      let char_id = id[0]._id;
+      this.setState({ id: id[0]._id });
+      this.loadAdventureList(char_id);
+    })
+    .catch((error)=>{
+      console.log("Error finding character.", error);
+      this.props.setMessage(error.message,'danger');
+    });
   };
 
   loadAdventureList = (char_id) => {
@@ -51,26 +52,27 @@ export default class CharacterDetail extends Component {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
     })
-      .then((response) => {
-        let adventures = response.data.adventures.filter(
-          (adventure) => adventure.character === char_id
-        );
-        this.setState({
-          myadventures: adventures.reverse(),
-          adventureCount: adventures.length,
-        });
-      })
-      .catch((err) => {
-        console.log("Error fetching adventures.");
-        console.log(err);
+    .then((response) => {
+      let adventures = response.data.adventures.filter(
+        (adventure) => adventure.character === char_id
+      );
+      this.setState({
+        myadventures: adventures.reverse(),
+        adventureCount: adventures.length,
       });
+    })
+    .catch((err) => {
+      console.log("Error fetching adventures.");
+      console.log(err);
+      this.props.setMessage(err.message,'danger');
+    });
   };
 
   setCharacter() {
     this.setState({
       character: this.props.character,
     });
-  }
+  };
 
   deleteAdventure = (adventure) => {
     Axios.delete(`adventure/delete?id=${adventure._id}`, {
@@ -85,6 +87,7 @@ export default class CharacterDetail extends Component {
       .catch((err) => {
         console.log(`Error deleting adventure: ${adventure.name}`);
         console.log(err);
+        this.props.setMessage(err.message,'danger');
       });
   };
 
@@ -94,7 +97,7 @@ export default class CharacterDetail extends Component {
     this.setState({
       redirect: true,
     });
-  }
+  };
 
   render() {
     let adventures = this.state.myadventures.map((a) => {
@@ -106,6 +109,7 @@ export default class CharacterDetail extends Component {
           id={a._id}
           continueAdventure={this.props.continueAdventure}
           deleteAdventure={this.deleteAdventure}
+          setMessage={this.setMessage}
         />
       );
     });
@@ -155,6 +159,7 @@ export default class CharacterDetail extends Component {
             to='/create-adventure'
             replace={true}
             character={this.state.character}
+            setMessage={this.props.setMessage}
           />
         )}
       </div>

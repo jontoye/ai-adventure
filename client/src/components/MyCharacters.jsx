@@ -45,6 +45,7 @@ export default class Characters extends Component {
       .catch((err) => {
         console.log("Error fetching characters.");
         console.log(err);
+        this.props.setMessage(err.message,'danger');
       });
   };
 
@@ -61,6 +62,7 @@ export default class Characters extends Component {
       .catch((err) => {
         console.log(`Error deleting character: ${name}`);
         console.log(err);
+        this.props.setMessage(err.message,'danger');
       });
   };
 
@@ -87,6 +89,7 @@ export default class Characters extends Component {
             createAdventure={this.props.createAdventure}
             deleteCharacter={this.deleteCharacter}
             setCharacter={this.props.setCharacter}
+            setMessage={this.props.setMessage}
           />
         </div>
       );
