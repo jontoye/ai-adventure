@@ -105,6 +105,7 @@ export default class Adventures extends Component {
           <Navigate
             to='/create-adventure'
             replace={true}
+            setMessage={this.props.setMessage}
           />
         )}
       </div>

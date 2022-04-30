@@ -371,6 +371,7 @@ export default class CreateCharacter extends Component {
             replace={true}
             character={this.state.newCharacter}
             achievement={true}
+            setMessage={this.props.setMessage}
           />
         )}
       </>

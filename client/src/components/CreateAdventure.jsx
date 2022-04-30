@@ -363,6 +363,7 @@ export default class CreateAdventure extends Component {
               adventure={this.state.newAdventure}
               character={this.state.character}
               achievementCheck={this.props.achievementCheck}
+              setMessage={this.props.setMessage}
             />
           )}
         </Container>

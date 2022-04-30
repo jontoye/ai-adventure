@@ -122,7 +122,7 @@ export default class Characters extends Component {
 
         </Container>
         {this.state.redirect && (
-          <Navigate to='/create-character' replace={true} />
+          <Navigate to='/create-character' replace={true} setMessage={this.props.setMessage}/>
         )}
       </div>
     );

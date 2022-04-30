@@ -83,6 +83,7 @@ function Users({ continueAdventure, createAdventure, setCharacter, setMessage, d
         createAdventure={createAdventure}
         setCharacter={setCharacter}
         dontCreateRandomCharacter={dontCreateRandomCharacter}
+        setmessage={setMessage}
       />
       <br></br>
       <br></br>
