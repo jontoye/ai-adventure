@@ -46,12 +46,12 @@ exports.auth_signup_post = (req, res) => {
         // req.flash("error", "Email is already in use");
         // res.redirect("/auth/signin");
         if (Object.keys(err.keyValue).includes("username")) {
-          res.json({ message: "Username already exists." }).status(400);
+          res.json({error:err, message: "Username already exists." }).status(400);
         } else if (Object.keys(err.keyValue).includes("emailAddress")) {
-          res.json({ message: "Email address already exists." }).status(400);
+          res.json({error:err,  message: "Email address already exists." }).status(400);
         } else {
           res
-            .json({
+            .json({error:err, 
               message:
                 "Username or email already exists. Please choose a new one.",
             })
@@ -134,7 +134,7 @@ exports.auth_signin_post = async (req, res) => {
       }
     );
   } catch (error) {
-    res.json({ message: "You are not logged in." }).status(400);
+    res.json({error:error,  message: "You are not logged in." }).status(400);
   }
 };
 
@@ -159,7 +159,8 @@ exports.googleLoginPost = (req, resp) => {
         User.findOne({ emailAddress: email }).exec((err, user) => {
           if (err) {
             return resp.json({
-              error: "Something went wrong...",
+              error:err, 
+              message: "Something went wrong...",
             });
           } else {
             if (user) {
@@ -192,7 +193,8 @@ exports.googleLoginPost = (req, resp) => {
               newUser.save((err, data) => {
                 if (err) {
                   return resp.json({
-                    error: "Something went wrong...",
+                    error:err, 
+                    message: "Something went wrong...",
                   });
                 }
                 const token = jwt.sign(

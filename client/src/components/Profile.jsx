@@ -59,7 +59,7 @@ function Profile({ currentUser }) {
       await axios.post(`/profile/${params.userId}/addsocial`, {
         user: currentUser.id,
         add: "friend",
-      }, {headers});
+      }, {headers}).catch((error)=>{console.log(error)});
       await axios.post(`/profile/${currentUser.id}/addsocial`, {
         user: params.userId,
         add: "friend",
@@ -75,7 +75,7 @@ function Profile({ currentUser }) {
       await axios.post(`/profile/${params.userId}/removesocial`, {
         user: currentUser.id,
         remove: "friend",
-      }, {headers});
+      }, {headers}).catch((error)=>{console.log(error)});
       await axios.post(`/profile/${currentUser.id}/removesocial`, {
         user: params.userId,
         remove: "friend",

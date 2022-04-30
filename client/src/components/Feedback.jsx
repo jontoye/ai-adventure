@@ -16,13 +16,18 @@ export default class Feedback extends Component {
       }    
 
       getFeedback = async () => {
-        const response = await Axios.get('/feedback', {
+        Axios.get('/feedback', {
           headers: {
             "Authorization": "Bearer " + localStorage.getItem("token"),
-        }
+          }
         })
-        this.setState({
-          feedback: response.data.feedback.reverse()
+        .then((response)=>{
+          this.setState({
+            feedback: response.data.feedback.reverse()
+          })
+        })
+        .catch((error)=>{
+          console.log("Error fetching feedback.",error)
         })
       }
     
@@ -34,10 +39,10 @@ export default class Feedback extends Component {
     
       feedbackHandler = () => {
         Axios.post("feedback", this.state, {
-            headers: {
-              Authorization: "Bearer " + localStorage.getItem("token"),
-            },
-          })
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        })
         .then((response) => {
             // console.log(response.data);
             let feedback = response.data.result ? 'Thank you for your message!' : null;

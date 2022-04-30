@@ -6,11 +6,11 @@ exports.event_create_post = (req, res) => {
   //save adventure
   event.save()
   .then((event) => {
-    res.json({ event });
+    res.json({ event }).status(200);
   })
   .catch((err) => {
     console.log(err);
-    res.send("Error 418");
+    res.json({error: err, message: "Error creating event."}).status(400);
   });
 };
 
@@ -18,11 +18,11 @@ exports.event_create_post = (req, res) => {
 exports.event_index_get = (req, res) => {
   Event.find()
   .then((events) => {
-    res.json({ events });
+    res.json({ events }).status(200);
   })
   .catch((err) => {
     console.log(err);
-    res.send("Error locating events.");
+    res.json({error: err, message: "Error fetching events."}).status(400);
   });
 }
 
@@ -30,8 +30,11 @@ exports.event_index_get = (req, res) => {
 exports.event_update_put = (req,res) => {
   Event.findByIdAndUpdate(req.body._id, req.body, {new: true})
   .then((event)=>{
-      res.json({event});
+      res.json({event}).status(200);
   })
-  .catch((err)=>{console.log(err); res.send("Error updating event.")})
+  .catch((err)=>{
+    console.log(err); 
+    res.json({error: err, message: "Error updating event."}).status(400);
+  })
 }
 

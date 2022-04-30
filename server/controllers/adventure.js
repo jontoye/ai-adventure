@@ -19,13 +19,13 @@ exports.adventure_create_post = async (req, res) => {
           }' on ${moment().format("MMMM Do YYYY, h:mm a")}`
         );
         user.save().then(() => {
-          res.json({ adventure });
+          res.json({ adventure }).status(200);
         });
       });
     })
-    .catch((err) => {zx
+    .catch((err) => {
       console.log(err);
-      res.send("CREATE ADVENTURE ERROR", err);
+      res.json({error: err, message: "Error creating adventure."}).status(400);
     });
 };
 
@@ -37,7 +37,7 @@ exports.adventure_index_get = (req, res) => {
     })
     .catch((err) => {
       console.log(err);
-      res.send("Error locating adventures.");
+      res.json({error: err, message: "Error fetching adventures."}).status(400);
     });
 };
 
@@ -55,7 +55,7 @@ exports.adventure_delete_get = (req, res) => {
           })
           .catch((err) => {
             console.log(err);
-            res.send("Error deleting events.");
+            res.json({error: err, message: "Error deleting events."}).status(400);
           });
       });
       //STEP THREE: DELETE THE ADVENTURE
@@ -66,12 +66,12 @@ exports.adventure_delete_get = (req, res) => {
         })
         .catch((err) => {
           console.log(err);
-          res.send("Error deleting selected adventure.");
+          res.json({error: err, message: "Error deleting adventure."}).status(400);
         });
     })
     .catch((err) => {
       console.log(err);
-      res.send("Error locating adventures.");
+      res.json({error: err, message: "Error fetching adventures."}).status(400);
     });
 };
 
@@ -83,6 +83,6 @@ exports.adventure_update_put = (req, res) => {
     })
     .catch((err) => {
       console.log(err);
-      res.send("Error updating adventure.");
+      res.json({error: err, message: "Error updating adventure."}).status(400);
     });
 };

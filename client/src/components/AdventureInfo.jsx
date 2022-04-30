@@ -58,6 +58,9 @@ export default class AdventureInfo extends Component {
           redirect: true,
         });
       }, 100);
+    })
+    .catch((error)=>{
+      console.log("Error continuing adventure.", error);
     });
     // console.log(this.state.character)
   };

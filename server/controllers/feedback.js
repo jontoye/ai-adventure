@@ -7,20 +7,20 @@ exports.feedback_create_post = (req, res) => {
   feedback
     .save()
     .then((result) => {
-      res.json({ result });
+      res.json({ result }).status(200);
     })
     .catch((err) => {
       console.log(err);
-      res.json({ error: err }).status(418);
+      res.json({ error: err, message: "Error sending feedback to developers." }).status(400);
     });
 };
 
 exports.feedback_index_get = (req, res) => {
   Feedback.find()
     .then((results) => {
-      res.json({ feedback: results });
+      res.json({ feedback: results }).status(200);
     })
     .catch((err) => {
-      res.json({ error: err });
+      res.json({ error: err, message: "Error fetching feedback." }).status(400);
     });
 };
