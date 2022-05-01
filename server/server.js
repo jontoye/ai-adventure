@@ -4,6 +4,7 @@ require("dotenv").config();
 const cors = require("cors");
 const favicon = require("serve-favicon");
 const path = require("path");
+var timeout = require("connect-timeout");
 
 const PORT = process.env.PORT || 3001;
 
@@ -12,10 +13,17 @@ let session = require("express-session");
 let passport = require("./helper/ppConfig");
 
 const app = express();
+app.use(timeout("29s"));
 app.use(express.urlencoded({ extended: true }));
 // app.use(express.static("public"));
 app.use(express.json());
 app.use(cors());
+
+app.use(haltOnTimedout);
+
+function haltOnTimedout(req, res, next) {
+  if (!req.timedout) next();
+}
 
 // app.use(favicon(path.join(__dirname, 'build', 'favicon.ico')));
 app.use(express.static(path.join(__dirname, "build")));
@@ -54,6 +62,8 @@ const feedbackRoute = require("./routes/feedback");
 app.get("/", (req, res, next) => {
   res.redirect("/home");
 });
+app.use(haltOnTimedout);
+
 app.use("/", adventureRoute);
 app.use("/", eventRoute);
 app.use("/", authRoute);
@@ -75,6 +85,7 @@ mongoose.connect(
     console.log("mongodb connected successfully!");
   }
 );
+app.use(haltOnTimedout);
 
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
