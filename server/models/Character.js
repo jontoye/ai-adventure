@@ -7,7 +7,7 @@ const characterSchema = mongoose.Schema(
       required: true,
       unique: true,
       minlength: [3, "Character name must be longer than 2 characters"],
-      maxlength: [32, "Character name cannot be longer than 32 characters."],
+      maxlength: [40, "Character name cannot be longer than 40 characters."],
     },
     class: {
       type: String,
