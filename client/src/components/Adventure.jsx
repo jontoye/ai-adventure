@@ -386,7 +386,7 @@ export default class Adventure extends Component {
                   onClick={this.buttonOneClick}
                   onKeyPress={this.handleKeyPress}
                 >
-                  {this.state.option1}
+                  {this.state.option1.replace(/(<([^>]+)>)/gi, "")}
                 </Button>
                 <br></br>
                 <br />
@@ -397,7 +397,7 @@ export default class Adventure extends Component {
                   onClick={this.buttonTwoClick}
                   onKeyPress={this.handleKeyPress}
                 >
-                  {this.state.option2}
+                  {this.state.option2.replace(/(<([^>]+)>)/gi, "")}
                 </Button>
                 <br></br>
                 <br />
@@ -408,7 +408,7 @@ export default class Adventure extends Component {
                   onClick={this.buttonThreeClick}
                   onKeyPress={this.handleKeyPress}
                 >
-                  {this.state.option3}
+                  {this.state.option3.replace(/(<([^>]+)>)/gi, "")}
                 </Button>
               </div>
             </Col>
