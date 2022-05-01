@@ -145,7 +145,7 @@ export default class CreateAdventure extends Component {
     // console.log("story: " + character.backstory);
 
     let intro = `${character.backstory}`;
-    let prompt = `Begin a ${formDataObj.genre} story to ${formDataObj.quest} in a ${formDataObj.setting} setting. Create a detailed introduction in 50 words about ${character.name} starting the quest`;
+    let prompt = `Begin a ${formDataObj.genre} story to ${formDataObj.quest} in a ${formDataObj.setting} setting. Create a detailed, interesting, entertaining, introduction in 100 words about ${character.name} starting the quest`;
     let AIprompt = intro + "\n\n" + prompt + "\n";
     // console.log("intro", intro);
     // console.log("prompt", prompt);
@@ -161,12 +161,12 @@ export default class CreateAdventure extends Component {
     openai
       .createCompletion(process.env.REACT_APP_API_ENGINE, {
         prompt: AIprompt,
-        temperature: 0.8,
+        temperature: 0.75,
         max_tokens: 1000,
         top_p: 1,
         // stream: true,
-        frequency_penalty: 0.5,
-        presence_penalty: 0.2,
+        frequency_penalty: 0,
+        presence_penalty: 0,
       })
       .then((response) => {
         let story = response.data.choices[0].text;
