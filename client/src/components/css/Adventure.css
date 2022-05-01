@@ -47,3 +47,7 @@
 
   margin: 0 auto;
 }
+
+.hidden-log {
+  display: none;
+}
