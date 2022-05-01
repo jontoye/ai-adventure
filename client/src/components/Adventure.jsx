@@ -91,9 +91,9 @@ export default class Adventure extends Component {
       .createCompletion(process.env.REACT_APP_API_ENGINE, {
         prompt: AIprompt,
         temperature: 0.8,
-        max_tokens: 256,
+        max_tokens: 1000,
         top_p: 1,
-        frequency_penalty: 1.5,
+        frequency_penalty: 2,
         presence_penalty: 0.8,
       })
       .then((response) => {
@@ -107,7 +107,7 @@ export default class Adventure extends Component {
         }
         // console.log(choices)
         let splitLines = choices.split('\n').filter(str => {
-          return str != '';
+          return str !== '';
         })
         // console.log(splitLines)
         let imavar = splitLines.map(str=>{
@@ -280,10 +280,10 @@ export default class Adventure extends Component {
           .createCompletion(process.env.REACT_APP_API_ENGINE, {
             prompt: AIprompt,
             temperature: 0.8,
-            max_tokens: 256,
+            max_tokens: 1000,
             top_p: 1,
-            frequency_penalty: 1.8,
-            presence_penalty: 1,
+            frequency_penalty: 2,
+            presence_penalty: 0.8,
           })
           .then((response) => {
             let reply = response.data.choices[0].text;

@@ -207,7 +207,7 @@ export default class CreateCharacter extends Component {
       .createCompletion(process.env.REACT_APP_API_ENGINE, {
         prompt: AIprompt,
         temperature: 0.8,
-        max_tokens: 500,
+        max_tokens: 1000,
         top_p: 1,
         frequency_penalty: 0,
         presence_penalty: 0,

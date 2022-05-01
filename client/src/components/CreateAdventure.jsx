@@ -52,7 +52,7 @@ export default class CreateAdventure extends Component {
       .catch((err) => {
         console.log("Error fetching characters.");
         console.log(err);
-        this.props.setMessage(err.message,'danger');
+        this.props.setMessage(err.message, "danger");
       });
   };
 
@@ -77,7 +77,12 @@ export default class CreateAdventure extends Component {
       .then((response) => {
         if (response.data.error) {
           console.log("Error adding adventure.", response.data.error);
-          this.props.setMessage(response.data.error._message+". Please confirm you have correctly filled out all the fields in the adventure creation form.\nIf the issue persists please contact the developers and quote: Adventure/"+response.data.error.name,'danger');
+          this.props.setMessage(
+            response.data.error._message +
+              ". Please confirm you have correctly filled out all the fields in the adventure creation form.\nIf the issue persists please contact the developers and quote: Adventure/" +
+              response.data.error.name,
+            "danger"
+          );
         } else {
           console.log("Adventure created successfully.", response);
           response.data.adventure.events = [this.state.event];
@@ -86,7 +91,10 @@ export default class CreateAdventure extends Component {
             character: character,
           });
           setTimeout(() => {
-            this.props.startStory(this.state.newAdventure, this.state.character);
+            this.props.startStory(
+              this.state.newAdventure,
+              this.state.character
+            );
             this.setRedirect();
           }, 100);
           // this.loadCharacterList();
@@ -94,8 +102,8 @@ export default class CreateAdventure extends Component {
       })
       .catch((error) => {
         console.log("Error creating adventure.", error);
-        console.log(error)
-        this.props.setMessage(error.message,'danger');
+        console.log(error);
+        this.props.setMessage(error.message, "danger");
       });
   };
 
@@ -154,10 +162,11 @@ export default class CreateAdventure extends Component {
       .createCompletion(process.env.REACT_APP_API_ENGINE, {
         prompt: AIprompt,
         temperature: 0.8,
-        max_tokens: 256,
+        max_tokens: 1000,
         top_p: 1,
-        frequency_penalty: 0,
-        presence_penalty: 0,
+        // stream: true,
+        frequency_penalty: 0.5,
+        presence_penalty: 0.2,
       })
       .then((response) => {
         let story = response.data.choices[0].text;
@@ -201,7 +210,7 @@ export default class CreateAdventure extends Component {
       })
       .catch((error) => {
         console.log("error log:", error);
-        this.props.setMessage(error.message,'danger');
+        this.props.setMessage(error.message, "danger");
       });
     this.setState({
       placeholder: `Generating Adventure. Please wait...`,
@@ -215,21 +224,26 @@ export default class CreateAdventure extends Component {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
     })
-    .then((response) => {
-      if (response.data.error) {
-        console.log("Error adding event.", response.data.error);
-        this.props.setMessage(response.data.error._message+". Please confirm you have correctly filled out all the fields in the adventure creation form.\nIf the issue persists please contact the developers and quote: Event/"+response.data.error.name,'danger');
-      } else {
-        console.log("Event created successfully.", response);
-        this.setState({
-          event: response.data.event,
-        });
-      }
-    })
-    .catch((error) => {
-      console.log("Error creating event.", error);
-      this.props.setMessage(error.message,'danger');
-    });
+      .then((response) => {
+        if (response.data.error) {
+          console.log("Error adding event.", response.data.error);
+          this.props.setMessage(
+            response.data.error._message +
+              ". Please confirm you have correctly filled out all the fields in the adventure creation form.\nIf the issue persists please contact the developers and quote: Event/" +
+              response.data.error.name,
+            "danger"
+          );
+        } else {
+          console.log("Event created successfully.", response);
+          this.setState({
+            event: response.data.event,
+          });
+        }
+      })
+      .catch((error) => {
+        console.log("Error creating event.", error);
+        this.props.setMessage(error.message, "danger");
+      });
   };
 
   render() {
@@ -270,6 +284,7 @@ export default class CreateAdventure extends Component {
                 name='name'
                 className='form__field'
                 placeholder='Monty Python and the Holy Grail'
+                maxlength='40'
                 onChange={this.handleChange}
               ></input>
             </div>
