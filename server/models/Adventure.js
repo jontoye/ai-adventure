@@ -6,7 +6,7 @@ const adventureSchema = mongoose.Schema(
       type: String,
       required: true,
       minlength: [3, "Adventure name must be longer than 2 characters"],
-      maxlength: [64, "Adventure name cannot be longer than 64 characters."],
+      maxlength: [41, "Adventure name cannot be longer than 40 characters."],
     },
     genre: {
       type: String,
@@ -35,17 +35,20 @@ const adventureSchema = mongoose.Schema(
       type: Array,
       default: [],
     },
-    events: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Event",
-    }],
+    events: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Event",
+      },
+    ],
     poem: {
       type: String,
     },
     image: {
       type: String,
-      default: "https://images.unsplash.com/photo-1462759353907-b2ea5ebd72e7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2231&q=80",
-    }
+      default:
+        "https://images.unsplash.com/photo-1462759353907-b2ea5ebd72e7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2231&q=80",
+    },
   },
   {
     timestamps: true,
