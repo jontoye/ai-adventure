@@ -26,10 +26,14 @@ export default class Adventure extends Component {
       event: {},
       disabled: "disabled",
       classText: "",
+      currentKey: "",
+      handleKeyPress: this.handleKeyPress.bind(this),
     };
   }
 
   componentDidMount() {
+    document.addEventListener("keydown", this.handleKeyPress);
+    // document.addEventListener("keydown", this.handleKeyDown);
     let events = this.props.adventure.events;
     let rawImageURL = this.props.adventure.image;
     let hiResImageURL = rawImageURL.replace("setting/", "setting/hi_res/");
@@ -65,6 +69,30 @@ export default class Adventure extends Component {
     }, 100);
   }
 
+  componentWillUnmount() {
+    document.removeEventListener("keydown", this.handleKeyPress);
+  }
+
+  handleKeyDown(event) {
+    if (event.keyCode === 13) {
+      console.log("Enter key pressed");
+    }
+  }
+
+  handleKeyPress = (event) => {
+    console.log("key pressed");
+    if (event.key === "1" && this.state.disabled !== "disabled") {
+      console.log("1 key pressed");
+      this.chooseOption(this.state.option1, 1);
+    }
+    if (event.key === "2" && this.state.disabled !== "disabled") {
+      this.chooseOption(this.state.option2, 2);
+    }
+    if (event.key === "3" && this.state.disabled !== "disabled") {
+      this.chooseOption(this.state.option3, 3);
+    }
+  };
+
   buttonOneClick = () => {
     this.chooseOption(this.state.option1, 1);
   };
@@ -93,8 +121,8 @@ export default class Adventure extends Component {
         temperature: 0.8,
         max_tokens: 1000,
         top_p: 1,
-        frequency_penalty: 2,
-        presence_penalty: 0.8,
+        frequency_penalty: 1.2,
+        presence_penalty: 0.2,
       })
       .then((response) => {
         let choices = response.data.choices[0].text;
@@ -282,7 +310,7 @@ export default class Adventure extends Component {
         const openai = new OpenAIApi(configuration);
         let previousLog = this.state.previousLog.join("");
         let action = `${this.state.character.name} chooses ${x}. ${option}.`;
-        let prompt = `Give a long and detailed account of what happens next.`;
+        let prompt = `Give a long, entertaining, detailed account of what happens next.`;
         let AIprompt = previousLog + "\n" + action + prompt;
 
         openai
@@ -291,8 +319,8 @@ export default class Adventure extends Component {
             temperature: 0.8,
             max_tokens: 1000,
             top_p: 1,
-            frequency_penalty: 2,
-            presence_penalty: 0.8,
+            frequency_penalty: 1.2,
+            presence_penalty: 0.2,
           })
           .then((response) => {
             let reply = response.data.choices[0].text;
@@ -356,6 +384,7 @@ export default class Adventure extends Component {
                   size='lg'
                   disabled={this.state.disabled}
                   onClick={this.buttonOneClick}
+                  onKeyPress={this.handleKeyPress}
                 >
                   {this.state.option1}
                 </Button>
@@ -366,6 +395,7 @@ export default class Adventure extends Component {
                   size='lg'
                   disabled={this.state.disabled}
                   onClick={this.buttonTwoClick}
+                  onKeyPress={this.handleKeyPress}
                 >
                   {this.state.option2}
                 </Button>
@@ -376,6 +406,7 @@ export default class Adventure extends Component {
                   size='lg'
                   disabled={this.state.disabled}
                   onClick={this.buttonThreeClick}
+                  onKeyPress={this.handleKeyPress}
                 >
                   {this.state.option3}
                 </Button>
@@ -398,6 +429,7 @@ export default class Adventure extends Component {
                   </Card.Title>
                   <Card.Subtitle>
                     <b>{this.state.classText}</b>
+                    {this.state.currentKey}
                   </Card.Subtitle>
                   <br></br>
                   <Card.Text>
