@@ -7,7 +7,9 @@ export default class Entry extends Component {
   render() {
     return (
       <div className={this.key}>
-        <div className='entryText typewriter'>{this.props.text}</div>
+        <div className='entryText typewriter'>
+          {this.props.text.replace(/(<([^>]+)>)/gi, "")}
+        </div>
       </div>
     );
   }
