@@ -284,7 +284,7 @@ export default class CreateAdventure extends Component {
                 name='name'
                 className='form__field'
                 placeholder='Monty Python and the Holy Grail'
-                maxlength='40'
+                maxLength='40'
                 onChange={this.handleChange}
               ></input>
             </div>
