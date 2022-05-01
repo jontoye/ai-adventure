@@ -32,7 +32,7 @@ export default class Adventure extends Component {
   componentDidMount() {
     let events = this.props.adventure.events;
     let rawImageURL = this.props.adventure.image;
-    let hiResImageURL = rawImageURL.replace('setting/',"setting/hi_res/");
+    let hiResImageURL = rawImageURL.replace("setting/", "setting/hi_res/");
 
     console.log("LOAD");
     console.log("adventure loaded: ", this.props.adventure);
@@ -106,39 +106,49 @@ export default class Adventure extends Component {
           choices = choices.slice(7, choices.length);
         }
         // console.log(choices)
-        let splitLines = choices.split('\n').filter(str => {
-          return str !== '';
-        })
+        let splitLines = choices.split("\n").filter((str) => {
+          return str !== "";
+        });
         // console.log(splitLines)
-        let imavar = splitLines.map(str=>{
+        let imavar = splitLines.map((str) => {
           let strIndex = str.search(/[a-z]/i);
-          console.log(str.slice(strIndex,str.length))
-          return str.slice(strIndex,str.length)
-        })
+          console.log(str.slice(strIndex, str.length));
+          return str.slice(strIndex, str.length);
+        });
         // console.log(imavar)
-        setTimeout(()=>{
+        setTimeout(() => {
           // console.log(imavar)
 
           // let split_choices = choices.split(/\s?\d+\.\s?/);
           let split_choices = imavar;
-  
+
           //check the option exists
-          split_choices[0] = split_choices[0] ? split_choices[0] : OPTION_DEFAULTS[Math.floor(Math.random()*OPTION_DEFAULTS.length)];
-          split_choices[1] = split_choices[1] ? split_choices[1] : OPTION_DEFAULTS[Math.floor(Math.random()*OPTION_DEFAULTS.length)];
-          split_choices[2] = split_choices[2] ? split_choices[2] : OPTION_DEFAULTS[Math.floor(Math.random()*OPTION_DEFAULTS.length)];
-  
-  
+          split_choices[0] = split_choices[0]
+            ? split_choices[0]
+            : OPTION_DEFAULTS[
+                Math.floor(Math.random() * OPTION_DEFAULTS.length)
+              ];
+          split_choices[1] = split_choices[1]
+            ? split_choices[1]
+            : OPTION_DEFAULTS[
+                Math.floor(Math.random() * OPTION_DEFAULTS.length)
+              ];
+          split_choices[2] = split_choices[2]
+            ? split_choices[2]
+            : OPTION_DEFAULTS[
+                Math.floor(Math.random() * OPTION_DEFAULTS.length)
+              ];
+
           //reduce the option down to one sentence
           // split_choices[0] = split_choices[0].split(".").reverse()[0]
           // split_choices[1] = split_choices[1].split(".").reverse()[0]
           // split_choices[2] = split_choices[2].split(".").reverse()[0]
-  
-  
+
           // //check the option is longer than 4 characters
           // split_choices[0] = split_choices[0].length < 5 ? split_choices[0] : OPTION_DEFAULTS[Math.floor(Math.random()*OPTION_DEFAULTS.length)];
           // split_choices[1] = split_choices[1].length < 5 ? split_choices[1] : OPTION_DEFAULTS[Math.floor(Math.random()*OPTION_DEFAULTS.length)];
           // split_choices[2] = split_choices[2].length < 5 ? split_choices[2] : OPTION_DEFAULTS[Math.floor(Math.random()*OPTION_DEFAULTS.length)];
-  
+
           let rejoined_choices =
             "1. " +
             split_choices[0] +
@@ -146,7 +156,7 @@ export default class Adventure extends Component {
             split_choices[1] +
             "\n3. " +
             split_choices[2];
-  
+
           this.setState({
             log: [...this.state.log, rejoined_choices],
             previousLog: [...this.state.log, prompt, rejoined_choices],
@@ -158,21 +168,20 @@ export default class Adventure extends Component {
               optionPrompt: prompt,
               options: [split_choices[0], split_choices[1], split_choices[2]],
               fullLog: [...this.state.event.fullLog, prompt, rejoined_choices],
-              displayedLog: [...this.state.event.displayedLog, rejoined_choices],
+              displayedLog: [...this.state.event.displayedLog],
             },
             disabled: "",
           });
-  
+
           setTimeout(() => {
             window.scrollTo(0, document.body.scrollHeight);
             this.saveEvent();
           }, 100);
-        },1000)
-        
+        }, 1000);
       })
       .catch((error) => {
         console.log("error log:", error);
-        this.props.setMessage(error.message,'danger');
+        this.props.setMessage(error.message, "danger");
       });
     this.setState({
       placeholder: `Generating Choice. Please wait...`,
@@ -201,7 +210,7 @@ export default class Adventure extends Component {
       })
       .catch((error) => {
         console.log("Error creating event.", error);
-        this.props.setMessage(error.message,'danger');
+        this.props.setMessage(error.message, "danger");
       });
   };
 
@@ -211,23 +220,23 @@ export default class Adventure extends Component {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
     })
-    .then((response) => {
-      console.log("Event created successfully.", response);
-      this.setState({
-        event: response.data.event,
-        adventure: {
-          ...this.state.adventure,
-          events: [...this.state.adventure.events, response.data.event],
-        },
+      .then((response) => {
+        console.log("Event created successfully.", response);
+        this.setState({
+          event: response.data.event,
+          adventure: {
+            ...this.state.adventure,
+            events: [...this.state.adventure.events, response.data.event],
+          },
+        });
+        setTimeout(() => {
+          this.updateAdventureData();
+        }, 100);
+      })
+      .catch((error) => {
+        console.log("Error saving event.", error);
+        this.props.setMessage(error.message, "danger");
       });
-      setTimeout(() => {
-        this.updateAdventureData();
-      }, 100);
-    })
-    .catch((error) => {
-      console.log("Error saving event.", error);
-      this.props.setMessage(error.message,'danger');
-    });
   };
 
   updateAdventureData = () => {
@@ -236,13 +245,13 @@ export default class Adventure extends Component {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
     })
-    .then((response) => {
-      console.log("Adventure updated successfully.", response);
-    })
-    .catch((error) => {
-      console.log("Error updating adventure.", error);
-      this.props.setMessage(error.message,'danger');
-    });
+      .then((response) => {
+        console.log("Adventure updated successfully.", response);
+      })
+      .catch((error) => {
+        console.log("Error updating adventure.", error);
+        this.props.setMessage(error.message, "danger");
+      });
   };
 
   chooseOption = (option, x) => {
@@ -315,7 +324,7 @@ export default class Adventure extends Component {
           })
           .catch((error) => {
             console.log("error log:", error);
-            this.props.setMessage(error.message,'danger');
+            this.props.setMessage(error.message, "danger");
           });
       }, 100);
     }, 100);
@@ -330,14 +339,16 @@ export default class Adventure extends Component {
     return (
       <div>
         <Container
-            className='adventure-screen'
-            style={{ backgroundImage: this.state.background }}>
+          className='adventure-screen'
+          style={{ backgroundImage: this.state.background }}
+        >
           <div className='game-log mb-3'>
-            <Log log={this.state.log} adventureName={this.state.adventure.name} />
+            <Log
+              log={this.state.log}
+              adventureName={this.state.adventure.name}
+            />
           </div>
-          <Row
-            className='adventure-container'
-          >
+          <Row className='adventure-container'>
             <Col xs='9'>
               <div className='buttons'>
                 <Button
