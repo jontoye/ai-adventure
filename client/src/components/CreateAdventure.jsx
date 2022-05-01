@@ -210,7 +210,7 @@ export default class CreateAdventure extends Component {
       })
       .catch((error) => {
         console.log("error log:", error);
-        this.props.setMessage(error.message, "danger");
+        this.props.setMessage(error.message + '. If the issue persists, please contact the developers.', "danger");
       });
     this.setState({
       placeholder: `Generating Adventure. Please wait...`,

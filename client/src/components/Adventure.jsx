@@ -238,7 +238,7 @@ export default class Adventure extends Component {
       })
       .catch((error) => {
         console.log("Error creating event.", error);
-        this.props.setMessage(error.message, "danger");
+        this.props.setMessage(error.message + '. If the issue persists, please contact the developers.', "danger");
       });
   };
 
@@ -278,7 +278,7 @@ export default class Adventure extends Component {
       })
       .catch((error) => {
         console.log("Error updating adventure.", error);
-        this.props.setMessage(error.message, "danger");
+        this.props.setMessage(error.message + '. If the issue persists, please contact the developers.', "danger");
       });
   };
 
@@ -352,7 +352,7 @@ export default class Adventure extends Component {
           })
           .catch((error) => {
             console.log("error log:", error);
-            this.props.setMessage(error.message, "danger");
+            this.props.setMessage(error.message + '. If the issue persists, please contact the developers.', "danger");
           });
       }, 100);
     }, 100);
