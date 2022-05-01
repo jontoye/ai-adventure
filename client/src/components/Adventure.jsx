@@ -121,8 +121,8 @@ export default class Adventure extends Component {
         temperature: 0.8,
         max_tokens: 1000,
         top_p: 1,
-        frequency_penalty: 1.2,
-        presence_penalty: 0.2,
+        frequency_penalty: 1.5,
+        presence_penalty: 0.8,
       })
       .then((response) => {
         let choices = response.data.choices[0].text;
@@ -319,8 +319,8 @@ export default class Adventure extends Component {
             temperature: 0.8,
             max_tokens: 1000,
             top_p: 1,
-            frequency_penalty: 1.2,
-            presence_penalty: 0.2,
+            frequency_penalty: 1.5,
+            presence_penalty: 0.8,
           })
           .then((response) => {
             let reply = response.data.choices[0].text;
