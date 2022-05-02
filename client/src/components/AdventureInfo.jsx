@@ -30,7 +30,7 @@ export default class AdventureInfo extends Component {
       .catch((err) => {
         console.log("Error fetching characters.");
         console.log(err);
-        this.props.setMessage(err.message,'danger');
+        this.props.setMessage(err.message, "danger");
       });
   }
 
@@ -40,32 +40,33 @@ export default class AdventureInfo extends Component {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
-    }).then((response) => {
-      let events = response.data.events.filter((v) => {
-        return this.state.adventure.events.includes(v._id);
-      });
-      // console.log('successfully found events: ', events)
-      this.setState({
-        adventure: {
-          ...this.state.adventure,
-          events: events,
-        },
-      });
-      //async!
-      setTimeout(() => {
-        this.props.continueAdventure(
-          this.state.adventure,
-          this.state.character
-        );
-        this.setState({
-          redirect: true,
-        });
-      }, 100);
     })
-    .catch((error)=>{
-      console.log("Error continuing adventure.", error);
-      this.props.setMessage(error.message,'danger');
-    });
+      .then((response) => {
+        let events = response.data.events.filter((v) => {
+          return this.state.adventure.events.includes(v._id);
+        });
+        // console.log('successfully found events: ', events)
+        this.setState({
+          adventure: {
+            ...this.state.adventure,
+            events: events,
+          },
+        });
+        //async!
+        setTimeout(() => {
+          this.props.continueAdventure(
+            this.state.adventure,
+            this.state.character
+          );
+          this.setState({
+            redirect: true,
+          });
+        }, 100);
+      })
+      .catch((error) => {
+        console.log("Error continuing adventure.", error);
+        this.props.setMessage(error.message, "danger");
+      });
     // console.log(this.state.character)
   };
 
@@ -89,8 +90,11 @@ export default class AdventureInfo extends Component {
           <Card.Body>
             <Card.Title>{this.state.adventure.name}</Card.Title>
             <Card.Text>
-              {a_an} {this.state.adventure.setting} {this.state.adventure.genre}{" "}
-              {this.state.adventure.length} to {quest}.<br></br>
+              <p className='overflow-adventure'>
+                {a_an} {this.state.adventure.setting}{" "}
+                {this.state.adventure.genre} {this.state.adventure.length} to{" "}
+                {quest}.
+              </p>
               Character: {this.state.character.name} (
               {this.state.character.class})
             </Card.Text>

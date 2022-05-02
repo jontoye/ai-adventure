@@ -8,7 +8,6 @@ import "./css/Adventures.css";
 export default class Adventures extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       adventures: [],
       redirect: false,
@@ -98,7 +97,7 @@ export default class Adventures extends Component {
             onClick={this.scrollLeft} 
             alt="right-arrow" />
         </div>
-          <Container className="text-center my-4">
+          <Container className="text-center">
             <Button variant='secondary' onClick={this.createAdventure}>Create New Adventure</Button>
           </Container>
         {this.state.redirect && (
