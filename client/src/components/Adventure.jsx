@@ -112,8 +112,13 @@ export default class Adventure extends Component {
     });
     const openai = new OpenAIApi(configuration);
     let previousLog = this.state.previousLog.join("");
-    let prompt = `Give ${this.state.character.name} 3 detailed options for what to do next.`;
-    let AIprompt = previousLog + "\n" + prompt;
+    let prompt = `Give ${this.state.character.name} the ${this.state.character.class} 3 detailed options for what to do next.`;
+     let AIprompt_holder = previousLog + "\n" + prompt;
+        let AIprompt = AIprompt_holder.split(" ")
+          .reverse()
+          .slice(0, 1100)
+          .reverse()
+          .join(" ");
 
     openai
       .createCompletion(process.env.REACT_APP_API_ENGINE, {
@@ -149,6 +154,7 @@ export default class Adventure extends Component {
 
           // let split_choices = choices.split(/\s?\d+\.\s?/);
           let split_choices = imavar;
+          console.log("prompt test");
 
           //check the option exists
           split_choices[0] = split_choices[0]
@@ -309,10 +315,15 @@ export default class Adventure extends Component {
         });
         const openai = new OpenAIApi(configuration);
         let previousLog = this.state.previousLog.join("");
-        let action = `${this.state.character.name} chooses ${x}. ${option}.`;
+        let action = `${this.state.character.name} the ${this.state.character.class} chooses ${x}. ${option}.`;
         let prompt = `Give a long, entertaining, detailed account of what happens next.`;
-        let AIprompt = previousLog + "\n" + action + prompt;
-
+        let AIprompt_holder = previousLog + "\n" + action + prompt;
+        let AIprompt = AIprompt_holder.split(" ")
+          .reverse()
+          .slice(0, 1100)
+          .reverse()
+          .join(" ");
+        console.log("prompt test");
         openai
           .createCompletion(process.env.REACT_APP_API_ENGINE, {
             prompt: AIprompt,
