@@ -259,7 +259,6 @@ export default class CreateCharacter extends Component {
         .toLowerCase()
         .replace(" ", "")}.png`;
     } else {
-      // const randomImages = ["random1", "random2", "random3", "random4"];
       const imgList = RANDOM_CLASSES.concat(CLASSES);
       const randImg = imgList[Math.floor(Math.random() * imgList.length)];
       path = `/images/class/${randImg.replace(" ", "")}.png`;

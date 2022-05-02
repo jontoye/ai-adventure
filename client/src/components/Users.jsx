@@ -17,7 +17,7 @@ function Users({ continueAdventure, createAdventure, setCharacter, setMessage, d
             Authorization: "Bearer " + localStorage.getItem("token"),
           }
         });
-        setUsers(response.data.users);
+        setUsers(response.data.users.reverse());
         return response;
       } catch (err) {
         console.error(err);
