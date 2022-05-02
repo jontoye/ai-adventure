@@ -1,9 +1,13 @@
 #adventure-log {
-  max-height: 40vh;
+  max-height: 55vh;
   overflow-y: scroll;
 }
 .buttons {
-  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+#log-card {
+  padding-bottom: 0px !important;
 }
 
 #character-card:hover #character-overlay {
@@ -36,8 +40,9 @@
 
 .adventure-screen-fade {
   height: 100px;
+  /* width: 100vw; */
   background: linear-gradient(transparent, #070707);
-  transform: translateY(-100px);
+  /* transform: translateY(-100px); */
 }
 
 .adventure-container {
@@ -50,4 +55,8 @@
 
 .hidden-log {
   display: none;
+}
+
+.background-container {
+  background-size: 100% 100%;
 }

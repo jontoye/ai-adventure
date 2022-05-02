@@ -113,12 +113,12 @@ export default class Adventure extends Component {
     const openai = new OpenAIApi(configuration);
     let previousLog = this.state.previousLog.join("");
     let prompt = `Give ${this.state.character.name} the ${this.state.character.class} 3 detailed options for what to do next.`;
-     let AIprompt_holder = previousLog + "\n" + prompt;
-        let AIprompt = AIprompt_holder.split(" ")
-          .reverse()
-          .slice(0, 1100)
-          .reverse()
-          .join(" ");
+    let AIprompt_holder = previousLog + "\n" + prompt;
+    let AIprompt = AIprompt_holder.split(" ")
+      .reverse()
+      .slice(0, 1100)
+      .reverse()
+      .join(" ");
 
     openai
       .createCompletion(process.env.REACT_APP_API_ENGINE, {
@@ -376,11 +376,11 @@ export default class Adventure extends Component {
 
   render() {
     return (
-      <div>
-        <Container
-          className='adventure-screen'
-          style={{ backgroundImage: this.state.background }}
-        >
+      <div
+        className='background-container'
+        style={{ backgroundImage: this.state.background }}
+      >
+        <Container className='adventure-screen'>
           <div className='game-log mb-3'>
             <Log
               log={this.state.log}
@@ -463,7 +463,7 @@ export default class Adventure extends Component {
             </Col>
           </Row>
         </Container>
-        <Container className='adventure-screen-fade'></Container>
+        {/* <Container className='adventure-screen-fade'></Container> */}
       </div>
     );
   }

@@ -66,7 +66,7 @@
   background-repeat: no-repeat;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
-  animation: t 3s forwards;
+  animation: t 2.5s forwards;
 }
 
 @keyframes t {
@@ -78,14 +78,14 @@
     color: rgba(255, 255, 255, 0.8);
   }
 }
-@keyframes b {
+/* @keyframes b {
   99% {
     background-position: -200% 50%, 0 0;
     background: linear-gradient(#00dffc 0 0) 0 50%/150% 95%,
       linear-gradient(#00dffc 0 0) 0 0 /100% 100%;
     -webkit-background-clip: padding-box, text;
   }
-}
+} */
 
 .entryText:last-child {
   white-space: pre-line;
