@@ -24,6 +24,8 @@
 .users-list {
   padding: 20px;
   overflow-x: scroll;
+  scrollbar-width: none;
+
 }
 
 .users-list::-webkit-scrollbar {
