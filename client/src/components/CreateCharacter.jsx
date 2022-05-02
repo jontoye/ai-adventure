@@ -23,6 +23,7 @@ export default class CreateCharacter extends Component {
     super(props);
     this.state = {
       currentStep: 1,
+      user: this.props.user.id,
       heading: "Backstory",
       generateRandomCharacter: false,
       newCharacter: {
@@ -57,18 +58,11 @@ export default class CreateCharacter extends Component {
     this._prev = this._prev.bind(this);
   }
   componentDidMount() {
-    this.setUser();
-
     if (this.props.randomCharacter) {
       this.createRandomCharacter();
     }
   }
 
-  setUser() {
-    this.setState({
-      user: this.props.user._id,
-    });
-  }
   createRandomCharacter = () => {
     //randomly generate an impressive name!
     let name = "";
@@ -277,6 +271,8 @@ export default class CreateCharacter extends Component {
 
     this.setImage();
 
+    console.log('user: ',this.state.newCharacter.user)
+
     setTimeout(() => {
       this.addCharacter(this.state.newCharacter);
     }, 100);
@@ -387,6 +383,7 @@ export default class CreateCharacter extends Component {
             character={this.state.newCharacter}
             achievement={true}
             setMessage={this.props.setMessage}
+            user={this.props.user}
           />
         )}
       </>

@@ -24,8 +24,11 @@ export default class Adventures extends Component {
         "Authorization": "Bearer " + localStorage.getItem("token"),
       }})
     .then((response) => {
+      let adventureFiltered = response.data.adventures.filter(a=>{
+        return a.user ? a.user===this.props.user.id : false
+      })
       this.setState({
-        adventures: response.data.adventures.reverse(),
+        adventures: adventureFiltered.reverse(),
       });
     })
     .catch((err) => {

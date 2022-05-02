@@ -389,6 +389,7 @@ export default class App extends Component {
                 achievement={this.state.charCreateA}
                 achievementCheck={this.achievementCheck}
                 setMessage={this.setMessage}
+                user={this.state.user}
               />
             }
           />
@@ -398,6 +399,7 @@ export default class App extends Component {
             element={<Adventures 
               continueAdventure={this.continueAdventure}
               setMessage={this.setMessage}
+              user={this.state.user}
             />}
           />
           <Route
@@ -421,6 +423,7 @@ export default class App extends Component {
                 dontCreateRandomCharacter={this.dontCreateRandomCharacter}
                 filtered={""}
                 setMessage={this.setMessage}
+                user={this.state.user}
               />
             }
           />

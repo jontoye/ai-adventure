@@ -27,8 +27,8 @@ export default class CreateAdventure extends Component {
 
   componentDidMount() {
     // this.log("test", this.props.achivement);
-    this.loadCharacterList();
     this.setState({ name: this.props.character.name });
+    this.loadCharacterList();
     this.achieveHandle(this.props.achievement);
   }
 
@@ -45,8 +45,11 @@ export default class CreateAdventure extends Component {
     })
       .then((response) => {
         // console.log(response.data.characters);
+        let characterFiltered = response.data.characters.filter(c=>{
+          return c.user ? c.user === this.props.user.id : false
+        })
         this.setState({
-          characters: response.data.characters.reverse(),
+          characters: characterFiltered.reverse(),
         });
       })
       .catch((err) => {
@@ -199,6 +202,7 @@ export default class CreateAdventure extends Component {
         this.createEvent(event);
         setTimeout(() => {
           formDataObj.events = [this.state.event];
+          formDataObj.user = this.props.user.id;
 
           this.addAdventure(formDataObj, character);
           this.setState({
@@ -373,8 +377,7 @@ export default class CreateAdventure extends Component {
                 <small>
                   You must provide an adventure{" "}
                   <span className='text-info'>name</span> and{" "}
-                  <span className='text-info'>quest</span> to begin your
-                  story...
+                  <span className='text-info'>quest</span> to begin your story...
                 </small>
               </p>
             )}

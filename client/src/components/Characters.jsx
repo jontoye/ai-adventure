@@ -26,19 +26,12 @@ export default class Characters extends Component {
     })
       .then((response) => {
         // console.log(response.data.characters);
-        if (this.props.filtered !== true) {
-          this.setState({
-            characters: response.data.characters.reverse(),
-          });
-        } else {
-          let characters = response.data.characters.filter(
-            (character) => character.user === this.props.user._id
-          );
-          // console.log("characters else test", characters);
-          this.setState({
-            characters: characters.reverse(), //finish
-          });
-        }
+        let characterFiltered = response.data.characters.filter(c=>{
+          return c.user ? c.user === this.props.user.id : false
+        })
+        this.setState({
+          characters: characterFiltered.reverse(),
+        });
       })
       .catch((err) => {
         console.log("Error fetching characters.");
