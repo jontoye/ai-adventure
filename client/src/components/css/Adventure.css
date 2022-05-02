@@ -58,5 +58,8 @@
 }
 
 .background-container {
-  background-size: 100% 100%;
+  background-size: 70vw;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-position: center;
 }
