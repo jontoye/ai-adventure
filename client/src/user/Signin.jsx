@@ -8,6 +8,7 @@ import jwt_decode from "jwt-decode";
 export default class Signin extends Component {
   state = {
     redirect: false,
+    path: "/",
   };
 
   // componentDidMount() { 
@@ -31,9 +32,18 @@ export default class Signin extends Component {
     this.props.login(this.state);
     this.setState({
       redirect: true,
+      path: "/",
     })
     this.setState({
       redirect: false,
+    })
+  };
+
+  
+  signupHandler = () => {
+    this.setState({
+      redirect: true,
+      path: "/signup",
     })
   };
 
@@ -46,6 +56,7 @@ export default class Signin extends Component {
         <div>
         <h1>Welcome to AI Adventure</h1>
         <Container id="sign-up-container">
+        <h3 className="text-white">Sign in</h3>
         <div className="form__group field">
           <input type="input" className="form__field" placeholder="Name" name="username" id='name' onChange={this.changeHandler} required />
           <label className="form__label" >Username</label>
@@ -56,6 +67,9 @@ export default class Signin extends Component {
           </div>
           <br></br>
           <Button id="create-user-button" onClick={this.loginHandler}>Sign In</Button>
+          <br></br>
+          <p className="text-white">Don't have an account?</p>
+          <Button id="" onClick={this.signupHandler}>Sign Up</Button>
         </Container><br></br><br></br>
         <hr className="signin-line"></hr>
         <div id="google-signin-wrapper">
@@ -65,7 +79,7 @@ export default class Signin extends Component {
         </div>
         {this.state.redirect && (
           <Navigate
-            to='/'
+            to={this.state.path}
             replace={true}
           />
         )}

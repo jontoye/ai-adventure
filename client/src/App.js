@@ -466,6 +466,7 @@ export default class App extends Component {
             element={
               <Signin 
               login={this.loginHandler} 
+              register={this.registerHandler}
               isAuth={this.state.isAuth}
               setMessage={this.setMessage}
               />

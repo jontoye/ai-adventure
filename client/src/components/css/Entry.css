@@ -10,19 +10,19 @@
 }
 
 .color_start {
-  color: purple;
+  color: darkgreen;
 }
 .color_0 {
-  color: blue;
+  color: darkred;
 }
 .color_1 {
-  color: green;
+  color: darkblue;
 }
 .color_2 {
-  color: blue;
+  color: darkmagenta;
 }
 .color_3 {
-  color: red;
+  color: darkred;
 }
 
 #adventure-log {

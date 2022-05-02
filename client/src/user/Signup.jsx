@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { Container, Form, Button } from "react-bootstrap";
+import { Container, Form, Button, Row, Col } from "react-bootstrap";
 import GSignup from "./GSignup";
 import axios from "axios";
 import './Signup.scss'
@@ -10,6 +10,7 @@ import { Navigate } from "react-router-dom";
 export default class Signup extends Component {
   state = {
     redirect: false,
+    path: "/",
   };
 
   changeHandler = (e) => {
@@ -18,11 +19,19 @@ export default class Signup extends Component {
     this.setState(temp);
   };
 
+  loginHandler = () => {
+    this.setState({
+      redirect: true,
+      path: "/signin",
+    })
+  };
+
   registerHandler = () => {
     this.props.register(this.state);
     this.props.login(this.state);
     this.setState({
       redirect: true,
+      path: "/",
     })
   };
 
@@ -34,6 +43,7 @@ export default class Signup extends Component {
         <div>
           <h1>Welcome to AI Adventure</h1>
           <Container id='sign-up-container'>
+            <h3 className="text-white">Sign up</h3>
             <div className='form__group field'>
               <input
                 type='input'
@@ -75,15 +85,24 @@ export default class Signup extends Component {
               </label>
             </div>
             <br></br>
-            <Button id='create-user-button' onClick={this.registerHandler}>
-              Register
-            </Button>
-          </Container>
-          <GSignup></GSignup>
+            <Row>
+              <Col>
+                <Button id='create-user-button' onClick={this.registerHandler}>
+                  Sign up
+                </Button>
+              </Col>
+
+            </Row>
+          </Container><br></br><br></br>
+          <hr className="signin-line"></hr>
+          <div id="google-signin-wrapper">
+            <span>OR</span>
+          <GSignup login={this.props.googleLogin}></GSignup>
+          </div>
         </div>
         {this.state.redirect && (
           <Navigate
-            to='/'
+            to={this.state.path}
             replace={true}
           />
         )}
