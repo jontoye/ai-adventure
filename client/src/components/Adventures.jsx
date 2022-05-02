@@ -25,7 +25,7 @@ export default class Adventures extends Component {
       }})
     .then((response) => {
       let adventureFiltered = response.data.adventures.filter(a=>{
-        return a.user ? a.user===this.props.user.id : false
+        return a.user ? a.user===this.props.user.id : !this.props.isFiltered
       })
       this.setState({
         adventures: adventureFiltered.reverse(),
@@ -80,6 +80,8 @@ export default class Adventures extends Component {
             continueAdventure={this.props.continueAdventure}
             deleteAdventure={this.deleteAdventure}
             setmessage={this.setMessage}
+            user={this.props.user}
+            isFiltered={this.props.isFiltered}
           />         
         </div>
       );
@@ -87,6 +89,7 @@ export default class Adventures extends Component {
     return (
       <div className='container-fluid my-5'>
         <h1 className="display-4">Adventure List</h1>
+        {this.props.isFiltered ? <p className="display-8 text-white" style={{"text-align":"center"}}>Explore the adventures you have begun.</p> : <p className="display-8 text-white" style={{"text-align":"center"}}>Explore adventures around the world.</p>}
         <div className="d-flex align-items-center container-fluid">
         <img 
             className="scroll-btn" 

@@ -79,13 +79,15 @@ function Users({ continueAdventure, createAdventure, setCharacter, setMessage, d
       <Adventures 
         continueAdventure={continueAdventure}
         setMessage={setMessage}
-        user={currentUser} />
+        user={currentUser}
+        isFiltered={false} />
       <Characters
         createAdventure={createAdventure}
         setCharacter={setCharacter}
         dontCreateRandomCharacter={dontCreateRandomCharacter}
         setmessage={setMessage}
         user={currentUser}
+        isFiltered={false}
       />
       <br></br>
       <br></br>

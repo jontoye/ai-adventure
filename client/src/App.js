@@ -400,6 +400,7 @@ export default class App extends Component {
               continueAdventure={this.continueAdventure}
               setMessage={this.setMessage}
               user={this.state.user}
+              isFiltered={true}
             />}
           />
           <Route
@@ -424,6 +425,7 @@ export default class App extends Component {
                 filtered={""}
                 setMessage={this.setMessage}
                 user={this.state.user}
+                isFiltered={true}
               />
             }
           />

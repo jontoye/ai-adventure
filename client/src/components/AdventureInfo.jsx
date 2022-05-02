@@ -99,12 +99,22 @@ export default class AdventureInfo extends Component {
               {this.state.character.class})
             </Card.Text>
             <div className='buttons-container'>
+              {this.props.isFiltered ? 
               <Button variant='primary' onClick={this.continueAdventure}>
                 Continue
-              </Button>
+              </Button> :
+              <Button variant='primary' onClick={this.continueAdventure}>
+                Start
+              </Button>}
+
+              {this.props.isFiltered ? 
               <Button variant='danger' onClick={this.deleteAdventure}>
                 Delete
+              </Button> :
+              <Button variant='danger' onClick={this.deleteAdventure}>
+                Read
               </Button>
+              }
             </div>
           </Card.Body>
         </Card>
