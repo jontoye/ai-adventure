@@ -210,8 +210,8 @@ export default class Adventure extends Component {
           setTimeout(() => {
             window.scrollTo(0, document.body.scrollHeight);
             this.saveEvent();
-          }, 100);
-        }, 1000);
+          }, 50);
+        }, 50);
       })
       .catch((error) => {
         console.log("error log:", error);

@@ -11,17 +11,17 @@ export default class Entry extends Component {
   }
 
   componentDidMount() {
-    console.log("[0]", this.props.text[0]);
+    // console.log("[0]", this.props.text[0]);
     this.handleOptions();
   }
 
   handleOptions() {
     if (this.props.text[0] === "1") {
-      this.key = `${this.key} hidden-log`;
+      // this.key = `${this.key} hidden-log`;
       this.setState({
         key: `entry ${this.props.colorID} hidden-log`,
       });
-      console.log("this key", this.key);
+      // console.log("this key", this.key);
     } else {
       this.setState({
         key: `entry ${this.props.colorID}`,
