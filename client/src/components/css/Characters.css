@@ -8,6 +8,8 @@
   padding: 20px;
   overflow-x: scroll;
   scroll-behavior: smooth;
+  scrollbar-width: none;
+
 }
 
 .character-list::-webkit-scrollbar {
