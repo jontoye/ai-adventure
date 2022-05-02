@@ -14,6 +14,10 @@ const { Configuration, OpenAIApi } = require("openai");
 const CLASSES = CHARACTER_DEFAULTS.class.map((v) => {
   return v.toLowerCase();
 });
+
+const RANDOM_CLASSES = CHARACTER_DEFAULTS.random.map((v) => {
+  return v.toLowerCase();
+});
 export default class CreateCharacter extends Component {
   constructor(props) {
     super(props);
@@ -238,7 +242,11 @@ export default class CreateCharacter extends Component {
       })
       .catch((error) => {
         console.log("error log:", error);
-        this.props.setMessage(error.message + '. If the issue persists, please contact the developers.', "danger");
+        this.props.setMessage(
+          error.message +
+            ". If the issue persists, please contact the developers.",
+          "danger"
+        );
       });
 
     //Use a timeout/clock here to randomly change state.response to keep things interesting while the AI thinks?
@@ -252,7 +260,7 @@ export default class CreateCharacter extends Component {
         .replace(" ", "")}.png`;
     } else {
       // const randomImages = ["random1", "random2", "random3", "random4"];
-      const imgList = [].concat(CLASSES);
+      const imgList = RANDOM_CLASSES.concat(CLASSES);
       const randImg = imgList[Math.floor(Math.random() * imgList.length)];
       path = `/images/class/${randImg.replace(" ", "")}.png`;
     }
