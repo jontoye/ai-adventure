@@ -244,7 +244,11 @@ export default class Adventure extends Component {
       })
       .catch((error) => {
         console.log("Error creating event.", error);
-        this.props.setMessage(error.message + '. If the issue persists, please contact the developers.', "danger");
+        this.props.setMessage(
+          error.message +
+            ". If the issue persists, please contact the developers.",
+          "danger"
+        );
       });
   };
 
@@ -284,7 +288,11 @@ export default class Adventure extends Component {
       })
       .catch((error) => {
         console.log("Error updating adventure.", error);
-        this.props.setMessage(error.message + '. If the issue persists, please contact the developers.', "danger");
+        this.props.setMessage(
+          error.message +
+            ". If the issue persists, please contact the developers.",
+          "danger"
+        );
       });
   };
 
@@ -363,7 +371,11 @@ export default class Adventure extends Component {
           })
           .catch((error) => {
             console.log("error log:", error);
-            this.props.setMessage(error.message + '. If the issue persists, please contact the developers.', "danger");
+            this.props.setMessage(
+              error.message +
+                ". If the issue persists, please contact the developers.",
+              "danger"
+            );
           });
       }, 100);
     }, 100);
@@ -376,11 +388,11 @@ export default class Adventure extends Component {
 
   render() {
     return (
-      <div
-        className='background-container'
-        style={{ backgroundImage: this.state.background }}
-      >
-        <Container className='adventure-screen'>
+      <div>
+        <Container
+          className='adventure-screen'
+          style={{ backgroundImage: this.state.background }}
+        >
           <div className='game-log mb-3'>
             <Log
               log={this.state.log}
@@ -463,7 +475,7 @@ export default class Adventure extends Component {
             </Col>
           </Row>
         </Container>
-        {/* <Container className='adventure-screen-fade'></Container> */}
+        <Container className='adventure-screen-fade'></Container>
       </div>
     );
   }
