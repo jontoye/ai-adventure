@@ -130,31 +130,33 @@ export default class Adventure extends Component {
         presence_penalty: 0.8,
       })
       .then((response) => {
+        console.log("choices test", response);
         let choices = response.data.choices[0].text;
         if (choices[0] === "\n") {
           choices = choices.slice(1, choices.length);
         }
-        // console.log(choices)
+        // console.log(choices);
         if (choices.split(" ")[0] === "Option") {
           choices = choices.slice(7, choices.length);
         }
+
         // console.log(choices)
         let splitLines = choices.split("\n").filter((str) => {
           return str !== "";
         });
-        // console.log(splitLines)
+        console.log(splitLines);
         let imavar = splitLines.map((str) => {
           let strIndex = str.search(/[a-z]/i);
           console.log(str.slice(strIndex, str.length));
           return str.slice(strIndex, str.length);
         });
-        // console.log(imavar)
+        console.log(imavar);
         setTimeout(() => {
           // console.log(imavar)
 
           // let split_choices = choices.split(/\s?\d+\.\s?/);
           let split_choices = imavar;
-          console.log("prompt test");
+          console.log("prompt test", imavar);
 
           //check the option exists
           split_choices[0] = split_choices[0]
@@ -208,10 +210,10 @@ export default class Adventure extends Component {
           });
 
           setTimeout(() => {
-            window.scrollTo(0, document.body.scrollHeight);
+            // window.scrollTo(0, document.body.scrollHeight);
             this.saveEvent();
-          }, 50);
-        }, 50);
+          }, 100);
+        }, 1000);
       })
       .catch((error) => {
         console.log("error log:", error);
@@ -244,7 +246,11 @@ export default class Adventure extends Component {
       })
       .catch((error) => {
         console.log("Error creating event.", error);
-        this.props.setMessage(error.message + '. If the issue persists, please contact the developers.', "danger");
+        this.props.setMessage(
+          error.message +
+            ". If the issue persists, please contact the developers.",
+          "danger"
+        );
       });
   };
 
@@ -284,7 +290,11 @@ export default class Adventure extends Component {
       })
       .catch((error) => {
         console.log("Error updating adventure.", error);
-        this.props.setMessage(error.message + '. If the issue persists, please contact the developers.', "danger");
+        this.props.setMessage(
+          error.message +
+            ". If the issue persists, please contact the developers.",
+          "danger"
+        );
       });
   };
 
@@ -334,6 +344,7 @@ export default class Adventure extends Component {
             presence_penalty: 0.8,
           })
           .then((response) => {
+            console.log("choose option test", response);
             let reply = response.data.choices[0].text;
             while (reply[0] === "\n") {
               reply = reply.slice(1, reply.length);
@@ -357,16 +368,20 @@ export default class Adventure extends Component {
               previousLog: [...this.state.log, action, prompt, reply],
             });
             setTimeout(() => {
-              window.scrollTo(0, document.body.scrollHeight);
+              window.scrollTo(250, document.body.scrollHeight);
               this.generateOptions();
             }, 100);
           })
           .catch((error) => {
             console.log("error log:", error);
-            this.props.setMessage(error.message + '. If the issue persists, please contact the developers.', "danger");
+            this.props.setMessage(
+              error.message +
+                ". If the issue persists, please contact the developers.",
+              "danger"
+            );
           });
       }, 100);
-    }, 100);
+    }, 1000);
 
     this.setState({
       placeholder: `Generating Adventure. Please wait...`,
@@ -376,10 +391,7 @@ export default class Adventure extends Component {
 
   render() {
     return (
-      <div
-        className='background-container'
-        style={{ backgroundImage: this.state.background }}
-      >
+      <div className="background-holder" style={{ backgroundImage: this.state.background }}>
         <Container className='adventure-screen'>
           <div className='game-log mb-3'>
             <Log

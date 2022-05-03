@@ -1,7 +1,18 @@
 #adventure-log {
   max-height: 55vh;
   overflow-y: scroll;
+  overflow-x: hidden;
 }
+
+#adventure-log::-webkit-scrollbar {
+  background: rgba(128, 128, 128, 0.333)
+}
+
+#adventure-log::-webkit-scrollbar-thumb {
+  background: rgba(128, 128, 128, 0.95);
+  border-radius: 15px;
+}
+
 .buttons {
   margin-bottom: 20px;
 }
@@ -35,7 +46,7 @@
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
-  background-size: 100% 100%;
+  background-size: initial;
 }
 
 .adventure-screen-fade {
@@ -57,8 +68,8 @@
   display: none;
 }
 
-.background-container {
-  background-size: 70vw;
+.background-holder {
+  background-size: 90vw;
   background-attachment: fixed;
   background-repeat: no-repeat;
   background-position: center;

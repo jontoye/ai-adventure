@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import { Container, Form, Button } from "react-bootstrap";
+import { Container, Button } from "react-bootstrap";
 import GSignup from "./GSignup";
-import axios from "axios";
+// import axios from "axios";
 import { Navigate } from "react-router-dom";
-import jwt_decode from "jwt-decode";
+// import jwt_decode from "jwt-decode";
 
 export default class Signin extends Component {
   state = {

@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 
-import { Container, Form, Button, Row, Col } from "react-bootstrap";
+import { Container, Button, Row, Col } from "react-bootstrap";
 import GSignup from "./GSignup";
-import axios from "axios";
-import './Signup.scss'
+// import axios from "axios";
+import "./Signup.scss";
 import { Navigate } from "react-router-dom";
-
 
 export default class Signup extends Component {
   state = {
@@ -23,7 +22,7 @@ export default class Signup extends Component {
     this.setState({
       redirect: true,
       path: "/signin",
-    })
+    });
   };
 
   registerHandler = () => {
@@ -32,18 +31,18 @@ export default class Signup extends Component {
     this.setState({
       redirect: true,
       path: "/",
-    })
+    });
   };
 
   render() {
     // console.log(this.state);
-      
+
     return (
       <div>
         <div>
           <h1>Welcome to AI Adventure</h1>
           <Container id='sign-up-container'>
-            <h3 className="text-white">Sign up</h3>
+            <h3 className='text-white'>Sign up</h3>
             <div className='form__group field'>
               <input
                 type='input'
@@ -91,20 +90,18 @@ export default class Signup extends Component {
                   Sign up
                 </Button>
               </Col>
-
             </Row>
-          </Container><br></br><br></br>
-          <hr className="signin-line"></hr>
-          <div id="google-signin-wrapper">
+          </Container>
+          <br></br>
+          <br></br>
+          <hr className='signin-line'></hr>
+          <div id='google-signin-wrapper'>
             <span>OR</span>
-          <GSignup login={this.props.googleLogin}></GSignup>
+            <GSignup login={this.props.googleLogin}></GSignup>
           </div>
         </div>
         {this.state.redirect && (
-          <Navigate
-            to={this.state.path}
-            replace={true}
-          />
+          <Navigate to={this.state.path} replace={true} />
         )}
       </div>
     );
