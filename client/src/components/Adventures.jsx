@@ -15,6 +15,7 @@ export default class Adventures extends Component {
     };
   }
   componentDidMount() {
+    this.loadUsers();
     this.loadAdventureList();
     this.loadUserCharacters();
   }
@@ -51,7 +52,7 @@ export default class Adventures extends Component {
     let userCharacters = response.data.characters.filter((c) => {
       return this.props.user.id === c.user;
     });
-    console.log(userCharacters)
+    // console.log(userCharacters)
       // console.log(character.name)
       this.setState({
         userCharacters: userCharacters,
@@ -61,6 +62,23 @@ export default class Adventures extends Component {
       console.log("Error fetching characters.");
       console.log(err);
       this.props.setMessage(err.message, "danger");
+    });
+  }
+
+  loadUsers = () => {
+    Axios.get("users", {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    })
+    .then((response) => {
+      this.setState({
+        users: response.data.users,
+      });
+    })
+    .catch((err) => {
+      console.log("Error fetching users.");
+      console.log(err);
     });
   }
 
@@ -110,6 +128,7 @@ export default class Adventures extends Component {
             isFiltered={this.props.isFiltered}
             startStory={this.props.startStory}
             userCharacters={this.state.userCharacters}
+            userList={this.state.users}
           />         
         </div>
       );

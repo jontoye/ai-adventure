@@ -15,9 +15,23 @@ export default class AdventureInfo extends Component {
     characters: {},
     userCharacters:this.props.userCharacters,
     isCopyingAdventure: false,
+    advUser: null,
   };
 
+  setUserInfo = (userID) => {
+    let user = this.props.userList.find((u) => {
+      return userID == u._id;
+    });
+    this.setState({
+      advUser: user.username,
+    });
+  }
+
   componentDidMount() {
+    if (this.props.adventure.user) {
+      this.setUserInfo(this.props.adventure.user)
+    }
+    
     Axios.get("character/index", {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),
@@ -40,6 +54,7 @@ export default class AdventureInfo extends Component {
       console.log(err);
       this.props.setMessage(err.message, "danger");
     });
+
   }
 
   continueAdventure = (e) => {
@@ -86,13 +101,13 @@ export default class AdventureInfo extends Component {
         isCopyingAdventure: false,
       })
     } else {
-      console.log('Copying adventure...',this.state.adventure)
+      console.log('Initialising copy...',this.state.adventure)
       let adventure = this.state.adventure
       adventure.user = this.props.user.id
       adventure._id = null
       adventure.character = this.state.userCharacters[0]
-      adventure.events = []
-      adventure.log = []
+      adventure.events = [this.state.adventure.events[0]]
+      adventure.log = [this.state.adventure.log[0]]
       this.setState({
         copiedAdventure:adventure,
         isCopyingAdventure: true,
@@ -101,7 +116,7 @@ export default class AdventureInfo extends Component {
   }
   
   createAdventure = (e) => {
-
+    console.log("Creating copy...",this.state.copiedAdventure)
     Axios.post("adventure/add", this.state.copiedAdventure, {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),
@@ -191,6 +206,9 @@ export default class AdventureInfo extends Component {
               </p>
               Character: {this.state.character.name} (
               {this.state.character.class})
+              <br></br>
+              {!this.props.isFiltered ? this.state.advUser ? <p>Created by: {this.state.advUser}</p> : <p>Created by: unknown</p> : null}
+              
             </Card.Text>
             <div className='buttons-container'>
               {this.props.isFiltered ? 
@@ -216,13 +234,15 @@ export default class AdventureInfo extends Component {
             {this.state.isCopyingAdventure ?
             <div className='mb-3 form__group field'>
               <label className='form__label'>Choose Character</label>
+              <br></br>
               <Form.Select
                 name='character'
                 onChange={this.handleChange}
-                className='form__field'
+                className=''
               >
                 {characterSelect}
               </Form.Select>
+              <br></br>
               <Button variant='primary' onClick={this.createAdventure}>
                 Confirm Copy
               </Button>
