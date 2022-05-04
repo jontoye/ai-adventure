@@ -20,6 +20,7 @@ export default class Adventure extends Component {
       previousLog: [],
       name: "",
       prompt: "",
+      promptText: "",
       option1: "Generating your first choice, hold on one second",
       option2: "Generating your second choice, hold on one second",
       option3: "Generating your third choice, hold on one second",
@@ -112,7 +113,7 @@ export default class Adventure extends Component {
     });
     const openai = new OpenAIApi(configuration);
     let previousLog = this.state.previousLog.join("");
-    let prompt = `Give ${this.state.character.name} the ${this.state.character.class} 3 detailed options for what to do next.`;
+    let prompt = `Give ${this.state.character.name} the ${this.state.character.class} 3 detailed options for what to do next. \n`;
     let AIprompt_holder = previousLog + "\n" + prompt;
     let AIprompt = AIprompt_holder.split(" ")
       .reverse()
@@ -127,7 +128,7 @@ export default class Adventure extends Component {
         max_tokens: 1000,
         top_p: 1,
         frequency_penalty: 1.5,
-        presence_penalty: 0.8,
+        presence_penalty: 0.0,
       })
       .then((response) => {
         console.log("choices test", response);
@@ -136,27 +137,33 @@ export default class Adventure extends Component {
           choices = choices.slice(1, choices.length);
         }
         // console.log(choices);
-        if (choices.split(" ")[0] === "Option") {
-          choices = choices.slice(7, choices.length);
+        if (
+          choices.split(" ")[0] === "Option" ||
+          choices.split(" ")[0] === ":"
+        ) {
+          console.log("Option x: format detected");
+          choices = choices.slice(7, choices.length).join(" ");
         }
 
         // console.log(choices)
         let splitLines = choices.split("\n").filter((str) => {
           return str !== "";
         });
-        console.log(splitLines);
+        // console.log(splitLines);
+
+        //add handling of : and Option 2: Option 3: if slice test[0] = ""
         let imavar = splitLines.map((str) => {
           let strIndex = str.search(/[a-z]/i);
-          console.log(str.slice(strIndex, str.length));
+          // console.log("slice test", str.slice(strIndex, str.length));
           return str.slice(strIndex, str.length);
         });
-        console.log(imavar);
+        //console.log(imavar);
         setTimeout(() => {
           // console.log(imavar)
 
           // let split_choices = choices.split(/\s?\d+\.\s?/);
           let split_choices = imavar;
-          console.log("prompt test", imavar);
+          //console.log("prompt test", imavar);
 
           //check the option exists
           split_choices[0] = split_choices[0]
@@ -185,17 +192,22 @@ export default class Adventure extends Component {
           // split_choices[1] = split_choices[1].length < 5 ? split_choices[1] : OPTION_DEFAULTS[Math.floor(Math.random()*OPTION_DEFAULTS.length)];
           // split_choices[2] = split_choices[2].length < 5 ? split_choices[2] : OPTION_DEFAULTS[Math.floor(Math.random()*OPTION_DEFAULTS.length)];
 
-          let rejoined_choices =
-            "1. " +
-            split_choices[0] +
-            "\n2. " +
-            split_choices[1] +
-            "\n3. " +
-            split_choices[2];
+          // let rejoined_choices =
+          //   "1. " +
+          //   split_choices[0] +
+          //   "\n2. " +
+          //   split_choices[1] +
+          //   "\n3. " +
+          //   split_choices[2];
 
           this.setState({
-            log: [...this.state.log, rejoined_choices],
-            previousLog: [...this.state.log, prompt, rejoined_choices],
+            log: [...this.state.log],
+
+            previousLog: [...this.state.log, prompt],
+
+            // log: [...this.state.log, rejoined_choices],
+            // previousLog: [...this.state.log, prompt, rejoined_choices],
+
             option1: split_choices[0],
             option2: split_choices[1],
             option3: split_choices[2],
@@ -203,7 +215,9 @@ export default class Adventure extends Component {
               ...this.state.event,
               optionPrompt: prompt,
               options: [split_choices[0], split_choices[1], split_choices[2]],
-              fullLog: [...this.state.event.fullLog, prompt, rejoined_choices],
+              fullLog: [...this.state.event.fullLog, prompt],
+              // fullLog: [...this.state.event.fullLog, prompt, rejoined_choices],
+
               displayedLog: [...this.state.event.displayedLog],
             },
             disabled: "",
@@ -326,22 +340,22 @@ export default class Adventure extends Component {
         const openai = new OpenAIApi(configuration);
         let previousLog = this.state.previousLog.join("");
         let action = `${this.state.character.name} the ${this.state.character.class} chooses ${x}. ${option}.`;
-        let prompt = `Give a long, entertaining, detailed account of what happens next.`;
+        let prompt = `Give a long, entertaining, detailed account of what happens next. \n`;
         let AIprompt_holder = previousLog + "\n" + action + prompt;
         let AIprompt = AIprompt_holder.split(" ")
           .reverse()
-          .slice(0, 1100)
+          .slice(0, 1200)
           .reverse()
           .join(" ");
-        console.log("prompt test");
+        console.log("prompty test", AIprompt);
         openai
           .createCompletion(process.env.REACT_APP_API_ENGINE, {
             prompt: AIprompt,
             temperature: 0.8,
             max_tokens: 1000,
             top_p: 1,
-            frequency_penalty: 1.5,
-            presence_penalty: 0.8,
+            frequency_penalty: 0,
+            presence_penalty: 0.0,
           })
           .then((response) => {
             console.log("choose option test", response);
@@ -391,7 +405,10 @@ export default class Adventure extends Component {
 
   render() {
     return (
-      <div className="background-holder" style={{ backgroundImage: this.state.background }}>
+      <div
+        className='background-holder'
+        style={{ backgroundImage: this.state.background }}
+      >
         <Container className='adventure-screen'>
           <div className='game-log mb-3'>
             <Log
