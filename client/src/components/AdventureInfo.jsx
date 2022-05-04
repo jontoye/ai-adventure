@@ -9,6 +9,9 @@ export default class AdventureInfo extends Component {
     adventure: this.props.adventure,
     character: {},
     redirect: false,
+    redirectAdv: false,
+    copiedAdventure: {},
+    copiedCharacter: {},
   };
 
   componentDidMount() {
@@ -17,21 +20,21 @@ export default class AdventureInfo extends Component {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
     })
-      .then((response) => {
-        // console.log(response.data.characters);
-        let character = response.data.characters.find((v) => {
-          return this.state.adventure.character === v._id;
-        });
-        // console.log(character.name)
-        this.setState({
-          character: character,
-        });
-      })
-      .catch((err) => {
-        console.log("Error fetching characters.");
-        console.log(err);
-        this.props.setMessage(err.message, "danger");
+    .then((response) => {
+      // console.log(response.data.characters);
+      let character = response.data.characters.find((v) => {
+        return this.state.adventure.character === v._id;
       });
+      // console.log(character.name)
+      this.setState({
+        character: character,
+      });
+    })
+    .catch((err) => {
+      console.log("Error fetching characters.");
+      console.log(err);
+      this.props.setMessage(err.message, "danger");
+    });
   }
 
   continueAdventure = (e) => {
@@ -69,10 +72,60 @@ export default class AdventureInfo extends Component {
       });
     // console.log(this.state.character)
   };
+  
+  createAdventure = (e) => {
+    console.log('cloning adventure...')
+    let adventure = this.state.adventure
+    adventure.user = this.props.user.id
+    adventure._id = null
+    // adventure.character
+    // remember to replace logs so user can start adventure from the start
+
+    Axios.post("adventure/add", adventure, {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    })
+    .then((response) => {
+      if (response.data.error) {
+        console.log("Error cloning adventure.", response.data.error);
+        this.props.setMessage(
+          response.data.error._message +
+            ". <error instructions>.\nIf the issue persists please contact the developers and quote: Adventure/" +
+            response.data.error.name,
+          "danger"
+        );
+      } else {
+        console.log("Adventure cloned successfully.", response);
+        response.data.adventure.events = [this.state.event];
+        setTimeout(() => {
+          this.props.startStory(
+            response.data.adventure,
+            this.state.character, //replace with user's chosen character when done
+          );
+          this.setState({
+            copiedAdventure: response.data.adventure,
+            copiedCharacter: this.state.character, //replace with user's chosen character when done
+            redirectAdv: true,
+          });
+        }, 100);
+        // this.loadCharacterList();
+      }
+    })
+    .catch((error) => {
+      console.log("Error cloning adventure.", error);
+      console.log(error);
+      this.props.setMessage(error.message, "danger");
+    });
+  }
 
   deleteAdventure = (e) => {
     this.props.deleteAdventure(this.state.adventure);
   };
+
+  readAdventure = (e) => {
+    console.log('opening adventure journal...')
+  }
 
   render() {
     let css = `adventure-${this.state.id}`;
@@ -103,7 +156,7 @@ export default class AdventureInfo extends Component {
               <Button variant='primary' onClick={this.continueAdventure}>
                 Continue
               </Button> :
-              <Button variant='primary' onClick={this.continueAdventure}>
+              <Button variant='primary' onClick={this.createAdventure}>
                 Start
               </Button>}
 
@@ -111,7 +164,7 @@ export default class AdventureInfo extends Component {
               <Button variant='danger' onClick={this.deleteAdventure}>
                 Delete
               </Button> :
-              <Button variant='danger' onClick={this.deleteAdventure}>
+              <Button variant='danger' onClick={this.readAdventure}>
                 Read
               </Button>
               }
@@ -127,6 +180,16 @@ export default class AdventureInfo extends Component {
             setMessage={this.props.setMessage}
           />
         )}
+        {this.state.redirectAdv && (
+          <Navigate
+            to='/adventure'
+            replace={true}
+            adventure={this.state.copiedAdventure}
+            character={this.state.copiedCharacter}
+            setMessage={this.props.setMessage}
+          />
+        )}
+
       </div>
     );
   }

@@ -79,9 +79,10 @@ export default class Adventures extends Component {
             id={a._id}
             continueAdventure={this.props.continueAdventure}
             deleteAdventure={this.deleteAdventure}
-            setmessage={this.setMessage}
+            setMessage={this.props.setMessage}
             user={this.props.user}
             isFiltered={this.props.isFiltered}
+            startStory={this.props.startStory}
           />         
         </div>
       );
