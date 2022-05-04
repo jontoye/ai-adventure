@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Axios from "axios";
 import { Card, Button } from "react-bootstrap";
 import { Navigate } from "react-router-dom";
 import "./css/Character.css";
@@ -12,11 +13,13 @@ export default class Character extends Component {
       weakness: this.props.weakness,
       backstory: this.props.backstory,
       image: this.props.image,
+      user: this.props.user,
     },
     name: this.props.name,
     log: [this.props.backstory],
     redirect: false,
     redirected: false,
+    redirectChar: false,
     image: "images/saad.png",
   };
 
@@ -34,6 +37,41 @@ export default class Character extends Component {
 
     // console.log(this.state.character)
   };
+
+  copyCharacter = (e) => {
+    let character = this.state.character
+    character.user = this.props.currentUser.id
+    character.id = null
+    character.name = prompt("Enter a name for your new character.")
+    //need to find a smart way to replace the name in the backstory
+    character.backstory = this.state.character.backstory.replace(this.state.character.name, character.name)
+
+    Axios.post("character/add", character, {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    })
+    .then((response) => {
+      if (response.data.error) {
+        console.log("Error copying character.", response.data.error);
+        this.props.setMessage(
+          response.data.error._message +
+            ". <descriptive test>.\nIf the issue persists please contact the developers and quote: Character/" +
+            response.data.error.name,
+          "danger"
+        );
+      } else {
+        console.log("Character copied successfully.", response);
+        this.setState({
+          redirectChar: true,
+        });
+      }
+    })
+    .catch((error) => {
+      console.log("Error adding character.", error);
+      this.props.setMessage(error.message, "danger");
+    });
+  }
 
   deleteCharacter = (e) => {
     // console.log('fancy backend stuff')
@@ -74,9 +112,13 @@ export default class Character extends Component {
               Weakness: {this.props.weakness}
             </Card.Text>
             <div className='buttons-container'>
+              {this.props.isFiltered ? 
               <Button variant='primary' onClick={this.startAdventure}>
                 Start Adventure
-              </Button>
+              </Button> :
+              <Button variant='primary' onClick={this.copyCharacter}>
+                Copy
+              </Button>}
               <Button variant='danger' onClick={this.characterDetail}>
                 Details
               </Button>
@@ -96,6 +138,15 @@ export default class Character extends Component {
             to='/character-detail'
             replace={true}
             character={this.state.character}
+            deleteCharacter={this.props.deleteCharacter}
+            createAdventure={this.props.createAdventure}
+            setMessage={this.props.setMessage}
+          />
+        )}
+        {this.state.redirectChar && (
+          <Navigate
+            to='/characters'
+            replace={true}
             deleteCharacter={this.props.deleteCharacter}
             createAdventure={this.props.createAdventure}
             setMessage={this.props.setMessage}

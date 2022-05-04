@@ -85,6 +85,8 @@ export default class Characters extends Component {
             ability={c.ability}
             weakness={c.weakness}
             image={c.image}
+            user={c.user}
+            currentUser={this.props.user}
             createAdventure={this.props.createAdventure}
             deleteCharacter={this.deleteCharacter}
             setCharacter={this.props.setCharacter}
