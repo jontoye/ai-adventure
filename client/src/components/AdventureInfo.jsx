@@ -16,10 +16,11 @@ export default class AdventureInfo extends Component {
     userCharacters:this.props.userCharacters,
     isCopyingAdventure: false,
     advUser: null,
+    users: this.props.userList,
   };
 
   setUserInfo = (userID) => {
-    let user = this.props.userList.find((u) => {
+    let user = this.state.users.find((u) => {
       return userID == u._id;
     });
     this.setState({
@@ -28,8 +29,8 @@ export default class AdventureInfo extends Component {
   }
 
   componentDidMount() {
-    if (this.props.adventure.user) {
-      this.setUserInfo(this.props.adventure.user)
+    if (this.state.adventure.user && this.state.users) {
+      this.setUserInfo(this.state.adventure.user)
     }
     
     Axios.get("character/index", {
@@ -42,10 +43,13 @@ export default class AdventureInfo extends Component {
       let character = response.data.characters.find((v) => {
         return this.state.adventure.character === v._id;
       });
-      // console.log(character.name)
+      if (character) {
+        this.setState({
+          character: character,
+        })
+      }
       this.setState({
         characters: response.data.characters,
-        character: character,
         userCharacters:this.props.userCharacters,
       });
     })
@@ -102,12 +106,15 @@ export default class AdventureInfo extends Component {
       })
     } else {
       console.log('Initialising copy...',this.state.adventure)
+      console.log(this.state.userCharacters)
       let adventure = this.state.adventure
       adventure.user = this.props.user.id
       adventure._id = null
-      adventure.character = this.state.userCharacters[0]
+      adventure.character = this.state.userCharacters[0]._id
       adventure.events = [this.state.adventure.events[0]]
       adventure.log = [this.state.adventure.log[0]]
+
+      console.log('Copy ready.',adventure)
       this.setState({
         copiedAdventure:adventure,
         isCopyingAdventure: true,
@@ -116,43 +123,54 @@ export default class AdventureInfo extends Component {
   }
   
   createAdventure = (e) => {
-    console.log("Creating copy...",this.state.copiedAdventure)
-    Axios.post("adventure/add", this.state.copiedAdventure, {
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token"),
-      },
-    })
-    .then((response) => {
-      if (response.data.error) {
-        console.log("Error cloning adventure.", response.data.error);
-        this.props.setMessage(
-          response.data.error._message +
-            ". <error instructions>.\nIf the issue persists please contact the developers and quote: Adventure/" +
-            response.data.error.name,
-          "danger"
-        );
-      } else {
-        console.log("Adventure cloned successfully.", response);
-        response.data.adventure.events = [this.state.event]; // to be updated
-        setTimeout(() => {
-          this.props.startStory(
-            response.data.adventure,
-            this.state.copiedAdventure.character,
-          );
-          this.setState({
-            copiedAdventure: response.data.adventure,
-            copiedCharacter: this.state.copiedAdventure.character,
-            redirectAdv: true,
-          });
-        }, 100);
-        // this.loadCharacterList();
+    let character = this.state.characters.find((v) => {
+      return this.state.copiedAdventure.character === v._id;
+    });
+    this.setState({
+      copiedAdventure:{
+        ...this.state.copiedAdventure,
+        character:character,
       }
     })
-    .catch((error) => {
-      console.log("Error cloning adventure.", error);
-      console.log(error);
-      this.props.setMessage(error.message, "danger");
-    });
+    setTimeout(() => {
+      console.log('To backend:',this.state.copiedAdventure)
+      Axios.post("adventure/add", this.state.copiedAdventure, {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      })
+      .then((response) => {
+        if (response.data.error) {
+          console.log("Error cloning adventure.", response.data.error);
+          this.props.setMessage(
+            response.data.error._message +
+              ". <error instructions>.\nIf the issue persists please contact the developers and quote: Adventure/" +
+              response.data.error.name,
+            "danger"
+          );
+        } else {
+          console.log("Adventure cloned successfully.", response);
+          response.data.adventure.events = [this.state.event]; // to be updated
+          setTimeout(() => {
+            this.props.startStory(
+              response.data.adventure,
+              this.state.copiedAdventure.character,
+            );
+            this.setState({
+              copiedAdventure: response.data.adventure,
+              copiedCharacter: this.state.copiedAdventure.character,
+              redirectAdv: true,
+            });
+          }, 100);
+          // this.loadCharacterList();
+        }
+      })
+      .catch((error) => {
+        console.log("Error cloning adventure.", error);
+        console.log(error);
+        this.props.setMessage(error.message, "danger");
+      });
+    },100)
   }
 
   deleteAdventure = (e) => {

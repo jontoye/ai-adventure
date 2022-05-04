@@ -15,7 +15,6 @@ export default class Adventures extends Component {
     };
   }
   componentDidMount() {
-    this.loadUsers();
     this.loadAdventureList();
     this.loadUserCharacters();
   }
@@ -65,23 +64,6 @@ export default class Adventures extends Component {
     });
   }
 
-  loadUsers = () => {
-    Axios.get("users", {
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token"),
-      },
-    })
-    .then((response) => {
-      this.setState({
-        users: response.data.users,
-      });
-    })
-    .catch((err) => {
-      console.log("Error fetching users.");
-      console.log(err);
-    });
-  }
-
   deleteAdventure = (adventure) => {
     Axios.delete(`adventure/delete?id=${adventure._id}`, {
       headers: {
@@ -128,7 +110,7 @@ export default class Adventures extends Component {
             isFiltered={this.props.isFiltered}
             startStory={this.props.startStory}
             userCharacters={this.state.userCharacters}
-            userList={this.state.users}
+            userList={this.props.userList}
           />         
         </div>
       );

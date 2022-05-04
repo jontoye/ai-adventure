@@ -8,10 +8,12 @@ exports.adventure_create_post = (req, res) => {
 
   //save adventure
   adventure.save()
-  .then(()=>{
+  .then((adventure)=>{
+    console.log(adventure)
     Adventure.findById(adventure.id)
     .populate("character")
     .then((adventure) => {
+      console.log('adv:',adventure) //something is broken here
       User.findById(req.user).then((user) => {
         user.activity.push(
           `${adventure.character.name} started adventure '${
