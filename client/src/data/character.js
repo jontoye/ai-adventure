@@ -464,7 +464,7 @@ const CLASS = [
   "Wanderer",
   "Duellist",
   "Crusader",
-  "Beserker",
+  "Berserker",
   "Samurai",
   "Templar",
   "Skirmisher",
@@ -599,13 +599,11 @@ const TRAIT = [
 
 let randomImages = [];
 const NUMRAND = 43;
-for (let i = 1; i < NUMRAND+1; i++) {
-  randomImages.push('random'+i)
+for (let i = 1; i < NUMRAND + 1; i++) {
+  randomImages.push("random" + i);
 }
 
 const RANDOM = randomImages;
-
-
 
 export const CHARACTER_DEFAULTS = {
   title_f: TITLE_F,
