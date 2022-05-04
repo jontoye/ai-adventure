@@ -77,37 +77,37 @@ export default class CreateAdventure extends Component {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
     })
-      .then((response) => {
-        if (response.data.error) {
-          console.log("Error adding adventure.", response.data.error);
-          this.props.setMessage(
-            response.data.error._message +
-              ". Please confirm you have correctly filled out all the fields in the adventure creation form.\nIf the issue persists please contact the developers and quote: Adventure/" +
-              response.data.error.name,
-            "danger"
+    .then((response) => {
+      if (response.data.error) {
+        console.log("Error adding adventure.", response.data.error);
+        this.props.setMessage(
+          response.data.error._message +
+            ". Please confirm you have correctly filled out all the fields in the adventure creation form.\nIf the issue persists please contact the developers and quote: Adventure/" +
+            response.data.error.name,
+          "danger"
+        );
+      } else {
+        console.log("Adventure created successfully.", response);
+        response.data.adventure.events = [this.state.event];
+        this.setState({
+          newAdventure: response.data.adventure,
+          character: character,
+        });
+        setTimeout(() => {
+          this.props.startStory(
+            this.state.newAdventure,
+            this.state.character
           );
-        } else {
-          console.log("Adventure created successfully.", response);
-          response.data.adventure.events = [this.state.event];
-          this.setState({
-            newAdventure: response.data.adventure,
-            character: character,
-          });
-          setTimeout(() => {
-            this.props.startStory(
-              this.state.newAdventure,
-              this.state.character
-            );
-            this.setRedirect();
-          }, 100);
-          // this.loadCharacterList();
-        }
-      })
-      .catch((error) => {
-        console.log("Error creating adventure.", error);
-        console.log(error);
-        this.props.setMessage(error.message, "danger");
-      });
+          this.setRedirect();
+        }, 100);
+        // this.loadCharacterList();
+      }
+    })
+    .catch((error) => {
+      console.log("Error creating adventure.", error);
+      console.log(error);
+      this.props.setMessage(error.message, "danger");
+    });
   };
 
   setRedirect() {

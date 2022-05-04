@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, Button } from "react-bootstrap";
+import { Card, Button, Form } from "react-bootstrap";
 import { Navigate } from "react-router-dom";
 import Axios from "axios";
 import "./css/AdventureInfo.css";
@@ -12,6 +12,9 @@ export default class AdventureInfo extends Component {
     redirectAdv: false,
     copiedAdventure: {},
     copiedCharacter: {},
+    characters: {},
+    userCharacters:this.props.userCharacters,
+    isCopyingAdventure: false,
   };
 
   componentDidMount() {
@@ -27,7 +30,9 @@ export default class AdventureInfo extends Component {
       });
       // console.log(character.name)
       this.setState({
+        characters: response.data.characters,
         character: character,
+        userCharacters:this.props.userCharacters,
       });
     })
     .catch((err) => {
@@ -72,16 +77,32 @@ export default class AdventureInfo extends Component {
       });
     // console.log(this.state.character)
   };
+
+  handleCopyAdventureBtn = (e) => {
+    if (this.state.isCopyingAdventure) {
+      console.log('Cancelling copy...',this.state.copiedAdventure)
+      this.setState({
+        copiedAdventure:{},
+        isCopyingAdventure: false,
+      })
+    } else {
+      console.log('Copying adventure...',this.state.adventure)
+      let adventure = this.state.adventure
+      adventure.user = this.props.user.id
+      adventure._id = null
+      adventure.character = this.state.userCharacters[0]
+      adventure.events = []
+      adventure.log = []
+      this.setState({
+        copiedAdventure:adventure,
+        isCopyingAdventure: true,
+      })
+    }
+  }
   
   createAdventure = (e) => {
-    console.log('cloning adventure...')
-    let adventure = this.state.adventure
-    adventure.user = this.props.user.id
-    adventure._id = null
-    // adventure.character
-    // remember to replace logs so user can start adventure from the start
 
-    Axios.post("adventure/add", adventure, {
+    Axios.post("adventure/add", this.state.copiedAdventure, {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
@@ -97,15 +118,15 @@ export default class AdventureInfo extends Component {
         );
       } else {
         console.log("Adventure cloned successfully.", response);
-        response.data.adventure.events = [this.state.event];
+        response.data.adventure.events = [this.state.event]; // to be updated
         setTimeout(() => {
           this.props.startStory(
             response.data.adventure,
-            this.state.character, //replace with user's chosen character when done
+            this.state.copiedAdventure.character,
           );
           this.setState({
             copiedAdventure: response.data.adventure,
-            copiedCharacter: this.state.character, //replace with user's chosen character when done
+            copiedCharacter: this.state.copiedAdventure.character,
             redirectAdv: true,
           });
         }, 100);
@@ -127,6 +148,18 @@ export default class AdventureInfo extends Component {
     console.log('opening adventure journal...')
   }
 
+  handleChange = (event) => {
+    const attributeToChange = event.target.name; // this will give the name of the field that is changing
+    const newValue = event.target.value; //this will give the value of the field that is changing
+
+    const adventure = { ...this.state.copiedAdventure };
+    adventure[attributeToChange] = newValue;
+    // console.log("onchange", adventure);
+    this.setState({
+      copiedAdventure: adventure,
+    });
+  };
+
   render() {
     let css = `adventure-${this.state.id}`;
     let a_an = "aeiou".includes(this.state.adventure.setting[0].toLowerCase())
@@ -135,6 +168,14 @@ export default class AdventureInfo extends Component {
     let quest =
       this.state.adventure.quest.charAt(0).toLowerCase() +
       this.state.adventure.quest.slice(1);
+
+    const characterSelect = this.state.userCharacters.map((c) => {
+      return (
+        <option value={c._id} className={c.name} key={c._id} index={c._id}>
+          {c.name} ({c.class})
+        </option>
+      );
+    });
 
     return (
       <div>
@@ -155,9 +196,12 @@ export default class AdventureInfo extends Component {
               {this.props.isFiltered ? 
               <Button variant='primary' onClick={this.continueAdventure}>
                 Continue
+              </Button> : this.state.isCopyingAdventure ?
+              <Button variant='secondary' onClick={this.handleCopyAdventureBtn}>
+                Cancel
               </Button> :
-              <Button variant='primary' onClick={this.createAdventure}>
-                Start
+              <Button variant='primary' onClick={this.handleCopyAdventureBtn}>
+                Copy
               </Button>}
 
               {this.props.isFiltered ? 
@@ -169,6 +213,20 @@ export default class AdventureInfo extends Component {
               </Button>
               }
             </div>
+            {this.state.isCopyingAdventure ?
+            <div className='mb-3 form__group field'>
+              <label className='form__label'>Choose Character</label>
+              <Form.Select
+                name='character'
+                onChange={this.handleChange}
+                className='form__field'
+              >
+                {characterSelect}
+              </Form.Select>
+              <Button variant='primary' onClick={this.createAdventure}>
+                Confirm Copy
+              </Button>
+            </div> : null }
           </Card.Body>
         </Card>
         {this.state.redirect && (

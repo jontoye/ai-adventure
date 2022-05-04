@@ -11,10 +11,12 @@ export default class Adventures extends Component {
     this.state = {
       adventures: [],
       redirect: false,
+      userCharacters: [],
     };
   }
   componentDidMount() {
     this.loadAdventureList();
+    this.loadUserCharacters();
   }
 
   loadAdventureList = () => {
@@ -37,6 +39,30 @@ export default class Adventures extends Component {
       this.props.setMessage(err.message,'danger');
     });
   };
+
+  loadUserCharacters = () => {
+    Axios.get("character/index", {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    })
+    .then((response) => {
+      // console.log(response.data.characters);
+    let userCharacters = response.data.characters.filter((c) => {
+      return this.props.user.id === c.user;
+    });
+    console.log(userCharacters)
+      // console.log(character.name)
+      this.setState({
+        userCharacters: userCharacters,
+      });
+    })
+    .catch((err) => {
+      console.log("Error fetching characters.");
+      console.log(err);
+      this.props.setMessage(err.message, "danger");
+    });
+  }
 
   deleteAdventure = (adventure) => {
     Axios.delete(`adventure/delete?id=${adventure._id}`, {
@@ -83,6 +109,7 @@ export default class Adventures extends Component {
             user={this.props.user}
             isFiltered={this.props.isFiltered}
             startStory={this.props.startStory}
+            userCharacters={this.state.userCharacters}
           />         
         </div>
       );
