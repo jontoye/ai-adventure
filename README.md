@@ -10,7 +10,7 @@
 [Camiel van Schoonhoven](https://github.com/Runite-Drill)<br>
 [Jon Cannata](https://github.com/cannatajon)<br>
 
-This app created in ten days as the final project for [General Assembly](https://generalassemb.ly/)'s Software Engineering Immersive.
+This app was created in ten days as the final project for [General Assembly](https://generalassemb.ly/)'s Software Engineering Immersive. Supporting development has continued thereafter.
 
 ## Getting Started
 
@@ -90,7 +90,7 @@ Future releases of AI Adventure will include:
     <li>Complete implementation of achievements</li>
     <li>Journal/scrap to read through completed adventures</li>
     <li>Epic Bard poems</li>
-    <li>Localise characters and adventures to their user</li>
+    <li>Localise characters and adventures to their user --DONE</li>
     <li>Dynamic image generation</li>
     <li>Improved AI and option parsing</li>
     <li>Sound effects and music</li>
