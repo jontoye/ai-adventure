@@ -33,8 +33,8 @@ export default class AdventureInfo extends Component {
   };
 
   componentDidMount() {
-    console.log(this.props.advUser);
-    console.log("user id test", this.props.user);
+    // console.log(this.props.advUser);
+    // console.log("user id test", this.props.user);
 
     if (this.props.advUser !== "unknown") {
       this.state.isFiltered =

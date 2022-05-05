@@ -25,6 +25,7 @@ export default class Character extends Component {
 
   componentDidMount() {
     // this.setImage();
+    // console.log(this.props.userList)
   }
 
   startAdventure = (e) => {
@@ -143,6 +144,11 @@ export default class Character extends Component {
             deleteCharacter={this.props.deleteCharacter}
             createAdventure={this.props.createAdventure}
             setMessage={this.props.setMessage}
+            isFiltered={this.props.isFiltered}
+            startStory={this.props.startStory}
+            userCharacters={this.state.userCharacters}
+            userList={this.props.userList}
+            user={this.props.currentUser}
           />
         )}
         {this.state.redirectChar && (
@@ -152,6 +158,9 @@ export default class Character extends Component {
             deleteCharacter={this.props.deleteCharacter}
             createAdventure={this.props.createAdventure}
             setMessage={this.props.setMessage}
+            startStory={this.props.startStory}
+            userList={this.props.userList}
+            user={this.props.currentUser}
           />
         )}
       </div>

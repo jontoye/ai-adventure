@@ -91,6 +91,10 @@ export default class Characters extends Component {
             deleteCharacter={this.deleteCharacter}
             setCharacter={this.props.setCharacter}
             setMessage={this.props.setMessage}
+            isFiltered={this.props.isFiltered}
+            startStory={this.props.startStory}
+            userCharacters={this.state.characters}
+            userList={this.props.userList}
           />
         </div>
       );

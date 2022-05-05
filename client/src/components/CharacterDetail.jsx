@@ -23,6 +23,7 @@ export default class CharacterDetail extends Component {
   componentDidMount() {
     this.loadName();
     this.setCharacter();
+    console.log(this.props.userList)
   }
 
   loadName = () => {
@@ -101,6 +102,11 @@ export default class CharacterDetail extends Component {
 
   render() {
     let adventures = this.state.myadventures.map((a) => {
+      let user = this.props.userList.find((u) => {
+        return a.user === u._id;
+      });
+      let advUser = user ? user.username : "unknown";
+      let advUserID = user ? user._id : "unknown";
       return (
         <AdventureInfo
           name={a.name}
@@ -110,6 +116,13 @@ export default class CharacterDetail extends Component {
           continueAdventure={this.props.continueAdventure}
           deleteAdventure={this.deleteAdventure}
           setMessage={this.setMessage}
+          user={this.props.user}
+          isFiltered={false}
+          startStory={this.props.startStory}
+          userCharacters={this.state.userCharacters}
+          userList={this.props.userList}
+          advUser={advUser}
+          advUserID={advUserID}
         />
       );
     });

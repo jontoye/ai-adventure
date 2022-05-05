@@ -90,6 +90,8 @@ function Users({ continueAdventure, createAdventure, setCharacter, setMessage, d
         setMessage={setMessage}
         user={currentUser}
         isFiltered={false}
+        startStory={startStory}
+        userList={users}
       />
       <br></br>
       <br></br>

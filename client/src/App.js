@@ -485,6 +485,8 @@ export default class App extends Component {
                 setMessage={this.setMessage}
                 user={this.state.user}
                 isFiltered={true}
+                startStory={this.startStory}
+                userList={this.state.users}
               />
             }
           />
@@ -498,6 +500,10 @@ export default class App extends Component {
                 continueAdventure={this.continueAdventure}
                 createAdventure={this.createAdventure}
                 setMessage={this.setMessage}
+                isFiltered={false}
+                startStory={this.startStory}
+                userList={this.state.users}
+                user={this.state.user}
               />
             }
           />
