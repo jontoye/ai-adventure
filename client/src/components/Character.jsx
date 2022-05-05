@@ -21,11 +21,17 @@ export default class Character extends Component {
     redirected: false,
     redirectChar: false,
     image: "images/saad.png",
+    charUser: this.props.charUser,
+    isFiltered: this.props.isFiltered,
   };
 
   componentDidMount() {
-    // this.setImage();
-    // console.log(this.props.userList)
+    if (this.props.charUser !== "unknown") {
+      this.setState({
+        isFiltered: this.props.user === this.props.currentUser.id
+          ? true : this.props.isFiltered,
+      })
+    }
   }
 
   startAdventure = (e) => {
@@ -113,16 +119,19 @@ export default class Character extends Component {
               Ability: {this.props.ability}
               <br />
               Weakness: {this.props.weakness}
+              {!this.props.isFiltered ? (
+                <p>Created by: {this.state.charUser}</p>
+              ) : null}
             </Card.Text>
             <div className='buttons-container'>
-              {this.props.isFiltered ? 
+              {this.state.isFiltered ? 
               <Button variant='primary' onClick={this.startAdventure}>
                 Start Adventure
               </Button> :
               <Button variant='primary' onClick={this.copyCharacter}>
                 Copy
               </Button>}
-              <Button variant='danger' onClick={this.characterDetail}>
+              <Button variant='secondary' onClick={this.characterDetail}>
                 Details
               </Button>
             </div>

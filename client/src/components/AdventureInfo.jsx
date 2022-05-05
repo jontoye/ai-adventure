@@ -37,10 +37,10 @@ export default class AdventureInfo extends Component {
     // console.log("user id test", this.props.user);
 
     if (this.props.advUser !== "unknown") {
-      this.state.isFiltered =
-        this.props.advUserID === this.props.user.id
-          ? true
-          : this.props.isFiltered;
+      this.setState({
+        isFiltered: this.props.advUserID === this.props.user.id
+          ? true : this.props.isFiltered,
+      })
     }
 
     Axios.get("character/index", {

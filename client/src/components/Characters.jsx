@@ -74,6 +74,10 @@ export default class Characters extends Component {
 
   render() {
     const characters = this.state.characters.map((c) => {
+      let user = this.props.userList.find((u) => {
+        return c.user === u._id;
+      });
+      let charUser = user ? user.username : "unknown";
       return (
         <div className='character-card'>
           <Character
@@ -95,6 +99,7 @@ export default class Characters extends Component {
             startStory={this.props.startStory}
             userCharacters={this.state.characters}
             userList={this.props.userList}
+            charUser={charUser}
           />
         </div>
       );
