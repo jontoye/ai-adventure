@@ -474,6 +474,7 @@ export default class App extends Component {
                 setMessage={this.setMessage}
                 dontCreateRandomCharacter={this.dontCreateRandomCharacter}
                 userList={this.state.users}
+                startStory={this.startStory}
               />
             }
           />

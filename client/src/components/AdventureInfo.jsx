@@ -15,22 +15,27 @@ export default class AdventureInfo extends Component {
     characters: {},
     userCharacters:this.props.userCharacters,
     isCopyingAdventure: false,
-    advUser: null,
+    advUser: this.props.advUser,
     users: this.props.userList,
+    isFiltered: this.props.isFiltered
   };
 
   setUserInfo = (userID) => {
-    let user = this.state.users.find((u) => {
-      return userID == u._id;
-    });
-    this.setState({
-      advUser: user.username,
-    });
+    // setTimeout(()=>{
+    //   // console.log(user)
+    //   if (user) {
+    //     this.setState({
+    //       advUser: user.username,
+    //     });
+    //   }
+    // },200)
   }
 
   componentDidMount() {
-    if (this.state.adventure.user && this.state.users) {
-      this.setUserInfo(this.state.adventure.user)
+    console.log(this.props.advUser)
+
+    if (this.props.advUser != "unknown") {
+      this.state.isFiltered = this.props.advUserID===this.props.user.id ? true : this.props.isFiltered
     }
     
     Axios.get("character/index", {
@@ -106,10 +111,11 @@ export default class AdventureInfo extends Component {
       })
     } else {
       console.log('Initialising copy...',this.state.adventure)
-      console.log(this.state.userCharacters)
+      // console.log(this.state.userCharacters)
       let adventure = this.state.adventure
       adventure.user = this.props.user.id
-      adventure._id = null
+      delete adventure.id
+      delete adventure._id
       adventure.character = this.state.userCharacters[0]._id
       adventure.events = [this.state.adventure.events[0]]
       adventure.log = [this.state.adventure.log[0]]
@@ -194,7 +200,7 @@ export default class AdventureInfo extends Component {
   };
 
   render() {
-    let css = `adventure-${this.state.id}`;
+    let css = `adventure-${this.state.adventure.id}`;
     let a_an = "aeiou".includes(this.state.adventure.setting[0].toLowerCase())
       ? "An"
       : "A";
@@ -225,11 +231,10 @@ export default class AdventureInfo extends Component {
               Character: {this.state.character.name} (
               {this.state.character.class})
               <br></br>
-              {!this.props.isFiltered ? this.state.advUser ? <p>Created by: {this.state.advUser}</p> : <p>Created by: unknown</p> : null}
-              
+              {!this.props.isFiltered ? <p>Created by: {this.state.advUser}</p> : null}
             </Card.Text>
             <div className='buttons-container'>
-              {this.props.isFiltered ? 
+              {this.state.isFiltered ? 
               <Button variant='primary' onClick={this.continueAdventure}>
                 Continue
               </Button> : this.state.isCopyingAdventure ?
@@ -240,11 +245,11 @@ export default class AdventureInfo extends Component {
                 Copy
               </Button>}
 
-              {this.props.isFiltered ? 
+              {this.state.isFiltered ? 
               <Button variant='danger' onClick={this.deleteAdventure}>
                 Delete
               </Button> :
-              <Button variant='danger' onClick={this.readAdventure}>
+              <Button variant='secondary' onClick={this.readAdventure}>
                 Read
               </Button>
               }

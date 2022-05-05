@@ -4,16 +4,15 @@ const User = require("../models/User");
 const moment = require("moment");
 
 exports.adventure_create_post = (req, res) => {
-  let adventure = new Adventure(req.body);
+
+  let newAdventure = new Adventure(req.body);
 
   //save adventure
-  adventure.save()
-  .then((adventure)=>{
-    console.log(adventure)
-    Adventure.findById(adventure.id)
+  newAdventure.save()
+  .then((savedAdventure)=>{
+    Adventure.findById(savedAdventure.id)
     .populate("character")
     .then((adventure) => {
-      console.log('adv:',adventure) //something is broken here
       User.findById(req.user).then((user) => {
         user.activity.push(
           `${adventure.character.name} started adventure '${
