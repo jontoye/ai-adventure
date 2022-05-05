@@ -421,6 +421,7 @@ export default class App extends Component {
               user={this.state.user}
               isFiltered={true}
               userList={this.state.users}
+              startStory={this.startStory}
             />}
           />
           <Route
@@ -431,7 +432,6 @@ export default class App extends Component {
                 adventure={this.state.adventure}
                 character={this.state.character}
                 setMessage={this.setMessage}
-                startStory={this.startStory}
               />
             }
           />

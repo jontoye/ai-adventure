@@ -17,7 +17,8 @@ export default class AdventureInfo extends Component {
     isCopyingAdventure: false,
     advUser: this.props.advUser,
     users: this.props.userList,
-    isFiltered: this.props.isFiltered
+    isFiltered: this.props.isFiltered,
+    event: {},
   };
 
   setUserInfo = (userID) => {
@@ -117,8 +118,8 @@ export default class AdventureInfo extends Component {
       delete adventure.id
       delete adventure._id
       adventure.character = this.state.userCharacters[0]._id
-      adventure.events = [this.state.adventure.events[0]]
       adventure.log = [this.state.adventure.log[0]]
+      adventure.events = [this.state.adventure.events[0]]
 
       console.log('Copy ready.',adventure)
       this.setState({
@@ -129,55 +130,119 @@ export default class AdventureInfo extends Component {
   }
   
   createAdventure = (e) => {
+    //get new character
     let character = this.state.characters.find((v) => {
       return this.state.copiedAdventure.character === v._id;
     });
-    this.setState({
-      copiedAdventure:{
-        ...this.state.copiedAdventure,
-        character:character,
+    //generate new starting event
+    Axios.get("event/index", {
+      headers: {
+        "Authorization": "Bearer " + localStorage.getItem("token"),
       }
     })
-    setTimeout(() => {
-      console.log('To backend:',this.state.copiedAdventure)
-      Axios.post("adventure/add", this.state.copiedAdventure, {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
+    .then((response) => {
+      // console.log(response.data.characters);
+      let event = response.data.events.find(e=>{
+        return this.state.copiedAdventure.events[0].id === e.id
       })
-      .then((response) => {
-        if (response.data.error) {
-          console.log("Error cloning adventure.", response.data.error);
-          this.props.setMessage(
-            response.data.error._message +
-              ". <error instructions>.\nIf the issue persists please contact the developers and quote: Adventure/" +
-              response.data.error.name,
-            "danger"
-          );
-        } else {
-          console.log("Adventure cloned successfully.", response);
-          response.data.adventure.events = [this.state.event]; // to be updated
-          setTimeout(() => {
-            this.props.startStory(
-              response.data.adventure,
-              this.state.copiedAdventure.character,
-            );
-            this.setState({
-              copiedAdventure: response.data.adventure,
-              copiedCharacter: this.state.copiedAdventure.character,
-              redirectAdv: true,
-            });
-          }, 100);
-          // this.loadCharacterList();
-        }
-      })
-      .catch((error) => {
-        console.log("Error cloning adventure.", error);
-        console.log(error);
-        this.props.setMessage(error.message, "danger");
-      });
-    },100)
+      event.fullLog[0] = character.backstory
+      event.displayedLog[0] = character.backstory
+      event.previousLog = [character.backstory]
+      delete event.id
+      delete event._id
+
+      this.createEvent(event);
+  
+      setTimeout(()=>{
+        this.setState({
+          copiedAdventure:{
+            ...this.state.copiedAdventure,
+            character:character,
+            events:[this.state.event]
+          }
+        })
+        setTimeout(() => {
+          //create new adventure with new character and event
+          console.log('To backend:',this.state.copiedAdventure)
+          Axios.post("adventure/add", this.state.copiedAdventure, {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          })
+          .then((response) => {
+            if (response.data.error) {
+              console.log("Error cloning adventure.", response.data.error);
+              this.props.setMessage(
+                response.data.error._message +
+                  ". <error instructions>.\nIf the issue persists please contact the developers and quote: Adventure/" +
+                  response.data.error.name,
+                "danger"
+              );
+            } else {
+              console.log("Adventure cloned successfully.", response);
+              response.data.adventure.events = [this.state.event];
+              setTimeout(() => {
+                this.props.startStory(
+                  response.data.adventure,
+                  this.state.copiedAdventure.character,
+                );
+                this.setState({
+                  adventure: response.data.adventure,
+                  character: this.state.copiedAdventure.character,
+                });
+                //redirect to new adventure... broken?????
+                setTimeout(() => {
+                  this.setState({
+                    redirect: true,
+                  })
+                },200)
+              }, 100);
+            }
+          })
+          .catch((error) => {
+            console.log("Error cloning adventure.", error);
+            console.log(error);
+            this.props.setMessage(error.message, "danger");
+          });
+        },100)
+      },100)
+      
+    })
+    .catch((err) => {
+      console.log("Error cloning events.");
+      console.log(err);
+      this.props.setMessage(err.message,'danger');
+    });
+    
   }
+
+  createEvent = (event) => {
+    Axios.post("event/add", event, {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    })
+    .then((response) => {
+      if (response.data.error) {
+        console.log("Error adding event.", response.data.error);
+        this.props.setMessage(
+          response.data.error._message +
+            ". Please confirm you have correctly filled out all the fields in the adventure creation form.\nIf the issue persists please contact the developers and quote: Event/" +
+            response.data.error.name,
+          "danger"
+        );
+      } else {
+        console.log("Event created successfully.", response);
+        this.setState({
+          event: response.data.event,
+        });
+      }
+    })
+    .catch((error) => {
+      console.log("Error creating event.", error);
+      this.props.setMessage(error.message, "danger");
+    });
+  };
 
   deleteAdventure = (e) => {
     this.props.deleteAdventure(this.state.adventure);
@@ -278,15 +343,6 @@ export default class AdventureInfo extends Component {
             replace={true}
             adventure={this.state.adventure}
             character={this.state.character}
-            setMessage={this.props.setMessage}
-          />
-        )}
-        {this.state.redirectAdv && (
-          <Navigate
-            to='/adventure'
-            replace={true}
-            adventure={this.state.copiedAdventure}
-            character={this.state.copiedCharacter}
             setMessage={this.props.setMessage}
           />
         )}
