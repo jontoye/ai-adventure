@@ -71,7 +71,7 @@
 }
 
 .background-holder {
-  background-size: 90vw;
+  background-size: 90vw 100vh;
   background-attachment: fixed;
   background-repeat: no-repeat;
   background-position: center;

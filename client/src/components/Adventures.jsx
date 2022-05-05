@@ -100,7 +100,7 @@ export default class Adventures extends Component {
   render() {
     const adventures = this.state.adventures.map((a) => {
       let user = this.props.userList.find((u) => {
-        return a.user == u._id;
+        return a.user === u._id;
       });
       let advUser = user ? user.username : "unknown";
       let advUserID = user ? user._id : "unknown";

@@ -33,7 +33,7 @@ export default class CreateCharacter extends Component {
         weakness: "",
         backstory: "",
         tone: "dark",
-        user: "",
+        user: this.props.user.id,
         image: "/images/class/default.png",
       },
       character: "",
@@ -146,30 +146,30 @@ export default class CreateCharacter extends Component {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
     })
-    .then((response) => {
-      // console.log("character success", character);
-      if (response.data.error) {
-        console.log("Error adding character.", response.data.error);
-        this.props.setMessage(
-          response.data.error._message +
-            ". Please confirm you have correctly filled out all the fields in the character creation form.\nIf the issue persists please contact the developers and quote: Character/" +
-            response.data.error.name,
-          "danger"
-        );
-      } else {
-        console.log("Character added successfully.", response);
-        this.props.createAdventure(this.state.newCharacter);
-        this.setState({
-          redirect: true,
-        });
-      }
-      // this.loadCharacterList();
-    })
-    .catch((error) => {
-      // console.log("character attempt", character);
-      console.log("Error adding character.", error);
-      this.props.setMessage(error.message, "danger");
-    });
+      .then((response) => {
+        // console.log("character success", character);
+        if (response.data.error) {
+          console.log("Error adding character.", response.data.error);
+          this.props.setMessage(
+            response.data.error._message +
+              ". Please confirm you have correctly filled out all the fields in the character creation form.\nIf the issue persists please contact the developers and quote: Character/" +
+              response.data.error.name,
+            "danger"
+          );
+        } else {
+          console.log("Character added successfully.", response);
+          this.props.createAdventure(this.state.newCharacter);
+          this.setState({
+            redirect: true,
+          });
+        }
+        // this.loadCharacterList();
+      })
+      .catch((error) => {
+        // console.log("character attempt", character);
+        console.log("Error adding character.", error);
+        this.props.setMessage(error.message, "danger");
+      });
   };
 
   appendResponse = (response) => {};
@@ -271,7 +271,7 @@ export default class CreateCharacter extends Component {
 
     this.setImage();
 
-    console.log('user: ',this.state.newCharacter.user)
+    console.log("user: ", this.state.newCharacter.user);
 
     setTimeout(() => {
       this.addCharacter(this.state.newCharacter);

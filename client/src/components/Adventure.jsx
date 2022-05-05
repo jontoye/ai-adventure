@@ -113,13 +113,15 @@ export default class Adventure extends Component {
     });
     const openai = new OpenAIApi(configuration);
     let previousLog = this.state.previousLog.join("");
-    let prompt = `Give ${this.state.character.name} the ${this.state.character.class} 3 detailed options for what to do next. \n`;
+    let prompt = `Give ${this.state.character.name} the ${this.state.character.class} 3 new, relevant, detailed options for what to do next. \n`;
     let AIprompt_holder = previousLog + "\n" + prompt;
     let AIprompt = AIprompt_holder.split(" ")
       .reverse()
       .slice(0, 1100)
       .reverse()
       .join(" ");
+
+    console.log("prompty 2", AIprompt);
 
     openai
       .createCompletion(process.env.REACT_APP_API_ENGINE, {
@@ -135,14 +137,22 @@ export default class Adventure extends Component {
         let choices = response.data.choices[0].text;
         if (choices[0] === "\n") {
           choices = choices.slice(1, choices.length);
+          if (choices[0] === "\n") {
+            choices = choices.slice(1, choices.length);
+          }
         }
         // console.log(choices);
         if (
-          choices.split(" ")[0] === "Option" ||
+          choices.split(" ")[0] === "Option"
+          // choices.split(" ")[0] === ":"
+        ) {
+          console.log("Option x: format detected", choices);
+          choices = choices.slice(7, choices.length).join(" ");
+        } else if (
+          // choices.split(" ")[0] === "Option" ||
           choices.split(" ")[0] === ":"
         ) {
-          console.log("Option x: format detected");
-          choices = choices.slice(7, choices.length).join(" ");
+          console.log("empty: format detected, do something");
         }
 
         // console.log(choices)
@@ -340,8 +350,9 @@ export default class Adventure extends Component {
         const openai = new OpenAIApi(configuration);
         let previousLog = this.state.previousLog.join("");
         let action = `${this.state.character.name} the ${this.state.character.class} chooses ${x}. ${option}.`;
-        let prompt = `Give a long, entertaining, detailed account of what happens next. \n`;
-        let AIprompt_holder = previousLog + "\n" + action + prompt;
+        let prompt = `Give a long, entertaining, detailed account of what happens next.`;
+        let AIprompt_holder =
+          previousLog + "\n" + action + "\n" + prompt + "\n";
         let AIprompt = AIprompt_holder.split(" ")
           .reverse()
           .slice(0, 1200)
@@ -365,6 +376,7 @@ export default class Adventure extends Component {
             }
             // console.log(reply)
             //CREATE NEW EVENT
+
             let event = {
               storyPrompt: prompt,
               story: reply,

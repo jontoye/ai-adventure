@@ -49,7 +49,7 @@ export default class App extends Component {
     adventure: {},
     achievments: [],
     charCreateA: false,
-    users:[],
+    users: [],
   };
 
   setNavExpanded = (expanded) => {
@@ -94,16 +94,16 @@ export default class App extends Component {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
     })
-    .then((response) => {
-      this.setState({
-        users: response.data.users,
+      .then((response) => {
+        this.setState({
+          users: response.data.users,
+        });
+      })
+      .catch((err) => {
+        console.log("Error fetching users.");
+        console.log(err);
       });
-    })
-    .catch((err) => {
-      console.log("Error fetching users.");
-      console.log(err);
-    });
-  }
+  };
 
   handleGoogleLogin = (response) => {
     Axios({
@@ -126,12 +126,12 @@ export default class App extends Component {
             user: user,
             logoutRedirect: false,
           });
-          this.setMessage("User logged in successfully.",'success')
+          this.setMessage("User logged in successfully.", "success");
         }
       })
       .catch((error) => {
         console.log(error);
-        this.setMessage(error.message,'danger')
+        this.setMessage(error.message, "danger");
         this.setState({
           isAuth: false,
         });
@@ -184,11 +184,11 @@ export default class App extends Component {
   registerHandler = (user) => {
     Axios.post("auth/signup", user)
       .then((response) => {
-        this.setMessage(response.data.message,'success')
+        this.setMessage(response.data.message, "success");
       })
       .catch((error) => {
         console.log(error);
-        this.setMessage(error.message,'danger')
+        this.setMessage(error.message, "danger");
       });
   };
 
@@ -198,7 +198,7 @@ export default class App extends Component {
         // console.log("response data token", response.data.token);
         // console.log(response.data.message);
 
-        this.setMessage(response.data.message,'warning')
+        this.setMessage(response.data.message, "warning");
 
         if (response.data.token != null) {
           //localStorage refers to localStorage of browser
@@ -212,12 +212,12 @@ export default class App extends Component {
             user: user,
             logoutRedirect: false,
           });
-          this.setMessage("User logged in successfully.",'success')
+          this.setMessage("User logged in successfully.", "success");
         }
       })
       .catch((error) => {
         console.log(error);
-        this.setMessage(error.message,'danger')
+        this.setMessage(error.message, "danger");
         this.setState({
           isAuth: false,
         });
@@ -238,7 +238,7 @@ export default class App extends Component {
       isGoogleUser: false,
       logoutRedirect: true,
     });
-    this.setMessage("User logged out successfully.",'danger')
+    this.setMessage("User logged out successfully.", "danger");
   };
 
   setBannerTimeout = (key) => {
@@ -249,18 +249,54 @@ export default class App extends Component {
     }, 10000);
   };
 
+  achievementHandler = () => {
+    Axios.post("feedback", this.state, {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    }).then((response) => {
+      // console.log(response.data);
+      let achieveMessage = response.data.result
+        ? "Achievement Unlocked!"
+        : null;
+      this.setState({
+        achieveMessage: achieveMessage,
+      });
+      this.setBannerTimeout("confirmationMessage");
+      this.setBannerTimeout("errorMessage");
+      this.getAchievements();
+    });
+  };
+
+  getAchievements = async () => {
+    Axios.get("/feedback", {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    })
+      .then((response) => {
+        this.setState({
+          feedback: response.data.feedback.reverse(),
+        });
+      })
+      .catch((error) => {
+        console.log("Error fetching feedback.", error);
+        this.props.setMessage(error.message, "danger");
+      });
+  };
+
   setMessage = (message, type) => {
     this.setState({
       infoMessage: null,
       failMessage: null,
       successMessage: null,
       warningMessage: null,
-    })
+    });
     this.setState({
-      [type.toLowerCase()+'Message']: message,
-    })
+      [type.toLowerCase() + "Message"]: message,
+    });
     this.setBannerTimeout(`${type.toLowerCase()}Message`);
-  }
+  };
 
   charCreateAchievement = () => {
     this.setState({
@@ -415,14 +451,16 @@ export default class App extends Component {
           <Route
             path='/adventure-list'
             exact
-            element={<Adventures 
-              continueAdventure={this.continueAdventure}
-              setMessage={this.setMessage}
-              user={this.state.user}
-              isFiltered={true}
-              userList={this.state.users}
-              startStory={this.startStory}
-            />}
+            element={
+              <Adventures
+                continueAdventure={this.continueAdventure}
+                setMessage={this.setMessage}
+                user={this.state.user}
+                isFiltered={true}
+                userList={this.state.users}
+                startStory={this.startStory}
+              />
+            }
           />
           <Route
             path='/adventure'
@@ -492,27 +530,31 @@ export default class App extends Component {
           <Route
             path='/signin'
             element={
-              <Signin 
-              login={this.loginHandler} 
-              register={this.registerHandler}
-              isAuth={this.state.isAuth}
-              setMessage={this.setMessage}
+              <Signin
+                login={this.loginHandler}
+                register={this.registerHandler}
+                isAuth={this.state.isAuth}
+                setMessage={this.setMessage}
               />
             }
           ></Route>
           <Route
             path={`/profile`}
-            element={<Profile 
-              currentUser={this.state.user}
-              setMessage={this.setMessage} 
-            />}
+            element={
+              <Profile
+                currentUser={this.state.user}
+                setMessage={this.setMessage}
+              />
+            }
           >
             <Route
               path=':userId'
-              element={<Profile 
-                currentUser={this.state.user}
-                setMessage={this.setMessage} 
-              />}
+              element={
+                <Profile
+                  currentUser={this.state.user}
+                  setMessage={this.setMessage}
+                />
+              }
             />
           </Route>
         </Routes>
