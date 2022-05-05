@@ -4,12 +4,13 @@ const User = require("../models/User");
 const moment = require("moment");
 
 exports.adventure_create_post = (req, res) => {
-  let adventure = new Adventure(req.body);
+
+  let newAdventure = new Adventure(req.body);
 
   //save adventure
-  adventure.save()
-  .then(()=>{
-    Adventure.findById(adventure.id)
+  newAdventure.save()
+  .then((savedAdventure)=>{
+    Adventure.findById(savedAdventure.id)
     .populate("character")
     .then((adventure) => {
       User.findById(req.user).then((user) => {

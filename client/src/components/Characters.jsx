@@ -22,22 +22,22 @@ export default class Characters extends Component {
     Axios.get("character/index", {
       headers: {
         "Authorization": "Bearer " + localStorage.getItem("token"),
-    }
+      }
     })
-      .then((response) => {
-        // console.log(response.data.characters);
-        let characterFiltered = response.data.characters.filter(c=>{
-          return c.user ? c.user === this.props.user.id : !this.props.isFiltered
-        })
-        this.setState({
-          characters: characterFiltered.reverse(),
-        });
+    .then((response) => {
+      // console.log(response.data.characters);
+      let characterFiltered = response.data.characters.filter(c=>{
+        return c.user ? c.user === this.props.user.id : !this.props.isFiltered
       })
-      .catch((err) => {
-        console.log("Error fetching characters.");
-        console.log(err);
-        this.props.setMessage(err.message,'danger');
+      this.setState({
+        characters: characterFiltered.reverse(),
       });
+    })
+    .catch((err) => {
+      console.log("Error fetching characters.");
+      console.log(err);
+      this.props.setMessage(err.message,'danger');
+    });
   };
 
   deleteCharacter = (name) => {

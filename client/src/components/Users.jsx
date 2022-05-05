@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import Characters from "./Characters";
 import Adventures from "./Adventures";
 
-function Users({ continueAdventure, createAdventure, setCharacter, setMessage, dontCreateRandomCharacter, currentUser }) {
+function Users({ continueAdventure, createAdventure, setCharacter, setMessage, dontCreateRandomCharacter, currentUser, startStory}) {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -80,7 +80,9 @@ function Users({ continueAdventure, createAdventure, setCharacter, setMessage, d
         continueAdventure={continueAdventure}
         setMessage={setMessage}
         user={currentUser}
-        isFiltered={false} />
+        isFiltered={false}
+        userList={users}
+        startStory={startStory} />
       <Characters
         createAdventure={createAdventure}
         setCharacter={setCharacter}

@@ -39,9 +39,11 @@ export default class Character extends Component {
   };
 
   copyCharacter = (e) => {
+    console.log("Copying character:",this.state.character)
     let character = this.state.character
     character.user = this.props.currentUser.id
-    character.id = null
+    delete character.id
+    delete character._id
     character.name = prompt("Enter a name for your new character.")
     //need to find a smart way to replace the name in the backstory
     character.backstory = this.state.character.backstory.replace(this.state.character.name, character.name)

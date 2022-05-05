@@ -49,6 +49,7 @@ export default class App extends Component {
     adventure: {},
     achievments: [],
     charCreateA: false,
+    users:[],
   };
 
   setNavExpanded = (expanded) => {
@@ -64,6 +65,7 @@ export default class App extends Component {
   };
 
   componentDidMount() {
+    this.loadUsers();
     let token = localStorage.getItem("token");
     if (token != null) {
       let user = jwt_decode(token);
@@ -84,6 +86,23 @@ export default class App extends Component {
         });
       }
     }
+  }
+
+  loadUsers = () => {
+    Axios.get("users", {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    })
+    .then((response) => {
+      this.setState({
+        users: response.data.users,
+      });
+    })
+    .catch((err) => {
+      console.log("Error fetching users.");
+      console.log(err);
+    });
   }
 
   handleGoogleLogin = (response) => {
@@ -401,6 +420,8 @@ export default class App extends Component {
               setMessage={this.setMessage}
               user={this.state.user}
               isFiltered={true}
+              userList={this.state.users}
+              startStory={this.startStory}
             />}
           />
           <Route
@@ -452,6 +473,8 @@ export default class App extends Component {
                 setCharacter={this.setCharacter}
                 setMessage={this.setMessage}
                 dontCreateRandomCharacter={this.dontCreateRandomCharacter}
+                userList={this.state.users}
+                startStory={this.startStory}
               />
             }
           />

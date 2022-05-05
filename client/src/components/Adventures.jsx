@@ -11,10 +11,12 @@ export default class Adventures extends Component {
     this.state = {
       adventures: [],
       redirect: false,
+      userCharacters: [],
     };
   }
   componentDidMount() {
     this.loadAdventureList();
+    this.loadUserCharacters();
   }
 
   loadAdventureList = () => {
@@ -27,9 +29,11 @@ export default class Adventures extends Component {
       let adventureFiltered = response.data.adventures.filter(a=>{
         return a.user ? a.user===this.props.user.id : !this.props.isFiltered
       })
-      this.setState({
-        adventures: adventureFiltered.reverse(),
-      });
+      setTimeout(()=>{
+        this.setState({
+          adventures: adventureFiltered.reverse(),
+        });
+      })
     })
     .catch((err) => {
       console.log("Error fetching adventures.");
@@ -37,6 +41,30 @@ export default class Adventures extends Component {
       this.props.setMessage(err.message,'danger');
     });
   };
+
+  loadUserCharacters = () => {
+    Axios.get("character/index", {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    })
+    .then((response) => {
+      // console.log(response.data.characters);
+    let userCharacters = response.data.characters.filter((c) => {
+      return this.props.user.id === c.user;
+    });
+    // console.log(userCharacters)
+      // console.log(character.name)
+      this.setState({
+        userCharacters: userCharacters,
+      });
+    })
+    .catch((err) => {
+      console.log("Error fetching characters.");
+      console.log(err);
+      this.props.setMessage(err.message, "danger");
+    });
+  }
 
   deleteAdventure = (adventure) => {
     Axios.delete(`adventure/delete?id=${adventure._id}`, {
@@ -71,6 +99,12 @@ export default class Adventures extends Component {
 
   render() {
     const adventures = this.state.adventures.map((a) => {
+      let user = this.props.userList.find((u) => {
+        return a.user == u._id;
+      });
+      let advUser = user ? user.username : "unknown";
+      let advUserID = user ? user._id : "unknown";
+    
       return (
         <div className="adventure-card">
           <AdventureInfo
@@ -79,9 +113,14 @@ export default class Adventures extends Component {
             id={a._id}
             continueAdventure={this.props.continueAdventure}
             deleteAdventure={this.deleteAdventure}
-            setmessage={this.setMessage}
+            setMessage={this.props.setMessage}
             user={this.props.user}
             isFiltered={this.props.isFiltered}
+            startStory={this.props.startStory}
+            userCharacters={this.state.userCharacters}
+            userList={this.props.userList}
+            advUser={advUser}
+            advUserID={advUserID}
           />         
         </div>
       );
