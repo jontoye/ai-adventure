@@ -18,8 +18,12 @@ export default class Home extends Component {
 			}
 		})
 		.then((response1) => {
+			let adventureFiltered = response1.data.adventures.filter(a=>{
+			  return a.user ? a.user===this.props.user.id : false
+			})
+
 		  this.setState({
-			adventure: response1.data.adventures.reverse()[0],
+			adventure: adventureFiltered.reverse()[0],
 		  });
 		  Axios.get("character/index", {
 			headers: {
