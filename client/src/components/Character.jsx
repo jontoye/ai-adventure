@@ -30,9 +30,11 @@ export default class Character extends Component {
   componentDidMount() {
     if (this.props.charUser !== "unknown") {
       this.setState({
-        isFiltered: this.props.user === this.props.currentUser.id
-          ? true : this.props.isFiltered,
-      })
+        isFiltered:
+          this.props.user === this.props.currentUser.id
+            ? true
+            : this.props.isFiltered,
+      });
     }
   }
 
@@ -48,41 +50,46 @@ export default class Character extends Component {
   };
 
   copyCharacter = (e) => {
-    console.log("Copying character:",this.state.character)
-    let character = this.state.character
-    character.user = this.props.currentUser.id
-    delete character.id
-    delete character._id
-    character.name = this.state.newName
+    console.log("Copying character:", this.state.character);
+    let character = this.state.character;
+    character.user = this.props.currentUser.id;
+    const nameHolder = character.name.split(" ")[0];
+    delete character.id;
+    delete character._id;
+    character.name = this.state.newName;
     //need to find a smart way to replace the name in the backstory
-    character.backstory = this.state.character.backstory.replace(this.state.character.name, character.name)
+    console.log("name replace test", nameHolder, "vs", character.name);
+    character.backstory = this.state.character.backstory.replace(
+      nameHolder,
+      character.name
+    );
 
     Axios.post("character/add", character, {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
     })
-    .then((response) => {
-      if (response.data.error) {
-        console.log("Error copying character.", response.data.error);
-        this.props.setMessage(
-          response.data.error._message +
-            ". <descriptive test>.\nIf the issue persists please contact the developers and quote: Character/" +
-            response.data.error.name,
-          "danger"
-        );
-      } else {
-        console.log("Character copied successfully.", response);
-        this.setState({
-          redirectChar: true,
-        });
-      }
-    })
-    .catch((error) => {
-      console.log("Error adding character.", error);
-      this.props.setMessage(error.message, "danger");
-    });
-  }
+      .then((response) => {
+        if (response.data.error) {
+          console.log("Error copying character.", response.data.error);
+          this.props.setMessage(
+            response.data.error._message +
+              ". <descriptive test>.\nIf the issue persists please contact the developers and quote: Character/" +
+              response.data.error.name,
+            "danger"
+          );
+        } else {
+          console.log("Character copied successfully.", response);
+          this.setState({
+            redirectChar: true,
+          });
+        }
+      })
+      .catch((error) => {
+        console.log("Error adding character.", error);
+        this.props.setMessage(error.message, "danger");
+      });
+  };
 
   deleteCharacter = (e) => {
     // console.log('fancy backend stuff')
@@ -143,24 +150,31 @@ export default class Character extends Component {
               <br />
               Weakness: {this.props.weakness}
               {!this.props.isFiltered ? (
-                <p>Created by: <a href={`/profile/${this.props.user}`}>{this.state.charUser}</a></p>
+                <p>
+                  Created by:{" "}
+                  <a href={`/profile/${this.props.user}`}>
+                    {this.state.charUser}
+                  </a>
+                </p>
               ) : null}
             </Card.Text>
             <div className='buttons-container'>
-              {this.state.isFiltered ? 
-              <Button variant='primary' onClick={this.startAdventure}>
-                Start Adventure
-              </Button> : this.state.isCopyingCharacter ? (
+              {this.state.isFiltered ? (
+                <Button variant='primary' onClick={this.startAdventure}>
+                  Start Adventure
+                </Button>
+              ) : this.state.isCopyingCharacter ? (
                 <Button
                   variant='secondary'
                   onClick={this.handleCopyCharacterBtn}
                 >
                   Cancel
                 </Button>
-              ) : 
-              <Button variant='primary' onClick={this.handleCopyCharacterBtn}>
-                Copy
-              </Button>}
+              ) : (
+                <Button variant='primary' onClick={this.handleCopyCharacterBtn}>
+                  Copy
+                </Button>
+              )}
               <Button variant='secondary' onClick={this.characterDetail}>
                 Details
               </Button>
@@ -174,8 +188,7 @@ export default class Character extends Component {
                   name='name'
                   onChange={this.handleNameChange}
                   className=''
-                >
-                </input>
+                ></input>
                 <br></br>
                 <Button variant='primary' onClick={this.copyCharacter}>
                   Confirm Copy
