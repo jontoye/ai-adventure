@@ -7,7 +7,7 @@
 }
 
 #adventure-log::-webkit-scrollbar {
-  background: rgba(128, 128, 128, 0.333)
+  background: rgba(128, 128, 128, 0.333);
 }
 
 #adventure-log::-webkit-scrollbar-thumb {
@@ -75,4 +75,5 @@
   background-attachment: fixed;
   background-repeat: no-repeat;
   background-position: center;
+  height: 100vh;
 }

@@ -106,7 +106,7 @@ export default class Adventures extends Component {
       let advUserID = user ? user._id : "unknown";
     
       return (
-        <div className="adventure-card">
+        <div className='adventure-card'>
           <AdventureInfo
             adventure={a}
             key={a._id}
@@ -121,7 +121,8 @@ export default class Adventures extends Component {
             userList={this.props.userList}
             advUser={advUser}
             advUserID={advUserID}
-          />         
+            loadAdventureList={this.loadAdventureList}
+          />
         </div>
       );
     });

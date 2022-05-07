@@ -140,6 +140,8 @@ export default class AdventureInfo extends Component {
         copiedAdventure: adventure,
         isCopyingAdventure: true,
       });
+      //update adventure list here
+      this.props.loadAdventureList();
     }
   };
 
