@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Axios from "axios";
-import { Card, Button } from "react-bootstrap";
+import { Card, Button, Form } from "react-bootstrap";
 import { Navigate } from "react-router-dom";
 import "./css/Character.css";
 
@@ -23,6 +23,8 @@ export default class Character extends Component {
     image: "images/saad.png",
     charUser: this.props.charUser,
     isFiltered: this.props.isFiltered,
+    isCopyingCharacter: false,
+    newName: "",
   };
 
   componentDidMount() {
@@ -51,7 +53,7 @@ export default class Character extends Component {
     character.user = this.props.currentUser.id
     delete character.id
     delete character._id
-    character.name = prompt("Enter a name for your new character.")
+    character.name = this.state.newName
     //need to find a smart way to replace the name in the backstory
     character.backstory = this.state.character.backstory.replace(this.state.character.name, character.name)
 
@@ -95,6 +97,27 @@ export default class Character extends Component {
     });
   };
 
+  handleCopyCharacterBtn = (e) => {
+    if (this.state.isCopyingCharacter) {
+      this.setState({
+        isCopyingCharacter: false,
+      });
+    } else {
+      console.log("Initialising copy...", this.state.character);
+      this.setState({
+        isCopyingCharacter: true,
+      });
+    }
+  };
+
+  handleNameChange = (event) => {
+    const newValue = event.target.value; //this will give the value of the field that is changing
+
+    this.setState({
+      newName: newValue,
+    });
+  };
+
   render() {
     let css = `characters character-${this.props.id}`;
     // console.log(this.state)
@@ -127,14 +150,38 @@ export default class Character extends Component {
               {this.state.isFiltered ? 
               <Button variant='primary' onClick={this.startAdventure}>
                 Start Adventure
-              </Button> :
-              <Button variant='primary' onClick={this.copyCharacter}>
+              </Button> : this.state.isCopyingCharacter ? (
+                <Button
+                  variant='secondary'
+                  onClick={this.handleCopyCharacterBtn}
+                >
+                  Cancel
+                </Button>
+              ) : 
+              <Button variant='primary' onClick={this.handleCopyCharacterBtn}>
                 Copy
               </Button>}
               <Button variant='secondary' onClick={this.characterDetail}>
                 Details
               </Button>
             </div>
+            {this.state.isCopyingCharacter ? (
+              <div className='mb-3 form__group field'>
+                <label className='form__label'>Name New Character</label>
+                <br></br>
+                <input
+                  type='text'
+                  name='name'
+                  onChange={this.handleNameChange}
+                  className=''
+                >
+                </input>
+                <br></br>
+                <Button variant='primary' onClick={this.copyCharacter}>
+                  Confirm Copy
+                </Button>
+              </div>
+            ) : null}
           </Card.Body>
         </Card>
         {this.state.redirect && (
