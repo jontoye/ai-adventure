@@ -487,6 +487,7 @@ const CLASS = [
   "Centaur",
   "Faun",
   "Time Traveller",
+  "Corgi",
 ];
 
 const TRAIT = [
@@ -598,7 +599,7 @@ const TRAIT = [
 ];
 
 let randomImages = [];
-const NUMRAND = 43;
+const NUMRAND = 45;
 for (let i = 1; i < NUMRAND + 1; i++) {
   randomImages.push("random" + i);
 }
