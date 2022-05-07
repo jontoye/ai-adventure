@@ -143,7 +143,7 @@ export default class Character extends Component {
               <br />
               Weakness: {this.props.weakness}
               {!this.props.isFiltered ? (
-                <p>Created by: {this.state.charUser}</p>
+                <p>Created by: <a href={`/profile/${this.props.user}`}>{this.state.charUser}</a></p>
               ) : null}
             </Card.Text>
             <div className='buttons-container'>

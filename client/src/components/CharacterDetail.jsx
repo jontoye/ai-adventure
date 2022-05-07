@@ -23,7 +23,7 @@ export default class CharacterDetail extends Component {
   componentDidMount() {
     this.loadName();
     this.setCharacter();
-    console.log(this.props.userList)
+    // console.log(this.props.userList)
   }
 
   loadName = () => {

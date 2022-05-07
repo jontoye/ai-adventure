@@ -114,7 +114,7 @@ export default class CreateAdventure extends Component {
   setRedirect() {
     // console.log("start-story triggered2");
     setTimeout(() => {
-      console.log(this.state.newAdventure);
+      // console.log(this.state.newAdventure);
       this.setState({
         redirect: true,
       });
@@ -130,9 +130,9 @@ export default class CreateAdventure extends Component {
   }
 
   achieveHandle(e) {
-    console.log("achieve handle check", e);
+    // console.log("achieve handle check", e);
     if (e === true) {
-      console.log("achievement detected");
+      // console.log("achievement detected");
     }
   }
 
@@ -229,26 +229,26 @@ export default class CreateAdventure extends Component {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
     })
-      .then((response) => {
-        if (response.data.error) {
-          console.log("Error adding event.", response.data.error);
-          this.props.setMessage(
-            response.data.error._message +
-              ". Please confirm you have correctly filled out all the fields in the adventure creation form.\nIf the issue persists please contact the developers and quote: Event/" +
-              response.data.error.name,
-            "danger"
-          );
-        } else {
-          console.log("Event created successfully.", response);
-          this.setState({
-            event: response.data.event,
-          });
-        }
-      })
-      .catch((error) => {
-        console.log("Error creating event.", error);
-        this.props.setMessage(error.message, "danger");
-      });
+    .then((response) => {
+      if (response.data.error) {
+        console.log("Error adding event.", response.data.error);
+        this.props.setMessage(
+          response.data.error._message +
+            ". Please confirm you have correctly filled out all the fields in the adventure creation form.\nIf the issue persists please contact the developers and quote: Event/" +
+            response.data.error.name,
+          "danger"
+        );
+      } else {
+        console.log("Event created successfully.", response);
+        this.setState({
+          event: response.data.event,
+        });
+      }
+    })
+    .catch((error) => {
+      console.log("Error creating event.", error);
+      this.props.setMessage(error.message, "danger");
+    });
   };
 
   render() {

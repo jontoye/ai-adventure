@@ -70,6 +70,17 @@ export default class AdventureInfo extends Component {
       });
   }
 
+  componentDidUpdate(prevProps, prevState) { 
+    let user = this.props.userList.find((u) => {
+      return this.state.adventure.user === u._id;
+    })
+    setTimeout(() => {
+      this.setState({
+        advUser: user ? user.username : "unknown",
+      })
+    }, 100);
+  } 
+
   continueAdventure = (e) => {
     console.log("continuing adventure...");
     Axios.get("event/index", {
@@ -302,7 +313,7 @@ export default class AdventureInfo extends Component {
               Character: {this.state.character.name} (
               {this.state.character.class})<br></br>
               {!this.props.isFiltered ? (
-                <p>Created by: {this.state.advUser}</p>
+                <p>Created by: {this.props.adventure.user ? (<a href={`/profile/${this.props.adventure.user}`}>{this.state.advUser}</a>) : this.state.advUser}</p>
               ) : null}
             </Card.Text>
             <div className='buttons-container'>
