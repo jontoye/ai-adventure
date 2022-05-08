@@ -59,6 +59,7 @@ export default class Home extends Component {
 					continueAdventure={this.props.continueAdventure}
 					createRandomCharacter={this.props.createRandomCharacter} 
 					setMessage={this.props.setMessage}
+					user={this.props.user}
 				/>
 				<Tutorial />
 				<TechStack />

@@ -141,6 +141,7 @@ export default class CreateCharacter extends Component {
   };
 
   addCharacter = (character) => {
+    console.log("add char test", character);
     Axios.post("character/add", character, {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),
@@ -265,8 +266,10 @@ export default class CreateCharacter extends Component {
     });
   }
 
+
   onFormSubmit = (e) => {
-    this.props.charCreateAchievement();
+    // this.props.charCreateAchievement();
+    this.props.createAchievement(1);
     e.preventDefault();
 
     this.setImage();

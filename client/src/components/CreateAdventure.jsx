@@ -199,6 +199,7 @@ export default class CreateAdventure extends Component {
           fullLog: logs,
           displayedLog: [character.backstory, story],
         };
+        this.props.createAchievement(2);
 
         this.createEvent(event);
         setTimeout(() => {

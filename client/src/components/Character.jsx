@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Axios from "axios";
-import { Card, Button, Form } from "react-bootstrap";
+import { Card, Button } from "react-bootstrap";
 import { Navigate } from "react-router-dom";
 import "./css/Character.css";
 

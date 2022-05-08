@@ -119,29 +119,45 @@
   }
 }
 
+.unachieved {
+  opacity: 0.4;
+}
+
 .badge-1 {
+  opacity: 0.4;
+}
+.badge-2 {
   opacity: 0.4;
 }
 
 .badge-3 {
   opacity: 0.4;
 }
+.badge-4 {
+  opacity: 0.4;
+}
 
 .badge-5 {
   opacity: 0.4;
 }
+.badge-6 {
+  opacity: 0.4;
+}
 .badge-7 {
+  opacity: 0.4;
+}
+.badge-8 {
   opacity: 0.4;
 }
 .badge-9 {
   opacity: 0.4;
 }
 
-#achievement-button{
-  background-color: rgb(255,255,255,0.001);
+#achievement-button {
+  background-color: rgb(255, 255, 255, 0.001);
   border: none;
 }
 
-#achievement-image{
+#achievement-image {
   margin: 0 auto;
 }

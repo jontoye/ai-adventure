@@ -249,41 +249,75 @@ export default class App extends Component {
     }, 10000);
   };
 
-  achievementHandler = () => {
-    Axios.post("feedback", this.state, {
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token"),
-      },
-    }).then((response) => {
-      // console.log(response.data);
-      let achieveMessage = response.data.result
-        ? "Achievement Unlocked!"
-        : null;
-      this.setState({
-        achieveMessage: achieveMessage,
-      });
-      this.setBannerTimeout("confirmationMessage");
-      this.setBannerTimeout("errorMessage");
-      this.getAchievements();
-    });
-  };
-
-  getAchievements = async () => {
-    Axios.get("/feedback", {
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token"),
-      },
-    })
+  createAchievement = (achievement) => {
+    Axios.post(
+      "achievement/add",
+      { 1: achievement },
+      {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      }
+    )
       .then((response) => {
-        this.setState({
-          feedback: response.data.feedback.reverse(),
-        });
+        if (response.data.error) {
+          console.log("Error adding event.", response.data.error);
+          this.props.setMessage(
+            response.data.error._message +
+              ". Please confirm you have correctly achieved something.\nIf the issue persists please contact the developers and quote: Event/" +
+              response.data.error.name,
+            "danger"
+          );
+        } else {
+          console.log("Achievement created successfully.", response);
+          // this.setState({
+          //   event: response.data.event,
+          // });
+        }
       })
       .catch((error) => {
-        console.log("Error fetching feedback.", error);
+        console.log("Error creating event.", error);
         this.props.setMessage(error.message, "danger");
       });
   };
+
+  triggerAchievement = (achievement) => {};
+
+  // achievementHandler = () => {
+  //   Axios.post("feedback", this.state, {
+  //     headers: {
+  //       Authorization: "Bearer " + localStorage.getItem("token"),
+  //     },
+  //   }).then((response) => {
+  //     // console.log(response.data);
+  //     let achieveMessage = response.data.result
+  //       ? "Achievement Unlocked!"
+  //       : null;
+  //     this.setState({
+  //       achieveMessage: achieveMessage,
+  //     });
+  //     this.setBannerTimeout("confirmationMessage");
+  //     this.setBannerTimeout("errorMessage");
+  //     this.getAchievements();
+  //   });
+  // };
+
+  // getAchievements = async () => {
+  //   Axios.get("/feedback", {
+  //     headers: {
+  //       Authorization: "Bearer " + localStorage.getItem("token"),
+  //     },
+  //   })
+  //     .then((response) => {
+  //       this.setState({
+  //         feedback: response.data.feedback.reverse(),
+  //       });
+  //     })
+  //     .catch((error) => {
+  //       console.log("Error fetching feedback.", error);
+  //       this.props.setMessage(error.message, "danger");
+  //     });
+  // };
 
   setMessage = (message, type) => {
     this.setState({
@@ -298,17 +332,17 @@ export default class App extends Component {
     this.setBannerTimeout(`${type.toLowerCase()}Message`);
   };
 
-  charCreateAchievement = () => {
-    this.setState({
-      charCreateA: true,
-    });
-  };
+  // charCreateAchievement = () => {
+  //   this.setState({
+  //     charCreateA: true,
+  //   });
+  // };
 
-  achievementCheck = (achievement) => {
-    this.setState({
-      achievement: [...this.state.achievments, achievement],
-    });
-  };
+  // achievementCheck = (achievement) => {
+  //   this.setState({
+  //     achievement: [...this.state.achievments, achievement],
+  //   });
+  // };
 
   render() {
     const infoMessage = this.state.infoMessage ? (
@@ -394,6 +428,7 @@ export default class App extends Component {
               </span>
             </Navbar.Collapse>
           </Container>
+          {/* <Button onClick={() => this.createAchievement(2)}></Button> */}
         </Navbar>
 
         {dangerMessage}
@@ -429,8 +464,8 @@ export default class App extends Component {
                 randomCharacter={this.state.randomCharacter}
                 createAdventure={this.createAdventure}
                 user={this.state.user}
-                charCreateAchievement={this.charCreateAchievement}
                 setMessage={this.setMessage}
+                createAchievement={this.createAchievement}
               />
             }
           />
@@ -445,6 +480,7 @@ export default class App extends Component {
                 achievementCheck={this.achievementCheck}
                 setMessage={this.setMessage}
                 user={this.state.user}
+                createAchievement={this.createAchievement}
               />
             }
           />
@@ -459,6 +495,7 @@ export default class App extends Component {
                 isFiltered={true}
                 userList={this.state.users}
                 startStory={this.startStory}
+                createAchievement={this.createAchievement}
               />
             }
           />
@@ -470,6 +507,7 @@ export default class App extends Component {
                 adventure={this.state.adventure}
                 character={this.state.character}
                 setMessage={this.setMessage}
+                createAchievement={this.createAchievement}
               />
             }
           />
@@ -487,6 +525,7 @@ export default class App extends Component {
                 isFiltered={true}
                 startStory={this.startStory}
                 userList={this.state.users}
+                createAchievement={this.createAchievement}
               />
             }
           />
@@ -504,6 +543,7 @@ export default class App extends Component {
                 startStory={this.startStory}
                 userList={this.state.users}
                 user={this.state.user}
+                createAchievement={this.createAchievement}
               />
             }
           />
@@ -519,6 +559,7 @@ export default class App extends Component {
                 dontCreateRandomCharacter={this.dontCreateRandomCharacter}
                 userList={this.state.users}
                 startStory={this.startStory}
+                createAchievement={this.createAchievement}
               />
             }
           />
