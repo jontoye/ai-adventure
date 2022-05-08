@@ -32,6 +32,7 @@ export default class App extends Component {
     this.continueAdventure = this.continueAdventure.bind(this);
     this.setCharacter = this.setCharacter.bind(this);
     this.setMessage = this.setMessage.bind(this);
+    this.createAchievement = this.createAchievement.bind(this);
   }
 
   state = {

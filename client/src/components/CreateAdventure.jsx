@@ -45,14 +45,13 @@ export default class CreateAdventure extends Component {
     })
       .then((response) => {
         // console.log(response.data.characters);
-        if (response.data.characters) {
-          let characterFiltered = response.data.characters.filter((c) => {
-            return c.user ? c.user === this.props.user.id : false;
-          });
-          this.setState({
-            characters: characterFiltered.reverse(),
-          });
-        }
+
+        let characterFiltered = response.data.characters.filter((c) => {
+          return c.user ? c.user === this.props.user.id : false;
+        });
+        this.setState({
+          characters: characterFiltered.reverse(),
+        });
       })
       .catch((err) => {
         console.log("Error fetching characters.");
