@@ -134,6 +134,7 @@ export default class AdventureInfo extends Component {
       adventure.character = this.state.userCharacters[0]._id;
       adventure.log = [this.state.adventure.log[0]];
       adventure.events = [this.state.adventure.events[0]];
+      this.props.createAchievement(6)
 
       console.log("Copy ready.", adventure);
       this.setState({
