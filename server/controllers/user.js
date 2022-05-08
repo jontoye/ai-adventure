@@ -9,7 +9,9 @@ exports.user_index_get = (req, res) => {
       res.json({ users: users }).status(200);
     })
     .catch((err) => {
-      res.json({ error: err, message: "Error fetching user list." }).status(400);
+      res
+        .json({ error: err, message: "Error fetching user list." })
+        .status(400);
     });
 };
 
@@ -31,8 +33,10 @@ exports.user_profile_get = (req, res) => {
       res.json({ user: user }).status(200);
     })
     .catch((err) => {
-      console.log(err)
-      res.json({ error: err, message: "Error getting user profile." }).status(400);
+      console.log(err);
+      res
+        .json({ error: err, message: "Error getting user profile." })
+        .status(400);
     });
 };
 
@@ -49,7 +53,9 @@ exports.user_profile_avatar_put = (req, res) => {
     })
     .catch((err) => {
       console.error(err);
-      res.json({ error: err, message: "Error updating profile picture." }).status(400);
+      res
+        .json({ error: err, message: "Error updating profile picture." })
+        .status(400);
     });
 };
 
@@ -95,7 +101,9 @@ exports.user_profile_addsocial_post = (req, res) => {
     })
     .catch((err) => {
       console.error(err);
-      res.json({ error: err, message: "Error friending user profile." }).status(400);
+      res
+        .json({ error: err, message: "Error friending user profile." })
+        .status(400);
     });
 };
 
@@ -131,6 +139,44 @@ exports.user_profile_removesocial_post = (req, res) => {
     })
     .catch((err) => {
       console.error(err);
-      res.json({ error: err, message: "Error unfriending user profile." }).status(400);
+      res
+        .json({ error: err, message: "Error unfriending user profile." })
+        .status(400);
     });
 };
+
+exports.user_profile_achievement_post = (req, res) => {
+  User.findById(req.user).then((user) => {
+    console.log("req test", req.body[1]);
+    if (user.achievements.includes(req.body[1])) {
+      console.log("achievement already detected");
+    } else {
+      user.achievements.push(req.body[1]);
+    }
+    user
+      .save()
+      .then(() => {
+        res.json({ user }).status(200);
+        // res.json({ character }).status(200);
+      })
+      .catch((err) => {
+        console.log(err);
+        // res.send("Error 418");
+        res
+          .json({ error: err, message: "Error creating Achievement." })
+          .status(400);
+      });
+  });
+};
+
+// exports.user_achievement_get = (req, res) => {
+//   User.findById(req.user)
+//     .then((user) => {
+//       res.json({ user: user }).status(200);
+//     })
+//     .catch((err) => {
+//       res
+//         .json({ error: err, message: "Error fetching user list." })
+//         .status(400);
+//     });
+// };

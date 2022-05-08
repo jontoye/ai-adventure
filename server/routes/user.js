@@ -29,4 +29,15 @@ router.put(
   userCtrl.user_profile_avatar_put
 );
 
+router.post(
+  "/achievement/add",
+  isLoggedIn,
+  userCtrl.user_profile_achievement_post
+)
+// router.get(
+//   "/achievement/get",
+//   isLoggedIn,
+//   userCtrl.user_profile_achievement_get
+// );
+
 module.exports = router;

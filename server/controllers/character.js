@@ -3,7 +3,7 @@ const User = require("../models/User");
 const moment = require("moment");
 
 exports.character_create_post = (req, res) => {
-  // console.log("REQ.BODY --->", req.body);
+  console.log("create char REQ.BODY --->", req.body, req.user);
   let character = new Character(req.body);
 
   //save character
@@ -24,7 +24,9 @@ exports.character_create_post = (req, res) => {
     .catch((err) => {
       console.log(err);
       // res.send("Error 418");
-      res.json({ error: err, message: "Error creating Character." }).status(400);
+      res
+        .json({ error: err, message: "Error creating Character." })
+        .status(400);
     });
 };
 
@@ -36,7 +38,9 @@ exports.character_index_get = (req, res) => {
     })
     .catch((err) => {
       console.log(err);
-      res.json({error:err, message: "Error locating Characters."}).status(400);
+      res
+        .json({ error: err, message: "Error locating Characters." })
+        .status(400);
     });
 };
 
@@ -49,6 +53,8 @@ exports.character_delete_get = (req, res) => {
     })
     .catch((err) => {
       console.log(err);
-      res.json({error: err, message: "Error deleting selected character."}).status(400);
+      res
+        .json({ error: err, message: "Error deleting selected character." })
+        .status(400);
     });
 };
