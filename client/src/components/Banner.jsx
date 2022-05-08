@@ -149,14 +149,6 @@ export default function Banner(props) {
       });
   };
 
-  // const achievementColors = () => {
-  //   console.log(props.user.achievements);
-  //   for (let i = 0; i < 12; i++) {
-  //     if (props.user.achievements.includes(i.toString())) {
-  //       document.getElementById(`badge-${i}`).style.opacity = 1;
-  //     }
-  //   }
-  // };
 
   function buttonHandler() {
     props.createRandomCharacter();
