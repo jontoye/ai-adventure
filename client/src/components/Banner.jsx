@@ -34,24 +34,12 @@ export default function Banner(props) {
     badge9: "achievement-badge unachieved",
   });
 
-  // const [badge1, setBadge1] = useState("achievement-badge unachieved");
-  // const [badge2, setBadge2] = useState("achievement-badge unachieved");
-  // const [badge3, setBadge3] = useState("achievement-badge unachieved");
-  // const [badge4, setBadge4] = useState("achievement-badge unachieved");
-  // const [badge5, setBadge5] = useState("achievement-badge unachieved");
-  // const [badge6, setBadge6] = useState("achievement-badge unachieved");
-  // const [badge7, setBadge7] = useState("achievement-badge unachieved");
-  // const [badge8, setBadge8] = useState("achievement-badge unachieved");
-  // const [badge9, setBadge9] = useState("achievement-badge unachieved");
-
   useEffect(() => {
-    console.log(props);
     // achievementColors();
-    loadUsers();
+    loadAchievements();
   }, []);
 
   const handleClose = () => setShow(false);
-  // const handleShow = () => setShow(true);
 
   const achievement1 = () => {
     setAchievement({
@@ -128,63 +116,32 @@ export default function Banner(props) {
     setShow(true);
   };
 
-  const loadUsers = () => {
+  const loadAchievements = () => {
     Axios.get("users", {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
     })
       .then((response) => {
-        // console.log("response test", response.data.users);
-        // console.log("props user test", props.user.id);
         let user = response.data.users.filter(
           (user) => props.user.id === user._id
         );
         let tempBadges = badges;
         for (let i = 1; i < 9; i++) {
-          
           if (user[0].achievements.includes(i.toString())) {
             console.log("achievement detected:", i);
             let badgeID = `badge${i}`;
-            
-            tempBadges = ({
+
+            tempBadges = {
               ...tempBadges,
               [badgeID]: "achievement-badge",
-            });
+            };
             // console.log(tempBadges);
-            // console.log("achievement detected:", i);
-            // let tempthing = `setBadge${i}`;
-            // tempthing("achievement-badge");
-
-            // let badge = document.getElementsByClassName(`badge-${i}`);
-            // badge.style = {
-            //   opacity: 1,
-            // };
-            // console.log(badge.style);
-
-            // document.getElementsByClassName(`badge-${i}`).style = {
-            //   opacity: 1,
-            // };
-            // console.log("thing", badge);
-            // thing.style.opacity = 1;
-            // } else {
-            //   let tempthing = `badge${i}`;
-            // setBadges({
-            //   [tempthing]: "achievement-badge unachieved",
-            // });
-            // console.log("badge test", badges);
-            // let badge = document.getElementsByClassName(`badge-${i}`);
-
-            // badge.style = {
-            //   opacity: 0.4,
-            // };
-            // console.log(badge.style);
           }
         }
         setBadges({
           ...tempBadges,
         });
-        // console.log("user achievments test", user[0]);
       })
       .catch((err) => {
         console.log("Error fetching users.");
