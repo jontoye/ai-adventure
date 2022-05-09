@@ -1,6 +1,6 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { useParams, Navigate } from "react-router-dom";
+import React, { useState } from "react";
+import { Navigate } from "react-router-dom";
 
 import "./css/Banner.css";
 import "./css/Profile.css";
@@ -56,7 +56,7 @@ function ImageSelect({ currentUser, setMessage }) {
     return <ProfileImage image={image} changeUserImg={changeUserImg} />;
   });
   return (
-    <div className='images-holder'>
+    <div className='images-holder2'>
       {imageList}
       <div>{redirect && <Navigate to='/' />}</div>
     </div>
