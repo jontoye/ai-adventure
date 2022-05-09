@@ -9,6 +9,7 @@ export default class AdventureInfo extends Component {
     adventure: this.props.adventure,
     character: {},
     redirect: false,
+    redirected: false,
     redirectAdv: false,
     copiedAdventure: {},
     copiedCharacter: {},
@@ -281,6 +282,15 @@ export default class AdventureInfo extends Component {
     });
   };
 
+  showStory = (e) => {
+    console.log('yeet')
+    e.preventDefault();
+    this.props.setAdventure(this.state.adventure);
+    this.setState({
+      redirected: true,
+    });
+  }
+
   render() {
     let css = `adventure-${this.state.adventure.id}`;
     let a_an = "aeiou".includes(this.state.adventure.setting[0].toLowerCase())
@@ -306,7 +316,8 @@ export default class AdventureInfo extends Component {
     return (
       <div>
         <Card className={css} style={{ width: "18rem", margin: "15px" }}>
-          <Card.Img variant='top' src={this.state.adventure.image} />
+          <Card.Img variant='top' src={this.state.adventure.image} 
+            onClick={this.showStory}/>
           <Card.Body>
             <Card.Title>{this.state.adventure.name}</Card.Title>
             <Card.Text>
@@ -384,6 +395,14 @@ export default class AdventureInfo extends Component {
             adventure={this.state.adventure}
             character={this.state.character}
             setMessage={this.props.setMessage}
+          />
+        )}
+        {this.state.redirected && (
+          <Navigate
+          to='/adventure-story'
+          replace={true}
+          adventure={this.state.adventure}
+          setMessage={this.props.setMessage}
           />
         )}
       </div>

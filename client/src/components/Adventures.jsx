@@ -123,6 +123,7 @@ export default class Adventures extends Component {
             advUserID={advUserID}
             loadAdventureList={this.loadAdventureList}
             createAchievement={this.props.createAchievement}
+            setAdventure={this.props.setAdventure}
           />
         </div>
       );

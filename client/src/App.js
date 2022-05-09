@@ -15,6 +15,7 @@ import Adventures from "./components/Adventures";
 import Adventure from "./components/Adventure";
 import Profile from "./components/Profile";
 import CharacterDetail from "./components/CharacterDetail";
+import Story from "./components/Story";
 
 import "./App.scss";
 import { Link } from "react-router-dom";
@@ -33,6 +34,7 @@ export default class App extends Component {
     this.setCharacter = this.setCharacter.bind(this);
     this.setMessage = this.setMessage.bind(this);
     this.createAchievement = this.createAchievement.bind(this);
+    this.setAdventure = this.setAdventure.bind(this);
   }
 
   state = {
@@ -164,6 +166,12 @@ export default class App extends Component {
   setCharacter(character) {
     this.setState({
       character: character,
+    });
+  }
+
+  setAdventure(adventure) {
+    this.setState({
+      adventure: adventure,
     });
   }
 
@@ -497,6 +505,7 @@ export default class App extends Component {
                 userList={this.state.users}
                 startStory={this.startStory}
                 createAchievement={this.createAchievement}
+                setAdventure={this.setAdventure}
               />
             }
           />
@@ -549,6 +558,16 @@ export default class App extends Component {
             }
           />
           <Route
+            path='/adventure-story'
+            exact
+            element={
+              <Story
+                adventure={this.state.adventure}
+                setMessage={this.setMessage}
+              />
+            }
+          />
+          <Route
             path='/users'
             element={
               <Users
@@ -561,6 +580,7 @@ export default class App extends Component {
                 userList={this.state.users}
                 startStory={this.startStory}
                 createAchievement={this.createAchievement}
+                setAdventure={this.setAdventure}
               />
             }
           />
