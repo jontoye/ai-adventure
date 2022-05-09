@@ -70,7 +70,8 @@ export default function Banner(props) {
     setAchievement({
       title: "Pro Adventurer",
       img: "images/badges/rank-3.png",
-      description: "You have played for over 5 hours. Remember to take a break!",
+      description:
+        "You have played for over 5 hours. Remember to take a break!",
     });
     setShow(true);
   };
@@ -135,7 +136,7 @@ export default function Banner(props) {
           (user) => props.user.id === user._id
         );
         let tempBadges = badges;
-        for (let i = 1; i < 9; i++) {
+        for (let i = 1; i < 12; i++) {
           if (user[0].achievements.includes(i.toString())) {
             console.log("achievement detected:", i);
             let badgeID = `badge${i}`;

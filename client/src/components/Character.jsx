@@ -80,6 +80,7 @@ export default class Character extends Component {
           );
         } else {
           console.log("Character copied successfully.", response);
+          // this.props.createAchievement(7)
           this.setState({
             redirectChar: true,
           });

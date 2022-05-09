@@ -30,7 +30,7 @@ export default class Signup extends Component {
     this.props.login(this.state);
     this.setState({
       redirect: true,
-      path: "/",
+      path: "/image-select",
     });
   };
 

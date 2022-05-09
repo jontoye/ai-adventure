@@ -5,21 +5,41 @@ import Axios from "axios";
 import "./css/AdventureInfo.css";
 
 export default class AdventureInfo extends Component {
-  state = {
-    adventure: this.props.adventure,
-    character: {},
-    redirect: false,
-    redirectAdv: false,
-    copiedAdventure: {},
-    copiedCharacter: {},
-    characters: {},
-    userCharacters: this.props.userCharacters,
-    isCopyingAdventure: false,
-    advUser: this.props.advUser,
-    users: this.props.userList,
-    isFiltered: this.props.isFiltered,
-    event: {},
-  };
+
+  constructor(props) {
+    super(props)
+  
+    this.state = {
+      adventure: this.props.adventure,
+      character: {},
+      redirect: false,
+      redirectAdv: false,
+      copiedAdventure: {},
+      copiedCharacter: {},
+      characters: {},
+      userCharacters: this.props.userCharacters,
+      isCopyingAdventure: false,
+      advUser: this.props.advUser,
+      users: this.props.userList,
+      isFiltered: this.props.isFiltered,
+      event: {},
+    };
+  }
+  // state = {
+  //   adventure: this.props.adventure,
+  //   character: {},
+  //   redirect: false,
+  //   redirectAdv: false,
+  //   copiedAdventure: {},
+  //   copiedCharacter: {},
+  //   characters: {},
+  //   userCharacters: this.props.userCharacters,
+  //   isCopyingAdventure: false,
+  //   advUser: this.props.advUser,
+  //   users: this.props.userList,
+  //   isFiltered: this.props.isFiltered,
+  //   event: {},
+  // };
 
   setUserInfo = (userID) => {
     // setTimeout(()=>{
@@ -144,6 +164,7 @@ export default class AdventureInfo extends Component {
         isCopyingAdventure: true,
       });
       //update adventure list here
+      // this.props.createAchievement(6);
       this.props.loadAdventureList();
     }
   };
