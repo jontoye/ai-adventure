@@ -56,8 +56,10 @@ function ImageSelect({ currentUser, setMessage }) {
     return <ProfileImage image={image} changeUserImg={changeUserImg} />;
   });
   return (
-    <div className='images-holder2'>
-      {imageList}
+    <div>
+      <h1>Select your profile image</h1>
+
+      <div className='images-holder2'>{imageList}</div>
       <div>{redirect && <Navigate to='/' />}</div>
     </div>
   );

@@ -159,7 +159,7 @@ export default function Profile({ currentUser, setMessage }) {
 
   const handleClose = () => setShow(false);
   const handleImageClose = () => setShowImageSelect(false);
-  const handleShow = () => setShow(true);
+  // const handleShow = () => setShow(true);
   const handleImageShow = () => setShowImageSelect(true);
 
   const handleBioClick = async () => {
@@ -446,7 +446,7 @@ export default function Profile({ currentUser, setMessage }) {
                       ></PictureChanger>
                     </Modal.Body>
                     <Modal.Footer>
-                      <Button variant='secondary' onClick={handleClose}>
+                      <Button variant='secondary' onClick={handleImageClose}>
                         Cancel
                       </Button>
                     </Modal.Footer>
