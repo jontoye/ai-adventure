@@ -518,7 +518,7 @@ export default class App extends Component {
           
 
           <Route
-            path={`/image-select`}
+            path='/image-select'
             element={
               <ImageSelect
                 currentUser={this.state.user}
