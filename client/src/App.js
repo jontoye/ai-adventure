@@ -15,6 +15,7 @@ import Adventures from "./components/Adventures";
 import Adventure from "./components/Adventure";
 import Profile from "./components/Profile";
 import CharacterDetail from "./components/CharacterDetail";
+import ImageSelect from "./components/ImageSelect";
 
 import "./App.scss";
 import { Link } from "react-router-dom";
@@ -31,8 +32,8 @@ export default class App extends Component {
     this.createAdventure = this.createAdventure.bind(this);
     this.continueAdventure = this.continueAdventure.bind(this);
     this.setCharacter = this.setCharacter.bind(this);
-    this.setMessage = this.setMessage.bind(this);
     this.createAchievement = this.createAchievement.bind(this);
+    this.setMessage = this.setMessage.bind(this);
   }
 
   state = {
@@ -250,7 +251,7 @@ export default class App extends Component {
     }, 10000);
   };
 
-  createAchievement = (achievement) => {
+  createAchievement(achievement) {
     Axios.post(
       "achievement/add",
       { 1: achievement },
@@ -280,7 +281,7 @@ export default class App extends Component {
         console.log("Error creating event.", error);
         this.props.setMessage(error.message, "danger");
       });
-  };
+  }
 
   triggerAchievement = (achievement) => {};
 
@@ -332,6 +333,7 @@ export default class App extends Component {
     });
     this.setBannerTimeout(`${type.toLowerCase()}Message`);
   };
+
 
   // charCreateAchievement = () => {
   //   this.setState({
@@ -470,6 +472,7 @@ export default class App extends Component {
               />
             }
           />
+          
           <Route
             path='/create-adventure'
             exact
@@ -512,6 +515,19 @@ export default class App extends Component {
               />
             }
           />
+          
+
+          <Route
+            path={`/image-select`}
+            element={
+              <ImageSelect
+                currentUser={this.state.user}
+                setMessage={this.setMessage}
+                changeUserImg={this.changeUserImg}
+              />
+            }
+          ></Route>
+          
           <Route
             path='/characters'
             exact
@@ -530,6 +546,8 @@ export default class App extends Component {
               />
             }
           />
+
+
 
           <Route
             path='/character-detail'
