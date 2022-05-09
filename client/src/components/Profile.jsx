@@ -13,6 +13,8 @@ export default function Profile({ currentUser, setMessage }) {
   };
   const [user, setUser] = useState();
   const [show, setShow] = useState(false);
+  const [showImageSelect, setShowImageSelect] = useState(false);
+
   const [edit, setEdit] = useState(false);
   const [bio, setBio] = useState("");
   const [achievement, setAchievement] = useState({
@@ -156,7 +158,9 @@ export default function Profile({ currentUser, setMessage }) {
   // };
 
   const handleClose = () => setShow(false);
+  const handleImageClose = () => setShowImageSelect(false);
   const handleShow = () => setShow(true);
+  const handleImageShow = () => setShowImageSelect(true);
 
   const handleBioClick = async () => {
     if (edit) {
@@ -324,7 +328,7 @@ export default function Profile({ currentUser, setMessage }) {
       { headers }
     );
     getUser(params.userId);
-    setShow(false);
+    setShowImageSelect(false);
   };
 
   const renderTooltip_follow = (info) => (
@@ -427,12 +431,12 @@ export default function Profile({ currentUser, setMessage }) {
                     <Button
                       className='center btn-light btn-lg my-3'
                       variant='primary'
-                      onClick={handleShow}
+                      onClick={handleImageShow}
                     >
                       Change Profile Image
                     </Button>
                   </div>
-                  <Modal size='xl' show={show} onHide={handleClose}>
+                  <Modal size='xl' show={showImageSelect} onHide={handleClose}>
                     <Modal.Header closeButton>
                       <Modal.Title>Select Your Profile Image</Modal.Title>
                     </Modal.Header>
