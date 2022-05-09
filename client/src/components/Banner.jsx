@@ -132,6 +132,7 @@ export default function Banner(props) {
       },
     })
       .then((response) => {
+        console.log("response test", response);
         let user = response.data.users.filter(
           (user) => props.user.id === user._id
         );
