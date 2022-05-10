@@ -35,7 +35,6 @@ export default function Banner(props) {
   });
 
   useEffect(() => {
-    
     // achievementColors();
     loadAchievements();
   }, []);
@@ -45,7 +44,7 @@ export default function Banner(props) {
   const achievement1 = () => {
     setAchievement({
       title: "Create a Character",
-      img: "images/badges/rank-1.png",
+      img: "images/badges/1.png",
       description: "Created your first Character! Good luck on your adventure",
     });
     setShow(true);
@@ -53,7 +52,7 @@ export default function Banner(props) {
   const achievement2 = () => {
     setAchievement({
       title: "Start an Adventure",
-      img: "images/badges/ninja-heroic-stance.png",
+      img: "images/badges/2.png",
       description:
         "The first step is always the hardest, but you've taken it. You've began an amazing adventure!",
     });
@@ -62,7 +61,7 @@ export default function Banner(props) {
   const achievement3 = () => {
     setAchievement({
       title: "I would code 100 miles",
-      img: "images/badges/rank-2.png",
+      img: "images/badges/3.png",
       description: "Played through 100 events",
     });
     setShow(true);
@@ -70,7 +69,7 @@ export default function Banner(props) {
   const achievement4 = () => {
     setAchievement({
       title: "Pro Adventurer",
-      img: "images/badges/rank-3.png",
+      img: "images/badges/4.png",
       description:
         "You have played for over 5 hours. Remember to take a break!",
     });
@@ -79,7 +78,7 @@ export default function Banner(props) {
   const achievement5 = () => {
     setAchievement({
       title: "10 Minutes in Heaven",
-      img: "images/badges/dragon-head.png",
+      img: "images/badges/5.png",
       description: "Play your first 10 minutes of AI Dungeon",
     });
     setShow(true);
@@ -87,7 +86,7 @@ export default function Banner(props) {
   const achievement6 = () => {
     setAchievement({
       title: "Copycat",
-      img: "images/badges/sabers-choc.png",
+      img: "images/badges/6.png",
       description: "Copy somone elses noble quest",
     });
     setShow(true);
@@ -95,7 +94,7 @@ export default function Banner(props) {
   const achievement7 = () => {
     setAchievement({
       title: "Doppleganger",
-      img: "images/badges/sabers-choc.png",
+      img: "images/badges/7.png",
       description: "Clone somone else character",
     });
     setShow(true);
@@ -103,7 +102,7 @@ export default function Banner(props) {
   const achievement8 = () => {
     setAchievement({
       title: "Play as Saad",
-      img: "images/badges/drink-me.png",
+      img: "images/badges/8.png",
       description: "Play as our brave leader throughout your mission",
     });
     setShow(true);
@@ -111,7 +110,7 @@ export default function Banner(props) {
   const achievement9 = () => {
     setAchievement({
       title: "Play as Marty",
-      img: "images/badges/drink-me-2.png",
+      img: "images/badges/9.png",
       description:
         "Play as the Marty, the brash warrior ready to conquer any quest",
     });
@@ -299,7 +298,7 @@ export default function Banner(props) {
                   <button id='achievement-button' onClick={achievement1}>
                     <img
                       className={badges.badge1}
-                      src='images/badges/rank-1.png'
+                      src='images/badges/1.png'
                       alt='Achievement 1'
                       title='Create a Character'
                     />
@@ -307,7 +306,7 @@ export default function Banner(props) {
                   <button id='achievement-button' onClick={achievement2}>
                     <img
                       className={badges.badge2}
-                      src='images/badges/ninja-heroic-stance.png'
+                      src='images/badges/2.png'
                       alt='Achievement 2'
                       title='Start an Adventure'
                     />
@@ -315,7 +314,7 @@ export default function Banner(props) {
                   <button id='achievement-button' onClick={achievement3}>
                     <img
                       className={badges.badge3}
-                      src='images/badges/rank-2.png'
+                      src='images/badges/3.png'
                       alt='Achievement 3'
                       title='I would code 100 miles'
                     />
@@ -323,7 +322,7 @@ export default function Banner(props) {
                   <button id='achievement-button' onClick={achievement4}>
                     <img
                       className={badges.badge4}
-                      src='images/badges/rank-3.png'
+                      src='images/badges/4.png'
                       alt='Achievement 4'
                       title='Pro Adventurer'
                     />
@@ -331,7 +330,7 @@ export default function Banner(props) {
                   <button id='achievement-button' onClick={achievement5}>
                     <img
                       className={badges.badge5}
-                      src='images/badges/dragon-head.png'
+                      src='images/badges/5.png'
                       alt='Achievement 5'
                       title='10 Minutes in Heaven'
                     />
@@ -339,7 +338,7 @@ export default function Banner(props) {
                   <button id='achievement-button' onClick={achievement6}>
                     <img
                       className={badges.badge6}
-                      src='images/badges/sabers-choc.png'
+                      src='images/badges/6.png'
                       alt='Achievement 6'
                       title='Copycat'
                     />
@@ -347,7 +346,7 @@ export default function Banner(props) {
                   <button id='achievement-button' onClick={achievement7}>
                     <img
                       className={badges.badge7}
-                      src='images/badges/drink-me.png'
+                      src='images/badges/7.png'
                       alt='Achievement 7'
                       title='Doppleganger'
                     />
@@ -355,7 +354,7 @@ export default function Banner(props) {
                   <button id='achievement-button' onClick={achievement8}>
                     <img
                       className={badges.badge8}
-                      src='images/badges/drink-me-2.png'
+                      src='images/badges/8.png'
                       alt='Achievement 8'
                       title='Saad'
                     />
@@ -363,7 +362,7 @@ export default function Banner(props) {
                   <button id='achievement-button' onClick={achievement9}>
                     <img
                       className={badges.badge9}
-                      src='images/badges/wheat.png'
+                      src='images/badges/9.png'
                       alt='Achievement 9'
                       title='Martin'
                     />

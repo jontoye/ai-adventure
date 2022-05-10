@@ -6,26 +6,38 @@ import { Link } from "react-router-dom";
 import Characters from "./Characters";
 import Adventures from "./Adventures";
 
-function Users({ continueAdventure, createAdventure, setCharacter, setMessage, dontCreateRandomCharacter, currentUser, startStory, setAdventure, storyBackBtnRedirectFcn}) {
+function Users({
+  continueAdventure,
+  createAdventure,
+  setCharacter,
+  setMessage,
+  dontCreateRandomCharacter,
+  currentUser,
+  startStory,
+  setAdventure,
+  storyBackBtnRedirectFcn,
+}) {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    const getUsers = async () => {
-      try {
-        const response = await axios.get("/users", {
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("token"),
-          }
-        });
-        setUsers(response.data.users.reverse());
-        return response;
-      } catch (err) {
-        console.error(err);
-        setMessage(err.message,'danger');
-      }
-    };
     getUsers();
   }, []);
+
+  const getUsers = async () => {
+    try {
+      const response = await axios.get("/users", {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      });
+      setUsers(response.data.users.reverse());
+      console.log("setUsers", response.data.users.reverse());
+      return response;
+    } catch (err) {
+      console.error(err);
+      setMessage(err.message, "danger");
+    }
+  };
 
   const scrollLeft = () => {
     document.querySelector(".users-list").scrollLeft += 500;
@@ -60,7 +72,7 @@ function Users({ continueAdventure, createAdventure, setCharacter, setMessage, d
                     />
                   </div>
                   <div className='user-card__content mx-2'>
-                    <h3 id="user-name">{user.username}</h3>
+                    <h3 id='user-name'>{user.username}</h3>
                     <p>Joined {moment(user.createdAt).fromNow()}</p>
                   </div>
                 </div>
@@ -76,17 +88,17 @@ function Users({ continueAdventure, createAdventure, setCharacter, setMessage, d
         </div>
       </div>
 
-      <Adventures 
+      <Adventures
         continueAdventure={continueAdventure}
         setMessage={setMessage}
         user={currentUser}
         isFiltered={false}
         userList={users}
         startStory={startStory}
-        setAdventure={setAdventure} 
+        setAdventure={setAdventure}
         origin={"/users"}
         storyBackBtnRedirectFcn={storyBackBtnRedirectFcn}
-        />
+      />
       <Characters
         createAdventure={createAdventure}
         setCharacter={setCharacter}
