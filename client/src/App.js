@@ -16,6 +16,7 @@ import Adventure from "./components/Adventure";
 import Profile from "./components/Profile";
 import CharacterDetail from "./components/CharacterDetail";
 import Story from "./components/Story";
+import ImageSelect from "./components/ImageSelect";
 
 import "./App.scss";
 import { Link } from "react-router-dom";
@@ -417,7 +418,7 @@ export default class App extends Component {
                     <Link to='/signup' className='nav-link'>
                       Sign Up
                     </Link>
-                    <Link to='/signin' className='nav-link'>
+                    <Link to='/' className='nav-link'>
                       Sign In
                     </Link>
                   </>
@@ -471,6 +472,16 @@ export default class App extends Component {
                   setMessage={this.setMessage}
                 />
               )
+            }
+          ></Route>
+          <Route
+            path={`/image-select`}
+            element={
+              <ImageSelect
+                currentUser={this.state.user}
+                setMessage={this.setMessage}
+                changeUserImg={this.changeUserImg}
+              />
             }
           ></Route>
           <Route

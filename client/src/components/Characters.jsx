@@ -100,6 +100,7 @@ export default class Characters extends Component {
             userCharacters={this.state.characters}
             userList={this.props.userList}
             charUser={charUser}
+            createAchievement={this.props.createAchievement}
           />
         </div>
       );

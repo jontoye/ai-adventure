@@ -266,19 +266,41 @@ export default class CreateCharacter extends Component {
     });
   }
 
+  achievementCheck(name) {
+    if (name === "Saad" || name === "Saad Iqbal") {
+      this.props.createAchievement(8);
+    }
+    if (name === "Martin" || name === "Marty") {
+      this.props.createAchievement(9);
+    }
+  }
 
   onFormSubmit = (e) => {
     // this.props.charCreateAchievement();
     this.props.createAchievement(1);
+    if (
+      this.state.newCharacter.name === "Saad" ||
+      this.state.newCharacter.name === "Saad Iqbal"
+    ) {
+      this.props.createAchievement(8);
+    }
+    if (
+      this.state.newCharacter.name === "Martin" ||
+      this.state.newCharacter.name === "Marty"
+    ) {
+      this.props.createAchievement(9);
+    }
+
     e.preventDefault();
 
     this.setImage();
 
-    console.log("user: ", this.state.newCharacter.user);
+    console.log("user: ", this.state.newCharacter.useruser);
 
     setTimeout(() => {
       this.addCharacter(this.state.newCharacter);
     }, 100);
+    // this.achievementCheck(this.state.newCharacter.name);
   };
 
   _next() {
