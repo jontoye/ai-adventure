@@ -155,7 +155,7 @@ export default class Character extends Component {
                 <p>
                   Created by:{" "}
                   <a href={`/profile/${this.props.user}`}>
-                    {this.state.charUser}
+                    {this.props.charUser}
                   </a>
                 </p>
               ) : null}
