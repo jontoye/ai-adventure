@@ -1,13 +1,49 @@
 import React, { Component } from 'react'
 import { Container, Button, Card, Row, Col } from "react-bootstrap";
 import Log from "./Log";
+import Axios from "axios";
 
 export default class Story extends Component {
     state = {
         adventure: this.props.adventure,
+        log: "Log failed to load...",
+        loadLog:false,
     }
     componentDidMount() { 
         console.log(this.props.adventure)
+        let event_ID = this.state.adventure.events.reverse()[0];
+        Axios.get("event/index", {
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+        })
+        .then((response) => {
+            let events = response.data.events.filter((v) => {
+                return this.state.adventure.events.includes(v._id);
+            });
+            // console.log('successfully found events: ', events)
+            this.setState({
+                adventure: {
+                    ...this.state.adventure,
+                    events: events,
+                },
+            });
+            //async!
+            setTimeout(() => {
+                let event = this.state.adventure.events.find((v) => {
+                    return v._id === event_ID;
+                });
+                console.log(event)
+                this.setState({
+                    log: event.displayedLog,
+                    loadLog: true,
+                })
+            }, 100);
+        })
+        .catch((error) => {
+            console.log("Error fetching event.", error);
+            this.props.setMessage(error.message, "danger");
+        });
      }
 
      handleClick = (e) => {
@@ -33,10 +69,10 @@ export default class Story extends Component {
                 {/* {this.state.character.name} the {this.state.character.class} */}
                 </Card.Title>
                 <div className='game-log mb-3'>
-                    <Log
-                    log={this.state.adventure.log}
+                    {this.state.loadLog ? <Log
+                    log={this.state.log}
                     adventureName={this.state.adventure.name}
-                    />
+                    /> : null }
                 </div>
             <Button variant='secondary' onClick={this.handleClick}>
               Go back

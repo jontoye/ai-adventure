@@ -147,7 +147,7 @@ export default class Adventure extends Component {
           // choices.split(" ")[0] === ":"
         ) {
           console.log("Option x: format detected", choices);
-          choices = choices.slice(7, choices.length).join(" ");
+          choices = choices.slice(7, choices.length);
         } else if (
           // choices.split(" ")[0] === "Option" ||
           choices.split(" ")[0] === ":"
