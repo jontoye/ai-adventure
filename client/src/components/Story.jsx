@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Container, Button, Card, Row, Col } from "react-bootstrap";
+import { Container, Button, Card, Row, Col, Tooltip, OverlayTrigger } from "react-bootstrap";
 import { Navigate } from "react-router-dom";
 import Log from "./Log";
 import Axios from "axios";
@@ -15,7 +15,7 @@ export default class Story extends Component {
         poem: null,
     }
     componentDidMount() { 
-        console.log(this.props.adventure)
+        // console.log(this.props.adventure)
         let event_ID = this.state.adventure.events.reverse()[0];
         Axios.get("event/index", {
             headers: {
@@ -52,7 +52,7 @@ export default class Story extends Component {
      }
 
      createBardPoem = (e) => {
-         console.log("filler function")
+        //  console.log("filler function")
          const configuration = new Configuration({
             apiKey: process.env.REACT_APP_API_KEY,
           });
@@ -66,7 +66,7 @@ export default class Story extends Component {
             .slice(0, 1200)
             .reverse()
             .join(" ");
-          console.log("prompty test", AIprompt);
+        //   console.log("prompty test", AIprompt);
           openai
             .createCompletion(process.env.REACT_APP_API_ENGINE, {
               prompt: AIprompt,
@@ -77,7 +77,7 @@ export default class Story extends Component {
               presence_penalty: 0.0,
             })
             .then((response) => {
-              console.log("choose option test", response);
+            //   console.log("choose option test", response);
               let reply = response.data.choices[0].text;
               while (reply[0] === "\n") {
                 reply = reply.slice(1, reply.length).split('\n');
@@ -123,6 +123,12 @@ export default class Story extends Component {
          })
      }
 
+     renderTooltip_poem = (info) => (
+        <Tooltip id='button-tooltip' {...info}>
+          Generate an epic bard poem about this adventure!
+        </Tooltip>
+      );
+
   render() {
     const poem = this.state.poem ? this.state.poem.map((entry, index) => {
         return <p>{entry}</p>;
@@ -154,9 +160,15 @@ export default class Story extends Component {
             <Button variant='secondary' onClick={this.goBackBtn}>
               Go back
             </Button> {" "}
-            <Button variant='primary' onClick={this.createBardPoem}>
-              Immortalize!
-            </Button>
+            <OverlayTrigger
+                placement='right'
+                delay={{ show: 250, hide: 400 }}
+                overlay={this.renderTooltip_poem}
+              >
+                <Button variant='primary' onClick={this.createBardPoem}>
+                Immortalize!
+                </Button>
+            </OverlayTrigger>
             <br></br>
             <br></br>
             {this.state.poem ? <Card.Text>
