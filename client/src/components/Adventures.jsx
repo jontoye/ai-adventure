@@ -124,6 +124,8 @@ export default class Adventures extends Component {
             loadAdventureList={this.loadAdventureList}
             createAchievement={this.props.createAchievement}
             setAdventure={this.props.setAdventure}
+            origin={this.props.origin}
+            storyBackBtnRedirectFcn={this.props.storyBackBtnRedirectFcn}
           />
         </div>
       );

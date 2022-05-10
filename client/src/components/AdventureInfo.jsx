@@ -34,7 +34,8 @@ export default class AdventureInfo extends Component {
   };
 
   componentDidMount() {
-    // console.log(this.props.advUser);
+    // console.log(this.props.origin);
+    this.props.storyBackBtnRedirectFcn(this.props.origin)
     // console.log("user id test", this.props.user);
 
     if (this.props.advUser !== "unknown") {
@@ -403,6 +404,7 @@ export default class AdventureInfo extends Component {
           replace={true}
           adventure={this.state.adventure}
           setMessage={this.props.setMessage}
+          origin={this.props.origin}
           />
         )}
       </div>

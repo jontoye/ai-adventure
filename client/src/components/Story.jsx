@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Container, Button, Card, Row, Col } from "react-bootstrap";
+import { Navigate } from "react-router-dom";
 import Log from "./Log";
 import Axios from "axios";
 
@@ -8,6 +9,8 @@ export default class Story extends Component {
         adventure: this.props.adventure,
         log: "Log failed to load...",
         loadLog:false,
+        redirect:false,
+        redirectLink: this.props.origin,
     }
     componentDidMount() { 
         console.log(this.props.adventure)
@@ -49,6 +52,13 @@ export default class Story extends Component {
      handleClick = (e) => {
          console.log("filler function")
      }
+
+     goBackBtn = (e) => {
+         this.setState({
+             redirect: true,
+         })
+     }
+
   render() {
     return (
         <div className='centered'>
@@ -74,7 +84,7 @@ export default class Story extends Component {
                     adventureName={this.state.adventure.name}
                     /> : null }
                 </div>
-            <Button variant='secondary' onClick={this.handleClick}>
+            <Button variant='secondary' onClick={this.goBackBtn}>
               Go back
             </Button> {" "}
             <Button variant='primary' onClick={this.handleClick}>
@@ -83,6 +93,12 @@ export default class Story extends Component {
             </Card.Body>
             </Card>
             <br></br>
+            {this.state.redirect && (
+                <Navigate
+                to={this.state.redirectLink}
+                replace={true}
+                />
+            )}
         </div>
     )
   }
