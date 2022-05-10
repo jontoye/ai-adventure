@@ -15,6 +15,7 @@ import Adventures from "./components/Adventures";
 import Adventure from "./components/Adventure";
 import Profile from "./components/Profile";
 import CharacterDetail from "./components/CharacterDetail";
+import Story from "./components/Story";
 import ImageSelect from "./components/ImageSelect";
 
 import "./App.scss";
@@ -34,6 +35,8 @@ export default class App extends Component {
     this.setCharacter = this.setCharacter.bind(this);
     this.setMessage = this.setMessage.bind(this);
     this.createAchievement = this.createAchievement.bind(this);
+    this.setAdventure = this.setAdventure.bind(this);
+    this.storyBackBtnRedirectFcn=this.storyBackBtnRedirectFcn.bind(this)
   }
 
   state = {
@@ -52,6 +55,7 @@ export default class App extends Component {
     achievments: [],
     charCreateA: false,
     users: [],
+    storyBackBtnRedirect: "/bug",
   };
 
   setNavExpanded = (expanded) => {
@@ -168,6 +172,12 @@ export default class App extends Component {
     });
   }
 
+  setAdventure(adventure) {
+    this.setState({
+      adventure: adventure,
+    });
+  }
+
   createAdventure(character) {
     // console.log("create adventure triggered");
     // console.log(character)
@@ -180,6 +190,12 @@ export default class App extends Component {
     this.setState({
       adventure: adventure,
       character: character,
+    });
+  }
+
+  storyBackBtnRedirectFcn(redirectLink) {
+    this.setState({
+      storyBackBtnRedirect: redirectLink,
     });
   }
 
@@ -508,6 +524,9 @@ export default class App extends Component {
                 userList={this.state.users}
                 startStory={this.startStory}
                 createAchievement={this.createAchievement}
+                setAdventure={this.setAdventure}
+                origin={"/adventure-list"}
+                storyBackBtnRedirectFcn={this.storyBackBtnRedirectFcn}
               />
             }
           />
@@ -560,6 +579,18 @@ export default class App extends Component {
             }
           />
           <Route
+            path='/adventure-story'
+            exact
+            element={
+              <Story
+                adventure={this.state.adventure}
+                setMessage={this.setMessage}
+                origin={this.state.storyBackBtnRedirect}
+                storyBackBtnRedirectFcn={this.storyBackBtnRedirectFcn}
+              />
+            }
+          />
+          <Route
             path='/users'
             element={
               <Users
@@ -572,6 +603,8 @@ export default class App extends Component {
                 userList={this.state.users}
                 startStory={this.startStory}
                 createAchievement={this.createAchievement}
+                setAdventure={this.setAdventure}
+                storyBackBtnRedirectFcn={this.storyBackBtnRedirectFcn}
               />
             }
           />
