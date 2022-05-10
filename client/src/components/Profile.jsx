@@ -5,7 +5,6 @@ import "./css/Banner.css";
 import "./css/Profile.css";
 import PictureChanger from "./PictureChanger";
 import { Modal, Button, Tooltip, OverlayTrigger, Card } from "react-bootstrap";
-import Axios from "axios";
 
 export default function Profile({ currentUser, setMessage }) {
   const headers = {
@@ -133,28 +132,6 @@ export default function Profile({ currentUser, setMessage }) {
   //     description: "Thanks for joining us on your adventures!",
   //   });
   //   setShow(true);
-  // };
-
-  // const loadAchievements = async () => {
-  //   Axios.get("users", {
-  //     headers: {
-  //       Authorization: "Bearer " + localStorage.getItem("token"),
-  //     },
-  //     // id: params.userId,
-  //   })
-  //     .then((response) => {
-  //       console.log("axios test", response);
-  //       // console.log("currentUser.id", currentUser.id);
-  //       console.log("params.userId", params.userId);
-  //       let user = response.data.users.filter(
-  //         (user) => currentUser.id === user._id
-  //       );
-
-  //     })
-  //     .catch((err) => {
-  //       console.log("Error fetching users.");
-  //       console.log(err);
-  //     });
   // };
 
   const handleClose = () => setShow(false);

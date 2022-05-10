@@ -299,43 +299,6 @@ export default class App extends Component {
       });
   };
 
-  triggerAchievement = (achievement) => {};
-
-  // achievementHandler = () => {
-  //   Axios.post("feedback", this.state, {
-  //     headers: {
-  //       Authorization: "Bearer " + localStorage.getItem("token"),
-  //     },
-  //   }).then((response) => {
-  //     // console.log(response.data);
-  //     let achieveMessage = response.data.result
-  //       ? "Achievement Unlocked!"
-  //       : null;
-  //     this.setState({
-  //       achieveMessage: achieveMessage,
-  //     });
-  //     this.setBannerTimeout("confirmationMessage");
-  //     this.setBannerTimeout("errorMessage");
-  //     this.getAchievements();
-  //   });
-  // };
-
-  // getAchievements = async () => {
-  //   Axios.get("/feedback", {
-  //     headers: {
-  //       Authorization: "Bearer " + localStorage.getItem("token"),
-  //     },
-  //   })
-  //     .then((response) => {
-  //       this.setState({
-  //         feedback: response.data.feedback.reverse(),
-  //       });
-  //     })
-  //     .catch((error) => {
-  //       console.log("Error fetching feedback.", error);
-  //       this.props.setMessage(error.message, "danger");
-  //     });
-  // };
 
   setMessage = (message, type) => {
     this.setState({
@@ -349,18 +312,6 @@ export default class App extends Component {
     });
     this.setBannerTimeout(`${type.toLowerCase()}Message`);
   };
-
-  // charCreateAchievement = () => {
-  //   this.setState({
-  //     charCreateA: true,
-  //   });
-  // };
-
-  // achievementCheck = (achievement) => {
-  //   this.setState({
-  //     achievement: [...this.state.achievments, achievement],
-  //   });
-  // };
 
   render() {
     const infoMessage = this.state.infoMessage ? (
