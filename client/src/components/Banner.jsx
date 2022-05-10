@@ -35,42 +35,10 @@ export default function Banner(props) {
   });
 
   useEffect(() => {
-    const loadAchievements = () => {
-      Axios.get("users", {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
-      })
-        .then((response) => {
-          console.log("response test", response);
-          let user = response.data.users.filter(
-            (user) => props.user.id === user._id
-          );
-          let tempBadges = badges;
-          for (let i = 1; i < 12; i++) {
-            if (user[0].achievements.includes(i.toString())) {
-              console.log("achievement detected:", i);
-              let badgeID = `badge${i}`;
-
-              tempBadges = {
-                ...tempBadges,
-                [badgeID]: "achievement-badge",
-              };
-              // console.log(tempBadges);
-            }
-          }
-          setBadges({
-            ...tempBadges,
-          });
-        })
-        .catch((err) => {
-          console.log("Error fetching users.");
-          console.log(err);
-        });
-    };
+    
     // achievementColors();
     loadAchievements();
-  }, [badges, props.user.id]);
+  }, []);
 
   const handleClose = () => setShow(false);
 
@@ -158,7 +126,39 @@ export default function Banner(props) {
   //   setShow(true);
   // };
 
-  
+  const loadAchievements = () => {
+    Axios.get("users", {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    })
+      .then((response) => {
+        console.log("response test", response);
+        let user = response.data.users.filter(
+          (user) => props.user.id === user._id
+        );
+        let tempBadges = badges;
+        for (let i = 1; i < 12; i++) {
+          if (user[0].achievements.includes(i.toString())) {
+            console.log("achievement detected:", i);
+            let badgeID = `badge${i}`;
+
+            tempBadges = {
+              ...tempBadges,
+              [badgeID]: "achievement-badge",
+            };
+            // console.log(tempBadges);
+          }
+        }
+        setBadges({
+          ...tempBadges,
+        });
+      })
+      .catch((err) => {
+        console.log("Error fetching users.");
+        console.log(err);
+      });
+  };
 
   function buttonHandler() {
     props.createRandomCharacter();
