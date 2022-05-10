@@ -268,7 +268,12 @@ export default class AdventureInfo extends Component {
   };
 
   readAdventure = (e) => {
-    console.log("opening adventure journal...");
+    // console.log("opening adventure journal...");
+    e.preventDefault();
+    this.props.setAdventure(this.state.adventure);
+    this.setState({
+      redirected: true,
+    });
   };
 
   handleChange = (event) => {
@@ -284,7 +289,7 @@ export default class AdventureInfo extends Component {
   };
 
   showStory = (e) => {
-    console.log('yeet')
+    // console.log('yeet')
     e.preventDefault();
     this.props.setAdventure(this.state.adventure);
     this.setState({
