@@ -266,11 +266,19 @@ export default class CreateCharacter extends Component {
     });
   }
 
-  achievementCheck(name) {
-    if (name === "Saad" || name === "Saad Iqbal") {
+  achievementCheck() {
+    if (
+      this.state.newCharacter.name.includes("Saad Iqbal") ||
+      this.state.newCharacter.name.includes( "Saad")
+    ) {
+      // console.log("saad detected");
       this.props.createAchievement(8);
     }
-    if (name === "Martin" || name === "Marty") {
+    if (
+      this.state.newCharacter.name.includes("Martin") ||
+      this.state.newCharacter.name.includes("Marty")
+    ) {
+      // console.log("marty detected");
       this.props.createAchievement(9);
     }
   }
@@ -278,24 +286,13 @@ export default class CreateCharacter extends Component {
   onFormSubmit = (e) => {
     // this.props.charCreateAchievement();
     this.props.createAchievement(1);
-    if (
-      this.state.newCharacter.name === "Saad" ||
-      this.state.newCharacter.name === "Saad Iqbal"
-    ) {
-      this.props.createAchievement(8);
-    }
-    if (
-      this.state.newCharacter.name === "Martin" ||
-      this.state.newCharacter.name === "Marty"
-    ) {
-      this.props.createAchievement(9);
-    }
+    this.achievementCheck();
 
     e.preventDefault();
 
     this.setImage();
 
-    console.log("user: ", this.state.newCharacter.useruser);
+    console.log("user: ", this.state.newCharacter.user);
 
     setTimeout(() => {
       this.addCharacter(this.state.newCharacter);
