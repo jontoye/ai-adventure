@@ -22,6 +22,7 @@ import "./App.scss";
 import { Link } from "react-router-dom";
 import Users from "./components/Users";
 import { Navigate } from "react-router-dom";
+import AdventureInfo from "./components/AdventureInfo";
 // import { useNavigate } from "react-router";
 
 export default class App extends Component {
@@ -388,7 +389,7 @@ export default class App extends Component {
                       to={`/profile/${this.state.user.id}`}
                       className='nav-link'
                     >
-                      <img class='circle icon' src={this.state.avatar} alt='' />
+                      <img className='circle' src={this.state.avatar} alt='' />
                     </Link>
                     <Link
                       to={`/profile/${this.state.user.id}`}
@@ -443,6 +444,15 @@ export default class App extends Component {
                 currentUser={this.state.user}
                 setMessage={this.setMessage}
                 changeUserImg={this.changeUserImg}
+              />
+            }
+          ></Route>
+          <Route
+            path={`/adventure-info`}
+            element={
+              <AdventureInfo
+                currentUser={this.state.user}
+                createAchievement={this.createAchievement}
               />
             }
           ></Route>

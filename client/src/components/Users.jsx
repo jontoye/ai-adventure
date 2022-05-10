@@ -31,7 +31,7 @@ function Users({
         },
       });
       setUsers(response.data.users.reverse());
-      console.log("setUsers", response.data.users.reverse());
+      // console.log("setUsers", response.data.users.reverse());
       return response;
     } catch (err) {
       console.error(err);
