@@ -63,7 +63,7 @@ export default class Character extends Component {
       nameHolder,
       character.name
     );
-
+    console.log("character test", character);
     Axios.post("character/add", character, {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),
