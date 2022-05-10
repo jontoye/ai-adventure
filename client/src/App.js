@@ -36,7 +36,7 @@ export default class App extends Component {
     this.setMessage = this.setMessage.bind(this);
     this.createAchievement = this.createAchievement.bind(this);
     this.setAdventure = this.setAdventure.bind(this);
-    this.storyBackBtnRedirectFcn=this.storyBackBtnRedirectFcn.bind(this)
+    this.storyBackBtnRedirectFcn = this.storyBackBtnRedirectFcn.bind(this);
   }
 
   state = {
@@ -50,6 +50,7 @@ export default class App extends Component {
     navExpanded: false,
     randomCharacter: false,
     log: [],
+    avatar: "",
     character: {},
     adventure: {},
     achievments: [],
@@ -77,8 +78,8 @@ export default class App extends Component {
       let user = jwt_decode(token);
       // console.log("BEFORE", user);
       if (user) {
-        // console.log("user = true");
-        // console.log(user);
+        console.log("user = true");
+        console.log(user);
         this.setState({
           isAuth: true,
           user: user,
@@ -101,7 +102,12 @@ export default class App extends Component {
       },
     })
       .then((response) => {
+        let user = response.data.users.filter(
+          (user) => this.state.user.id === user._id
+        );
+        console.log("load user response", user[0].avatar);
         this.setState({
+          avatar: user[0].avatar,
           users: response.data.users,
         });
       })
@@ -299,7 +305,6 @@ export default class App extends Component {
       });
   };
 
-
   setMessage = (message, type) => {
     this.setState({
       infoMessage: null,
@@ -379,6 +384,12 @@ export default class App extends Component {
               <span id='main-greeting' onClick={this.setNavClose}>
                 {this.state.user ? (
                   <div className='right-nav'>
+                    <Link
+                      to={`/profile/${this.state.user.id}`}
+                      className='nav-link'
+                    >
+                      <img class='circle icon' src={this.state.avatar} alt='' />
+                    </Link>
                     <Link
                       to={`/profile/${this.state.user.id}`}
                       className='nav-link'
