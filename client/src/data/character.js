@@ -596,6 +596,14 @@ const TRAIT = [
   "the Internet",
   "Gymnastics",
   "Birdwatching",
+  "Public speaking",
+  "Debating",
+  "Sympathy",
+  "Empathy",
+  "Supersonic speed",
+  "Laser vision",
+  "Superhuman strength",
+  "Forcefields",
 ];
 
 let randomImages = [];

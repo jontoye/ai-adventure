@@ -101,21 +101,22 @@ export default class CreateCharacter extends Component {
           Math.floor(Math.random() * CHARACTER_DEFAULTS.decor.length)
         ];
     }
-    //NOTE: currently ability & weakness COULD be the same thing
+    //ability and weakness cannot be the same thing
+    let ability = CHARACTER_DEFAULTS.trait[
+      Math.floor(Math.random() * CHARACTER_DEFAULTS.trait.length)
+    ];
+    let weakness = CHARACTER_DEFAULTS.trait.filter(t=>{return t!=ability})[
+      Math.floor(Math.random() * CHARACTER_DEFAULTS.trait.length-1)
+    ];
+
     const character = {
       name: name,
       class:
         CHARACTER_DEFAULTS.class[
           Math.floor(Math.random() * CHARACTER_DEFAULTS.class.length)
         ],
-      ability:
-        CHARACTER_DEFAULTS.trait[
-          Math.floor(Math.random() * CHARACTER_DEFAULTS.trait.length)
-        ],
-      weakness:
-        CHARACTER_DEFAULTS.trait[
-          Math.floor(Math.random() * CHARACTER_DEFAULTS.trait.length)
-        ],
+      ability:ability,
+      weakness:weakness,
       backstory: "", // default
       tone: "dark", // default
       user: this.state.user,
