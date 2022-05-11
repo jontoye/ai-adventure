@@ -17,6 +17,7 @@ import Profile from "./components/Profile";
 import CharacterDetail from "./components/CharacterDetail";
 import Story from "./components/Story";
 import ImageSelect from "./components/ImageSelect";
+import Character from "./components/Character";
 
 import "./App.scss";
 import { Link } from "react-router-dom";
@@ -451,6 +452,16 @@ export default class App extends Component {
             path={`/adventure-info`}
             element={
               <AdventureInfo
+                currentUser={this.state.user}
+                changeUserImg={this.changeUserImg}
+                createAchievement={this.createAchievement}
+              />
+            }
+          ></Route>
+          <Route
+            path={`/character`}
+            element={
+              <Character
                 currentUser={this.state.user}
                 changeUserImg={this.changeUserImg}
                 createAchievement={this.createAchievement}
