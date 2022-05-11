@@ -452,6 +452,7 @@ export default class App extends Component {
             element={
               <AdventureInfo
                 currentUser={this.state.user}
+                changeUserImg={this.changeUserImg}
                 createAchievement={this.createAchievement}
               />
             }

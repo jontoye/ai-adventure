@@ -23,23 +23,26 @@ export default class Adventures extends Component {
     // console.log("getting adventures...");
     Axios.get("adventure/index", {
       headers: {
-        "Authorization": "Bearer " + localStorage.getItem("token"),
-      }})
-    .then((response) => {
-      let adventureFiltered = response.data.adventures.filter(a=>{
-        return a.user ? a.user===this.props.user.id : !this.props.isFiltered
-      })
-      setTimeout(()=>{
-        this.setState({
-          adventures: adventureFiltered.reverse(),
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    })
+      .then((response) => {
+        let adventureFiltered = response.data.adventures.filter((a) => {
+          return a.user
+            ? a.user === this.props.user.id
+            : !this.props.isFiltered;
+        });
+        setTimeout(() => {
+          this.setState({
+            adventures: adventureFiltered.reverse(),
+          });
         });
       })
-    })
-    .catch((err) => {
-      console.log("Error fetching adventures.");
-      console.log(err);
-      this.props.setMessage(err.message,'danger');
-    });
+      .catch((err) => {
+        console.log("Error fetching adventures.");
+        console.log(err);
+        this.props.setMessage(err.message, "danger");
+      });
   };
 
   loadUserCharacters = () => {
@@ -48,40 +51,40 @@ export default class Adventures extends Component {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
     })
-    .then((response) => {
-      // console.log(response.data.characters);
-    let userCharacters = response.data.characters.filter((c) => {
-      return this.props.user.id === c.user;
-    });
-    // console.log(userCharacters)
-      // console.log(character.name)
-      this.setState({
-        userCharacters: userCharacters,
+      .then((response) => {
+        // console.log(response.data.characters);
+        let userCharacters = response.data.characters.filter((c) => {
+          return this.props.user.id === c.user;
+        });
+        // console.log(userCharacters)
+        // console.log(character.name)
+        this.setState({
+          userCharacters: userCharacters,
+        });
+      })
+      .catch((err) => {
+        console.log("Error fetching characters.");
+        console.log(err);
+        this.props.setMessage(err.message, "danger");
       });
-    })
-    .catch((err) => {
-      console.log("Error fetching characters.");
-      console.log(err);
-      this.props.setMessage(err.message, "danger");
-    });
-  }
+  };
 
   deleteAdventure = (adventure) => {
     Axios.delete(`adventure/delete?id=${adventure._id}`, {
       headers: {
-          "Authorization": "Bearer " + localStorage.getItem("token"),
-      }
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
     })
-    .then(response => {
-      // console.log("Deleted adventure.")
-      this.loadAdventureList();
-    })
-    .catch(err=>{
-      console.log(`Error deleting adventure: ${adventure.name}`)
-      console.log(err)
-      this.props.setMessage(err.message,'danger');
-    })
-  }
+      .then((response) => {
+        // console.log("Deleted adventure.")
+        this.loadAdventureList();
+      })
+      .catch((err) => {
+        console.log(`Error deleting adventure: ${adventure.name}`);
+        console.log(err);
+        this.props.setMessage(err.message, "danger");
+      });
+  };
 
   createAdventure = (e) => {
     this.setState({
@@ -90,12 +93,12 @@ export default class Adventures extends Component {
   };
 
   scrollLeft = () => {
-    document.querySelector('.adventure-list').scrollLeft += 500
-  }
+    document.querySelector(".adventure-list").scrollLeft += 500;
+  };
 
   scrollRight = () => {
-    document.querySelector('.adventure-list').scrollLeft -= 500
-  }
+    document.querySelector(".adventure-list").scrollLeft -= 500;
+  };
 
   render() {
     const adventures = this.state.adventures.map((a) => {
@@ -104,7 +107,7 @@ export default class Adventures extends Component {
       });
       let advUser = user ? user.username : "unknown";
       let advUserID = user ? user._id : "unknown";
-    
+
       return (
         <div className='adventure-card'>
           <AdventureInfo
@@ -132,24 +135,44 @@ export default class Adventures extends Component {
     });
     return (
       <div className='container-fluid my-5'>
-        <h1 className="display-4">Adventure List</h1>
-        {this.props.isFiltered ? <p className="display-8 text-white" style={{"text-align":"center"}}>Explore the adventures you have begun.</p> : <p className="display-8 text-white" style={{"text-align":"center"}}>Explore adventures around the world.</p>}
-        <div className="d-flex align-items-center container-fluid">
-        <img 
-            className="scroll-btn" 
-            src="/images/icons/left-arrow.png" 
-            onClick={this.scrollRight} 
-            alt="left-arrow" />
-          <div className='adventure-list my-3 container-fluid'>{adventures}</div>
-          <img 
-            className="scroll-btn" 
-            src="/images/icons/right-arrow.png" 
-            onClick={this.scrollLeft} 
-            alt="right-arrow" />
+        <h1 className='display-4'>Adventure List</h1>
+        {this.props.isFiltered ? (
+          <p
+            className='display-8 text-white'
+            style={{ "text-align": "center" }}
+          >
+            Explore the adventures you have begun.
+          </p>
+        ) : (
+          <p
+            className='display-8 text-white'
+            style={{ "text-align": "center" }}
+          >
+            Explore adventures around the world.
+          </p>
+        )}
+        <div className='d-flex align-items-center container-fluid'>
+          <img
+            className='scroll-btn'
+            src='/images/icons/left-arrow.png'
+            onClick={this.scrollRight}
+            alt='left-arrow'
+          />
+          <div className='adventure-list my-3 container-fluid'>
+            {adventures}
+          </div>
+          <img
+            className='scroll-btn'
+            src='/images/icons/right-arrow.png'
+            onClick={this.scrollLeft}
+            alt='right-arrow'
+          />
         </div>
-          <Container className="text-center">
-            <Button variant='secondary' onClick={this.createAdventure}>Create New Adventure</Button>
-          </Container>
+        <Container className='text-center'>
+          <Button variant='secondary' onClick={this.createAdventure}>
+            Create New Adventure
+          </Button>
+        </Container>
         {this.state.redirect && (
           <Navigate
             to='/create-adventure'

@@ -5,10 +5,9 @@ import Axios from "axios";
 import "./css/AdventureInfo.css";
 
 export default class AdventureInfo extends Component {
-
   constructor(props) {
-    super(props)
-  
+    super(props);
+
     this.state = {
       adventure: this.props.adventure,
       character: {},
@@ -55,7 +54,8 @@ export default class AdventureInfo extends Component {
 
   componentDidMount() {
     // console.log(this.props.origin);
-    this.props.storyBackBtnRedirectFcn(this.props.origin)
+    this.props.storyBackBtnRedirectFcn(this.props.origin);
+    // console.log("props test", this.props);
     // console.log("user id test", this.props.user);
 
     if (this.props.advUser !== "unknown") {
@@ -141,6 +141,10 @@ export default class AdventureInfo extends Component {
     // console.log(this.state.character)
   };
 
+  handleAchievement = () => {
+    this.props.createAchievement(6);
+  };
+
   handleCopyAdventureBtn = (e) => {
     if (this.state.isCopyingAdventure) {
       console.log("Cancelling copy...", this.state.copiedAdventure);
@@ -158,7 +162,6 @@ export default class AdventureInfo extends Component {
       adventure.character = this.state.userCharacters[0]._id;
       adventure.log = [this.state.adventure.log[0]];
       adventure.events = [this.state.adventure.events[0]];
-      
 
       console.log("Copy ready.", adventure);
       this.setState({
@@ -166,7 +169,7 @@ export default class AdventureInfo extends Component {
         isCopyingAdventure: true,
       });
       //update adventure list here
-      // this.props.createAchievement(6);
+      this.handleAchievement();
       this.props.loadAdventureList();
     }
   };
@@ -316,7 +319,7 @@ export default class AdventureInfo extends Component {
     this.setState({
       redirected: true,
     });
-  }
+  };
 
   render() {
     let css = `adventure-${this.state.adventure.id}`;
@@ -343,8 +346,11 @@ export default class AdventureInfo extends Component {
     return (
       <div>
         <Card className={css} style={{ width: "18rem", margin: "15px" }}>
-          <Card.Img variant='top' src={this.state.adventure.image} 
-            onClick={this.showStory}/>
+          <Card.Img
+            variant='top'
+            src={this.state.adventure.image}
+            onClick={this.showStory}
+          />
           <Card.Body>
             <Card.Title>{this.state.adventure.name}</Card.Title>
             <Card.Text>
@@ -426,11 +432,11 @@ export default class AdventureInfo extends Component {
         )}
         {this.state.redirected && (
           <Navigate
-          to='/adventure-story'
-          replace={true}
-          adventure={this.state.adventure}
-          setMessage={this.props.setMessage}
-          origin={this.props.origin}
+            to='/adventure-story'
+            replace={true}
+            adventure={this.state.adventure}
+            setMessage={this.props.setMessage}
+            origin={this.props.origin}
           />
         )}
       </div>
