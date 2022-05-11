@@ -310,6 +310,10 @@ export default class Adventure extends Component {
       },
     })
       .then((response) => {
+        if (response.data.adventure.events.length > 4){
+          this.props.createAchievement(3)
+
+        }
         console.log("Adventure updated successfully.", response);
       })
       .catch((error) => {

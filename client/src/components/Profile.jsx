@@ -31,6 +31,7 @@ export default function Profile({ currentUser, setMessage }) {
     badge7: "achievement-badge unachieved",
     badge8: "achievement-badge unachieved",
     badge9: "achievement-badge unachieved",
+    badge10: "achievement-badge unachieved",
   });
 
   let params = useParams();
@@ -60,9 +61,9 @@ export default function Profile({ currentUser, setMessage }) {
   };
   const achievement3 = () => {
     setAchievement({
-      title: "I would code 100 miles",
+      title: "I would code 5 miles",
       img: "images/badges/3.png",
-      description: "Played through 100 events",
+      description: "Played through 5 events",
     });
     setShow(true);
   };
@@ -116,14 +117,14 @@ export default function Profile({ currentUser, setMessage }) {
     });
     setShow(true);
   };
-  // const achievement10 = () => {
-  //   setAchievement({
-  //     title: "Play 5 adventures",
-  //     img: "images/badges/wheat.png",
-  //     description: "Thanks for joining us on your adventures!",
-  //   });
-  //   setShow(true);
-  // };
+  const achievement10 = () => {
+    setAchievement({
+      title: "Immortal",
+      img: "images/badges/10.png",
+      description: "Immortalize an adventure with an Epic Poem",
+    });
+    setShow(true);
+  };
 
   const handleClose = () => setShow(false);
   const handleImageClose = () => setShowImageSelect(false);
@@ -500,7 +501,7 @@ export default function Profile({ currentUser, setMessage }) {
                           className={badges.badge3}
                           src='/images/badges/3.png'
                           alt='Achievement 3'
-                          title='I would code 100 miles'
+                          title='I would code 5 miles'
                         />
                       </button>
                       <button id='achievement-button' onClick={achievement4}>
@@ -549,6 +550,14 @@ export default function Profile({ currentUser, setMessage }) {
                           src='/images/badges/9.png'
                           alt='Achievement 9'
                           title='Martin'
+                        />
+                      </button>
+                      <button id='achievement-button' onClick={achievement10}>
+                        <img
+                          className={badges.badge10}
+                          src='images/badges/10.png'
+                          alt='Achievement 10'
+                          title='Immortal'
                         />
                       </button>
                     </div>
