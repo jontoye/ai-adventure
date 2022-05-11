@@ -11,6 +11,7 @@ exports.character_create_post = (req, res) => {
     .save()
     .then((character) => {
       User.findById(req.user).then((user) => {
+        // console.log("user test", req.user, user);
         user.activity.push(
           `Created ${character.name} on ${moment().format(
             "MMMM Do YYYY, h:mm a"

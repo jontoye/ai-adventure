@@ -16,6 +16,7 @@ function Users({
   startStory,
   setAdventure,
   storyBackBtnRedirectFcn,
+  createAchievement,
 }) {
   const [users, setUsers] = useState([]);
 
@@ -98,6 +99,7 @@ function Users({
         setAdventure={setAdventure}
         origin={"/users"}
         storyBackBtnRedirectFcn={storyBackBtnRedirectFcn}
+        createAchievement={createAchievement}
       />
       <Characters
         createAdventure={createAdventure}
@@ -108,6 +110,7 @@ function Users({
         isFiltered={false}
         startStory={startStory}
         userList={users}
+        createAchievement={createAchievement}
       />
       <br></br>
       <br></br>

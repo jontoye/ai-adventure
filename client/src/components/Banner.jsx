@@ -139,7 +139,7 @@ export default function Banner(props) {
         let tempBadges = badges;
         for (let i = 1; i < 12; i++) {
           if (user[0].achievements.includes(i.toString())) {
-            console.log("achievement detected:", i);
+            // console.log("achievement detected:", i);
             let badgeID = `badge${i}`;
 
             tempBadges = {
