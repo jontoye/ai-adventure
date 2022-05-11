@@ -1,10 +1,7 @@
 import React, { Component } from "react";
 import {
-  Container,
   Button,
   Card,
-  Row,
-  Col,
   Tooltip,
   OverlayTrigger,
 } from "react-bootstrap";
