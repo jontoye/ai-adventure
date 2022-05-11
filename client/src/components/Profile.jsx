@@ -555,7 +555,7 @@ export default function Profile({ currentUser, setMessage }) {
                       <button id='achievement-button' onClick={achievement10}>
                         <img
                           className={badges.badge10}
-                          src='images/badges/10.png'
+                          src='/images/badges/10.png'
                           alt='Achievement 10'
                           title='Immortal'
                         />

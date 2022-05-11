@@ -26,10 +26,12 @@ export default class Signup extends Component {
   };
 
   registerHandler = () => {
+    console.log("register state test", this.state);
     this.props.register(this.state);
     this.props.login(this.state);
     this.setState({
       redirect: true,
+      // path: "/",
       path: "/image-select",
     });
   };

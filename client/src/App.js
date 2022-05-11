@@ -104,6 +104,7 @@ export default class App extends Component {
       },
     })
       .then((response) => {
+        console.log('user test', response.data.users)
         let user = response.data.users.filter(
           (user) => this.state.user.id === user._id
         );
