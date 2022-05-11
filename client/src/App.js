@@ -571,6 +571,7 @@ export default class App extends Component {
                 setMessage={this.setMessage}
                 origin={this.state.storyBackBtnRedirect}
                 storyBackBtnRedirectFcn={this.storyBackBtnRedirectFcn}
+                createAchievement={this.createAchievement}
               />
             }
           />
