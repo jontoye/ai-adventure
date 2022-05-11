@@ -141,6 +141,20 @@ export default class CreateCharacter extends Component {
   };
 
   addCharacter = (character) => {
+    if (
+      this.state.newCharacter.name.includes("Saad Iqbal") ||
+      this.state.newCharacter.name.includes("Saad")
+    ) {
+      // console.log("saad detected");
+      character.image = "/images/class/saad.jpg"
+    }
+    if (
+      this.state.newCharacter.name.includes("Martin") ||
+      this.state.newCharacter.name.includes("Marty")
+    ) {
+      // console.log("marty detected");
+      character.image = "/images/class/martin.jpg";
+    }
     console.log("add char test", character);
     Axios.post("character/add", character, {
       headers: {
@@ -266,7 +280,7 @@ export default class CreateCharacter extends Component {
     });
   }
 
-  achievementCheck() {
+  achievementCheck(character) {
     if (
       this.state.newCharacter.name.includes("Saad Iqbal") ||
       this.state.newCharacter.name.includes( "Saad")
