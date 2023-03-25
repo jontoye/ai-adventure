@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Axios from "axios";
 import Character from "./Character";
 import { Navigate } from "react-router-dom";
-import { Button, Container } from "react-bootstrap";
+// import { Button, Container } from "react-bootstrap";
 import "./css/Characters.css";
 
 export default class Characters extends Component {
@@ -21,23 +21,23 @@ export default class Characters extends Component {
     // console.log("getting characters...");
     Axios.get("character/index", {
       headers: {
-        "Authorization": "Bearer " + localStorage.getItem("token"),
-      }
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
     })
-    .then((response) => {
-      // console.log(response.data.characters);
-      let characterFiltered = response.data.characters.filter(c=>{
-        return c.user ? c.user === this.props.user.id : !this.props.isFiltered
+      .then((response) => {
+        // console.log(response.data.characters);
+        let characterFiltered = response.data.characters.filter((c) => {
+          return c.user ? c.user : !this.props.isFiltered;
+        });
+        this.setState({
+          characters: characterFiltered.reverse(),
+        });
       })
-      this.setState({
-        characters: characterFiltered.reverse(),
+      .catch((err) => {
+        console.log("Error fetching characters.");
+        console.log(err);
+        this.props.setMessage(err.message, "danger");
       });
-    })
-    .catch((err) => {
-      console.log("Error fetching characters.");
-      console.log(err);
-      this.props.setMessage(err.message,'danger');
-    });
   };
 
   deleteCharacter = (name) => {
@@ -53,7 +53,7 @@ export default class Characters extends Component {
       .catch((err) => {
         console.log(`Error deleting character: ${name}`);
         console.log(err);
-        this.props.setMessage(err.message,'danger');
+        this.props.setMessage(err.message, "danger");
       });
   };
 
@@ -65,12 +65,12 @@ export default class Characters extends Component {
   };
 
   scrollLeft = () => {
-    document.querySelector('.character-list').scrollLeft += 500
-  }
+    document.querySelector(".character-list").scrollLeft += 500;
+  };
 
   scrollRight = () => {
-    document.querySelector('.character-list').scrollLeft -= 500
-  }
+    document.querySelector(".character-list").scrollLeft -= 500;
+  };
 
   render() {
     const characters = this.state.characters.map((c) => {
@@ -79,7 +79,7 @@ export default class Characters extends Component {
       });
       let charUser = user ? user.username : "unknown";
       return (
-        <div className='character-card'>
+        <div className='character-card' key={c._id}>
           <Character
             name={c.name}
             backstory={c.backstory}
@@ -105,30 +105,59 @@ export default class Characters extends Component {
         </div>
       );
     });
+
+    if (characters.length < 1) {
+      return (
+        <div>
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <h1>Loading..</h1>
+        </div>
+      );
+    }
     return (
       <div className='container-fluid my-5'>
-
-        <h1 className="display-4">Character List</h1>
-        {this.props.isFiltered ? <p className="display-8 text-white" style={{"textAlign":"center"}}>Explore the characters you have created.</p> : <p className="display-8 text-white" style={{"text-align":"center"}}>Explore characters from around the world.</p>}
-        <div className="d-flex align-items-center container-fluid">
-        <img 
-            className="scroll-btn" 
-            src="/images/icons/left-arrow.png" 
-            onClick={this.scrollRight} 
-            alt="left-arrow" />
-          <div className='character-list my-2 container-fluid'>{characters}</div>
-          <img 
-            className="scroll-btn" 
-            src="/images/icons/right-arrow.png" 
-            onClick={this.scrollLeft} 
-            alt="right-arrow" />
+        <h1 className='display-4'>Character List</h1>
+        {/* {this.props.isFiltered ? (
+          <p className='display-8 text-white' style={{ textAlign: "center" }}>
+            Explore the characters you have created.
+          </p>
+        ) : (
+          <p className='display-8 text-white' style={{ textAlign: "center" }}>
+            Explore characters from around the world.
+          </p>
+        )} */}
+        <div className='d-flex align-items-center container-fluid'>
+          <img
+            className='scroll-btn'
+            src='/images/icons/left-arrow.png'
+            onClick={this.scrollRight}
+            alt='left-arrow'
+          />
+          <div className='character-list my-2 container-fluid'>
+            {characters}
+          </div>
+          <img
+            className='scroll-btn'
+            src='/images/icons/right-arrow.png'
+            onClick={this.scrollLeft}
+            alt='right-arrow'
+          />
         </div>
-        <Container className="text-center my-4">
-          <Button variant='secondary' onClick={this.createCharacter}>Create New Character</Button>
-
-        </Container>
+        {/* <Container className='text-center my-4'>
+          <Button variant='secondary' onClick={this.createCharacter}>
+            Create New Character
+          </Button>
+        </Container> */}
         {this.state.redirect && (
-          <Navigate to='/create-character' replace={true} setMessage={this.props.setMessage}/>
+          <Navigate
+            to='/create-character'
+            replace={true}
+            setMessage={this.props.setMessage}
+          />
         )}
       </div>
     );

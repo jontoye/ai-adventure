@@ -18,6 +18,8 @@ import CharacterDetail from "./components/CharacterDetail";
 import Story from "./components/Story";
 import ImageSelect from "./components/ImageSelect";
 import Character from "./components/Character";
+import MyCharacters from "./components/MyCharacters"
+import MyAdventures from "./components/MyAdventures"
 
 import "./App.scss";
 import { Link } from "react-router-dom";
@@ -59,7 +61,15 @@ export default class App extends Component {
     charCreateA: false,
     users: [],
     storyBackBtnRedirect: "/bug",
+    firstLogin: false,
+    redirect: false,
   };
+
+  setImage = (imgUrl) => {
+    this.setState({
+      avatar: imgUrl
+    })
+  }
 
   setNavExpanded = (expanded) => {
     this.setState({
@@ -73,22 +83,20 @@ export default class App extends Component {
     });
   };
 
-  componentDidMount() {
-    this.loadUsers();
+  async componentDidMount() {
     let token = localStorage.getItem("token");
     if (token != null) {
       let user = jwt_decode(token);
-      // console.log("BEFORE", user);
-      if (user) {
-        console.log("user = true");
-        console.log(user);
+      let currentTime = Date.now() / 1000;
+      // console.log(user.exp, 'vs', currentTime)
+      if (user && user.exp > currentTime) {
+        // console.log("user = true", user);
         this.setState({
           isAuth: true,
           user: user,
         });
+        await this.loadUsers();
       } else {
-        // console.log("user = false");
-        // console.log(user);
         localStorage.removeItem("token");
         this.setState({
           isAuth: false,
@@ -97,60 +105,78 @@ export default class App extends Component {
     }
   }
 
-  loadUsers = () => {
-    Axios.get("users", {
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token"),
-      },
-    })
-      .then((response) => {
-        console.log('user test', response.data.users)
-        let user = response.data.users.filter(
-          (user) => this.state.user.id === user._id
-        );
-        console.log("load user response", user[0].avatar);
-        this.setState({
-          avatar: user[0].avatar,
-          users: response.data.users,
-        });
-      })
-      .catch((err) => {
-        console.log("Error fetching users.");
-        console.log(err);
+  loadUsers = async () => {
+    // console.log('loading users')
+    try {
+      const response = await Axios.get("/users", {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
       });
+      // console.log('response', response.data.users)
+      let user = response.data.users.filter(
+        (user) => this.state.user.id === user._id
+      );
+      this.setState({
+        avatar: user[0].avatar,
+        users: response.data.users,
+      });
+    } catch (err) {
+      console.log("Error fetching users.");
+      console.log(err);
+    }
   };
 
-  handleGoogleLogin = (response) => {
-    Axios({
-      method: "post",
-      url: "/auth/google",
-      data: { tokenId: response.tokenId },
-    })
-      .then((res) => {
-        // console.log("google login success", res);
+  //  getUsers = async () => {
+  //   try {
+  //     const response = await axios.get("/users", {
+  //       headers: {
+  //         Authorization: "Bearer " + localStorage.getItem("token"),
+  //       },
+  //     });
+  //     setUsers(response.data.users.reverse());
+  //     // console.log("setUsers", response.data.users.reverse());
+  //     return response;
+  //   } catch (err) {
+  //     console.error(err);
+  //     setMessage(err.message, "danger");
+  //   }
+  // };
 
-        if (res.data.token != null) {
-          //localStorage refers to localStorage of browser
-          localStorage.setItem("token", res.data.token);
-          let user = jwt_decode(res.data.token);
 
-          // console.log("GOOGLE USER", user);
 
-          this.setState({
-            isAuth: true,
-            user: user,
-            logoutRedirect: false,
-          });
-          this.setMessage("User logged in successfully.", "success");
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-        this.setMessage(error.message, "danger");
+
+
+
+  handleGoogleLogin = async (response) => {
+    try {
+      const res = await Axios.post("/auth/google", { tokenId: response.tokenId });
+      if (res.data.token != null) {
+        localStorage.setItem("token", res.data.token);
+        let user = jwt_decode(res.data.token);
+
         this.setState({
-          isAuth: false,
+          isAuth: true,
+          user: user,
+          logoutRedirect: false,
+          firstLogin: false,
+          redirect: false,
+
+          //below settings are to attempt to redirect to image-select page if its a new user, some errors though
+          // firstLogin: res.data.newUser,
+          // redirect: res.data.newUser,
         });
+        this.setMessage("User logged in successfully.", "success");
+        this.loadUsers()
+
+      }
+    } catch (error) {
+      console.log(error);
+      this.setMessage(error.message, "Google login error");
+      this.setState({
+        isAuth: false,
       });
+    }
   };
 
   createRandomCharacter() {
@@ -202,7 +228,7 @@ export default class App extends Component {
     });
   }
 
-  storyBackBtnRedirectFcn(redirectLink) {
+  storyBackBtnRedirectFcn = (redirectLink) => {
     this.setState({
       storyBackBtnRedirect: redirectLink,
     });
@@ -264,8 +290,10 @@ export default class App extends Component {
       user: null,
       isGoogleUser: false,
       logoutRedirect: true,
-    });
-    this.setMessage("User logged out successfully.", "danger");
+    }, () => {
+      this.setMessage("User logged out successfully.", "success");
+      redirect()
+    })
   };
 
   setBannerTimeout = (key) => {
@@ -291,12 +319,12 @@ export default class App extends Component {
           console.log("Error adding event.", response.data.error);
           this.props.setMessage(
             response.data.error._message +
-              ". Please confirm you have correctly achieved something.\nIf the issue persists please contact the developers and quote: Event/" +
-              response.data.error.name,
+            ". Please confirm you have correctly achieved something.\nIf the issue persists please contact the developers and quote: Event/" +
+            response.data.error.name,
             "danger"
           );
         } else {
-          console.log("Achievement created successfully.", response);
+          // console.log("Achievement created successfully.", response);
           // this.setState({
           //   event: response.data.event,
           // });
@@ -341,7 +369,7 @@ export default class App extends Component {
           fixed='top'
           variant='dark'
           bg='dark'
-          expand='lg'
+          expand='xl'
           onToggle={this.setNavExpanded}
           expanded={this.state.navExpanded}
           className='main-navbar'
@@ -360,16 +388,16 @@ export default class App extends Component {
                       Explore
                     </Link>
                     <Link to='/create-character' className='nav-link'>
-                      Create Character
+                      New Character
                     </Link>
                     <Link to='/create-adventure' className='nav-link'>
-                      Create Adventure
+                      New Adventure
                     </Link>
-                    <Link to='/characters' className='nav-link'>
-                      Characters
+                    <Link to='/my-characters' className='nav-link'>
+                      My Characters
                     </Link>
-                    <Link to='/adventure-list' className='nav-link'>
-                      Adventures
+                    <Link to='/my-adventures' className='nav-link'>
+                      My Adventures
                     </Link>
                   </>
                 ) : (
@@ -388,23 +416,24 @@ export default class App extends Component {
                 {this.state.user ? (
                   <div className='right-nav'>
                     <Link
-                      to={`/profile/${this.state.user.id}`}
+                      to="/image-select"
+                      // to={`/profile/${this.state.user.id}`}
                       className='nav-link'
                     >
-                      <img className='circle' src={this.state.avatar} alt='' />
+                      <img className='circle nav-img' src={this.state.avatar} alt='' />
                     </Link>
                     <Link
                       to={`/profile/${this.state.user.id}`}
                       className='nav-link'
                     >
-                      {"Welcome " + this.state.user.name}
+                      {this.state.user.name}
                     </Link>
                     <Link
-                      to='/signout'
+                      to='/'
                       className='nav-link'
                       onClick={this.logoutHandler}
                     >
-                      Sign Out
+                      Logout
                     </Link>
                   </div>
                 ) : null}{" "}
@@ -413,12 +442,12 @@ export default class App extends Component {
           </Container>
           {/* <Button onClick={() => this.createAchievement(2)}></Button> */}
         </Navbar>
-
-        {dangerMessage}
-        {warningMessage}
-        {successMessage}
-        {infoMessage}
-
+        <div className="alerts">
+          {dangerMessage}
+          {warningMessage}
+          {successMessage}
+          {infoMessage}
+        </div>
         <Routes>
           <Route
             path='/'
@@ -446,6 +475,7 @@ export default class App extends Component {
                 currentUser={this.state.user}
                 setMessage={this.setMessage}
                 changeUserImg={this.changeUserImg}
+                setImage={this.setImage}
               />
             }
           ></Route>
@@ -497,11 +527,32 @@ export default class App extends Component {
               />
             }
           />
+
           <Route
-            path='/adventure-list'
+            path='/adventures'
             exact
             element={
               <Adventures
+                continueAdventure={this.continueAdventure}
+                setMessage={this.setMessage}
+                user={this.state.user}
+                isFiltered={true}
+                userList={this.state.users}
+                startStory={this.startStory}
+                createAchievement={this.createAchievement}
+                setAdventure={this.setAdventure}
+                origin={"/adventure-list"}
+                storyBackBtnRedirectFcn={this.storyBackBtnRedirectFcn}
+              />
+            }
+          />
+
+
+          <Route
+            path='/my-adventures'
+            exact
+            element={
+              <MyAdventures
                 continueAdventure={this.continueAdventure}
                 setMessage={this.setMessage}
                 user={this.state.user}
@@ -547,6 +598,25 @@ export default class App extends Component {
           />
 
           <Route
+            path='/my-characters'
+            exact
+            element={
+              <MyCharacters
+                createAdventure={this.createAdventure}
+                setCharacter={this.setCharacter}
+                dontCreateRandomCharacter={this.dontCreateRandomCharacter}
+                filtered={""}
+                setMessage={this.setMessage}
+                user={this.state.user}
+                isFiltered={false}
+                startStory={this.startStory}
+                userList={this.state.users}
+                createAchievement={this.createAchievement}
+              />
+            }
+          />
+
+          <Route
             path='/character-detail'
             exact
             element={
@@ -560,6 +630,7 @@ export default class App extends Component {
                 userList={this.state.users}
                 user={this.state.user}
                 createAchievement={this.createAchievement}
+                setAdventure={this.setAdventure}
               />
             }
           />
@@ -639,6 +710,10 @@ export default class App extends Component {
 
         <Footer />
         {this.state.logoutRedirect && <Navigate to='/' replace={true} />}
+
+        {this.state.firstLogin &&
+          <Navigate to={"/image-select"} replace={true} />
+        }
       </Router>
     );
   }

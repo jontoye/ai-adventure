@@ -155,7 +155,9 @@ export default function Profile({ currentUser, setMessage }) {
       .get(`/profile/${id}`, { headers })
       .then((response) => {
         response.data.user.activity = response.data.user.activity.reverse();
-        setUser(response.data.user);
+        if (user !== response.data.user) {
+          setUser(response.data.user);
+        }
         setBio(response.data.user.biography);
         let tempBadges = badges;
         for (let i = 1; i < 12; i++) {
@@ -424,10 +426,10 @@ export default function Profile({ currentUser, setMessage }) {
 
                 <div className='row mb-5'>
                   <div className='col-md-9 col-xl-6 mx-auto d-flex justify-content-between'>
-                    <Link to='/characters' className='display-6'>
+                    <Link to='/my-characters' className='display-6'>
                       My Characters
                     </Link>
-                    <Link to='/adventure-list' className='display-6'>
+                    <Link to='/my-adventures' className='display-6'>
                       My Adventures
                     </Link>
                   </div>

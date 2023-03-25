@@ -1,30 +1,29 @@
-h1{
-    text-align: center;
-    color: white
+h1 {
+  text-align: center;
+  color: white;
 }
 
-#sign-up-container{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 500px;   
-    background-color: rgb(255, 255, 255, 0.02);
-    margin-top: 20px;
-    border-radius: 10px;
-    padding: 10px
+#sign-up-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 500px;
+  background-color: rgb(255, 255, 255, 0.02);
+  margin-top: 20px;
+  border-radius: 10px;
+  padding: 10px;
 }
 
-#create-user-button{
-    background-color: rgb(255,255,255,0.02);
-    border: 1px solid rgb(255,255,255,0.02);
+#create-user-button {
+  background-color: rgb(255, 255, 255, 0.02);
+  border: 1px solid rgb(255, 255, 255, 0.02);
 }
 
-#create-user-button:hover{
-    cursor: pointer;
-    background-color: rgb(255,255,255,0.3);
+#create-user-button:hover {
+  cursor: pointer;
+  background-color: rgb(255, 255, 255, 0.3);
 }
-
 
 $primary: #11998e;
 $secondary: #38ef7d;
@@ -54,7 +53,7 @@ $gray: #9b9b9b;
   }
 
   &:placeholder-shown ~ .form__label {
-    font-size: .9rem;
+    font-size: 0.9rem;
     cursor: text;
     top: 20px;
   }
@@ -65,7 +64,7 @@ $gray: #9b9b9b;
   top: 0;
   display: block;
   transition: 0.2s;
-  font-size: .9rem;
+  font-size: 0.9rem;
   color: $gray;
 }
 
@@ -77,83 +76,87 @@ $gray: #9b9b9b;
     transition: 0.2s;
     font-size: 1rem;
     color: $primary;
-    font-weight:700;    
+    font-weight: 700;
   }
-  padding-bottom: 6px;  
+  padding-bottom: 6px;
   font-weight: 700;
   border-width: 3px;
-  border-image: linear-gradient(to right, $primary,$secondary);
+  // border-image: linear-gradient(to right, $primary,$secondary);
   border-image-slice: 1;
 }
 
 /* reset input */
-.form__field{
-  &:required,&:invalid { box-shadow:none; }
-} 
-  body {
-    width: 100%;
-    height: 100%;
-      background: linear-gradient(-45deg, #1e1e1e, #070707, #181818, #000000);
-      background-size: 400% 400%;
-      // animation: gradient 25s ease infinite;
+.form__field {
+  &:required,
+  &:invalid {
+    box-shadow: none;
   }
-  
-  @keyframes gradient {
-      0% {
-          background-position: 0% 50%;
-      }
-      50% {
-          background-position: 100% 50%;
-      }
-      100% {
-          background-position: 0% 50%;
-      }
-  }
-
-  #main-greeting{
-      color: white;
-  }
-
-  #google-button{
-    border: none;
-    color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-radius: 10px;
-    padding: 10px;
-    margin-top: 20px;
-    background-color: rgb(255, 255, 255, 0.02);
-    background-image: "client/src/images/google-logo.webp";
-    width: 120px
-  }
-
-  #google-button:hover{
-    cursor: pointer;
-    background-color: rgb(255,255,255,0.1);
+}
+body {
+  width: 100%;
+  height: 100%;
+  // background: linear-gradient(-45deg, #1e1e1e, #070707, #181818, #000000);
+  background-size: 400% 400%;
+  background-color: darkslategray;
+  // animation: gradient 25s ease infinite;
 }
 
-  #google-signin-wrapper{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
   }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
 
-  #google-signin-wrapper span{
-    font-size: 20pt;
-    font-weight:900;
-  }
+#main-greeting {
+  color: white;
+}
 
-  #google-logo-img{
-    width: 35px;
-  }
+#google-button {
+  border: none;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 20px;
+  background-color: rgb(255, 255, 255, 0.02);
+  background-image: "client/src/images/google-logo.webp";
+  width: 120px;
+}
 
-  #google-button span{
-    font-size: 14pt;
-  }
+#google-button:hover {
+  cursor: pointer;
+  background-color: rgb(255, 255, 255, 0.1);
+}
 
-  .signin-line{
-    margin: 0 auto;
-    width: 80%;
-  }
+#google-signin-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#google-signin-wrapper span {
+  font-size: 20pt;
+  font-weight: 900;
+}
+
+#google-logo-img {
+  width: 35px;
+}
+
+#google-button span {
+  font-size: 14pt;
+}
+
+.signin-line {
+  margin: 0 auto;
+  width: 80%;
+}

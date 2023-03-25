@@ -21,24 +21,23 @@ function Users({
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
+    const getUsers = async () => {
+      try {
+        const response = await axios.get("/users", {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        });
+        setUsers(response.data.users.reverse());
+        // console.log("setUsers", response.data.users.reverse());
+        return response;
+      } catch (err) {
+        console.error(err);
+        setMessage(err.message, "danger");
+      }
+    };
     getUsers();
   }, []);
-
-  const getUsers = async () => {
-    try {
-      const response = await axios.get("/users", {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
-      });
-      setUsers(response.data.users.reverse());
-      // console.log("setUsers", response.data.users.reverse());
-      return response;
-    } catch (err) {
-      console.error(err);
-      setMessage(err.message, "danger");
-    }
-  };
 
   const scrollLeft = () => {
     document.querySelector(".users-list").scrollLeft += 500;
@@ -51,9 +50,7 @@ function Users({
   return (
     <>
       <div className='section-explore container-fluid my-5'>
-        <h1 className='display-4'>Explore</h1>
-
-        {/* <div className='users-list d-flex flex-column align-items-center gap-5 my-5'> */}
+        <h1 className='display-4'>Users</h1>
         <div className='d-flex align-items-center'>
           <img
             className='scroll-btn'
@@ -74,7 +71,7 @@ function Users({
                   </div>
                   <div className='user-card__content mx-2'>
                     <h3 id='user-name'>{user.username}</h3>
-                    <p>Joined {moment(user.createdAt).fromNow()}</p>
+                    <div>Joined {moment(user.createdAt).fromNow()}</div>
                   </div>
                 </div>
               </Link>
@@ -88,7 +85,6 @@ function Users({
           />
         </div>
       </div>
-
       <Adventures
         continueAdventure={continueAdventure}
         setMessage={setMessage}

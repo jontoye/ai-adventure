@@ -46,12 +46,13 @@ exports.auth_signup_post = (req, res) => {
         // req.flash("error", "Email is already in use");
         // res.redirect("/auth/signin");
         if (Object.keys(err.keyValue).includes("username")) {
-          res.json({error:err, message: "Username already exists." }).status(400);
+          res.json({ error: err, message: "Username already exists." }).status(400);
         } else if (Object.keys(err.keyValue).includes("emailAddress")) {
-          res.json({error:err,  message: "Email address already exists." }).status(400);
+          res.json({ error: err, message: "Email address already exists." }).status(400);
         } else {
           res
-            .json({error:err, 
+            .json({
+              error: err,
               message:
                 "Username or email already exists. Please choose a new one.",
             })
@@ -127,14 +128,14 @@ exports.auth_signin_post = async (req, res) => {
         email: user.emailAddress,
       },
       process.env.SECRET,
-      { expiresIn: "7d" },
+      { expiresIn: "5h" },
       (err, token) => {
         if (err) throw err;
         res.json({ token, message: "Login successful." }).status(200);
       }
     );
   } catch (error) {
-    res.json({error:error,  message: "You are not logged in." }).status(400);
+    res.json({ error: error, message: "You are not logged in." }).status(400);
   }
 };
 
@@ -153,13 +154,14 @@ exports.googleLoginPost = (req, resp) => {
   client
     .verifyIdToken({ idToken: tokenId, audience: process.env.GOOGLE_CLIENT_ID })
     .then((res) => {
+      // console.log('login troubleshooting:', res)
       const { email_verified, name, email } = res.payload;
       // console.log({ email_verified, name, email });
       if (email_verified) {
         User.findOne({ emailAddress: email }).exec((err, user) => {
           if (err) {
             return resp.json({
-              error:err, 
+              error: err,
               message: "Something went wrong...",
             });
           } else {
@@ -172,7 +174,7 @@ exports.googleLoginPost = (req, resp) => {
                 },
                 process.env.SECRET,
                 {
-                  expiresIn: "7d",
+                  expiresIn: "5h",
                 }
               );
               const { _id, username, emailAddress } = user;
@@ -180,20 +182,26 @@ exports.googleLoginPost = (req, resp) => {
               return resp.json({
                 token,
                 user: { _id, username, emailAddress },
+                newUser: false,
               });
             } else {
               let password = email + process.env.SECRET;
+              const randomIndex = Math.floor(Math.random() * 20);
+              const randomImage = `/images/profiles/user${randomIndex + 2}.png`
+
+
               let newUser = new User({
                 username: name,
                 emailAddress: email,
                 password: password,
+                avatar: randomImage,
               });
               let hash = bcrypt.hashSync(password, salt);
               newUser.password = hash;
               newUser.save((err, data) => {
                 if (err) {
                   return resp.json({
-                    error:err, 
+                    error: err,
                     message: "Something went wrong...",
                   });
                 }
@@ -205,7 +213,7 @@ exports.googleLoginPost = (req, resp) => {
                   },
                   process.env.SECRET,
                   {
-                    expiresIn: "7d",
+                    expiresIn: "5h",
                   }
                 );
                 // this is a comment
@@ -214,6 +222,7 @@ exports.googleLoginPost = (req, resp) => {
                 return resp.json({
                   token,
                   user: { _id, username, emailAddress, password },
+                  newUser: true,
                 });
               });
             }

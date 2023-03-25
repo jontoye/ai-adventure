@@ -58,7 +58,7 @@ export default class Character extends Component {
     delete character._id;
     character.name = this.state.newName;
     //need to find a smart way to replace the name in the backstory
-    console.log("name replace test", nameHolder, "vs", character.name);
+    // console.log("name replace test", nameHolder, "vs", character.name);
     character.backstory = this.state.character.backstory.replace(
       nameHolder,
       character.name
@@ -147,17 +147,19 @@ export default class Character extends Component {
               {this.props.name} the {this.props.class}
             </Card.Title>
             <Card.Text>
-              <p className='overflow-char'>{this.props.backstory}</p>
+              <span className='overflow-char'>{this.props.backstory}</span>
+              <br />
               Ability: {this.props.ability}
               <br />
               Weakness: {this.props.weakness}
               {!this.props.isFiltered ? (
-                <p>
+                <span>
+                  <br />
                   Created by:{" "}
                   <a href={`/profile/${this.props.user}`}>
                     {this.props.charUser}
                   </a>
-                </p>
+                </span>
               ) : null}
             </Card.Text>
             <div className='buttons-container'>
@@ -172,11 +174,10 @@ export default class Character extends Component {
                 >
                   Cancel
                 </Button>
-              ) : (
-                <Button variant='primary' onClick={this.handleCopyCharacterBtn}>
-                  Copy
-                </Button>
-              )}
+              ) : // <Button variant='primary' onClick={this.handleCopyCharacterBtn}>
+              //   Copy
+              // </Button>
+              null}
               <Button variant='secondary' onClick={this.characterDetail}>
                 Details
               </Button>

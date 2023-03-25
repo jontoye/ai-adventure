@@ -3,8 +3,9 @@
   font-weight: 600;
   width: 100%;
 
-  /* background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.6)), url("https://images.unsplash.com/photo-1462759353907-b2ea5ebd72e7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2231&q=80"); */
-  background-image: url("https://images.unsplash.com/photo-1500964757637-c85e8a162699?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3003&q=80");
+  /* background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.6)), */
+  /* url("https://images.unsplash.com/photo-1462759353907-b2ea5ebd72e7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2231&q=80"); */
+  background-image: url("https://cdn.discordapp.com/attachments/1080683584433704991/1088693503250419712/Hermis_Epic_Elden_ring_landscape._Volumetric_light._6a2095a4-373e-43b0-b130-dbaf833acab1.png");
   margin: 0 auto;
 
   /* parallax scroll effect */

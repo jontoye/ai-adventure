@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { Container, Button, Row, Col } from "react-bootstrap";
+// import { Container, Button, Row, Col } from "react-bootstrap";
 import GSignup from "./GSignup";
 // import axios from "axios";
 import "./Signup.scss";
@@ -43,7 +43,7 @@ export default class Signup extends Component {
       <div>
         <div>
           <h1>Welcome to AI Adventure</h1>
-          <Container id='sign-up-container'>
+          {/* <Container id='sign-up-container'>
             <h3 className='text-white'>Sign up</h3>
             <div className='form__group field'>
               <input
@@ -96,9 +96,9 @@ export default class Signup extends Component {
           </Container>
           <br></br>
           <br></br>
-          <hr className='signin-line'></hr>
+          <hr className='signin-line'></hr> */}
           <div id='google-signin-wrapper'>
-            <span>OR</span>
+            {/* <span>OR</span> */}
             <GSignup login={this.props.googleLogin}></GSignup>
           </div>
         </div>

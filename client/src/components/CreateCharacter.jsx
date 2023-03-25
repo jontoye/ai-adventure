@@ -23,7 +23,7 @@ export default class CreateCharacter extends Component {
     super(props);
     this.state = {
       currentStep: 1,
-      user: this.props.user.id,
+      user: this.props.user ? this.props.user.id : null,
       heading: "Backstory",
       generateRandomCharacter: false,
       newCharacter: {
@@ -57,7 +57,10 @@ export default class CreateCharacter extends Component {
     this._next = this._next.bind(this);
     this._prev = this._prev.bind(this);
   }
+
   componentDidMount() {
+    let theUser = () => (this.props.user ? this.props.user.id : null);
+    this.setState({ user: theUser() });
     if (this.props.randomCharacter) {
       this.createRandomCharacter();
     }
@@ -102,12 +105,13 @@ export default class CreateCharacter extends Component {
         ];
     }
     //ability and weakness cannot be the same thing
-    let ability = CHARACTER_DEFAULTS.trait[
-      Math.floor(Math.random() * CHARACTER_DEFAULTS.trait.length)
-    ];
-    let weakness = CHARACTER_DEFAULTS.trait.filter(t=>{return t!=ability})[
-      Math.floor(Math.random() * CHARACTER_DEFAULTS.trait.length-1)
-    ];
+    let ability =
+      CHARACTER_DEFAULTS.trait[
+        Math.floor(Math.random() * CHARACTER_DEFAULTS.trait.length)
+      ];
+    let weakness = CHARACTER_DEFAULTS.trait.filter((t) => {
+      return t !== ability;
+    })[Math.floor(Math.random() * CHARACTER_DEFAULTS.trait.length - 1)];
 
     const character = {
       name: name,
@@ -115,8 +119,8 @@ export default class CreateCharacter extends Component {
         CHARACTER_DEFAULTS.class[
           Math.floor(Math.random() * CHARACTER_DEFAULTS.class.length)
         ],
-      ability:ability,
-      weakness:weakness,
+      ability: ability,
+      weakness: weakness,
       backstory: "", // default
       tone: "dark", // default
       user: this.state.user,
@@ -143,17 +147,17 @@ export default class CreateCharacter extends Component {
 
   addCharacter = (character) => {
     if (
-      this.state.newCharacter.name.includes("Saad Iqbal") ||
-      this.state.newCharacter.name.includes("Saad")
+      this.state.newCharacter.name.toLowerCase().includes("saad iqbal") ||
+      this.state.newCharacter.name.toLowerCase().includes("saad")
     ) {
-      // console.log("saad detected");
-      character.image = "/images/class/saad.jpg"
+      console.log("saad detected");
+      character.image = "/images/class/saad.jpg";
     }
     if (
-      this.state.newCharacter.name.includes("Martin") ||
-      this.state.newCharacter.name.includes("Marty")
+      this.state.newCharacter.name.toLowerCase().includes("martin") ||
+      this.state.newCharacter.name.toLowerCase().includes("marty")
     ) {
-      // console.log("marty detected");
+      console.log("marty detected");
       character.image = "/images/class/martin.jpg";
     }
     console.log("add char test", character);
@@ -284,7 +288,7 @@ export default class CreateCharacter extends Component {
   achievementCheck(character) {
     if (
       this.state.newCharacter.name.includes("Saad Iqbal") ||
-      this.state.newCharacter.name.includes( "Saad")
+      this.state.newCharacter.name.includes("Saad")
     ) {
       // console.log("saad detected");
       this.props.createAchievement(8);

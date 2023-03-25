@@ -5,7 +5,7 @@ const findOrCreate = require('mongoose-findorcreate');
 
 const userSchema = mongoose.Schema({
 
-    googleId:{
+    googleId: {
         type: String
     },
 
@@ -14,7 +14,7 @@ const userSchema = mongoose.Schema({
         required: true,
         minlength: [3, "Username must be more than 3 characters."],
         maxlength: [20, "Username cannot be longer than 20 characters."],
-        unique: true,
+        // unique: true,
     },
     email: {
         type: String,
@@ -22,7 +22,7 @@ const userSchema = mongoose.Schema({
         lowercase: true,
         unique: true,
         validate: {
-            validator: function(v) {
+            validator: function (v) {
                 return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v);
             },
             message: "Please enter a valid email."

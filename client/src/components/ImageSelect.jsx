@@ -6,7 +6,7 @@ import "./css/Banner.css";
 import "./css/Profile.css";
 import ProfileImage from "./ProfileImage";
 
-function ImageSelect({ currentUser, setMessage }) {
+function ImageSelect({ currentUser, setImage }) {
   const headers = {
     Authorization: "Bearer " + localStorage.getItem("token"),
   };
@@ -50,17 +50,21 @@ function ImageSelect({ currentUser, setMessage }) {
       { avatar: imgUrl },
       { headers }
     );
+    setImage(imgUrl);
     setRedirect(true);
   };
+
   const imageList = images.map((image, index) => {
-    return <ProfileImage image={image} changeUserImg={changeUserImg} />;
+    return (
+      <ProfileImage image={image} key={index} changeUserImg={changeUserImg} />
+    );
   });
   return (
-    <div>
+    <div className='imageSelectScreen'>
       <h1>Select your profile image</h1>
 
       <div className='images-holder2'>{imageList}</div>
-      <div>{redirect && <Navigate to='/' />}</div>
+      <div>{redirect && <Navigate to='/' replace={true} />}</div>
     </div>
   );
 }
