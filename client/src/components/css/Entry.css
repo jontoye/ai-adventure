@@ -72,8 +72,9 @@
 @keyframes t {
   from {
     background-size: 0 95%, 0 100%;
+    background-color: slategray;
     background: linear-gradient(rgba(255, 255, 255, 0.8)) 0 50%/150% 95%,
-      linear-gradient(rgba(255, 255, 255, 0.8)) 0 0 /100% 100%;
+    linear-gradient(rgba(255, 255, 255, 0.8)) 0 0 /100% 100%;
     -webkit-background-clip: padding-box, text;
     color: rgba(255, 255, 255, 0.8);
   }

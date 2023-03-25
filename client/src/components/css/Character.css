@@ -25,7 +25,6 @@
   padding: 20px;
   overflow-x: scroll;
   scrollbar-width: none;
-
 }
 
 .users-list::-webkit-scrollbar {
@@ -38,6 +37,7 @@
   border-radius: 10px;
   padding: 20px 30px;
   font-size: larger;
+  background-color: slategray;
 
   box-shadow: rgba(255, 255, 255, 0.35) 0px 5px 15px;
   transition: all 0.3s ease;

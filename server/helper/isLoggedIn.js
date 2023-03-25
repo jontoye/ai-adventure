@@ -18,6 +18,10 @@ module.exports = (req, res, next) => {
   // const token = req.header("x-auth-token")
   // console.log(token);
   var authorizationToken = req.header("Authorization");
+  if (!authorizationToken) {
+    return res.json({ message: "You must sign in to view this page." }).status(401);
+    // return res.redirect("/");
+  }
   authorizationToken = authorizationToken.replace("Bearer ", "");
   let token = authorizationToken;
 

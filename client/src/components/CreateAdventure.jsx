@@ -20,15 +20,38 @@ export default class CreateAdventure extends Component {
       name: "",
       prompt: "",
       redirect: false,
-      event: {},
+      event: null,
     };
     // console.log(this.props)
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     // this.log("test", this.props.achivement);
     this.setState({ name: this.props.character.name });
-    this.loadCharacterList();
+
+    const loadCharacterList = () => {
+      // console.log("getting characters...");
+      Axios.get("character/index", {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      })
+        .then((response) => {
+          // console.log(response.data.characters);
+          let characterFiltered = response.data.characters.filter((c) => {
+            return c.user === this.props.user.id && c.user !== "unknown";
+          });
+          this.setState({
+            characters: characterFiltered.reverse(),
+          });
+        })
+        .catch((err) => {
+          console.log("Error fetching characters.");
+          console.log(err);
+          this.props.setMessage(err.message, "danger");
+        });
+    };
+    await loadCharacterList();
     this.achieveHandle(this.props.achievement);
   }
 
@@ -36,29 +59,29 @@ export default class CreateAdventure extends Component {
     console.log("this props achievement", this.props.achievement);
   }
 
-  loadCharacterList = () => {
-    // console.log("getting characters...");
-    Axios.get("character/index", {
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token"),
-      },
-    })
-      .then((response) => {
-        // console.log(response.data.characters);
+  // loadCharacterList = () => {
+  //   // console.log("getting characters...");
+  //   Axios.get("character/index", {
+  //     headers: {
+  //       Authorization: "Bearer " + localStorage.getItem("token"),
+  //     },
+  //   })
+  //     .then((response) => {
+  //       // console.log(response.data.characters);
 
-        let characterFiltered = response.data.characters.filter((c) => {
-          return c.user ? c.user === this.props.user.id : false;
-        });
-        this.setState({
-          characters: characterFiltered.reverse(),
-        });
-      })
-      .catch((err) => {
-        console.log("Error fetching characters.");
-        console.log(err);
-        this.props.setMessage(err.message, "danger");
-      });
-  };
+  //       let characterFiltered = response.data.characters.filter((c) => {
+  //         return c.user ? c.user === this.props.user.id : false;
+  //       });
+  //       this.setState({
+  //         characters: characterFiltered.reverse(),
+  //       });
+  //     })
+  //     .catch((err) => {
+  //       console.log("Error fetching characters.");
+  //       console.log(err);
+  //       this.props.setMessage(err.message, "danger");
+  //     });
+  // };
 
   handleChange = (event) => {
     const attributeToChange = event.target.name; // this will give the name of the field that is changing
@@ -72,8 +95,8 @@ export default class CreateAdventure extends Component {
     });
   };
 
-  addAdventure = (adventure, character) => {
-    console.log(adventure);
+  addAdventure = async (adventure, character) => {
+    // console.log("new adventure:", adventure, character);
     Axios.post("adventure/add", adventure, {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),
@@ -89,7 +112,7 @@ export default class CreateAdventure extends Component {
             "danger"
           );
         } else {
-          console.log("Adventure created successfully.", response);
+          // console.log("Adventure created successfully.", response);
           response.data.adventure.events = [this.state.event];
           this.setState({
             newAdventure: response.data.adventure,
@@ -101,13 +124,13 @@ export default class CreateAdventure extends Component {
               this.state.character
             );
             this.setRedirect();
-          }, 100);
+          }, 250);
           // this.loadCharacterList();
         }
       })
       .catch((error) => {
-        console.log("Error creating adventure.", error);
-        console.log(error);
+        console.log("Error creating adventure.", error.message);
+        // console.log(error);
         this.props.setMessage(error.message, "danger");
       });
   };
@@ -150,7 +173,7 @@ export default class CreateAdventure extends Component {
     // console.log("story: " + character.backstory);
 
     let intro = `${character.backstory}`;
-    let prompt = `Begin a ${formDataObj.genre} story to ${formDataObj.quest} in a ${formDataObj.setting} setting. Create a detailed, interesting, entertaining, introduction in 100 words about ${character.name} starting the quest`;
+    let prompt = `Begin a ${formDataObj.genre} story to ${formDataObj.quest} in a ${formDataObj.setting} setting. Create a detailed, interesting, entertaining, introduction in 150 words about ${character.name} the ${character.class} starting the quest`;
     let AIprompt = intro + "\n\n" + prompt + "\n";
     // console.log("intro", intro);
     // console.log("prompt", prompt);
@@ -204,7 +227,9 @@ export default class CreateAdventure extends Component {
 
         this.createEvent(event);
         setTimeout(() => {
-          formDataObj.events = [this.state.event];
+          if (this.state.event) {
+            formDataObj.events = [this.state.event];
+          }
           formDataObj.user = this.props.user.id;
 
           this.addAdventure(formDataObj, character);
@@ -245,7 +270,7 @@ export default class CreateAdventure extends Component {
             "danger"
           );
         } else {
-          console.log("Event created successfully.", response);
+          // console.log("Event created successfully.", response);
           this.setState({
             event: response.data.event,
           });
@@ -263,7 +288,7 @@ export default class CreateAdventure extends Component {
         return (
           <option
             value={c.name}
-            selected
+            defaultValue={c.name}
             className={c.name}
             key={c._id}
             index={c._id}
@@ -281,7 +306,7 @@ export default class CreateAdventure extends Component {
     });
     // console.log(this.props)
 
-    return (
+    return characters ? (
       <div>
         <Container className='container-fluid my-5'>
           <h1>Begin an Adventure</h1>
@@ -405,6 +430,8 @@ export default class CreateAdventure extends Component {
           )}
         </Container>
       </div>
+    ) : (
+      <div>Loading...</div>
     );
   }
 }

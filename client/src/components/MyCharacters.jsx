@@ -2,10 +2,10 @@ import React, { Component } from "react";
 import Axios from "axios";
 import Character from "./Character";
 import { Navigate } from "react-router-dom";
-import { Button, Container } from "react-bootstrap";
+// import { Button, Container } from "react-bootstrap";
 import "./css/Characters.css";
 
-export default class Characters extends Component {
+export default class MyCharacters extends Component {
   constructor(props) {
     super(props);
 
@@ -13,10 +13,10 @@ export default class Characters extends Component {
       characters: [],
     };
   }
-  componentDidMount() {
-    this.loadCharacterList();
+  async componentDidMount() {
+    await this.loadCharacterList();
 
-    // console.log("filter props test", this.props.filtered);
+    // this.loadCharacterList();
   }
 
   loadCharacterList = () => {
@@ -28,24 +28,17 @@ export default class Characters extends Component {
     })
       .then((response) => {
         // console.log(response.data.characters);
-        if (this.props.filtered !== true) {
-          this.setState({
-            characters: response.data.characters.reverse(),
-          });
-        } else {
-          let characters = response.data.characters.filter(
-            (character) => character.user === this.props.user._id
-          );
-          console.log("characters else test", characters);
-          this.setState({
-            characters: characters.reverse(), //finish
-          });
-        }
+        let characterFiltered = response.data.characters.filter((c) => {
+          return c.user === this.props.user.id && c.user !== "unknown";
+        });
+        this.setState({
+          characters: characterFiltered.reverse(),
+        });
       })
       .catch((err) => {
         console.log("Error fetching characters.");
         console.log(err);
-        this.props.setMessage(err.message,'danger');
+        this.props.setMessage(err.message, "danger");
       });
   };
 
@@ -62,7 +55,7 @@ export default class Characters extends Component {
       .catch((err) => {
         console.log(`Error deleting character: ${name}`);
         console.log(err);
-        this.props.setMessage(err.message,'danger');
+        this.props.setMessage(err.message, "danger");
       });
   };
 
@@ -73,10 +66,26 @@ export default class Characters extends Component {
     });
   };
 
+  scrollLeft = () => {
+    document.querySelector(".character-list").scrollLeft += 500;
+  };
+
+  scrollRight = () => {
+    document.querySelector(".character-list").scrollLeft -= 500;
+  };
+
   render() {
     const characters = this.state.characters.map((c) => {
+      let user = this.props.userList.find((u) => {
+        return c.user === u._id;
+      });
+      if (!user) {
+        // handle the case where no user is found
+        console.error(`No user found with id ${c.user} `);
+      }
+      let charUser = user?.username || "unknown";
       return (
-        <div className='character-card'>
+        <div className='character-card' key={c._id}>
           <Character
             name={c.name}
             backstory={c.backstory}
@@ -86,25 +95,74 @@ export default class Characters extends Component {
             ability={c.ability}
             weakness={c.weakness}
             image={c.image}
+            user={c.user}
+            currentUser={this.props.user}
             createAdventure={this.props.createAdventure}
             deleteCharacter={this.deleteCharacter}
             setCharacter={this.props.setCharacter}
             setMessage={this.props.setMessage}
+            isFiltered={this.props.isFiltered}
+            startStory={this.props.startStory}
+            userCharacters={this.state.characters}
+            userList={this.props.userList}
+            charUser={charUser}
+            createAchievement={this.props.createAchievement}
           />
         </div>
       );
     });
+    if (characters.length < 1) {
+      return (
+        <div>
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <h1>Create your first Character</h1>
+        </div>
+      );
+    }
     return (
-      <div>
-        <h1>Character List</h1>
-        <div className='character-list my-5 container'>{characters}</div>
-        <Container className='text-center'>
+      <div className='container-fluid my-5'>
+        <h1 className='display-4'>Character List</h1>
+        {this.props.isFiltered ? (
+          <p className='display-8 text-white' style={{ textAlign: "center" }}>
+            Explore the characters you have created.
+          </p>
+        ) : (
+          <p className='display-8 text-white' style={{ textAlign: "center" }}>
+            Explore characters from around the world.
+          </p>
+        )}
+        <div className='d-flex align-items-center container-fluid'>
+          <img
+            className='scroll-btn'
+            src='/images/icons/left-arrow.png'
+            onClick={this.scrollRight}
+            alt='left-arrow'
+          />
+          <div className='character-list my-2 container-fluid'>
+            {characters}
+          </div>
+          <img
+            className='scroll-btn'
+            src='/images/icons/right-arrow.png'
+            onClick={this.scrollLeft}
+            alt='right-arrow'
+          />
+        </div>
+        {/* <Container className='text-center my-4'>
           <Button variant='secondary' onClick={this.createCharacter}>
             Create New Character
           </Button>
-        </Container>
+        </Container> */}
         {this.state.redirect && (
-          <Navigate to='/create-character' replace={true} setMessage={this.props.setMessage}/>
+          <Navigate
+            to='/create-character'
+            replace={true}
+            setMessage={this.props.setMessage}
+          />
         )}
       </div>
     );

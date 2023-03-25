@@ -2,9 +2,8 @@ import React, { Component } from "react";
 import Axios from "axios";
 import AdventureInfo from "./AdventureInfo";
 import { Navigate } from "react-router-dom";
-import { Button, Container } from "react-bootstrap";
+// import { Button, Container } from "react-bootstrap";
 import "./css/Adventures.css";
-
 export default class Adventures extends Component {
   constructor(props) {
     super(props);
@@ -14,9 +13,10 @@ export default class Adventures extends Component {
       userCharacters: [],
     };
   }
-  componentDidMount() {
-    this.loadAdventureList();
-    this.loadUserCharacters();
+  async componentDidMount() {
+    await Promise.all([this.loadAdventureList(), this.loadUserCharacters()]);
+    // this.loadAdventureList();
+    // this.loadUserCharacters();
   }
 
   loadAdventureList = () => {
@@ -28,9 +28,8 @@ export default class Adventures extends Component {
     })
       .then((response) => {
         let adventureFiltered = response.data.adventures.filter((a) => {
-          return a.user
-            ? a.user === this.props.user.id
-            : !this.props.isFiltered;
+          // console.log(a.user,'vs',this.props.user.id)
+          return a.user ? a.user : !this.props.isFiltered;
         });
         setTimeout(() => {
           this.setState({
@@ -103,13 +102,16 @@ export default class Adventures extends Component {
   render() {
     const adventures = this.state.adventures.map((a) => {
       let user = this.props.userList.find((u) => {
+        // console.log("check if user exists?",a.user === u._id)
         return a.user === u._id;
       });
       let advUser = user ? user.username : "unknown";
       let advUserID = user ? user._id : "unknown";
+      // console.log(advUser, advUserID);
+      // console.log(a);
 
       return (
-        <div className='adventure-card'>
+        <div className='adventure-card' key={a._id}>
           <AdventureInfo
             adventure={a}
             key={a._id}
@@ -129,28 +131,38 @@ export default class Adventures extends Component {
             setAdventure={this.props.setAdventure}
             origin={this.props.origin}
             storyBackBtnRedirectFcn={this.props.storyBackBtnRedirectFcn}
+            image={a.image}
+            setting={a.setting}
+            name={a.name}
+            quest={a.quest}
           />
         </div>
       );
     });
+
+    if (adventures.length < 1) {
+      return (
+        <div>
+          <br />
+          <br />
+          <br />
+
+          <h1>Loading..</h1>
+        </div>
+      );
+    }
     return (
       <div className='container-fluid my-5'>
         <h1 className='display-4'>Adventure List</h1>
-        {this.props.isFiltered ? (
-          <p
-            className='display-8 text-white'
-            style={{ "text-align": "center" }}
-          >
+        {/* {this.props.isFiltered ? (
+          <p className='display-8 text-white' style={{ textAlign: "center" }}>
             Explore the adventures you have begun.
           </p>
         ) : (
-          <p
-            className='display-8 text-white'
-            style={{ "text-align": "center" }}
-          >
+          <p className='display-8 text-white' style={{ textAlign: "center" }}>
             Explore adventures around the world.
           </p>
-        )}
+        )} */}
         <div className='d-flex align-items-center container-fluid'>
           <img
             className='scroll-btn'
@@ -168,11 +180,11 @@ export default class Adventures extends Component {
             alt='right-arrow'
           />
         </div>
-        <Container className='text-center'>
+        {/* <Container className='text-center'>
           <Button variant='secondary' onClick={this.createAdventure}>
             Create New Adventure
           </Button>
-        </Container>
+        </Container> */}
         {this.state.redirect && (
           <Navigate
             to='/create-adventure'

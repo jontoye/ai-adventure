@@ -39,8 +39,8 @@ export default class Adventure extends Component {
     let rawImageURL = this.props.adventure.image;
     let hiResImageURL = rawImageURL.replace("setting/", "setting/hi_res/");
 
-    console.log("LOAD");
-    console.log("adventure loaded: ", this.props.adventure);
+    // console.log("LOAD");
+    // console.log("adventure loaded: ", this.props.adventure);
     // console.log("character loaded: ", this.props.character);
     this.setState({
       event: events.reverse()[0],
@@ -51,8 +51,8 @@ export default class Adventure extends Component {
     });
     //async!
     setTimeout(() => {
-      console.log("event loaded: ", this.state.event);
-      console.log("background: ", this.state.background);
+      // console.log("event loaded: ", this.state.event);
+      // console.log("background: ", this.state.background);
 
       this.setState({
         log: this.state.event.displayedLog,
@@ -107,22 +107,22 @@ export default class Adventure extends Component {
   };
 
   generateOptions = () => {
-    console.log("PROMPT");
+    // console.log("PROMPT");
     const configuration = new Configuration({
       apiKey: process.env.REACT_APP_API_KEY,
     });
     const openai = new OpenAIApi(configuration);
-    let previousLog = this.state.previousLog.join("");
-    let prompt = `Give ${this.state.character.name} the ${this.state.character.class} 3 new, relevant, detailed options for what to do next. \n`;
+    let previousLog = this.state.event.fullLog
+      ? this.state.event.fullLog.join("")
+      : this.state.previousLog.join("");
+    let prompt = `Give ${this.state.character.name} 3 new, relevant, detailed, options for what to do next in the choose your own adventure game, keeping in mind context from above to make sure it is relevant. Avoid giving the same option multiple times. \n`;
     let AIprompt_holder = previousLog + "\n" + prompt;
     let AIprompt = AIprompt_holder.split(" ")
       .reverse()
       .slice(0, 1100)
       .reverse()
       .join(" ");
-
-    console.log("prompty 2", AIprompt);
-
+    // console.log("prompty 2", AIprompt);
     openai
       .createCompletion(process.env.REACT_APP_API_ENGINE, {
         prompt: AIprompt,
@@ -133,7 +133,7 @@ export default class Adventure extends Component {
         presence_penalty: 0.0,
       })
       .then((response) => {
-        console.log("choices test", response);
+        // console.log("choices test", response);
         let choices = response.data.choices[0].text;
         if (choices[0] === "\n") {
           choices = choices.slice(1, choices.length);
@@ -146,7 +146,7 @@ export default class Adventure extends Component {
           choices.split(" ")[0] === "Option"
           // choices.split(" ")[0] === ":"
         ) {
-          console.log("Option x: format detected", choices);
+          // console.log("Option x: format detected", choices);
           choices = choices.slice(7, choices.length);
         } else if (
           // choices.split(" ")[0] === "Option" ||
@@ -250,7 +250,7 @@ export default class Adventure extends Component {
   };
 
   loadOptions = () => {
-    console.log("loading options...");
+    // console.log("loading options...");
     this.setState({
       option1: this.state.event.options[0],
       option2: this.state.event.options[1],
@@ -266,7 +266,7 @@ export default class Adventure extends Component {
       },
     })
       .then((response) => {
-        console.log("Event saved successfully.", response);
+        // console.log("Event saved successfully.", response);
       })
       .catch((error) => {
         console.log("Error creating event.", error);
@@ -285,7 +285,7 @@ export default class Adventure extends Component {
       },
     })
       .then((response) => {
-        console.log("Event created successfully.", response);
+        // console.log("Event created successfully.", response);
         this.setState({
           event: response.data.event,
           adventure: {
@@ -310,11 +310,10 @@ export default class Adventure extends Component {
       },
     })
       .then((response) => {
-        if (response.data.adventure.events.length > 4){
-          this.props.createAchievement(3)
-
+        if (response.data.adventure.events.length > 4) {
+          this.props.createAchievement(3);
         }
-        console.log("Adventure updated successfully.", response);
+        // console.log("Adventure updated successfully.", response);
       })
       .catch((error) => {
         console.log("Error updating adventure.", error);
@@ -327,7 +326,7 @@ export default class Adventure extends Component {
   };
 
   chooseOption = (option, x) => {
-    console.log("OPTION");
+    // console.log("OPTION");
     //UPDATE & SAVE EXISTING EVENT
     this.setState({
       option1: "Generating Choice. Please wait...",
@@ -343,7 +342,7 @@ export default class Adventure extends Component {
       this.saveEvent();
       //INITIALIZE A NEW EVENT
       setTimeout(() => {
-        console.log("NEW EVENT");
+        // console.log("NEW EVENT");
         this.setState({
           event: {},
         });
@@ -354,7 +353,7 @@ export default class Adventure extends Component {
         const openai = new OpenAIApi(configuration);
         let previousLog = this.state.previousLog.join("");
         let action = `${this.state.character.name} the ${this.state.character.class} chooses ${x}. ${option}.`;
-        let prompt = `Give a long, entertaining, detailed account of what happens next.`;
+        let prompt = `Progress the the story forward a short period of time. Give a clever, entertaining, interesting, detailed account of what happens next in an open ended way.`;
         let AIprompt_holder =
           previousLog + "\n" + action + "\n" + prompt + "\n";
         let AIprompt = AIprompt_holder.split(" ")
@@ -362,7 +361,7 @@ export default class Adventure extends Component {
           .slice(0, 1200)
           .reverse()
           .join(" ");
-        console.log("prompty test", AIprompt);
+        // console.log("prompty test", AIprompt);
         openai
           .createCompletion(process.env.REACT_APP_API_ENGINE, {
             prompt: AIprompt,
@@ -373,7 +372,7 @@ export default class Adventure extends Component {
             presence_penalty: 0.0,
           })
           .then((response) => {
-            console.log("choose option test", response);
+            // console.log("choose option test", response);
             let reply = response.data.choices[0].text;
             while (reply[0] === "\n") {
               reply = reply.slice(1, reply.length);

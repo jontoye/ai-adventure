@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Button } from "react-bootstrap";
+// import { Container, Button } from "react-bootstrap";
 import GSignup from "./GSignup";
 // import axios from "axios";
 import { Navigate } from "react-router-dom";
@@ -11,8 +11,8 @@ export default class Signin extends Component {
     path: "/",
   };
 
-  // componentDidMount() { 
-    
+  // componentDidMount() {
+
   //     axios.get('/wedidit')
   //     .then(res=>{
   //       console.log(res)
@@ -21,7 +21,7 @@ export default class Signin extends Component {
   //       console.log(err)
   //     })
   //   }
-  
+
   changeHandler = (e) => {
     let temp = { ...this.state };
     temp[e.target.name] = e.target.value;
@@ -33,29 +33,25 @@ export default class Signin extends Component {
     this.setState({
       redirect: true,
       path: "/",
-    })
+    });
     this.setState({
       redirect: false,
-    })
+    });
   };
 
-  
   signupHandler = () => {
     this.setState({
       redirect: true,
       path: "/signup",
-    })
+    });
   };
 
-  
-
-  render(){
+  render() {
     return (
-      <div >
-
+      <div>
         <div>
-        <h1>Welcome to AI Adventure</h1>
-        <Container id="sign-up-container">
+          <h1>Welcome to AI Adventure</h1>
+          {/* <Container id="sign-up-container">
         <h3 className="text-white">Sign in</h3>
         <div className="form__group field">
           <input type="input" className="form__field" placeholder="Name" name="username" id='name' onChange={this.changeHandler} required />
@@ -71,17 +67,14 @@ export default class Signin extends Component {
           <p className="text-white">Don't have an account?</p>
           <Button id="" onClick={this.signupHandler}>Sign Up</Button>
         </Container><br></br><br></br>
-        <hr className="signin-line"></hr>
-        <div id="google-signin-wrapper">
-          <span>OR</span>
-        <GSignup login={this.props.googleLogin}></GSignup>
-        </div>
+        <hr className="signin-line"></hr> */}
+          <div id='google-signin-wrapper'>
+            {/* <span>OR</span> */}
+            <GSignup login={this.props.googleLogin}></GSignup>
+          </div>
         </div>
         {this.state.redirect && (
-          <Navigate
-            to={this.state.path}
-            replace={true}
-          />
+          <Navigate to={this.state.path} replace={true} />
         )}
       </div>
     );

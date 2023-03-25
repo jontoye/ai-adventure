@@ -54,7 +54,7 @@ export default class AdventureInfo extends Component {
 
   componentDidMount() {
     // console.log(this.props.origin);
-    this.props.storyBackBtnRedirectFcn(this.props.origin);
+    // this.props.storyBackBtnRedirectFcn(this.props.origin);
     // console.log("props test", this.props);
     // console.log("user id test", this.props.user);
 
@@ -80,17 +80,19 @@ export default class AdventureInfo extends Component {
         if (character) {
           this.setState({
             character: character,
+            characters: response.data.characters,
+            userCharacters: this.props.userCharacters,
           });
         }
-        this.setState({
-          characters: response.data.characters,
-          userCharacters: this.props.userCharacters,
-        });
+        // this.setState({});
       })
       .catch((err) => {
         console.log("Error fetching characters.");
-        console.log(err);
-        this.props.setMessage(err.message, "danger");
+        console.log(err.message);
+        this.props.setMessage(
+          err.message,
+          "no characters found, please make one"
+        );
       });
   }
 
@@ -275,7 +277,7 @@ export default class AdventureInfo extends Component {
             "danger"
           );
         } else {
-          console.log("Event created successfully.", response);
+          // console.log("Event created successfully.", response);
           this.setState({
             event: response.data.event,
           });
@@ -343,59 +345,70 @@ export default class AdventureInfo extends Component {
       characterSelect = ["wat"];
     }
 
-    return (
+    return this.state.character.name && this.state.advUser ? (
       <div>
         <Card className={css} style={{ width: "18rem", margin: "15px" }}>
           <Card.Img
             variant='top'
             src={this.state.adventure.image}
-            onClick={this.showStory}
+            // onClick={this.showStory}
           />
           <Card.Body>
             <Card.Title>{this.state.adventure.name}</Card.Title>
             <Card.Text>
-              <p className='overflow-adventure'>
+              <span className='overflow-adventure'>
                 {a_an} {this.state.adventure.setting}{" "}
                 {this.state.adventure.genre} {this.state.adventure.length} to{" "}
                 {quest}.
-              </p>
+              </span>
+              <br />
               Character: {this.state.character.name} (
               {this.state.character.class})<br></br>
               {!this.props.isFiltered ? (
-                <p>
+                <span>
                   Created by:{" "}
                   {this.props.adventure.user ? (
                     <a href={`/profile/${this.props.adventure.user}`}>
-                      {this.state.advUser}
+                      <span className='by'>{this.state.advUser}</span>
                     </a>
                   ) : (
                     this.state.advUser
                   )}
-                </p>
+                </span>
               ) : null}
             </Card.Text>
             <div className='buttons-container'>
-              {this.state.isFiltered ? (
-                <Button variant='primary' onClick={this.continueAdventure}>
-                  Continue
-                </Button>
-              ) : this.state.isCopyingAdventure ? (
-                <Button
-                  variant='secondary'
-                  onClick={this.handleCopyAdventureBtn}
-                >
-                  Cancel
-                </Button>
-              ) : (
-                <Button variant='primary' onClick={this.handleCopyAdventureBtn}>
-                  Copy
-                </Button>
-              )}
+              {
+                this.state.isFiltered ? (
+                  <Button
+                    className='continue'
+                    variant='primary'
+                    onClick={this.continueAdventure}
+                  >
+                    Continue
+                  </Button>
+                ) : this.state.isCopyingAdventure ? (
+                  <Button
+                    variant='secondary'
+                    onClick={this.handleCopyAdventureBtn}
+                  >
+                    Cancel
+                  </Button>
+                ) : null
+                // <Button variant='primary' onClick={this.handleCopyAdventureBtn}>
+                //   Copy
+                // </Button>
+              }
 
               {this.state.isFiltered ? (
-                <Button variant='danger' onClick={this.deleteAdventure}>
-                  Delete
-                </Button>
+                <div className='read-delete'>
+                  <Button variant='secondary' onClick={this.readAdventure}>
+                    Read
+                  </Button>
+                  <Button variant='danger' onClick={this.deleteAdventure}>
+                    Delete
+                  </Button>
+                </div>
               ) : (
                 <Button variant='secondary' onClick={this.readAdventure}>
                   Read
@@ -440,6 +453,8 @@ export default class AdventureInfo extends Component {
           />
         )}
       </div>
+    ) : (
+      <div className='heightHolder'></div>
     );
   }
 }

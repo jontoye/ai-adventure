@@ -4,10 +4,33 @@ body {
   font-family: "Heebo", sans-serif;
   padding-top: 61px;
   height: 100vh !important;
+  background-color: black;
 }
 
 #nav {
   color: white;
+}
+
+.by {
+  color: blue;
+}
+
+.alert {
+  position: absolute;
+  top: 30px;
+  width: 100%;
+  text-align: center;
+  z-index: 100;
+  font-size: larger;
+}
+.alerts {
+  position: relative;
+  width: 100vw;
+}
+
+.navbar {
+  padding-top: 2px !important;
+  padding-bottom: 2px !important;
 }
 
 .main-navbar {
@@ -22,15 +45,53 @@ body {
 .right-nav {
   display: flex;
   flex-direction: row;
+  align-items: center;
+}
+
+.navbar-toggler {
+  margin-bottom: 0.5em;
+  margin-top: 0.5em;
+}
+
+.nav-link {
+  display: inline-block;
+  margin-right: 5px; /* Add or modify any margin/padding values as needed */
+}
+
+.navbar-expand-xl .navbar-nav .nav-link {
+  padding-right: 0rem !important;
+  padding-left: 0.5rem !important;
+}
+.heightHolder {
+  height: 300px;
+}
+
+.hidden {
+  display: none;
 }
 
 .circle {
+  height: 70px;
+  width: 70px;
   border-radius: 50%;
-  display: inline;
-  max-height: 55px;
+  overflow: hidden;
   padding: 0;
-  margin: -50px;
+  margin-top: 0;
+  margin-bottom: 0;
   border: 1px solid black;
+}
+.imageSelectScreen {
+  margin-top: 5%;
+}
+
+.read-delete {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.continue {
+  margin-right: 7px;
 }
 
 input:-webkit-autofill,

@@ -44,7 +44,8 @@ exports.user_profile_avatar_put = (req, res) => {
   // console.log(req.body);
   User.findOneAndUpdate({ _id: req.params.userId }, { avatar: req.body.avatar })
     .then((user) => {
-      user.activity.push(
+
+      user?.activity?.push(
         `Updated profile image on ${moment().format("MMMM Do YYYY, h:mm a")}`
       );
       user.save().then(() => {
@@ -147,8 +148,8 @@ exports.user_profile_removesocial_post = (req, res) => {
 
 exports.user_profile_achievement_post = (req, res) => {
   User.findById(req.user).then((user) => {
-    console.log("req test", req.body[1]);
-    if (user.achievements.includes(req.body[1])) {
+    // console.log("req test", req.body[1]);
+    if (user?.achievements?.includes(req.body[1])) {
       console.log("achievement already detected");
     } else {
       user.achievements.push(req.body[1]);
