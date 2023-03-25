@@ -1,0 +1,99 @@
+.entry {
+  white-space: pre-line;
+  background-color: rgba(255, 255, 255, 0.8);
+  text-shadow: 2px 2px rgba(234, 234, 234, 0.9);
+
+  border-radius: 10px;
+  font-weight: bold;
+  margin: 5px;
+  width: 100%;
+}
+
+.color_start {
+  color: darkgreen;
+}
+.color_0 {
+  color: darkred;
+}
+.color_1 {
+  color: darkblue;
+}
+.color_2 {
+  color: darkmagenta;
+}
+.color_3 {
+  color: darkred;
+}
+
+#adventure-log {
+  background-color: 1px solid blue;
+}
+
+#log-card {
+  background-color: rgb(255, 255, 255, 0);
+  color: black;
+  padding: 20px;
+  border: none;
+}
+
+#log-card-body {
+  background-color: rgba(21, 21, 21, 0);
+  border-radius: 10px;
+}
+
+.adventure-log-text {
+  color: rgba(234, 234, 234);
+  font-weight: bolder;
+  background-color: rgba(33, 37, 41, 0.9);
+  /* text-shadow: 2px 2px rgba(234, 234, 234, 0.9); */
+  padding: 10px;
+  margin-left: 20px;
+  border-radius: 5px;
+}
+
+.banner__intro-card {
+  background-color: rgba(37, 37, 37, 0.625);
+  color: white;
+}
+
+.banner__achievement-card {
+  background-color: rgba(37, 37, 37, 0.625);
+  color: white;
+}
+
+.entry:last-child {
+  background-clip: padding-box, text;
+  background-repeat: no-repeat;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  animation: t 2.5s forwards;
+}
+
+@keyframes t {
+  from {
+    background-size: 0 95%, 0 100%;
+    background-color: slategray;
+    background: linear-gradient(rgba(255, 255, 255, 0.8)) 0 50%/150% 95%,
+    linear-gradient(rgba(255, 255, 255, 0.8)) 0 0 /100% 100%;
+    -webkit-background-clip: padding-box, text;
+    color: rgba(255, 255, 255, 0.8);
+  }
+}
+/* @keyframes b {
+  99% {
+    background-position: -200% 50%, 0 0;
+    background: linear-gradient(#00dffc 0 0) 0 50%/150% 95%,
+      linear-gradient(#00dffc 0 0) 0 0 /100% 100%;
+    -webkit-background-clip: padding-box, text;
+  }
+} */
+
+.entryText:last-child {
+  white-space: pre-line;
+  text-shadow: 2px 2px rgba(234, 234, 234, 0.9);
+  padding: 15px;
+  border-radius: 10px;
+  font-weight: bold;
+  margin: 5px;
+  width: 100%;
+}

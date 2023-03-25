@@ -1,0 +1,11 @@
+.character-detail-card {
+  margin: 0 auto;
+}
+
+.card {
+  margin: 0;
+}
+
+.overflow {
+  white-space: pre-line;
+}

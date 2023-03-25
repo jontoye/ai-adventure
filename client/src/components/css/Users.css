@@ -1,0 +1,80 @@
+.section-explore {
+  color: white;
+}
+
+.users-list {
+  padding: 20px;
+  overflow-x: scroll;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+}
+
+.users-list::-webkit-scrollbar {
+  display: none;
+}
+
+.user-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 250px;
+  border: 2px solid white;
+  border-radius: 10px;
+  padding: 20px 10px;
+  font-weight: bolder;
+  font-size: larger;
+  background-color: white;
+  color: black;
+
+  box-shadow: rgba(255, 255, 255, 0.35) 0px 5px 15px;
+  transition: all 0.3s ease;
+}
+
+#user-name {
+  color: white;
+  font-weight: bolder;
+}
+
+.user-card:hover {
+  transform: scale(1.06);
+}
+
+.user-card__content {
+  padding: 15px;
+}
+
+.user-card #user-name {
+  color: black;
+}
+
+/* .user-card__img { */
+/* padding: 15px;
+    display: flex; */
+/* } */
+
+.user-card__img img {
+  /* border-radius: 50%; */
+  width: 150px;
+  height: 150px;
+  border-color: black;
+}
+
+.user-card text {
+  color: black;
+}
+
+.circular-square {
+  border-radius: 50%;
+  border: 5px white solid;
+}
+
+.scroll-btn {
+  height: 60px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.scroll-btn:hover {
+  opacity: 0.7;
+}

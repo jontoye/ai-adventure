@@ -1,0 +1,91 @@
+.section-profile {
+  color: white;
+  font-size: larger;
+  line-height: 1.6;
+}
+
+.profile-img {
+  display: block;
+  max-width: 300px;
+  margin: 30px auto;
+  border-radius: 50%;
+}
+
+#biography {
+  white-space: pre-line;
+  color: white;
+  font-weight: 600;
+}
+
+#biography-input {
+  width: 100%;
+}
+
+.profile-connections {
+  letter-spacing: 3px;
+}
+
+.social-button {
+  transition: all 0.3s all;
+  cursor: pointer;
+}
+
+.edit-btn {
+  width: 50%;
+}
+
+.social-button:hover {
+  opacity: 0.7;
+}
+
+.social-button img {
+  width: 70px;
+}
+.circular-square {
+  border-radius: 50%;
+  border: 5px white solid;
+
+  display: block;
+  max-width: 300px;
+
+  width: 300px;
+  height: 300px;
+}
+
+.center-me {
+  display: flex;
+  justify-content: center;
+}
+
+.modal-content {
+  background-color: #212529;
+  color: white;
+  text-align: center;
+}
+.modal-header {
+  text-align: center;
+  border-bottom: none;
+}
+.modal-title {
+  margin: 0 auto;
+  text-align: center;
+  width: fit-content;
+}
+.btn-close {
+  display: none;
+}
+
+.activity-log {
+  color: white;
+  font-weight: bolder;
+}
+
+@media (max-width: 620px) {
+  .profile-links,
+  /* .profile-buttons, */
+  .profile-connections {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+}

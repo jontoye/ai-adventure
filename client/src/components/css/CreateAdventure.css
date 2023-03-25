@@ -1,0 +1,19 @@
+.form-container {
+  background: rgba(0, 0, 0, 0.8);
+  border: 2px solid white;
+  border-radius: 10px;
+  margin: 35px auto;
+  padding: 50px 50px;
+  max-width: 800px;
+  font-size: larger;
+
+  box-shadow: rgba(255, 255, 255, 0.35) 0px 5px 15px;
+}
+
+.mb-3 .form-container {
+  height: 500px;
+}
+select.form__field.form-select {
+  color: white;
+  background-color: #020202f1;
+}

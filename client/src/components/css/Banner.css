@@ -1,0 +1,164 @@
+.banner {
+  min-height: 800px;
+  font-weight: 600;
+  width: 100%;
+
+  /* background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.6)), */
+  /* url("https://images.unsplash.com/photo-1462759353907-b2ea5ebd72e7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2231&q=80"); */
+  background-image: url("https://cdn.discordapp.com/attachments/1080683584433704991/1088693503250419712/Hermis_Epic_Elden_ring_landscape._Volumetric_light._6a2095a4-373e-43b0-b130-dbaf833acab1.png");
+  margin: 0 auto;
+
+  /* parallax scroll effect */
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.banner-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
+}
+
+.banner-right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.greeting-title {
+  font-size: 56px;
+  font-weight: 600;
+  margin-bottom: 30px;
+}
+
+.banner__intro-card {
+  background: rgba(0, 0, 0, 0.8);
+  border: 2px solid white;
+  border-radius: 10px;
+  margin: 0 auto;
+  padding: 10px 30px;
+  width: 80%;
+
+  color: white;
+  font-size: larger;
+
+  box-shadow: rgba(255, 255, 255, 0.35) 0px 5px 15px;
+}
+
+.banner__achievement-card {
+  background: rgba(0, 0, 0, 0.8);
+  border: 2px solid white;
+  border-radius: 10px;
+  width: 80%;
+
+  color: white;
+  font-weight: 600;
+  text-align: center;
+
+  box-shadow: rgba(255, 255, 255, 0.35) 0px 5px 15px;
+}
+
+.banner__buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  width: 40%;
+  margin-bottom: 30px;
+}
+
+.banner-button {
+  transition: all 0.3s ease;
+  font-weight: 600;
+}
+
+.banner-button:hover {
+  transform: scale(1.05);
+  background-color: black;
+  color: white;
+}
+
+.achievement-list {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 25px;
+
+  padding: 10px;
+}
+
+.achievement-badge {
+  width: 60px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.achievement-badge:hover {
+  transform: scale(1.08);
+}
+
+.banner-fade {
+  height: 100px;
+  background: linear-gradient(transparent, #070707);
+  transform: translateY(-100px);
+}
+
+@media (max-width: 991px) {
+  .banner__intro-card {
+    margin-top: 30px;
+    width: 100%;
+  }
+  .banner__achievement-card {
+    margin-bottom: 150px;
+  }
+
+  .banner__buttons {
+    width: 80%;
+  }
+}
+
+.unachieved {
+  opacity: 0.4;
+}
+
+.badge-1 {
+  opacity: 0.4;
+}
+.badge-2 {
+  opacity: 0.4;
+}
+
+.badge-3 {
+  opacity: 0.4;
+}
+.badge-4 {
+  opacity: 0.4;
+}
+
+.badge-5 {
+  opacity: 0.4;
+}
+.badge-6 {
+  opacity: 0.4;
+}
+.badge-7 {
+  opacity: 0.4;
+}
+.badge-8 {
+  opacity: 0.4;
+}
+.badge-9 {
+  opacity: 0.4;
+}
+
+#achievement-button {
+  background-color: rgb(255, 255, 255, 0.001);
+  border: none;
+}
+
+#achievement-image {
+  margin: 0 auto;
+}

@@ -1,0 +1,59 @@
+.characters .card-body .card-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 10; /* number of lines to show */
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.overflow-char {
+  white-space: pre-line;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 10; /* number of lines to show */
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.section-explore {
+  color: black !important;
+}
+
+.users-list {
+  padding: 20px;
+  overflow-x: scroll;
+  scrollbar-width: none;
+}
+
+.users-list::-webkit-scrollbar {
+  display: none;
+}
+
+.user-card {
+  /* width: 400px; */
+  border: 2px solid white;
+  border-radius: 10px;
+  padding: 20px 30px;
+  font-size: larger;
+  background-color: slategray;
+
+  box-shadow: rgba(255, 255, 255, 0.35) 0px 5px 15px;
+  transition: all 0.3s ease;
+}
+
+.user-card:hover {
+  transform: scale(1.06);
+}
+
+.user-card__img img {
+  /* border-radius: 50%; */
+  width: 150px;
+  height: 150px;
+}
+
+.circular-square {
+  border-radius: 50%;
+  border: 5px white solid;
+}

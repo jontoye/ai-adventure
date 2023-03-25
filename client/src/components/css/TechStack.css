@@ -1,0 +1,58 @@
+.section-tech {
+    text-align: center;
+    padding: 100px 200px;
+    color: black;
+    background-color: white;
+    line-height: 1.6;
+    font-size: larger;
+}
+
+.tech-title {
+    font-size: 72px;
+    margin-bottom: 50px;
+    color: black;
+}
+
+.tech-logos {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+}
+
+.logo-img {
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+.logo-img:hover {
+    transform: scale(1.03);
+}
+
+.openai-img {
+    width: 200px;
+    margin: 20px 0;
+    transition: all 0.3s ease;
+}
+
+.openai-img:hover {
+    transform: scale(1.03);
+}
+
+@media (max-width: 991px) {
+    .section-tech {
+        padding: 100px 20px;
+    }
+
+    .tech-logos {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .logo-img {
+        width: 200px;
+    }
+
+    .tech-title {
+        font-size: 56px;
+    }
+}

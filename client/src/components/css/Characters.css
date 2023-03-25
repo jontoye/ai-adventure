@@ -1,0 +1,27 @@
+.character-list {
+  display: flex;
+  /* flex-direction: row;
+  flex-wrap: wrap; */
+  /* margin-left: 150px;
+  margin-right: 150px;
+  justify-content: space-evenly; */
+  padding: 20px;
+  overflow-x: scroll;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+
+}
+
+.character-list::-webkit-scrollbar {
+  display: none;
+}
+
+.character-card {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.character-card:hover {
+  transform: scale(1.06);
+}
+

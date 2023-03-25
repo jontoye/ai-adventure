@@ -1,0 +1,17 @@
+.images-holder {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  gap: 15px;
+}
+
+.images-holder2 {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  gap: 15px;
+  width: 65vw;
+  margin: 0 auto;
+  margin-top: 50px;
+
+}

@@ -1,0 +1,26 @@
+.adventure-list {
+  display: flex;
+  /* flex-direction: row;
+  flex-wrap: wrap; */
+  /* margin-left: 150px;
+  margin-right: 150px;
+  justify-content: space-evenly; */
+  padding: 20px;
+  overflow-x: scroll;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+
+}
+
+.adventure-list::-webkit-scrollbar {
+  display: none;
+}
+
+.adventure-card {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.adventure-card:hover {
+  transform: scale(1.06);
+}
