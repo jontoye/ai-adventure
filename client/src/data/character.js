@@ -328,7 +328,6 @@ const DECOR = [
   "the Brave",
   "the Brown",
   "the Builder",
-  "the Changeling",
   "the Conqueror",
   "the Cruel",
   "the Demented",
@@ -380,14 +379,15 @@ const DECOR = [
   "the White",
   "the Wise",
   "the Worthy",
-  "the Young",
+  "the Younger",
+  "the Fifth"
 ];
 
 const CLASS = ["Alchemist", "Archangel", "Archer", "Astronomer", "Assassin", "Bandit", "Bard", "Barbarian", "Beastmaster",
-  "Berserker", "Bishop", "Blacksmith", "Brute", "Busker", "Cleric", "Centaur", "Corgi", "Cultist",
-  "Crusader", "Cybernetic", "Dragon", "Dragonborn", "Druid", "Dwarf", "Engineer", "Ent",
-  "Faun", "Ghost", "Giant", "Gladiator", "Gnome", "Goblin", "Gunslinger", "Gypsy", "Hacker", "Headhunter", "Horseman", "Hunter", "Illusionist", "Inquisitor", "Inventor",
-  "Jester", "Knight", "Leader", "Librarian", "Mage", "Marine", "Medic", "Merchant",
+  "Berserker", "Bishop", "Blacksmith", "Brute", "Busker", "Cat", "Cleric", "Centaur", "Corgi", "Cultist",
+  "Crusader", "Cybernetic", "Dog", "Dragon", "Dragonborn", "Druid", "Dwarf", "Engineer", "Ent",
+  "Faun", "Gambler", "Ghost", "Giant", "Gladiator", "Gnome", "Goblin", "Gunslinger", "Gypsy", "Hacker", "Headhunter", "Horseman", "Hunter", "Illusionist", "Inquisitor", "Inventor",
+  "Jester", "King", "Knight", "Leader", "Librarian", "Mage", "Marine", "Medic", "Merchant", "MMA Fighter", "Monk", "Mystic", "Necromancer", "Ogre", "Orator", "Orc", "Outlaw", "Paladin", "Phantom", "Pirate",
   "Monk", "Mystic", "Necromancer", "Ogre", "Orator", "Orc", "Outlaw", "Paladin", "Phantom", "Pirate",
   "Priest", "Programmer", "Psychic", "Ranger", "Rogue", "Robber", "Sapper", "Samurai", "Scholar", "Scout", "SEI Grad",
   "Shaman", "Sharpshooter", "Shapeshifter", "Skald", "Skirmisher", "Sniper", "Sorcerer", "Squire", "Spectre", "Spy",
@@ -458,6 +458,11 @@ const TRAIT = [
   "Poetry",
   "Portals",
   "Problem solving",
+  "Prompt Engineering",
+  "Pro Gaming",
+  "Procrastination",
+  "Programming",
+  "Puns",
   "Public speaking",
   "Puzzles",
   "Reading",
@@ -504,11 +509,7 @@ const TRAIT = [
   "Yoga",
 ];
 
-let randomImages = [];
-const NUMRAND = 5;
-for (let i = 1; i < NUMRAND + 1; i++) {
-  randomImages.push("random" + i);
-}
+let randomImages = CLASS.map(element => element.toLowerCase());
 
 const RANDOM = randomImages;
 

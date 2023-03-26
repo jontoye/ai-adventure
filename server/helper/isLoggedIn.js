@@ -19,16 +19,17 @@ module.exports = (req, res, next) => {
   // console.log(token);
   var authorizationToken = req.header("Authorization");
   if (!authorizationToken) {
-    return res.json({ message: "You must sign in to view this page." }).status(401);
-    // return res.redirect("/");
+    // return res.json({ message: "You must sign in to view this page." }).status(401);
+    return res.redirect("/");
   }
   authorizationToken = authorizationToken.replace("Bearer ", "");
   let token = authorizationToken;
 
   if (!token) {
-    return res
-      .json({ message: "You must sign in to view this page." })
-      .status(401);
+    return res.redirect("/");
+    // return res
+    // .json({ message: "You must sign in to view this page." })
+    // .status(401);
   }
   try {
     const decoded = jwt.verify(token, process.env.SECRET);

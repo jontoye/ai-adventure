@@ -23,9 +23,10 @@ export default class CreateCharacter extends Component {
     super(props);
     this.state = {
       currentStep: 1,
-      user: this.props.user ? this.props.user.id : null,
       heading: "Backstory",
       generateRandomCharacter: false,
+      isLoading: true,
+      user: null,
       newCharacter: {
         name: "",
         class: "",
@@ -33,7 +34,7 @@ export default class CreateCharacter extends Component {
         weakness: "",
         backstory: "",
         tone: "dark",
-        user: this.props.user.id,
+        user: "",
         image: "/images/class/default.png",
       },
       character: "",
@@ -47,8 +48,6 @@ export default class CreateCharacter extends Component {
         ability: "Speaking in riddles",
         weakness: "Hobbits",
         tone: "dark",
-        // backstory:
-        //   'Gandalf was born in the year 2953 of the Third Age. He was originally a Maia of the race of the Valar, and his name was Olorin. He was one of the Maiar who remained in Middle-earth after the Valar departed. He became a friend of the Elves of Middle-earth and often visited them. He was known by various names, including Mithrandir, meaning "Gray Pilgrim", and tharkûn, meaning "staff-man". In the year 2063 of the Third Age, he took the form of an old man and went to live among the Dwarves of the Blue Mountains. He remained with them for many years, and became known as Gandalf the Grey.\nIn the year 2941 of the Third Age, Gandalf returned to Middle-earth. He gathered the Dwarves of the Lonely Mountain and helped them reclaim their homeland from the dragon Smaug. He also played a key role in the War of the Ring, which culminated in the destruction of the One Ring and the defeat of Sauron. After the war, Gandalf was instrumental in the establishment of the Shire as a safe haven for the Hobbits. He also helped to restore the kingdom of Gondor.',
         backstory: 'Please chose a tone and click "Generate Backstory" above.',
       },
     };
@@ -58,12 +57,22 @@ export default class CreateCharacter extends Component {
     this._prev = this._prev.bind(this);
   }
 
-  componentDidMount() {
-    let theUser = () => (this.props.user ? this.props.user.id : null);
-    this.setState({ user: theUser() });
+  async componentDidMount() {
+    const { user } = this.props;
+    if (user) {
+      this.setState({
+        isLoading: false,
+        user: user.id,
+        newCharacter: {
+          ...this.state.newCharacter,
+          user: user.id,
+        },
+      });
+    }
     if (this.props.randomCharacter) {
       this.createRandomCharacter();
     }
+    // console.log("id", this.props.user.id);
   }
 
   createRandomCharacter = () => {
@@ -123,7 +132,7 @@ export default class CreateCharacter extends Component {
       weakness: weakness,
       backstory: "", // default
       tone: "dark", // default
-      user: this.state.user,
+      user: this.props.user.id,
     };
     this.setState({
       placeholder: character,
@@ -151,16 +160,16 @@ export default class CreateCharacter extends Component {
       this.state.newCharacter.name.toLowerCase().includes("saad")
     ) {
       console.log("saad detected");
-      character.image = "/images/class/saad.jpg";
+      character.image = "/images/class/saad.png";
     }
     if (
       this.state.newCharacter.name.toLowerCase().includes("martin") ||
       this.state.newCharacter.name.toLowerCase().includes("marty")
     ) {
       console.log("marty detected");
-      character.image = "/images/class/martin.jpg";
+      character.image = "/images/class/marty.png";
     }
-    console.log("add char test", character);
+    // console.log("add char test", character);
     Axios.post("character/add", character, {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),
@@ -177,7 +186,7 @@ export default class CreateCharacter extends Component {
             "danger"
           );
         } else {
-          console.log("Character added successfully.", response);
+          // console.log("Character added successfully.", response);
           this.props.createAdventure(this.state.newCharacter);
           this.setState({
             redirect: true,
@@ -311,7 +320,7 @@ export default class CreateCharacter extends Component {
 
     this.setImage();
 
-    console.log("user: ", this.state.newCharacter.user);
+    // console.log("user: ", this.state.newCharacter.user);
 
     setTimeout(() => {
       this.addCharacter(this.state.newCharacter);
@@ -387,8 +396,10 @@ export default class CreateCharacter extends Component {
   }
 
   render() {
+    const { isLoading, user, newCharacter } = this.state;
+
     // console.log(this.props)
-    return (
+    return !isLoading ? (
       <>
         <Container className='container-fluid my-5'>
           <h1 className='display-4'>Create a Character</h1>
@@ -428,6 +439,14 @@ export default class CreateCharacter extends Component {
           />
         )}
       </>
+    ) : (
+      <div>
+        <br />
+        <br />
+        <br />
+        <br />
+        <h2 className='center'>Refresh error, please go back and try again</h2>
+      </div>
     );
   }
 }
