@@ -30,6 +30,7 @@ exports.user_index_get = (req, res) => {
 exports.user_profile_get = (req, res) => {
   User.findOne({ _id: req.params.userId })
     .then((user) => {
+      // console.log('user api', user)
       res.json({ user: user }).status(200);
     })
     .catch((err) => {
