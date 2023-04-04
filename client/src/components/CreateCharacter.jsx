@@ -417,7 +417,7 @@ export default class CreateCharacter extends Component {
         <div className='relative w-full h-full overflow-hidden bg-cover bg-50 bg-no-repeat'>
           <div className='items-center w-100'>
             <img
-              src='https://i.imgur.com/BEjmUTt.png'
+              src='https://i.imgur.com/zAzseke.jpg'
               className='outImage'
             ></img>
           </div>
