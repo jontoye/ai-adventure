@@ -21,6 +21,7 @@ import Character from "./components/Character";
 import MyCharacters from "./components/MyCharacters"
 import MyAdventures from "./components/MyAdventures"
 
+
 import "./App.scss";
 import { Link } from "react-router-dom";
 import Users from "./components/Users";
@@ -63,6 +64,7 @@ export default class App extends Component {
     storyBackBtnRedirect: "/bug",
     firstLogin: false,
     redirect: false,
+    tokenCount: 0,
   };
 
   setImage = (imgUrl) => {
@@ -84,6 +86,7 @@ export default class App extends Component {
   };
 
   async componentDidMount() {
+
     let token = localStorage.getItem("token");
     if (token != null) {
       let user = jwt_decode(token);
@@ -102,6 +105,7 @@ export default class App extends Component {
           isAuth: false,
         });
       }
+      // console.log('userid', user.id)
     }
   }
 
@@ -526,6 +530,7 @@ export default class App extends Component {
                 setMessage={this.setMessage}
                 createAchievement={this.createAchievement}
                 addTokens={this.addTokens}
+                tokenCount={this.state.tokenCount}
               />
             }
           />
@@ -542,6 +547,7 @@ export default class App extends Component {
                 user={this.state.user}
                 createAchievement={this.createAchievement}
                 addTokens={this.addTokens}
+                tokenCount={this.state.tokenCount}
               />
             }
           />
@@ -594,6 +600,8 @@ export default class App extends Component {
                 setMessage={this.setMessage}
                 createAchievement={this.createAchievement}
                 addTokens={this.addTokens}
+                tokenCount={this.state.tokenCount}
+                user={this.state.user}
               />
             }
           />

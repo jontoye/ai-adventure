@@ -37,6 +37,8 @@ export default class CreateCharacter extends Component {
         user: "",
         image: "/images/class/default.png",
       },
+      tokenShow: true,
+      tokenCount: null,
       character: "",
       log: [],
       prompt: "",
@@ -72,6 +74,18 @@ export default class CreateCharacter extends Component {
     if (this.props.randomCharacter) {
       this.createRandomCharacter();
     }
+
+    Axios.get(`/profile/${user.id}`, {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    }).then((response) => {
+      // console.log("tokens", response.data.user.tokens);
+      this.setState({
+        tokenCount: response.data.user.tokens,
+        tokenShow: response.data.user.tokens < 50000,
+      });
+    });
     // console.log("id", this.props.user.id);
   }
 
@@ -200,8 +214,6 @@ export default class CreateCharacter extends Component {
         this.props.setMessage(error.message, "danger");
       });
   };
-
-  appendResponse = (response) => {};
 
   generateBackstory = (e) => {
     // console.log("CREATING BACKSTORY");
@@ -397,7 +409,58 @@ export default class CreateCharacter extends Component {
   }
 
   render() {
-    const { isLoading, user, newCharacter } = this.state;
+    const { isLoading, user, newCharacter, tokenShow } = this.state;
+    // console.log("user: ", this.props.user.tokens);
+
+    if (!tokenShow) {
+      return (
+        <div className='relative w-full h-full overflow-hidden bg-cover bg-50 bg-no-repeat'>
+          <div className='items-center w-100'>
+            <img
+              src='https://i.imgur.com/BEjmUTt.png'
+              className='outImage'
+            ></img>
+          </div>
+          <div className='absolute top-0 right-0 bottom-0 left-0 h-full w-full overflow-auto bg-fixed bg-grey'>
+            <div className='flex h-full  my-5 flex-col max-w-80 mx-auto text-left outOfTokens'>
+              <h2 className='textwhite opacity-100'>
+                Thank you for using AI Adventure!
+              </h2>
+              <p>&nbsp;</p>
+              <p className='textwhite opacity-100'>
+                {" "}
+                {`We hope you enjoyed the app and were able to go on a number of entertaining adventures`}{" "}
+                {`We are thrilled that the app has been more popular than expected.`}
+              </p>
+              <p>&nbsp;</p>
+              <p className='textwhite opacity-100'>
+                {" "}
+                {` Unfortunately, the costs of maintaining AI Adventure are adding up and
+              it looks like you've used up all your free tokens.`}{" "}
+              </p>
+              <p>&nbsp;</p>
+              <p className='textwhite opacity-100'>
+                {`Don't worry though - you can`}
+                <a href='https://dylankotzer.com/' className='text-blue-400'>
+                  {" "}
+                  contact Dylan Kotzer
+                </a>{" "}
+                {` to request more tokens or let us know about any features you'd
+              like to see, bugs you've encountered, or feedback you have. We're
+              always looking for ways to improve Adventure AI and make it even
+              better for our users.`}
+              </p>
+              <p>&nbsp;</p>
+              <p className='textwhite opacity-100'>
+                {`Thanks again for Adventuring with us, and we appreciate your
+              understanding as we work to keep the app sustainable. We hope to
+              hear from you soon!`}
+              </p>
+            </div>
+          </div>
+        </div>
+      );
+    }
 
     // console.log(this.props)
     return !isLoading ? (
