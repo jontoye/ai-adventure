@@ -34,10 +34,12 @@ router.post(
   isLoggedIn,
   userCtrl.user_profile_achievement_post
 )
-// router.get(
-//   "/achievement/get",
-//   isLoggedIn,
-//   userCtrl.user_profile_achievement_get
-// );
+
+router.post(
+  "/tokens/add",
+  isLoggedIn,
+  userCtrl.user_profile_tokens_post
+)
+
 
 module.exports = router;

@@ -60,6 +60,8 @@ const userSchema = mongoose.Schema(
       },
     ],
 
+    tokens: { type: Number, default: 0 },
+    
     achievements: [String],
 
     activity: [
