@@ -245,6 +245,7 @@ export default class CreateCharacter extends Component {
         presence_penalty: 0,
       })
       .then((response) => {
+        this.props.addTokens(response.data.usage.total_tokens);
         let backstory = response.data.choices[0].text;
         if (backstory[0] === "\n") {
           backstory = backstory.slice(1, backstory.length);

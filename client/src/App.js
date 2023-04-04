@@ -336,6 +336,22 @@ export default class App extends Component {
       });
   };
 
+  addTokens = (tokens) => {
+    // console.log("adding tokens", tokens, "to user", this.state.user)
+    Axios.post(
+      "tokens/add",
+      { tokens: tokens },
+      {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      }
+    ).catch((error) => {
+      console.log("Error adding tokens.", error);
+      this.props.setMessage(error.message, "danger");
+    });
+  }
+
   setMessage = (message, type) => {
     this.setState({
       infoMessage: null,
@@ -509,6 +525,7 @@ export default class App extends Component {
                 user={this.state.user}
                 setMessage={this.setMessage}
                 createAchievement={this.createAchievement}
+                addTokens={this.addTokens}
               />
             }
           />
@@ -524,6 +541,7 @@ export default class App extends Component {
                 setMessage={this.setMessage}
                 user={this.state.user}
                 createAchievement={this.createAchievement}
+                addTokens={this.addTokens}
               />
             }
           />
@@ -575,6 +593,7 @@ export default class App extends Component {
                 character={this.state.character}
                 setMessage={this.setMessage}
                 createAchievement={this.createAchievement}
+                addTokens={this.addTokens}
               />
             }
           />

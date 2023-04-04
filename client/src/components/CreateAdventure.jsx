@@ -197,6 +197,7 @@ export default class CreateAdventure extends Component {
         presence_penalty: 0,
       })
       .then((response) => {
+        this.props.addTokens(response.data.usage.total_tokens);
         let story = response.data.choices[0].text;
         // console.log("after response intro test", intro);
         if (story[0] === "\n") {

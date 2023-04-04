@@ -170,14 +170,27 @@ exports.user_profile_achievement_post = (req, res) => {
   });
 };
 
-// exports.user_achievement_get = (req, res) => {
-//   User.findById(req.user)
-//     .then((user) => {
-//       res.json({ user: user }).status(200);
-//     })
-//     .catch((err) => {
-//       res
-//         .json({ error: err, message: "Error fetching user list." })
-//         .status(400);
-//     });
-// };
+exports.user_profile_tokens_post = (req, res) => {
+  console.log('tokens body', req.body.tokens)
+  let newTokens = req.body.tokens
+  User.findById(req.user).then((user) => {
+
+    if (!user?.tokens) {
+      user.tokens = Number(newTokens)
+      console.log("no tokens found, creating them")
+    }
+
+    console.log('tokens before', user?.tokens)
+    user.tokens += Number(newTokens);
+    console.log('tokens after', user.tokens)
+    user
+      .save()
+      .then(() => {
+        res.json({ user }).status(200);
+        // res.json({ character }).status(200);
+      })
+  }
+    // console.log("req test", req.body[1]);
+  )
+}
+

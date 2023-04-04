@@ -76,6 +76,7 @@ export default class Story extends Component {
         presence_penalty: 0.0,
       })
       .then((response) => {
+        this.props.addTokens(response.data.usage.total_tokens);
         //   console.log("choose option test", response);
         let reply = response.data.choices[0].text;
         while (reply[0] === "\n") {
