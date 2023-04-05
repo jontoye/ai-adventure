@@ -49,7 +49,7 @@ function Users({
 
   return (
     <>
-      <div className='section-explore container-fluid my-5'>
+      <div className='section-explore container-fluid mt-5'>
         <h1 className='display-4'>Users</h1>
         <div className='d-flex align-items-center'>
           <img

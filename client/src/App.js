@@ -341,6 +341,10 @@ export default class App extends Component {
   };
 
   addTokens = (tokens) => {
+
+    if (tokens < 0) {
+      return 'Error: Cannot add negative tokens'
+    }
     // console.log("adding tokens", tokens, "to user", this.state.user)
     Axios.post(
       "tokens/add",
@@ -671,6 +675,9 @@ export default class App extends Component {
                 origin={this.state.storyBackBtnRedirect}
                 storyBackBtnRedirectFcn={this.storyBackBtnRedirectFcn}
                 createAchievement={this.createAchievement}
+                addTokens={this.addTokens}
+                tokenCount={this.state.tokenCount}
+                user={this.state.user}
               />
             }
           />

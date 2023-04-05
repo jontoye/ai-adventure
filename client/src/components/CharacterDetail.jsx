@@ -153,10 +153,16 @@ export default class CharacterDetail extends Component {
                 </span>
               </span>
               <br />
+              <br className='ability' />
+              <span className='ability'>
+                {" "}
+                Ability: {this.state.character.ability}
+              </span>
               <br />
-              Ability: {this.state.character.ability}
-              <br />
-              Weakness: {this.state.character.weakness}
+              <span className='weakness'>
+                {" "}
+                Weakness: {this.state.character.weakness}
+              </span>
               <br /> Adventures: {this.state.adventureCount}
             </Card.Text>
             <Button variant='primary' onClick={this.handleClick}>

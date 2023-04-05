@@ -566,10 +566,10 @@ export default class Adventure extends Component {
                   </Card.Subtitle>
                   <br></br>
                   <Card.Text>
-                    Strength: {this.state.character.ability}
+                    <span className="ability">Strength: {this.state.character.ability}</span>
                   </Card.Text>
                   <Card.Text>
-                    Weakness: {this.state.character.weakness}
+                    <span className="weakness"> Weakness: {this.state.character.weakness} </span>
                   </Card.Text>
                   <br></br>
                   <Card.Text>

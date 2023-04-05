@@ -149,9 +149,9 @@ export default class Character extends Component {
             <Card.Text>
               <span className='overflow-char'>{this.props.backstory}</span>
               <br />
-              Ability: {this.props.ability}
+              <span className='ability'>Ability: {this.props.ability}</span>
               <br />
-              Weakness: {this.props.weakness}
+              <span className='weakness'>Weakness: {this.props.weakness}</span>
               {!this.props.isFiltered ? (
                 <span>
                   <br />

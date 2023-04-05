@@ -22,6 +22,7 @@ export default class CreateAdventure extends Component {
       redirect: false,
       event: null,
       tokenCount: null,
+      tokenShow: true,
     };
     // console.log(this.props)
   }

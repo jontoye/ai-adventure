@@ -1,7 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Heebo:wght@100&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital@1&display=swap");
 
 body {
-  font-family: "Heebo", sans-serif;
+  // font-family: "Heebo", sans-serif;
   padding-top: 61px;
   height: 100vh !important;
   background-color: black;
@@ -40,7 +41,7 @@ body {
 }
 
 .main-navbar {
-  font-weight: bolder;
+  font-weight: bold;
   font-size: larger;
 }
 
@@ -60,6 +61,8 @@ body {
 }
 
 .nav-link {
+  font-family: "Heebo";
+
   display: inline-block;
   margin-right: 5px; /* Add or modify any margin/padding values as needed */
 }
@@ -210,4 +213,46 @@ select:-webkit-autofill:focus {
 .text-left {
   text-align: left;
   align-items: left !important;
+}
+
+.poemWrapper {
+  border: 1px solid black;
+  border-radius: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  padding: 20px;
+  margin: 0 auto;
+  margin-top: 0px;
+  margin-top: 35px;
+}
+
+.poemWrapper p {
+  margin: 0;
+  min-height: 25px;
+  font-family: "Libre Baskerville";
+}
+
+.card-title {
+  text-transform: capitalize;
+}
+
+.weakness {
+  display: inline-block; /* or inline, depending on your needs */
+  width: 200px; /* set the desired width of the container */
+  white-space: nowrap; /* prevent text from wrapping to a new line */
+  overflow: hidden; /* hide any overflowing text */
+  text-overflow: ellipsis;
+  text-transform: capitalize;
+}
+
+.ability {
+  display: inline-block; /* or inline, depending on your needs */
+  width: 200px; /* set the desired width of the container */
+  white-space: nowrap; /* prevent text from wrapping to a new line */
+  overflow: hidden; /* hide any overflowing text */
+  text-overflow: ellipsis;
+  text-transform: capitalize;
 }

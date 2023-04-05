@@ -152,7 +152,7 @@ export default class Adventures extends Component {
       );
     }
     return (
-      <div className='container-fluid my-5'>
+      <div className='container-fluid mt-4'>
         <h1 className='display-4'>Adventure List</h1>
         {/* {this.props.isFiltered ? (
           <p className='display-8 text-white' style={{ textAlign: "center" }}>

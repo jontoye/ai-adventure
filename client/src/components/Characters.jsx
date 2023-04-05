@@ -119,7 +119,7 @@ export default class Characters extends Component {
       );
     }
     return (
-      <div className='container-fluid my-5'>
+      <div className='container-fluid mt-3 mb-4'>
         <h1 className='display-4'>Character List</h1>
         {/* {this.props.isFiltered ? (
           <p className='display-8 text-white' style={{ textAlign: "center" }}>
