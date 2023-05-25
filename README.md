@@ -77,6 +77,8 @@ This project was built with HTML, CSS, JavaScript, Bootsrap, MongoDB, Express.js
 AI technology by OpenAI, utilizing the Davinci text engine.<br>
 All artwork is AI-generated using Disco Diffusion.
 
+<img src="https://i.imgur.com/Cskkljz.png"  width="1400" height="1000">
+
 ## Next Steps
 
 Future releases of AI Adventure will include:
