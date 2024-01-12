@@ -239,9 +239,31 @@ export default class Story extends Component {
               delay={{ show: 250, hide: 400 }}
               overlay={this.renderTooltip_poem}
             >
-              <Button variant='primary' onClick={this.createBardPoem}>
-                Immortalize!
-              </Button>
+              <div style={{ position: "relative" }}>
+                <Button
+                  variant='primary'
+                  onClick={this.createBardPoem}
+                  disabled
+                >
+                  Immortalize!
+                </Button>
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    backgroundColor: "rgba(0,0,0,0.5)",
+                    color: "white",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  Out of Order
+                </div>
+              </div>
             </OverlayTrigger>
             <br></br>
             <br></br>

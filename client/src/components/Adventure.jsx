@@ -512,37 +512,91 @@ export default class Adventure extends Component {
           <Row className='adventure-container'>
             <Col xs='9'>
               <div className='buttons'>
-                <Button
-                  variant='dark'
-                  size='lg'
-                  disabled={this.state.disabled}
-                  onClick={this.buttonOneClick}
-                  onKeyPress={this.handleKeyPress}
-                >
-                  {this.state.option1.replace(/(<([^>]+)>)/gi, "")}
-                </Button>
+                <div style={{ position: "relative" }}>
+                  <Button
+                    variant='dark'
+                    size='lg'
+                    disabled={true}
+                    onClick={this.buttonOneClick}
+                    onKeyPress={this.handleKeyPress}
+                  >
+                    {this.state.option1.replace(/(<([^>]+)>)/gi, "")}
+                  </Button>
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      width: "100%",
+                      height: "100%",
+                      backgroundColor: "rgba(0,0,0,0.5)",
+                      color: "white",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    Out of Order
+                  </div>
+                </div>
                 <br></br>
                 <br />
-                <Button
-                  variant='dark'
-                  size='lg'
-                  disabled={this.state.disabled}
-                  onClick={this.buttonTwoClick}
-                  onKeyPress={this.handleKeyPress}
-                >
-                  {this.state.option2.replace(/(<([^>]+)>)/gi, "")}
-                </Button>
+                <div style={{ position: "relative" }}>
+                  <Button
+                    variant='dark'
+                    size='lg'
+                    disabled={true}
+                    onClick={this.buttonTwoClick}
+                    onKeyPress={this.handleKeyPress}
+                  >
+                    {this.state.option2.replace(/(<([^>]+)>)/gi, "")}
+                  </Button>
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      width: "100%",
+                      height: "100%",
+                      backgroundColor: "rgba(0,0,0,0.5)",
+                      color: "white",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    Out of Order
+                  </div>
+                </div>
                 <br></br>
                 <br />
-                <Button
-                  variant='dark'
-                  size='lg'
-                  disabled={this.state.disabled}
-                  onClick={this.buttonThreeClick}
-                  onKeyPress={this.handleKeyPress}
-                >
-                  {this.state.option3.replace(/(<([^>]+)>)/gi, "")}
-                </Button>
+                <div style={{ position: "relative" }}>
+                  <Button
+                    variant='dark'
+                    size='lg'
+                    disabled={true}
+                    onClick={this.buttonThreeClick}
+                    onKeyPress={this.handleKeyPress}
+                  >
+                    {this.state.option3.replace(/(<([^>]+)>)/gi, "")}
+                  </Button>
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      width: "100%",
+                      height: "100%",
+                      backgroundColor: "rgba(0,0,0,0.5)",
+                      color: "white",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    Out of Order
+                  </div>
+                </div>
               </div>
             </Col>
             <Col>
@@ -566,10 +620,15 @@ export default class Adventure extends Component {
                   </Card.Subtitle>
                   <br></br>
                   <Card.Text>
-                    <span className="ability">Strength: {this.state.character.ability}</span>
+                    <span className='ability'>
+                      Strength: {this.state.character.ability}
+                    </span>
                   </Card.Text>
                   <Card.Text>
-                    <span className="weakness"> Weakness: {this.state.character.weakness} </span>
+                    <span className='weakness'>
+                      {" "}
+                      Weakness: {this.state.character.weakness}{" "}
+                    </span>
                   </Card.Text>
                   <br></br>
                   <Card.Text>
