@@ -463,14 +463,30 @@ export default class CreateAdventure extends Component {
             </div>
 
             {this.state.newAdventure.quest && this.state.newAdventure.name ? (
-              <>
-                <Button variant='primary' size='lg' type='submit'>
+              <div style={{ position: "relative" }}>
+                <Button variant='primary' size='lg' type='submit' disabled>
                   Start Adventure
                 </Button>
                 <Form.Text>
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {this.state.placeholder}
                 </Form.Text>
-              </>
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    backgroundColor: "rgba(0,0,0,0.5)",
+                    color: "white",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  Out of Order
+                </div>
+              </div>
             ) : (
               <p className='text-white'>
                 <small>

@@ -51,23 +51,24 @@ export default class Signin extends Component {
       <div>
         <div>
           <h1>Welcome to AI Adventure</h1>
-          {/* <Container id="sign-up-container">
-        <h3 className="text-white">Sign in</h3>
-        <div className="form__group field">
-          <input type="input" className="form__field" placeholder="Name" name="username" id='name' onChange={this.changeHandler} required />
-          <label className="form__label" >Username</label>
-          </div>
-          <div className="form__group field">
-          <input type="password" className="form__field" placeholder="Name" name="password" id='name' onChange={this.changeHandler} required />
-          <label className="form__label" onChange={this.changeHandler}>Password</label>
-          </div>
-          <br></br>
-          <Button id="create-user-button" onClick={this.loginHandler}>Sign In</Button>
-          <br></br>
-          <p className="text-white">Don't have an account?</p>
-          <Button id="" onClick={this.signupHandler}>Sign Up</Button>
-        </Container><br></br><br></br>
-        <hr className="signin-line"></hr> */}
+          <section class='w-full py-12 md:py-24 lg:py-32 bg-red-100 dark:bg-red-800'>
+            <div class='container flex flex-col items-center justify-center gap-4 px-4 text-center md:px-6'>
+              <div class='space-y-3'>
+                <h2 class='text-3xl font-bold tracking-tighter text-red-500 dark:text-red-400'>
+                  AI Adventure is currently under maintenance. The API's the
+                  site relies on are currently down. We're working on revamping
+                  the site to version 2.0.
+                </h2>
+                <p class='mx-auto max-w-600px text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400'>
+                  We're sorry for the inconvenience. Please check back soon or
+                  contact us at{" "}
+                  <a href='mailto:dkotzer@gmail.com'>dkotzer@gmail.com</a> to
+                  become an early tester or for more information.
+                </p>
+              </div>
+            </div>
+          </section>
+
           <div id='google-signin-wrapper'>
             {/* <span>OR</span> */}
             <GSignup login={this.props.googleLogin}></GSignup>
