@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import { Form, Button, Container, Col, Row } from 'react-bootstrap';
+import React, { Component } from "react";
+import { Form, Button, Container, Col, Row } from "react-bootstrap";
 // import Log from "./Log";
 
 export default class CharacterForm2 extends Component {
   render() {
     if (this.props.currentStep !== 2) {
-        return null;
+      return null;
     }
     return (
       <Container>
@@ -51,12 +51,17 @@ export default class CharacterForm2 extends Component {
             &nbsp; &nbsp; &nbsp; &nbsp;
             <Col xs={4}>
               <div style={{ position: "relative" }}>
-                <Button variant='primary' size='lg' type='submit' disabled>
-                  Start Adventure
+                <Button
+                  as={Col}
+                  className='pull-right'
+                  variant='primary'
+                  size='lg'
+                  type='button'
+                  onClick={this.props.generateBackstory}
+                  disabled
+                >
+                  Generate Backstory
                 </Button>
-                <Form.Text>
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {this.state.placeholder}
-                </Form.Text>
                 <div
                   style={{
                     position: "absolute",
@@ -91,9 +96,35 @@ export default class CharacterForm2 extends Component {
           <br></br>
 
           {this.props.isBackstory ? (
-            <Button variant='primary' size='lg' type='submit'>
-              Create Character
-            </Button>
+            <div style={{ position: "relative" }}>
+              <Button
+                as={Col}
+                className='pull-right'
+                variant='primary'
+                size='lg'
+                type='button'
+                onClick={this.props.generateBackstory}
+                disabled
+              >
+                Create Character
+              </Button>
+              <div
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: "100%",
+                  height: "100%",
+                  backgroundColor: "rgba(0,0,0,0.5)",
+                  color: "white",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                Out of Order
+              </div>
+            </div>
           ) : (
             <p className='text-white'>
               <small>You must create a backstory to continue...</small>
