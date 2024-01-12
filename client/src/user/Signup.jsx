@@ -49,14 +49,13 @@ export default class Signup extends Component {
                 <h2 class='text-3xl font-bold tracking-tighter text-red-500 dark:text-red-400'>
                   AI Adventure is currently under maintenance. The API's the
                   site relies on are currently down. We're working on revamping
-                  the site to version 2.0. Please check back soon or contact us
-                  at <a href='mailto:dkotzer@gmail.com'>dkotzer@gmail.com</a> to
-                  become an early tester or for more information.
+                  the site to version 2.0.
                 </h2>
                 <p class='mx-auto max-w-600px text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400'>
-                  We're sorry for the inconvenience. This section is currently
-                  under maintenance and will be available soon. We appreciate
-                  your patience.
+                  We're sorry for the inconvenience. Please check back soon or
+                  contact us at{" "}
+                  <a href='mailto:dkotzer@gmail.com'>dkotzer@gmail.com</a> to
+                  become an early tester or for more information.
                 </p>
               </div>
             </div>
